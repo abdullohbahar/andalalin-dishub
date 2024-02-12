@@ -40,7 +40,7 @@ License: For each use you must have a valid license purchased only from above li
     </style>
 
     <title>
-        Siswasdal PolSiB | @yield('title')
+        @yield('title') - Andalalin
     </title>
     @stack('addons-css')
 </head>
@@ -269,108 +269,22 @@ License: For each use you must have a valid license purchased only from above li
                                             </span>
                                             <!--end:Menu link-->
                                             <!--begin:Menu sub-->
-                                            <div class="menu-sub menu-sub-accordion {{ $active == 'cv-consultant' || 'supervising-consultant' ? 'show' : 'open-menu-sub' }}"
+                                            <div class="menu-sub menu-sub-accordion {{ $active == 'jenis-rencana-pembangunan' || 'supervising-consultant' ? 'show' : 'open-menu-sub' }}"
                                                 kt-hidden-height="167">
                                                 <!--begin:Menu item-->
                                                 <div class="menu-item">
                                                     <!--begin:Menu link-->
-                                                    <a class="menu-link {{ $active == 'cv-consultant' ? 'active' : '' }}"
-                                                        href="#">
+                                                    <a class="menu-link {{ $active == 'jenis-rencana-pembangunan' ? 'active' : '' }}"
+                                                        href="{{ route('admin.jenis.rencana.pembangunan') }}">
                                                         <span class="menu-bullet">
                                                             <span class="bullet bullet-dot"></span>
                                                         </span>
-                                                        <span class="menu-title">CV</span>
+                                                        <span class="menu-title">Jenis Rencana Pembangunan</span>
                                                     </a>
                                                     <!--end:Menu link-->
                                                 </div>
                                                 <!--end:Menu item-->
-                                                <!--begin:Menu item-->
-                                                <div class="menu-item">
-                                                    <!--begin:Menu link-->
-                                                    <a class="menu-link {{ $active == 'supervising-consultant' ? 'active' : '' }}"
-                                                        href="#">
-                                                        <span class="menu-bullet">
-                                                            <span class="bullet bullet-dot"></span>
-                                                        </span>
-                                                        <span class="menu-title">Konsultan Pengawas</span>
-                                                    </a>
-                                                    <!--end:Menu link-->
-                                                </div>
-                                                <!--end:Menu item-->
-                                                <!--begin:Menu item-->
-                                                <div class="menu-item">
-                                                    <!--begin:Menu link-->
-                                                    <a class="menu-link {{ $active == 'partner' ? 'active' : '' }}"
-                                                        href="#">
-                                                        <span class="menu-bullet">
-                                                            <span class="bullet bullet-dot"></span>
-                                                        </span>
-                                                        <span class="menu-title">Rekanan (Penyedia Jasa)</span>
-                                                    </a>
-                                                    <!--end:Menu link-->
-                                                </div>
-                                                <!--end:Menu item-->
-                                                <!--begin:Menu item-->
-                                                <div class="menu-item">
-                                                    <!--begin:Menu link-->
-                                                    <a class="menu-link {{ $active == 'site-supervisor' ? 'active' : '' }}"
-                                                        href="#">
-                                                        <span class="menu-bullet">
-                                                            <span class="bullet bullet-dot"></span>
-                                                        </span>
-                                                        <span class="menu-title">Pengawas Lapangan</span>
-                                                    </a>
-                                                    <!--end:Menu link-->
-                                                </div>
-                                                <!--end:Menu item-->
-                                                <!--begin:Menu item-->
-                                                <div class="menu-item">
-                                                    <!--begin:Menu link-->
-                                                    <a class="menu-link {{ $active == 'ppk' ? 'active' : '' }}"
-                                                        href="#">
-                                                        <span class="menu-bullet">
-                                                            <span class="bullet bullet-dot"></span>
-                                                        </span>
-                                                        <span class="menu-title">PPK</span>
-                                                    </a>
-                                                    <!--end:Menu link-->
-                                                </div>
-                                                <!--end:Menu item-->
-                                                <!--begin:Menu item-->
-                                                <div class="menu-item">
-                                                    <!--begin:Menu link-->
-                                                    <a class="menu-link {{ $active == 'unit' ? 'active' : '' }}"
-                                                        href="#">
-                                                        <span class="menu-bullet">
-                                                            <span class="bullet bullet-dot"></span>
-                                                        </span>
-                                                        <span class="menu-title">Satuan</span>
-                                                    </a>
-                                                    <!--end:Menu link-->
-                                                </div>
-                                                <div class="menu-item">
-                                                    <!--begin:Menu link-->
-                                                    <a class="menu-link {{ $active == 'division' ? 'active' : '' }}"
-                                                        href="#">
-                                                        <span class="menu-bullet">
-                                                            <span class="bullet bullet-dot"></span>
-                                                        </span>
-                                                        <span class="menu-title">Divisi</span>
-                                                    </a>
-                                                    <!--end:Menu link-->
-                                                </div>
-                                                <div class="menu-item">
-                                                    <!--begin:Menu link-->
-                                                    <a class="menu-link {{ $active == 'task' ? 'active' : '' }}"
-                                                        href="#">
-                                                        <span class="menu-bullet">
-                                                            <span class="bullet bullet-dot"></span>
-                                                        </span>
-                                                        <span class="menu-title">Pekerjaan</span>
-                                                    </a>
-                                                    <!--end:Menu link-->
-                                                </div>
-                                                <!--end:Menu item-->
+
                                             </div>
                                             <!--end:Menu sub-->
                                         </div>
