@@ -1,7 +1,7 @@
 @extends('admin.layout.app')
 
 @section('title')
-    Tambah Sub Jenis Rencana Pembangunan {{ $jenisRencanaPembangunan->nama }}
+    Tambah Sub Sub Jenis Rencana Pembangunan {{ $subJenisRencanaPembangunan->nama }}
 @endsection
 
 @push('addons-css')
@@ -18,18 +18,18 @@
                     <div class="col-12 mb-3">
                         <div class="card">
                             <div class="card-header">
-                                <h1 class="mt-5"> Tambah Sub Jenis Rencana Pembangunan -
-                                    {{ $jenisRencanaPembangunan->nama }}
+                                <h1 class="mt-5"> Tambah Sub Sub Jenis Rencana Pembangunan -
+                                    {{ $subJenisRencanaPembangunan->nama }}
                                 </h1>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('admin.store.jenis.sub.rencana.pembangunan') }}" method="POST">
+                                <form action="{{ route('admin.store.jenis.sub.sub.rencana.pembangunan') }}" method="POST">
                                     @csrf
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <label for="" class="form-label">Nama</label>
-                                            <input type="hidden" name="id_jenis_rencana_pembangunan"
-                                                value="{{ $jenisRencanaPembangunan->id }}">
+                                            <input type="hidden" name="id_sub_jenis_rencana_pembangunan"
+                                                value="{{ $subJenisRencanaPembangunan->id }}">
                                             <input type="text" name="nama"
                                                 class="form-control @error('nama') is-invalid @enderror"
                                                 value="{{ old('nama') }}" id="">
@@ -50,8 +50,8 @@
                     <div class="col-12 mt-5">
                         <div class="card">
                             <div class="card-header">
-                                <h1 class="mt-5">Sub Jenis Rencana Pembangunan -
-                                    {{ $jenisRencanaPembangunan->nama }}</h1>
+                                <h1 class="mt-5">Sub Sub Jenis Rencana Pembangunan -
+                                    {{ $subJenisRencanaPembangunan->nama }}</h1>
                             </div>
                             <div class="card-body" style="overflow-y: visible">
                                 <table id="kt_datatable_dom_positioning"
@@ -59,7 +59,7 @@
                                     <thead>
                                         <tr class="fw-bold fs-6 text-gray-800 px-7">
                                             <th style="width: 10%">#</th>
-                                            <th style="width: 30%">Sub Jenis Rencana Pembangunan</th>
+                                            <th style="width: 30%">Sub Sub Jenis Rencana Pembangunan</th>
                                             <th style="width: 30%">Aksi</th>
                                         </tr>
                                     </thead>
@@ -67,20 +67,17 @@
                                         @php
                                             $no = 1;
                                         @endphp
-                                        @foreach ($subJenisRencanaPembangunan as $subJenis)
+                                        @foreach ($subSubJenisRencanaPembangunan as $subSubJenis)
                                             <tr>
                                                 <td>{{ $no++ }}</td>
-                                                <td>{{ $subJenis->nama }}</td>
+                                                <td>{{ $subSubJenis->nama }}</td>
                                                 <td>
                                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                                        <a href="{{ route('admin.jenis.sub.sub.rencana.pembangunan', $subJenis->id) }}"
-                                                            type="button" class="btn btn-sm btn-success">Tambah Sub
-                                                            Sub Jenis</a>
                                                         <button type="button" class="btn btn-sm btn-info">Ukuran
                                                             Minimal</button>
-                                                        <a href="{{ route('admin.edit.jenis.sub.rencana.pembangunan', $subJenis->id) }}"
+                                                        <a href="{{ route('admin.edit.jenis.sub.sub.rencana.pembangunan', $subSubJenis->id) }}"
                                                             type="button" class="btn btn-sm btn-warning">Ubah</a>
-                                                        <a data-id="{{ $subJenis->id }}" id="removeBtn"
+                                                        <a data-id="{{ $subSubJenis->id }}" id="removeBtn"
                                                             style="cursor: pointer !important;"
                                                             class="btn btn-sm btn-danger"><b>Hapus</b></a>
                                                     </div>
@@ -129,7 +126,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: '/admin/jenis-rencana-pembangunan/sub-jenis-rencana-pembangunan/destroy/' +
+                        url: '/admin/jenis-rencana-pembangunan/sub-jenis-rencana-pembangunan/sub-sub-jenis-rencana-pembangunan/destroy/' +
                             id,
                         type: 'DELETE',
                         success: function(response) {

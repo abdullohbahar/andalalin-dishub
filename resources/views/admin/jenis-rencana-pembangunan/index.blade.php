@@ -5,6 +5,7 @@
 @endsection
 
 @push('addons-css')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 @endpush
 
 @section('content')
@@ -50,7 +51,9 @@
                                                             Jenis</a>
                                                         <a href="{{ route('admin.edit.jenis.rencana.pembangunan', $jenis->id) }}"
                                                             type="button" class="btn btn-sm btn-warning">Ubah</a>
-                                                        <button type="button" class="btn btn-sm btn-danger">Hapus</button>
+                                                        <a data-id="{{ $jenis->id }}" id="removeBtn"
+                                                            style="cursor: pointer !important;"
+                                                            class="btn btn-sm btn-danger"><b>Hapus</b></a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -71,4 +74,56 @@
 @endsection
 
 @push('addons-js')
+    <script>
+        var token = $('meta[name="csrf-token"]').attr('content');
+
+
+        // destroy anak asuh
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': token
+            }
+        });
+
+        $("body").on("click", "#removeBtn", function() {
+            var id = $(this).data("id");
+
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Data yang berhubungan akan dihapus secara permanen!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/admin/jenis-rencana-pembangunan/destroy/' +
+                            id,
+                        type: 'DELETE',
+                        success: function(response) {
+                            if (response.code == 200) {
+                                Swal.fire(
+                                    'Berhasil!',
+                                    response.message,
+                                    'success'
+                                ).then(() => {
+                                    location
+                                        .reload(); // Refresh halaman setelah mengklik OK
+                                });
+                            } else if (response.code == 500) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal!',
+                                    text: response.message,
+                                })
+                            }
+                        }
+                    })
+                }
+            })
+        })
+    </script>
 @endpush

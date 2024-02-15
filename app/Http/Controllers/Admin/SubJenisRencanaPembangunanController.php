@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\JenisRencanaPembangunan;
 use App\Models\SubJenisRencanaPembangunan;
+use App\Models\SubSubJenisRencana;
 
 class SubJenisRencanaPembangunanController extends Controller
 {
@@ -79,6 +80,36 @@ class SubJenisRencanaPembangunanController extends Controller
             return to_route('admin.jenis.sub.rencana.pembangunan', $subJenisRencanaPembangunan->jenis_rencana_id)->with('success', 'Berhasil Mengubah Sub Jenis Rencana Pembangunan');
         } catch (\Throwable $th) {
             return to_route('admin.jenis.sub.rencana.pembangunan', $subJenisRencanaPembangunan->jenis_rencana_id)->with('failed', 'Gagal Mengubah Sub Jenis Rencana Pembangunan')->withInput();
+        }
+    }
+
+    public function destroy($idSubJenisRencanaPembangunan)
+    {
+        try {
+            $subsub = SubSubJenisRencana::where('sub_jenis_rencana_id', $idSubJenisRencanaPembangunan)->get();
+
+            foreach ($subsub as $sub) {
+                $sub->delete();
+            }
+
+            $sub = SubJenisRencanaPembangunan::findOrFail($idSubJenisRencanaPembangunan); // Temukan user yang akan dihapus
+
+            // Hapus user dari tabel user
+            $sub->delete();
+
+            // Mengembalikan respons JSON sukses dengan status 200
+            return response()->json([
+                'message' => 'Berhasil Menghapus',
+                'code' => 200,
+                'error' => false
+            ]);
+        } catch (\Exception $e) {
+            // Menangkap exception jika terjadi kesalahan
+            return response()->json([
+                'message' => 'Gagal Menghapus' . $e,
+                'code' => 500,
+                'error' => $e->getMessage()
+            ]);
         }
     }
 }
