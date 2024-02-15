@@ -1,7 +1,7 @@
 @extends('admin.layout.app')
 
 @section('title')
-    Edit Jenis Rencana Pembangunan
+    Edit Sub Jenis Rencana Pembangunan
 @endsection
 
 @push('addons-css')
@@ -17,20 +17,20 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header pt-5">
-                                <h1>Edit Jenis Rencana Pembangunan</h1>
+                                <h1>Edit Sub Jenis Rencana Pembangunan</h1>
                             </div>
                             <div class="card-body" style="overflow-y: visible">
                                 <form
-                                    action="{{ route('admin.update.jenis.rencana.pembangunan', $jenisRencanaPembangunan->id) }}"
+                                    action="{{ route('admin.update.jenis.sub.rencana.pembangunan', $subJenisRencanaPembangunan->id) }}"
                                     method="POST">
                                     @csrf
                                     @method('PUT')
                                     <div class="row">
                                         <div class="col-12">
-                                            <label class="form-label" for="">Jenis Rencana Pembangunan</label>
+                                            <label class="form-label" for="">Nama</label>
                                             <input type="text" name="nama"
                                                 class="form-control @error('nama') is-invalid @enderror"
-                                                value="{{ old('nama', $jenisRencanaPembangunan->nama) }}" id=""
+                                                value="{{ old('nama', $subJenisRencanaPembangunan->nama) }}" id=""
                                                 required>
                                             @error('nama')
                                                 <div class="invalid-feedback">

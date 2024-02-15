@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\JenisRencanaPembangunanController;
+use App\Http\Controllers\Admin\SubJenisRencanaPembangunanController;
 use App\Http\Controllers\Guest\LoginController;
+use App\Models\SubJenisRencanaPembangunan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,5 +29,12 @@ Route::prefix('admin')->group(function () {
         Route::post('/store', [JenisRencanaPembangunanController::class, 'store'])->name('admin.store.jenis.rencana.pembangunan');
         Route::get('/edit/{id}', [JenisRencanaPembangunanController::class, 'edit'])->name('admin.edit.jenis.rencana.pembangunan');
         Route::put('/update/{id}', [JenisRencanaPembangunanController::class, 'update'])->name('admin.update.jenis.rencana.pembangunan');
+
+        Route::prefix('sub-jenis-rencana-pembangunan')->group(function () {
+            Route::get('/{idJenisRencanaPembangunan}', [SubJenisRencanaPembangunanController::class, 'index'])->name('admin.jenis.sub.rencana.pembangunan');
+            Route::post('/store', [SubJenisRencanaPembangunanController::class, 'store'])->name('admin.store.jenis.sub.rencana.pembangunan');
+            Route::get('/edit/{id}', [SubJenisRencanaPembangunanController::class, 'edit'])->name('admin.edit.jenis.sub.rencana.pembangunan');
+            Route::put('/update/{id}', [SubJenisRencanaPembangunanController::class, 'update'])->name('admin.update.jenis.sub.rencana.pembangunan');
+        });
     });
 });
