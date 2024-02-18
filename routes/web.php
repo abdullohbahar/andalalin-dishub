@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\JenisRencanaPembangunanController;
 use App\Http\Controllers\Admin\SubJenisRencanaPembangunanController;
 use App\Http\Controllers\Admin\SubSubJenisRencanaController;
+use App\Http\Controllers\Admin\UkuranMinimalController;
 use App\Http\Controllers\Guest\LoginController;
 use App\Models\SubJenisRencanaPembangunan;
 use Illuminate\Support\Facades\Route;
@@ -39,12 +40,23 @@ Route::prefix('admin')->group(function () {
             Route::put('/update/{id}', [SubJenisRencanaPembangunanController::class, 'update'])->name('admin.update.jenis.sub.rencana.pembangunan');
             Route::delete('/destroy/{idSubJenisRencanaPembangunan}', [SubJenisRencanaPembangunanController::class, 'destroy'])->name('admin.destroy.jenis.sub.rencana.pembangunan');
 
+            Route::prefix('ukuran-minimal')->group(function () {
+                Route::post('/store', [UkuranMinimalController::class, 'store'])->name('admin.store.ukuran.minimal');
+                Route::get('/edit/{idMinimal}/{jenis}/{idSub}', [UkuranMinimalController::class, 'edit'])->name('admin.edit.ukuran.minimal');
+                Route::get('/{idSub}/{jenis}', [UkuranMinimalController::class, 'index'])->name('admin.sub.ukuran.minimal');
+                Route::put('/update/{idMinimal}', [UkuranMinimalController::class, 'update'])->name('admin.update.ukuran.minimal');
+            });
+
             Route::prefix('sub-sub-jenis-rencana-pembangunan')->group(function () {
                 Route::get('/{idSubJenisRencanaPembangunan}', [SubSubJenisRencanaController::class, 'index'])->name('admin.jenis.sub.sub.rencana.pembangunan');
                 Route::post('/store', [SubSubJenisRencanaController::class, 'store'])->name('admin.store.jenis.sub.sub.rencana.pembangunan');
                 Route::get('/edit/{id}', [SubSubJenisRencanaController::class, 'edit'])->name('admin.edit.jenis.sub.sub.rencana.pembangunan');
                 Route::put('/update/{id}', [SubSubJenisRencanaController::class, 'update'])->name('admin.update.jenis.sub.sub.rencana.pembangunan');
                 Route::delete('/destroy/{idSubSubJenisRencanaPembangunan}', [SubSubJenisRencanaController::class, 'destroy'])->name('admin.destroy.jenis.sub.sub.rencana.pembangunan');
+
+                Route::prefix('ukuran-minimal')->group(function () {
+                    Route::get('/{idSub}/{jenis}', [UkuranMinimalController::class, 'index'])->name('admin.sub.sub.ukuran.minimal');
+                });
             });
         });
     });

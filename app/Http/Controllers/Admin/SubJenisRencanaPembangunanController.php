@@ -13,7 +13,8 @@ class SubJenisRencanaPembangunanController extends Controller
     public function index($idJenisRencanaPembangunan)
     {
         $jenisRencanaPembangunan = JenisRencanaPembangunan::findorfail($idJenisRencanaPembangunan);
-        $subJenisRencanaPembangunan = SubJenisRencanaPembangunan::where('jenis_rencana_id', $idJenisRencanaPembangunan)
+        $subJenisRencanaPembangunan = SubJenisRencanaPembangunan::with('hasOneUkuranMinimal', 'hasOneSubSubJenis')
+            ->where('jenis_rencana_id', $idJenisRencanaPembangunan)
             ->orderBy('created_at', 'desc')
             ->get();
 

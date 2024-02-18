@@ -74,10 +74,16 @@
                                                 <td>
                                                     <div class="btn-group" role="group" aria-label="Basic example">
                                                         <a href="{{ route('admin.jenis.sub.sub.rencana.pembangunan', $subJenis->id) }}"
+                                                            {{ $subJenis->hasOneUkuranMinimal != null ? 'hidden' : '' }}
                                                             type="button" class="btn btn-sm btn-success">Tambah Sub
                                                             Sub Jenis</a>
-                                                        <button type="button" class="btn btn-sm btn-info">Ukuran
-                                                            Minimal</button>
+                                                        <a href="{{ route('admin.sub.ukuran.minimal', [
+                                                            'idSub' => $subJenis->id,
+                                                            'jenis' => 'sub',
+                                                        ]) }}"
+                                                            {{ $subJenis->hasOneSubSubJenis != null ? 'hidden' : '' }}
+                                                            type="button" class="btn btn-sm btn-info">Ukuran
+                                                            Minimal</a>
                                                         <a href="{{ route('admin.edit.jenis.sub.rencana.pembangunan', $subJenis->id) }}"
                                                             type="button" class="btn btn-sm btn-warning">Ubah</a>
                                                         <a data-id="{{ $subJenis->id }}" id="removeBtn"
