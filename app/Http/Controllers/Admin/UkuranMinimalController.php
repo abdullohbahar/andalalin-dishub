@@ -104,4 +104,28 @@ class UkuranMinimalController extends Controller
             ])->with('success', 'Berhasil mengubah ukuran minimal');
         }
     }
+
+    public function destroy($idUkuranMinimal)
+    {
+        try {
+            $user = UkuranMinimal::findOrFail($idUkuranMinimal); // Temukan user yang akan dihapus
+
+            // Hapus user dari tabel user
+            $user->delete();
+
+            // Mengembalikan respons JSON sukses dengan status 200
+            return response()->json([
+                'message' => 'Berhasil Menghapus',
+                'code' => 200,
+                'error' => false
+            ]);
+        } catch (\Exception $e) {
+            // Menangkap exception jika terjadi kesalahan
+            return response()->json([
+                'message' => 'Gagal Menghapus' . $e,
+                'code' => 500,
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
 }

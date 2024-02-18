@@ -142,7 +142,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: '/admin/jenis-rencana-pembangunan/sub-jenis-rencana-pembangunan/destroy/' +
+                        url: '/admin/jenis-rencana-pembangunan/sub-jenis-rencana-pembangunan/ukuran-minimal/destroy/' +
                             id,
                         type: 'DELETE',
                         success: function(response) {

@@ -45,6 +45,7 @@ Route::prefix('admin')->group(function () {
                 Route::get('/edit/{idMinimal}/{jenis}/{idSub}', [UkuranMinimalController::class, 'edit'])->name('admin.edit.ukuran.minimal');
                 Route::get('/{idSub}/{jenis}', [UkuranMinimalController::class, 'index'])->name('admin.sub.ukuran.minimal');
                 Route::put('/update/{idMinimal}', [UkuranMinimalController::class, 'update'])->name('admin.update.ukuran.minimal');
+                Route::delete('/destroy/{idMinimal}', [UkuranMinimalController::class, 'destroy'])->name('admin.destroy.ukuran.minimal');
             });
 
             Route::prefix('sub-sub-jenis-rencana-pembangunan')->group(function () {
