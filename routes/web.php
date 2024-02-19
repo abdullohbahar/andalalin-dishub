@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardAdminController;
+use App\Http\Controllers\Admin\JenisJalanController;
 use App\Http\Controllers\Admin\JenisRencanaPembangunanController;
 use App\Http\Controllers\Admin\SubJenisRencanaPembangunanController;
 use App\Http\Controllers\Admin\SubSubJenisRencanaController;
@@ -65,6 +66,15 @@ Route::prefix('admin')->group(function () {
                 });
             });
         });
+    });
+
+    Route::prefix('jenis-jalan')->group(function () {
+        Route::get('/', [JenisJalanController::class, 'index'])->name('admin.jenis.jalan');
+        Route::get('/create', [JenisJalanController::class, 'create'])->name('admin.create.jenis.jalan');
+        Route::post('/store', [JenisJalanController::class, 'store'])->name('admin.store.jenis.jalan');
+        Route::get('/edit/{id}', [JenisJalanController::class, 'edit'])->name('admin.edit.jenis.jalan');
+        Route::put('/update/{id}', [JenisJalanController::class, 'update'])->name('admin.update.jenis.jalan');
+        Route::delete('/destroy/{id}', [JenisJalanController::class, 'destroy'])->name('admin.destroy.jenis.jalan');
     });
 });
 

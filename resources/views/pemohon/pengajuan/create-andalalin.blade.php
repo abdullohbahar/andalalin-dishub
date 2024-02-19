@@ -60,6 +60,9 @@
                                             <label for="" class="form-label">Pilih Jenis Jalan</label>
                                             <select name="jenis_jalan_id" id="" class="form-control" required>
                                                 <option value="">-- Pilih Jenis Jalan --</option>
+                                                @foreach ($jenisJalans as $jalan)
+                                                    <option value="{{ $jalan->id }}">{{ $jalan->jenis }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -104,13 +107,14 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <button class="btn btn-primary">
-                                        Lanjut
-                                    </button>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <button id="next" class="btn btn-primary mt-5" style="float: right">
+                                                Lanjut
+                                            </button>
+                                        </div>
+                                    </div>
                                 </form>
-                            </div>
-                            <div class="card-footer">
-
                             </div>
                         </div>
                     </div>

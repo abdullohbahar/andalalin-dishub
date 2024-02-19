@@ -281,6 +281,13 @@ License: For each use you must have a valid license purchased only from above li
                                                         </span>
                                                         <span class="menu-title">Jenis Rencana Pembangunan</span>
                                                     </a>
+                                                    <a class="menu-link {{ $active == 'jenis-jalan' ? 'active' : '' }}"
+                                                        href="{{ route('admin.jenis.jalan') }}">
+                                                        <span class="menu-bullet">
+                                                            <span class="bullet bullet-dot"></span>
+                                                        </span>
+                                                        <span class="menu-title">Jenis Jalan</span>
+                                                    </a>
                                                     <!--end:Menu link-->
                                                 </div>
                                                 <!--end:Menu item-->

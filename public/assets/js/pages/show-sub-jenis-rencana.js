@@ -115,3 +115,13 @@ $("#subSubJenisRencana").on("change", function () {
         },
     });
 });
+
+setInterval(() => {
+    if ($("#sectionUkuranMinimal:hidden").length > 0) {
+        // The element with ID "yourElementId" is hidden
+        $("#next").attr("hidden", true);
+    } else {
+        // The element with ID "yourElementId" is not hidden
+        $("#next").attr("hidden", false);
+    }
+}, 10);
