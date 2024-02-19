@@ -6,6 +6,11 @@ use App\Http\Controllers\Admin\SubJenisRencanaPembangunanController;
 use App\Http\Controllers\Admin\SubSubJenisRencanaController;
 use App\Http\Controllers\Admin\UkuranMinimalController;
 use App\Http\Controllers\Guest\LoginController;
+use App\Http\Controllers\Pemohon\Ajax\ShowSubJenisRencana;
+use App\Http\Controllers\Pemohon\Ajax\ShowSubSubJenisRencana;
+use App\Http\Controllers\Pemohon\Ajax\ShowUkuranMinimal;
+use App\Http\Controllers\Pemohon\DashboardPemohonController;
+use App\Http\Controllers\Pemohon\PengajuanPemohonController;
 use App\Models\SubJenisRencanaPembangunan;
 use Illuminate\Support\Facades\Route;
 
@@ -60,5 +65,22 @@ Route::prefix('admin')->group(function () {
                 });
             });
         });
+    });
+});
+
+
+Route::prefix('pemohon')->group(function () {
+    Route::get('dashboard', [DashboardPemohonController::class, 'index'])->name('pemohon.dashboard');
+
+    Route::prefix('pengajuan')->group(function () {
+        Route::get('/', [PengajuanPemohonController::class, 'index'])->name('pemohon.pengajuan');
+        Route::get('/pilih-tipe', [PengajuanPemohonController::class, 'pilihTipe'])->name('pemohon.pilih.tipe.pengajuan');
+        Route::get('/create/andalalin', [PengajuanPemohonController::class, 'createAndalalin'])->name('pemohon.create.pengajuan.andalalin');
+    });
+
+    Route::prefix('ajax')->group(function () {
+        Route::get('/show-sub-jenis-rencana/{idJenis}', ShowSubJenisRencana::class)->name('show.sub.jenis.rencana');
+        Route::get('/show-sub-sub-jenis-rencana/{idSubJenisRencana}', ShowSubSubJenisRencana::class)->name('show.sub.sub.jenis.rencana');
+        Route::get('/show-ukuran-minimal/{jenis}/{idSubJenisRencana}', ShowUkuranMinimal::class)->name('show.ukuran.minimal');
     });
 });
