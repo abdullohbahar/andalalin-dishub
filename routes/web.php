@@ -1,19 +1,21 @@
 <?php
 
-use App\Http\Controllers\Admin\DashboardAdminController;
-use App\Http\Controllers\Admin\JenisJalanController;
-use App\Http\Controllers\Admin\JenisRencanaPembangunanController;
-use App\Http\Controllers\Admin\SubJenisRencanaPembangunanController;
-use App\Http\Controllers\Admin\SubSubJenisRencanaController;
-use App\Http\Controllers\Admin\UkuranMinimalController;
+use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
+use App\Models\SubJenisRencanaPembangunan;
 use App\Http\Controllers\Guest\LoginController;
-use App\Http\Controllers\Pemohon\Ajax\ShowSubJenisRencana;
-use App\Http\Controllers\Pemohon\Ajax\ShowSubSubJenisRencana;
+use App\Http\Controllers\Admin\JenisJalanController;
+use App\Http\Controllers\Admin\UkuranMinimalController;
+use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Pemohon\Ajax\ShowUkuranMinimal;
+use App\Http\Controllers\Pemohon\Ajax\ShowSubJenisRencana;
+use App\Http\Controllers\Admin\SubSubJenisRencanaController;
 use App\Http\Controllers\Pemohon\DashboardPemohonController;
 use App\Http\Controllers\Pemohon\PengajuanPemohonController;
-use App\Models\SubJenisRencanaPembangunan;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Pemohon\Ajax\ShowSubSubJenisRencana;
+use App\Http\Controllers\Admin\JenisRencanaPembangunanController;
+use App\Http\Controllers\Admin\SubJenisRencanaPembangunanController;
+use App\Http\Controllers\Auth\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +28,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [LoginController::class, 'index'])->name('login');
+Route::get('/login', [AuthController::class, 'redirectToKeycloak'])->name('login');
+Route::get('/', [AuthController::class, 'handleKeycloakCallback'])->name('keycloak.callback');
+Route::get('/logout', [AuthController::class, 'logout'])->name('keycloak.logout');
 
 Route::prefix('admin')->group(function () {
     Route::get('dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
@@ -77,7 +81,6 @@ Route::prefix('admin')->group(function () {
         Route::delete('/destroy/{id}', [JenisJalanController::class, 'destroy'])->name('admin.destroy.jenis.jalan');
     });
 });
-
 
 Route::prefix('pemohon')->group(function () {
     Route::get('dashboard', [DashboardPemohonController::class, 'index'])->name('pemohon.dashboard');
