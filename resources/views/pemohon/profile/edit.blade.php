@@ -47,30 +47,9 @@
             <!--begin::Content container-->
             <div id="kt_app_content_container" class="app-container container-fluid">
                 <div class="row">
-                    <div class="col-12">
-                        <!--begin::Alert-->
-                        <div class="alert alert-dismissible bg-warning d-flex flex-column flex-sm-row p-5 mb-10">
-                            <!--begin::Icon-->
-                            <i class="ki-duotone ki-notification-bing fs-2hx text-dark me-4 mb-5 mb-sm-0"><span
-                                    class="path1"></span><span class="path2"></span><span class="path3"></span></i>
-                            <!--end::Icon-->
-
-                            <!--begin::Wrapper-->
-                            <div class="d-flex flex-column text-dark pe-0 pe-sm-10">
-                                <!--begin::Title-->
-                                <h4 class="mb-2 light">Harap Melengkapi Profil !</h4>
-                                <!--end::Title-->
-
-                                <!--begin::Content-->
-                                <span>
-                                    Harap lengkapi profile anda agar dapat membuat pengajuan.
-                                </span>
-                                <!--end::Content-->
-                            </div>
-                            <!--end::Wrapper-->
-                        </div>
-                        <!--end::Alert-->
-                    </div>
+                    @includeWhen(
+                        $user->hasOneProfile == null,
+                        'pemohon.profile.components.alert-lengkapi-profile')
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header pt-5">
@@ -140,44 +119,15 @@
                                         <div class="col-12">
                                             <hr>
                                         </div>
-                                        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 mt-3">
-                                            <label for="" class="form-label">
-                                                Foto KTP <span style="color: red">*</span>
-                                            </label>
-                                            <input type="file" name="file_ktp"
-                                                class="form-control @error('file_ktp') is-invalid @enderror" id="">
-                                            @error('file_ktp')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 mt-3">
-                                            <label for="" class="form-label">
-                                                Sertifikat Andalalin (Penyusun) <span style="color: red">*</span>
-                                            </label>
-                                            <input type="file" name="file_sertifikat_andalalin"
-                                                class="form-control @error('file_sertifikat_andalalin') is-invalid @enderror"
-                                                id="">
-                                            @error('file_sertifikat_andalalin')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 mt-3">
-                                            <label for="" class="form-label">
-                                                CV (Company Profile) <span style="color: red">*</span>
-                                            </label>
-                                            <input type="file" name="file_cv"
-                                                class="form-control @error('file_cv') is-invalid @enderror"
-                                                id="">
-                                            @error('file_cv')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
+                                        @includeWhen(
+                                            $user->role == 'pemohon',
+                                            'pemohon.profile.components.file-upload-pemohon')
+                                        @includeWhen(
+                                            $user->role == 'pemrakarsa',
+                                            'pemohon.profile.components.file-upload-pemrakarsa')
+                                        @includeWhen(
+                                            $user->role == 'konsultan',
+                                            'pemohon.profile.components.file-upload-konsultan')
                                         <div class="col-12 mt-5">
                                             <button type="submit" class="btn btn-success mt-5"
                                                 style="width: 100%">Simpan</button>

@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\JenisRencanaPembangunanController;
 use App\Http\Controllers\Admin\SubJenisRencanaPembangunanController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Pemohon\ProfilePemohonController;
+use App\Http\Controllers\Role\PilihRoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -84,10 +85,13 @@ Route::prefix('admin')->group(function () {
     });
 });
 
-Route::prefix('pemohon')->group(function () {
-    Route::get('dashboard', [DashboardPemohonController::class, 'index'])->name('pemohon.dashboard');
+Route::get('pilih-role', [PilihRoleController::class, 'index'])->name('pilih-role');
+Route::get('pilih-role/{role}', [PilihRoleController::class, 'store'])->name('store.pilih.role');
 
-    Route::prefix('pengajuan')->group(function () {
+Route::prefix('pemohon')->middleware('choose.role')->group(function () {
+    Route::get('dashboard', [DashboardPemohonController::class, 'index'])->middleware('check.profile')->name('pemohon.dashboard');
+
+    Route::prefix('pengajuan')->middleware('check.profile')->group(function () {
         Route::get('/', [PengajuanPemohonController::class, 'index'])->name('pemohon.pengajuan');
         Route::get('/pilih-tipe', [PengajuanPemohonController::class, 'pilihTipe'])->name('pemohon.pilih.tipe.pengajuan');
         Route::get('/create/andalalin', [PengajuanPemohonController::class, 'createAndalalin'])->name('pemohon.create.pengajuan.andalalin');

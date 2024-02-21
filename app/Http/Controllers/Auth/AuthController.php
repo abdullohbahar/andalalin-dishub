@@ -43,7 +43,7 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-        return to_route('admin.dashboard');
+        return to_route('pemohon.dashboard');
     }
 
     public function logout()

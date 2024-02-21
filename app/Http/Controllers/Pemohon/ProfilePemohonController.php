@@ -41,43 +41,46 @@ class ProfilePemohonController extends Controller
             'no_telepon' => 'required',
             'alamat' => 'required',
             'file_ktp' => 'required',
-            'file_sertifikat_andalalin' => 'required',
-            'file_cv' => 'required',
         ], [
             'nama.required' => 'Nama harus diisi',
             'no_ktp.required' => 'Nomor KTP harus diisi',
             'no_telepon.required' => 'Nomor Telepon harus diisi',
             'alamat.required' => 'Alamat harus diisi',
             'file_ktp.required' => 'KTP harus diisi',
-            'file_sertifikat_andalalin.required' => 'Sertifikat harus diisi',
-            'file_cv.required' => 'CV harus diisi',
         ]);
 
-        if ($request->hasFile('file_ktp')) {
-            $file = $request->file('file_ktp');
-            $filename = time() . "." . $file->getClientOriginalExtension();
-            $file->storeAs('public/file-uploads/ktp', $filename);
-            $fileKtp = $filename;
-        } else {
-            $fileKtp = null;
-        }
+        $role = auth()->user()->role;
 
-        if ($request->hasFile('file_sertifikat_andalalin')) {
-            $file = $request->file('file_sertifikat_andalalin');
-            $filename = time() . "." . $file->getClientOriginalExtension();
-            $file->storeAs('public/file-uploads/sertifikat-andalalin', $filename);
-            $fileSertifikatAndalalin = $filename;
-        } else {
-            $fileSertifikatAndalalin = null;
-        }
-
-        if ($request->hasFile('file_cv')) {
-            $file = $request->file('file_cv');
-            $filename = time() . "." . $file->getClientOriginalExtension();
-            $file->storeAs('public/file-uploads/cv', $filename);
-            $fileCv = $filename;
-        } else {
-            $fileCv = null;
+        if ($role == 'konsultan') {
+            $request->validate([
+                'no_sertifikat' => 'required',
+                'masa_berlaku_sertifikat' => 'required',
+                'tingkatan' => 'required',
+                'sekolah_terakhir' => 'required',
+                'file_sertifikat' => 'required',
+                'file_ijazah_terakhir' => 'required',
+            ], [
+                'no_sertifikat.required' => 'Nomor sertifikat harus diisi',
+                'masa_berlaku_sertifikat.required' => 'Masa berlaku sertifikat harus diisi',
+                'tingkat.required' => 'Tingkatan harus diisi',
+                'sekolah_terakhir.required' => 'Sekolah terakhir harus diisi',
+                'file_sertifikat.required' => 'Sertifikat harus diisi',
+                'file_ijazah.required' => 'Ijazah Sertifikat harus diisi',
+            ]);
+        } else if ($role == 'pemohon') {
+            $request->validate([
+                'file_sertifikat_andalalin' => 'required',
+                'file_cv' => 'required',
+            ], [
+                'file_sertifikat_andalalin.required' => 'Sertifikat andalalin harus diisi',
+                'file_cv.required' => 'CV harus diisi',
+            ]);
+        } else if ($role == 'pemakarsa') {
+            $request->validate([
+                'file_sk_kepala_dinas' => 'required',
+            ], [
+                'file_sk_kepala_dinas.required' => 'SK Kepala Dinas harus diisi',
+            ]);
         }
 
         $data = [
@@ -86,10 +89,53 @@ class ProfilePemohonController extends Controller
             'no_ktp' => $request->no_ktp,
             'no_telepon' => $request->no_telepon,
             'alamat' => $request->alamat,
-            'file_ktp' => $fileKtp,
-            'file_sertifikat_andalalin' => $fileSertifikatAndalalin,
-            'file_cv' => $fileCv,
+            'no_sertifikat' => $request->no_sertifikat,
+            'masa_berlaku_sertifikat' => $request->masa_berlaku_sertifikat,
+            'tingkatan' => $request->tingkatan,
+            'sekolah_terakhir' => $request->sekolah_terakhir,
         ];
+
+        if ($request->hasFile('file_ktp')) {
+            $file = $request->file('file_ktp');
+            $filename = time() . "." . $file->getClientOriginalExtension();
+            $file->storeAs('public/file-uploads/ktp', $filename);
+            $data['file_ktp'] = $filename;
+        }
+
+        if ($request->hasFile('file_sertifikat_andalalin')) {
+            $file = $request->file('file_sertifikat_andalalin');
+            $filename = time() . "." . $file->getClientOriginalExtension();
+            $file->storeAs('public/file-uploads/sertifikat-andalalin', $filename);
+            $data['file_sertifikat_andalalin'] = $filename;
+        }
+
+        if ($request->hasFile('file_cv')) {
+            $file = $request->file('file_cv');
+            $filename = time() . "." . $file->getClientOriginalExtension();
+            $file->storeAs('public/file-uploads/cv', $filename);
+            $data['file_cv'] = $filename;
+        }
+
+        if ($request->hasFile('file_sk_kepala_dinas')) {
+            $file = $request->file('file_sk_kepala_dinas');
+            $filename = time() . "." . $file->getClientOriginalExtension();
+            $file->storeAs('public/file-uploads/sk-kepala-dinas', $filename);
+            $data['file_sk_kepala_dinas'] = $filename;
+        }
+
+        if ($request->hasFile('file_sertifikat')) {
+            $file = $request->file('file_sertifikat');
+            $filename = time() . "." . $file->getClientOriginalExtension();
+            $file->storeAs('public/file-uploads/sertifikat', $filename);
+            $data['file_sertifikat'] = $filename;
+        }
+
+        if ($request->hasFile('file_ijazah_terakhir')) {
+            $file = $request->file('file_ijazah_terakhir');
+            $filename = time() . "." . $file->getClientOriginalExtension();
+            $file->storeAs('public/file-uploads/ijazah-terakhir', $filename);
+            $data['file_ijazah_terakhir'] = $filename;
+        }
 
         Profile::updateorcreate([
             'user_id' => $id,

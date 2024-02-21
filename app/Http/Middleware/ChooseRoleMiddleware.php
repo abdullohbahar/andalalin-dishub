@@ -2,11 +2,11 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\User;
 use Closure;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class CheckProfileMiddleware
+class ChooseRoleMiddleware
 {
     /**
      * Handle an incoming request.
@@ -21,8 +21,8 @@ class CheckProfileMiddleware
 
         $user = User::with('hasOneProfile')->where('id', $userID)->first();
 
-        if ($user->hasOneProfile == null) {
-            return to_route('pemohon.edit.profile', $userID);
+        if ($user->role === '-') {
+            return to_route('pilih-role');
         }
 
         return $next($request);
