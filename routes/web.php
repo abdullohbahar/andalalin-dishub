@@ -16,6 +16,7 @@ use App\Http\Controllers\Pemohon\Ajax\ShowSubSubJenisRencana;
 use App\Http\Controllers\Admin\JenisRencanaPembangunanController;
 use App\Http\Controllers\Admin\SubJenisRencanaPembangunanController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Pemohon\ProfilePemohonController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +29,8 @@ use App\Http\Controllers\Auth\AuthController;
 |
 */
 
-Route::get('/login', [AuthController::class, 'redirectToKeycloak'])->name('login');
+// Route::get('/', [LoginController::class, 'index']);
+Route::get('/login', [AuthController::class, 'redirectToKeycloak'])->name('login.keycloak');
 Route::get('/', [AuthController::class, 'handleKeycloakCallback'])->name('keycloak.callback');
 Route::get('/logout', [AuthController::class, 'logout'])->name('keycloak.logout');
 
@@ -89,6 +91,12 @@ Route::prefix('pemohon')->group(function () {
         Route::get('/', [PengajuanPemohonController::class, 'index'])->name('pemohon.pengajuan');
         Route::get('/pilih-tipe', [PengajuanPemohonController::class, 'pilihTipe'])->name('pemohon.pilih.tipe.pengajuan');
         Route::get('/create/andalalin', [PengajuanPemohonController::class, 'createAndalalin'])->name('pemohon.create.pengajuan.andalalin');
+    });
+
+    Route::prefix('profile')->group(function () {
+        Route::get('/', [ProfilePemohonController::class, 'index'])->name('pemohon.profile');
+        Route::get('/edit/{id}', [ProfilePemohonController::class, 'edit'])->name('pemohon.edit.profile');
+        Route::put('/update/{id}', [ProfilePemohonController::class, 'update'])->name('pemohon.update.profile');
     });
 
     Route::prefix('ajax')->group(function () {

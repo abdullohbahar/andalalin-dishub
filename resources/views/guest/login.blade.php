@@ -144,9 +144,11 @@ License: For each use you must have a valid license purchased only from above li
                             <div class="d-grid mb-10">
                                 <button type="submit" class="btn btn-primary">Login
                                 </button>
-                                <h5 class="mt-3">
-                                    <a href="">Belum punya akun? Daftar sekarang.</a>
-                                </h5>
+                            </div>
+                            <div class="d-grid mb-10">
+                                <a href="{{ route('login.keycloak') }}" type="submit" class="btn btn-success">
+                                    Masuk Menggunakan SSO Kabupaten Bantul
+                                </a>
                             </div>
                             <!--end::Submit button-->
                         </form>
