@@ -59,7 +59,37 @@
                                 </div>
                             </div>
                             <div class="card-body" style="overflow-y: visible">
-
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Jenis Rencana Pembangunan</th>
+                                            <th>Status</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $no = 1;
+                                        @endphp
+                                        @foreach ($pengajuans as $pengajuan)
+                                            <tr>
+                                                <td>
+                                                    {{ $no++ }}
+                                                </td>
+                                                <td>
+                                                    {{ $pengajuan->belongsToJenisRencana->nama }}
+                                                </td>
+                                                <td>
+                                                    {{ $pengajuan->status }}
+                                                </td>
+                                                <td>
+                                                    <button></button>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

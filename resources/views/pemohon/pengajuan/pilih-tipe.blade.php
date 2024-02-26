@@ -56,7 +56,7 @@
                     </div>
 
                     <div class="col-sm-12 mt-3 col-md-6">
-                        <a href="{{ route('pemohon.create.pengajuan.andalalin') }}" class="card bg-primary">
+                        <a href="{{ route('pemohon.create.tipe.andalalin') }}" class="card bg-primary">
                             <div class="card-body text-center">
                                 <h1>Andalalin</h1>
                             </div>

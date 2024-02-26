@@ -48,34 +48,6 @@
             <div id="kt_app_content_container" class="app-container container-fluid">
                 <div class="row">
                     <div class="col-12">
-                        <!--begin::Alert-->
-                        <div class="alert alert-dismissible bg-warning d-flex flex-column flex-sm-row p-5 mb-10">
-                            <!--begin::Icon-->
-                            <i class="ki-duotone ki-notification-bing fs-2hx text-dark me-4 mb-5 mb-sm-0"><span
-                                    class="path1"></span><span class="path2"></span><span class="path3"></span></i>
-                            <!--end::Icon-->
-
-                            <!--begin::Wrapper-->
-                            <div class="d-flex flex-column text-dark pe-0 pe-sm-10">
-                                <!--begin::Title-->
-                                <h4 class="mb-2 light">Harap Melengkapi Profil !</h4>
-                                <!--end::Title-->
-
-                                <!--begin::Content-->
-                                <span>
-                                    Harap lengkapi profile anda agar dapat membuat pengajuan. <br>
-                                    <a href="" class="btn btn-info btn-sm mt-2">
-                                        Lengkapi profile
-                                    </a>
-
-                                </span>
-                                <!--end::Content-->
-                            </div>
-                            <!--end::Wrapper-->
-                        </div>
-                        <!--end::Alert-->
-                    </div>
-                    <div class="col-12">
                         <div class="card">
                             <div class="card-header pt-5">
                                 <h1>Pengajuan Baru</h1>

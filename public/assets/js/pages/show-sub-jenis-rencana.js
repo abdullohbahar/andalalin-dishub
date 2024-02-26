@@ -1,6 +1,8 @@
 $("#jenisRencana").on("change", function () {
     var jenisRencana = $(this).val();
 
+    console.log("halo");
+
     $.ajax({
         url: "/pemohon/ajax/show-sub-jenis-rencana/" + jenisRencana,
         method: "GET",

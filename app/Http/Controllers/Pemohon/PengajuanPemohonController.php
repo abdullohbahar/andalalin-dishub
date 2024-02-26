@@ -5,15 +5,20 @@ namespace App\Http\Controllers\Pemohon;
 use App\Http\Controllers\Controller;
 use App\Models\JenisJalan;
 use App\Models\JenisRencanaPembangunan;
+use App\Models\Pengajuan;
 use Illuminate\Http\Request;
 
 class PengajuanPemohonController extends Controller
 {
     public function index()
     {
+        $userID = auth()->user()->id;
+
+        $pengajuans = Pengajuan::with('belongsToJenisRencana')->where('user_id', $userID)->get();
 
         $data = [
             'active' => 'pengajuan',
+            'pengajuans' => $pengajuans
         ];
 
         return view('pemohon.pengajuan.index', $data);
@@ -28,18 +33,15 @@ class PengajuanPemohonController extends Controller
         return view('pemohon.pengajuan.pilih-tipe', $data);
     }
 
-    public function createAndalalin()
+    public function createTipeAndalalin()
     {
-        $jenisJalans = JenisJalan::get();
-        $jenisRencanas = JenisRencanaPembangunan::orderBy('nama', 'asc')->get();
+        $userID = auth()->user()->id;
 
-        $data = [
-            'active' => 'pengajuan',
-            'tipe' => 'andalalin',
-            'jenisRencanas' => $jenisRencanas,
-            'jenisJalans' => $jenisJalans
-        ];
+        $pengajuan = Pengajuan::create([
+            'user_id' => $userID,
+            'jenis_pengajuan' => 'andalalin'
+        ]);
 
-        return view('pemohon.pengajuan.create-andalalin', $data);
+        return to_route('pemohon.create.pengajuan.andalalin', $pengajuan->id);
     }
 }

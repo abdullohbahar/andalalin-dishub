@@ -3,21 +3,22 @@
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\SubJenisRencanaPembangunan;
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Guest\LoginController;
+use App\Http\Controllers\Role\PilihRoleController;
 use App\Http\Controllers\Admin\JenisJalanController;
 use App\Http\Controllers\Admin\UkuranMinimalController;
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Pemohon\Ajax\ShowUkuranMinimal;
 use App\Http\Controllers\Pemohon\Ajax\ShowSubJenisRencana;
+use App\Http\Controllers\Pemohon\ProfilePemohonController;
 use App\Http\Controllers\Admin\SubSubJenisRencanaController;
 use App\Http\Controllers\Pemohon\DashboardPemohonController;
 use App\Http\Controllers\Pemohon\PengajuanPemohonController;
 use App\Http\Controllers\Pemohon\Ajax\ShowSubSubJenisRencana;
+use App\Http\Controllers\Pemohon\PengajuanAndalalinController;
 use App\Http\Controllers\Admin\JenisRencanaPembangunanController;
 use App\Http\Controllers\Admin\SubJenisRencanaPembangunanController;
-use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Pemohon\ProfilePemohonController;
-use App\Http\Controllers\Role\PilihRoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,9 +31,9 @@ use App\Http\Controllers\Role\PilihRoleController;
 |
 */
 
-// Route::get('/', [LoginController::class, 'index']);
+Route::get('/', [LoginController::class, 'index']);
 Route::get('/login', [AuthController::class, 'redirectToKeycloak'])->name('login.keycloak');
-Route::get('/', [AuthController::class, 'handleKeycloakCallback'])->name('keycloak.callback');
+Route::get('/callback', [AuthController::class, 'handleKeycloakCallback'])->name('keycloak.callback');
 Route::get('/logout', [AuthController::class, 'logout'])->name('keycloak.logout');
 
 Route::prefix('admin')->group(function () {
@@ -94,7 +95,14 @@ Route::prefix('pemohon')->middleware('choose.role')->group(function () {
     Route::prefix('pengajuan')->middleware('check.profile')->group(function () {
         Route::get('/', [PengajuanPemohonController::class, 'index'])->name('pemohon.pengajuan');
         Route::get('/pilih-tipe', [PengajuanPemohonController::class, 'pilihTipe'])->name('pemohon.pilih.tipe.pengajuan');
-        Route::get('/create/andalalin', [PengajuanPemohonController::class, 'createAndalalin'])->name('pemohon.create.pengajuan.andalalin');
+        Route::get('/create-tipe-andalalin', [PengajuanPemohonController::class, 'createTipeAndalalin'])->name('pemohon.create.tipe.andalalin');
+
+        Route::prefix('andalalin')->group(function () {
+            Route::get('/create/{id}', [PengajuanAndalalinController::class, 'createAndalalin'])->name('pemohon.create.pengajuan.andalalin');
+            Route::put('/store/{pengajuanID}', [PengajuanAndalalinController::class, 'updateAndalalin'])->name('pemohon.store.pengajuan.andalalin');
+
+            Route::get('/pilih-konsultan/{idPengajuan}', [PengajuanAndalalinController::class, 'pilihKonsultan'])->name('pemohon.pilih.konsultan.pengajuan.andalalin');
+        });
     });
 
     Route::prefix('profile')->group(function () {
