@@ -79,10 +79,10 @@
                                                     {{ $no++ }}
                                                 </td>
                                                 <td>
-                                                    {{ $pengajuan->belongsToJenisRencana->nama }}
+                                                    {{ $pengajuan->belongsToJenisRencana?->nama ?? '' }}
                                                 </td>
                                                 <td>
-                                                    {{ $pengajuan->hasOneDataPemohon?->nama_proyek ?? 'Belum Diisi' }}
+                                                    {{ $pengajuan->hasOneDataPemohon?->nama_proyek ?? '' }}
                                                 </td>
                                                 <td class="text-capitalize">
                                                     {{ $pengajuan->status }}

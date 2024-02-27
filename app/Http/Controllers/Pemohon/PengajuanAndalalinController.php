@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Pemohon;
 
+use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Pengajuan;
 use App\Models\JenisJalan;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\DataPemohon;
+use Illuminate\Http\Request;
 use App\Models\DokumenDataPemohon;
+use App\Http\Controllers\Controller;
 use App\Models\JenisRencanaPembangunan;
-use App\Models\User;
 
 class PengajuanAndalalinController extends Controller
 {
@@ -211,8 +212,20 @@ class PengajuanAndalalinController extends Controller
             ]);
         }
 
+        // Mendapatkan tanggal hari ini
+        $today = Carbon::now();
+
+        // Menambahkan 3 hari kerja ke depan
+        $nextWorkingDay = $today->addWeekdays(3);
+
+        // Jika tanggal jatuh pada akhir pekan, lompat ke hari Senin berikutnya
+        if ($nextWorkingDay->isWeekend()) {
+            $nextWorkingDay->next(Carbon::MONDAY);
+        }
+
         Pengajuan::where('id', $dataPemohon->pengajuan_id)->update([
-            'status' => 'menunggu konfirmasi admin'
+            'status' => 'menunggu konfirmasi admin',
+            'deadline' => $nextWorkingDay->toDateString(),
         ]);
 
         return to_route('pemohon.pengajuan')->with('success', 'Terimakasih telah mengisi data yang sesuai. Harap menunggu konfirmasi admin, paling lambat 3 hari kerja');
