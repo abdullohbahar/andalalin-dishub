@@ -18,11 +18,13 @@ return new class extends Migration
             $table->foreignUuid('user_id')->nullable()->references('id')->on('users')->nullOnDelete();
             $table->unsignedBigInteger('data_pemohon_id')->nullable();
             $table->foreign('data_pemohon_id')->references('id')->on('data_pemohons')->nullOnDelete();
-            $table->text('surat_permohonan')->nullable();
-            $table->text('dokumen_site_plan')->nullable();
-            $table->text('surat_aspek_tata_ruang')->nullable();
-            $table->text('sertifikat_tanah')->nullable();
-            $table->text('kkop')->nullable();
+            // $table->text('surat_permohonan')->nullable();
+            // $table->text('dokumen_site_plan')->nullable();
+            // $table->text('surat_aspek_tata_ruang')->nullable();
+            // $table->text('sertifikat_tanah')->nullable();
+            // $table->text('kkop')->nullable();
+            $table->string('nama_dokumen')->nullable();
+            $table->text('dokumen')->nullable();
             $table->text('is_verified')->nullable();
             $table->text('alasan')->nullable();
             $table->timestamps();

@@ -131,19 +131,20 @@ class PengajuanAndalalinController extends Controller
         $dataPemohon = DataPemohon::findorfail($request->data_pemohon_id);
         $userID = auth()->user()->id;
 
-        $dokumenPemohon = [
-            'data_pemohon_id' => $request->data_pemohon_id,
-            'user_id' => $userID,
-            'is_verified' => null
-        ];
-
         if ($request->hasFile('surat_permohonan')) {
             $file = $request->file('surat_permohonan');
             $filename = time() . " - surat permohonan." . $file->getClientOriginalExtension();
             $location = 'file-uploads/Dokumen Permohonan/'  . $userID .  '/' . $dataPemohon->nama_proyek . '/';
             $filepath = $location . $filename;
             $file->move($location, $filename);
-            $dokumenPemohon['surat_permohonan'] = $filepath;
+
+            DokumenDataPemohon::create([
+                'data_pemohon_id' => $request->data_pemohon_id,
+                'user_id' => $userID,
+                'nama_dokumen' => 'Surat Permohonan',
+                'dokumen' => $filepath,
+                'is_verified' => false
+            ]);
         }
 
         if ($request->hasFile('dokumen_site_plan')) {
@@ -152,7 +153,14 @@ class PengajuanAndalalinController extends Controller
             $location = 'file-uploads/Dokumen Permohonan/'  . $userID .  '/' . $dataPemohon->nama_proyek . '/';
             $filepath = $location . $filename;
             $file->move($location, $filename);
-            $dokumenPemohon['dokumen_site_plan'] = $filepath;
+
+            DokumenDataPemohon::create([
+                'data_pemohon_id' => $request->data_pemohon_id,
+                'user_id' => $userID,
+                'nama_dokumen' => 'Dokumen Site Plan',
+                'dokumen' => $filepath,
+                'is_verified' => false
+            ]);
         }
 
         if ($request->hasFile('surat_aspek_tata_ruang')) {
@@ -161,7 +169,14 @@ class PengajuanAndalalinController extends Controller
             $location = 'file-uploads/Dokumen Permohonan/'  . $userID .  '/' . $dataPemohon->nama_proyek . '/';
             $filepath = $location . $filename;
             $file->move($location, $filename);
-            $dokumenPemohon['surat_aspek_tata_ruang'] = $filepath;
+
+            DokumenDataPemohon::create([
+                'data_pemohon_id' => $request->data_pemohon_id,
+                'user_id' => $userID,
+                'nama_dokumen' => 'Surat Aspek Tata Ruang',
+                'dokumen' => $filepath,
+                'is_verified' => false
+            ]);
         }
 
         if ($request->hasFile('sertifikat_tanah')) {
@@ -170,7 +185,14 @@ class PengajuanAndalalinController extends Controller
             $location = 'file-uploads/Dokumen Permohonan/'  . $userID .  '/' . $dataPemohon->nama_proyek . '/';
             $filepath = $location . $filename;
             $file->move($location, $filename);
-            $dokumenPemohon['sertifikat_tanah'] = $filepath;
+
+            DokumenDataPemohon::create([
+                'data_pemohon_id' => $request->data_pemohon_id,
+                'user_id' => $userID,
+                'nama_dokumen' => 'Sertifikat Tanah',
+                'dokumen' => $filepath,
+                'is_verified' => false
+            ]);
         }
 
         if ($request->hasFile('kkop')) {
@@ -179,10 +201,19 @@ class PengajuanAndalalinController extends Controller
             $location = 'file-uploads/Dokumen Permohonan/'  . $userID .  '/' . $dataPemohon->nama_proyek . '/';
             $filepath = $location . $filename;
             $file->move($location, $filename);
-            $dokumenPemohon['kkop'] = $filepath;
+
+            DokumenDataPemohon::create([
+                'data_pemohon_id' => $request->data_pemohon_id,
+                'user_id' => $userID,
+                'nama_dokumen' => 'KKOP',
+                'dokumen' => $filepath,
+                'is_verified' => false
+            ]);
         }
 
-        DokumenDataPemohon::create($dokumenPemohon);
+        Pengajuan::where('id', $dataPemohon->pengajuan_id)->update([
+            'status' => 'menunggu konfirmasi admin'
+        ]);
 
         return to_route('pemohon.pengajuan')->with('success', 'Terimakasih telah mengisi data yang sesuai. Harap menunggu konfirmasi admin, paling lambat 3 hari kerja');
     }
