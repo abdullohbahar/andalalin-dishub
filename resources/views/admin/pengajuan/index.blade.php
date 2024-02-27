@@ -1,7 +1,7 @@
 @extends('admin.layout.app')
 
 @section('title')
-    Dashboard
+    Pengajuan Permohonan
 @endsection
 
 @push('addons-css')
@@ -17,7 +17,7 @@
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-                        Dashboard</h1>
+                        Pengajuan Permohonan</h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -32,7 +32,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Dashboard</li>
+                        <li class="breadcrumb-item text-muted">Pengajuan Permohonan</li>
                         <!--end::Item-->
                     </ul>
                     <!--end::Breadcrumb-->
@@ -50,7 +50,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header pt-5">
-                                <h1>Pengajuan Menunggu Konfirmasi Admin</h1>
+                                <h1>Pengajuan Permohonan</h1>
                             </div>
                             <div class="card-body" style="overflow-y: visible">
                                 <table class="table table-bordered table-striped">

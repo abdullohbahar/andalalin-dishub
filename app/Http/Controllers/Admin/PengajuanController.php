@@ -6,20 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Models\Pengajuan;
 use Illuminate\Http\Request;
 
-class DashboardAdminController extends Controller
+class PengajuanController extends Controller
 {
     public function index()
     {
         $pengajuans = Pengajuan::with('belongsToJenisRencana', 'hasOneDataPemohon', 'belongsToUser.hasOneProfile')
-            ->where('status', 'menunggu konfirmasi admin')
             ->orderBy('updated_at', 'desc')
             ->get();
 
         $data = [
-            'active' => 'dashboard',
+            'active' => 'pengajuan-permohonan',
             'pengajuans' => $pengajuans
         ];
 
-        return view('admin.dashboard.index', $data);
+        return view('admin.pengajuan.index', $data);
     }
 }

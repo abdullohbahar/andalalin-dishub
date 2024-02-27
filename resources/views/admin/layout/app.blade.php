@@ -231,7 +231,7 @@ License: For each use you must have a valid license purchased only from above li
                                         <div class="menu-item">
                                             <!--begin:Menu link-->
                                             <a class="menu-link {{ $active == 'dashboard' ? 'active' : '' }}"
-                                                href="#">
+                                                href="{{ route('admin.dashboard') }}">
                                                 <span class="menu-icon">
                                                     <i class="ki-duotone ki-element-11 fs-2">
                                                         <span class="path1"></span>
@@ -247,12 +247,12 @@ License: For each use you must have a valid license purchased only from above li
                                         <!--begin:Menu link-->
                                         <div class="menu-item">
                                             <!--begin:Menu link-->
-                                            <a class="menu-link {{ $active == 'task-report' ? 'active' : '' }}"
-                                                href="#">
+                                            <a class="menu-link {{ $active == 'pengajuan-permohonan' ? 'active' : '' }}"
+                                                href="{{ route('admin.pengajuan.index') }}">
                                                 <span class="menu-icon">
                                                     <i class="fas fa-list"></i>
                                                 </span>
-                                                <span class="menu-title">Laporan Pekerjaan</span>
+                                                <span class="menu-title">Data Pengajuan Permohonan</span>
                                             </a>
                                             <!--end:Menu link-->
                                         </div>

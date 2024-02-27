@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Laravel\Socialite\Facades\Socialite;
-use App\Models\SubJenisRencanaPembangunan;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Guest\LoginController;
 use App\Http\Controllers\Role\PilihRoleController;
@@ -18,6 +16,7 @@ use App\Http\Controllers\Pemohon\PengajuanPemohonController;
 use App\Http\Controllers\Pemohon\Ajax\ShowSubSubJenisRencana;
 use App\Http\Controllers\Pemohon\PengajuanAndalalinController;
 use App\Http\Controllers\Admin\JenisRencanaPembangunanController;
+use App\Http\Controllers\Admin\PengajuanController;
 use App\Http\Controllers\Admin\SubJenisRencanaPembangunanController;
 
 /*
@@ -40,6 +39,10 @@ Route::post('auth', [LoginController::class, 'authenticate'])->name('authenticat
 
 Route::prefix('admin')->group(function () {
     Route::get('dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
+
+    Route::prefix('pengajuan')->group(function () {
+        Route::get('/', [PengajuanController::class, 'index'])->name('admin.pengajuan.index');
+    });
 
     Route::prefix('jenis-rencana-pembangunan')->group(function () {
         Route::get('/', [JenisRencanaPembangunanController::class, 'index'])->name('admin.jenis.rencana.pembangunan');

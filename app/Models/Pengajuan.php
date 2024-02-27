@@ -42,4 +42,9 @@ class Pengajuan extends Model
     {
         return $this->hasOne(DataPemohon::class);
     }
+
+    public function belongsToUser(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }
