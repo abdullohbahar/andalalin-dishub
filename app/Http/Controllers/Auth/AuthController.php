@@ -52,7 +52,7 @@ class AuthController extends Controller
         Auth::logout();
 
         // The URL the user is redirected to after logout.
-        $redirectUri = env('KEYCLOAK_REDIRECT_URI');
+        $redirectUri = env('APP_URL');
 
         return redirect(Socialite::driver('keycloak')->getLogoutUrl($redirectUri, env('KEYCLOAK_CLIENT_ID')));
     }

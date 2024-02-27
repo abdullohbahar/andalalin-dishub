@@ -36,6 +36,8 @@ Route::get('/login', [AuthController::class, 'redirectToKeycloak'])->name('login
 Route::get('/callback', [AuthController::class, 'handleKeycloakCallback'])->name('keycloak.callback');
 Route::get('/logout', [AuthController::class, 'logout'])->name('keycloak.logout');
 
+Route::post('auth', [LoginController::class, 'authenticate'])->name('authenticate');
+
 Route::prefix('admin')->group(function () {
     Route::get('dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
 

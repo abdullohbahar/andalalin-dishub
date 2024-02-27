@@ -102,7 +102,7 @@ License: For each use you must have a valid license purchased only from above li
                     <!--begin::Wrapper-->
                     <div class="d-flex flex-center flex-column flex-column-fluid px-lg-10 pb-15 pb-lg-20">
                         <!--begin::Form-->
-                        <form class="form w-100" action="" method="POST">
+                        <form class="form w-100" action="{{ route('authenticate') }}" method="POST">
                             @csrf
                             <!--begin::Heading-->
                             <div class="text-center mb-11">
