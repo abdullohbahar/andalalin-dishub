@@ -64,6 +64,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Jenis Rencana Pembangunan</th>
+                                            <th>Nama Proyek</th>
                                             <th>Status</th>
                                             <th>Aksi</th>
                                         </tr>
@@ -81,10 +82,16 @@
                                                     {{ $pengajuan->belongsToJenisRencana->nama }}
                                                 </td>
                                                 <td>
+                                                    {{ $pengajuan->hasOneDataPemohon?->nama_proyek ?? 'Belum Diisi' }}
+                                                </td>
+                                                <td class="text-capitalize">
                                                     {{ $pengajuan->status }}
                                                 </td>
                                                 <td>
-                                                    <button></button>
+                                                    @if ($pengajuan->status == 'input data belum selesai')
+                                                        <a href="{{ route('pemohon.create.pengajuan.andalalin', $pengajuan->id) }}"
+                                                            class="btn btn-warning btn-sm">Lanjutkan Mengisi Data</a>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach

@@ -37,4 +37,9 @@ class Pengajuan extends Model
     {
         return $this->belongsTo(SubSubJenisRencana::class, 'sub_sub_jenis_rencana_id', 'id');
     }
+
+    public function hasOneDataPemohon(): HasOne
+    {
+        return $this->hasOne(DataPemohon::class);
+    }
 }

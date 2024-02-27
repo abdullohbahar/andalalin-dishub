@@ -14,7 +14,9 @@
 @endpush
 
 @section('content')
-    <form action="">
+    <form action="{{ route('pemohon.store.data.pemohon.andalalin') }}" method="POST">
+        @csrf
+        <input type="hidden" name="pengajuan_id" value="{{ $pengajuan->id }}">
         <div class="d-flex flex-column flex-column-fluid">
             <!--begin::Toolbar-->
             <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
@@ -96,8 +98,9 @@
                                             <label for="" class="form-label">Nama Pimpinan</label>
                                             <input type="text"
                                                 class="form-control @error('nama_pimpinan') is-invalid @enderror"
-                                                name="nama_pimpinan" value="{{ old('nama_pimpinan') }}" id=""
-                                                required>
+                                                name="nama_pimpinan"
+                                                value="{{ old('nama_pimpinan', $dataPemohon->nama_pimpinan ?? '') }}"
+                                                id="" required>
                                             @error('nama_pimpinan')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -108,8 +111,9 @@
                                             <label for="" class="form-label">Jabatan Pimpinan</label>
                                             <input type="text"
                                                 class="form-control @error('jabatan_pimpinan') is-invalid @enderror"
-                                                name="jabatan_pimpinan" value="{{ old('jabatan_pimpinan') }}" id=""
-                                                required>
+                                                name="jabatan_pimpinan"
+                                                value="{{ old('jabatan_pimpinan', $dataPemohon->jabatan_pimpinan ?? '') }}"
+                                                id="" required>
                                             @error('jabatan_pimpinan')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -139,23 +143,29 @@
                                         <div class="col-12">
                                             <div class="col-12 mt-5">
                                                 <label for="" class="form-label">Nama</label>
-                                                <input type="text" class="form-control" readonly id="nama_konsultan"
+                                                <input type="text" class="form-control" readonly name="nama_konsultan"
+                                                    id="nama_konsultan"
+                                                    value="{{ old('nama_konsultan', $dataPemohon->belongsToConsultan?->hasOneProfile?->nama ?? '') }}"
                                                     required>
-                                                <input type="hidden" name="konsultan_id" class="form-control"
-                                                    id="konsultan_id">
+                                                <input type="hidden" name="konsultan_id"
+                                                    value="{{ old('konsultan_id', $dataPemohon->konsultan_id ?? '') }}"
+                                                    class="form-control" id="konsultan_id">
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="col-12 mt-5">
                                                 <label for="" class="form-label">Nomor Telepon</label>
-                                                <input type="text" class="form-control" readonly
-                                                    id="no_telepon_konsultan">
+                                                <input type="text" class="form-control"
+                                                    value="{{ old('no_telepon_konsultan', $dataPemohon->belongsToConsultan?->hasOneProfile?->no_telepon ?? '') }}"
+                                                    name="no_telepon_konsultan" readonly id="no_telepon_konsultan">
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="col-12 mt-5">
                                                 <label for="" class="form-label">Email</label>
-                                                <input type="text" class="form-control" readonly id="email_konsultan">
+                                                <input type="text" class="form-control"
+                                                    value="{{ old('email_konsultan', $dataPemohon->belongsToConsultan?->email ?? '') }}"
+                                                    readonly id="email_konsultan" name="email_konsultan">
                                             </div>
                                         </div>
                                         {{-- <div class="col-12">
@@ -234,17 +244,20 @@
                                                 <div class="col-12 mt-5">
                                                     <label for="" class="form-label">Nama Proyek</label>
                                                     <input type="text" class="form-control"
-                                                        value="{{ old('nama_proyek') }}" required id="">
+                                                        value="{{ old('nama_proyek', $dataPemohon->nama_proyek ?? '') }}"
+                                                        name="nama_proyek" required id="">
                                                 </div>
                                                 <div class="col-12 mt-5">
                                                     <label for="" class="form-label">Nama Jalan</label>
                                                     <input type="text" class="form-control"
-                                                        value="{{ old('nama_jalan') }}" required id="">
+                                                        value="{{ old('nama_jalan', $dataPemohon->nama_jalan ?? '') }}"
+                                                        name="nama_jalan" required id="">
                                                 </div>
                                                 <div class="col-12 mt-5">
                                                     <label for="" class="form-label">Luas Bangunan</label>
                                                     <input type="text" class="form-control"
-                                                        value="{{ old('luas_bangunan') }}" required id="">
+                                                        value="{{ old('luas_bangunan', $dataPemohon->luas_bangunan ?? '') }}"
+                                                        name="luas_bangunan" required id="">
                                                 </div>
                                             </div>
                                         </div>
@@ -253,25 +266,28 @@
                                                 <div class="col-12">
                                                     <label for="" class="form-label">Luas Tanah</label>
                                                     <input type="text" class="form-control"
-                                                        value="{{ old('luas_tanah') }}" required id="">
+                                                        value="{{ old('luas_tanah', $dataPemohon->luas_tanah ?? '') }}"
+                                                        name="luas_tanah" required id="">
                                                 </div>
                                                 <div class="col-12 mt-5">
                                                     <label for="" class="form-label">Alamat</label>
-                                                    <textarea name="alamat" id="" style="width:100%" class="form-control" rows="1">{{ old('alamat') }}</textarea>
+                                                    <textarea name="alamat" id="" name="alamat" style="width:100%" class="form-control" rows="1">{{ old('alamat', $dataPemohon->alamat ?? '') }}</textarea>
                                                 </div>
                                                 <div class="col-12 mt-5">
                                                     <label for="" class="form-label">Nomor Surat
                                                         Permohonan</label>
                                                     <input type="text" class="form-control"
-                                                        value="{{ old('nomor_surat_permohonan') }}" required
-                                                        id="">
+                                                        name="nomor_surat_permohonan"
+                                                        value="{{ old('nomor_surat_permohonan', $dataPemohon->nomor_surat_permohonan ?? '') }}"
+                                                        required id="">
                                                 </div>
                                                 <div class="col-12 mt-5">
                                                     <label for="" class="form-label">Tanggal Surat
                                                         Permohonan</label>
                                                     <input type="date" class="form-control"
-                                                        value="{{ old('tanggal_surat_permohonan') }}" required
-                                                        id="">
+                                                        name="tanggal_surat_permohonan"
+                                                        value="{{ old('tanggal_surat_permohonan', $dataPemohon->tanggal_surat_permohonan ?? '') }}"
+                                                        required id="">
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-12 mt-5">
@@ -283,12 +299,16 @@
                                                     <div class="col-6">
                                                         <label for="" class="form-label">longitude</label>
                                                         <input type="text" readonly class="form-control"
-                                                            value="{{ old('longitude') }}" required id="longitude">
+                                                            name="longitude"
+                                                            value="{{ old('longitude', $dataPemohon->longitude ?? '') }}"
+                                                            required id="longitude">
                                                     </div>
                                                     <div class="col-6">
                                                         <label for="" class="form-label">latitude</label>
                                                         <input type="text" readonly class="form-control"
-                                                            value="{{ old('latitude') }}" required id="latitude">
+                                                            name="latitude"
+                                                            value="{{ old('latitude', $dataPemohon->latitidue ?? '') }}"
+                                                            required id="latitude">
                                                     </div>
                                                     <div class="col-12 mt-2">
                                                         <button type="button" id="getLocation"

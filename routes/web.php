@@ -102,6 +102,10 @@ Route::prefix('pemohon')->middleware('choose.role')->group(function () {
             Route::put('/store/{pengajuanID}', [PengajuanAndalalinController::class, 'updateAndalalin'])->name('pemohon.store.pengajuan.andalalin');
 
             Route::get('/pilih-konsultan/{idPengajuan}', [PengajuanAndalalinController::class, 'pilihKonsultan'])->name('pemohon.pilih.konsultan.pengajuan.andalalin');
+            Route::post('/store-pemohon', [PengajuanAndalalinController::class, 'storeDataPemohon'])->name('pemohon.store.data.pemohon.andalalin');
+
+            Route::get('upload-dokumen-pemohon/{idDataPemohon}', [PengajuanAndalalinController::class, 'uploadDokumenPemohon'])->name('pemohon.upload.dokumen.pemohon');
+            Route::post('store-dokumen-pemohon', [PengajuanAndalalinController::class, 'storeDokumenPemohon'])->name('pemohon.store.dokumen.pemohon');
         });
     });
 
