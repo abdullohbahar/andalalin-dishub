@@ -134,9 +134,9 @@ class PengajuanAndalalinController extends Controller
         if ($request->hasFile('surat_permohonan')) {
             $file = $request->file('surat_permohonan');
             $filename = time() . " - surat permohonan." . $file->getClientOriginalExtension();
-            $location = 'file-uploads/Dokumen Permohonan/'  . $userID .  '/' . $dataPemohon->nama_proyek . '/';
+            $location = 'public/file-uploads/Dokumen Permohonan/'  . $userID .  '/' . $dataPemohon->nama_proyek . '/';
             $filepath = $location . $filename;
-            $file->move($location, $filename);
+            $file->storeAs($location, $filename);
 
             DokumenDataPemohon::create([
                 'data_pemohon_id' => $request->data_pemohon_id,
@@ -150,9 +150,9 @@ class PengajuanAndalalinController extends Controller
         if ($request->hasFile('dokumen_site_plan')) {
             $file = $request->file('dokumen_site_plan');
             $filename = time() . " - dokumen site plan." . $file->getClientOriginalExtension();
-            $location = 'file-uploads/Dokumen Permohonan/'  . $userID .  '/' . $dataPemohon->nama_proyek . '/';
+            $location = 'public/file-uploads/Dokumen Permohonan/'  . $userID .  '/' . $dataPemohon->nama_proyek . '/';
             $filepath = $location . $filename;
-            $file->move($location, $filename);
+            $file->storeAs($location, $filename);
 
             DokumenDataPemohon::create([
                 'data_pemohon_id' => $request->data_pemohon_id,
@@ -166,9 +166,9 @@ class PengajuanAndalalinController extends Controller
         if ($request->hasFile('surat_aspek_tata_ruang')) {
             $file = $request->file('surat_aspek_tata_ruang');
             $filename = time() . " - surat aspek tata ruang." . $file->getClientOriginalExtension();
-            $location = 'file-uploads/Dokumen Permohonan/'  . $userID .  '/' . $dataPemohon->nama_proyek . '/';
+            $location = 'public/file-uploads/Dokumen Permohonan/'  . $userID .  '/' . $dataPemohon->nama_proyek . '/';
             $filepath = $location . $filename;
-            $file->move($location, $filename);
+            $file->storeAs($location, $filename);
 
             DokumenDataPemohon::create([
                 'data_pemohon_id' => $request->data_pemohon_id,
@@ -182,9 +182,9 @@ class PengajuanAndalalinController extends Controller
         if ($request->hasFile('sertifikat_tanah')) {
             $file = $request->file('sertifikat_tanah');
             $filename = time() . " - sertifikat tanah." . $file->getClientOriginalExtension();
-            $location = 'file-uploads/Dokumen Permohonan/'  . $userID .  '/' . $dataPemohon->nama_proyek . '/';
+            $location = 'public/file-uploads/Dokumen Permohonan/'  . $userID .  '/' . $dataPemohon->nama_proyek . '/';
             $filepath = $location . $filename;
-            $file->move($location, $filename);
+            $file->storeAs($location, $filename);
 
             DokumenDataPemohon::create([
                 'data_pemohon_id' => $request->data_pemohon_id,
@@ -198,9 +198,9 @@ class PengajuanAndalalinController extends Controller
         if ($request->hasFile('kkop')) {
             $file = $request->file('kkop');
             $filename = time() . " - kkop." . $file->getClientOriginalExtension();
-            $location = 'file-uploads/Dokumen Permohonan/'  . $userID .  '/' . $dataPemohon->nama_proyek . '/';
+            $location = 'public/file-uploads/Dokumen Permohonan/'  . $userID .  '/' . $dataPemohon->nama_proyek . '/';
             $filepath = $location . $filename;
-            $file->move($location, $filename);
+            $file->storeAs($location, $filename);
 
             DokumenDataPemohon::create([
                 'data_pemohon_id' => $request->data_pemohon_id,
