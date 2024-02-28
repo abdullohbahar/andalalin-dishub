@@ -42,6 +42,14 @@ Route::prefix('admin')->group(function () {
 
     Route::prefix('pengajuan')->group(function () {
         Route::get('/', [PengajuanController::class, 'index'])->name('admin.pengajuan.index');
+        Route::get('/detail/{pengajuanID}', [PengajuanController::class, 'show'])->name('admin.pengajuan.show');
+        Route::put('revisi', [PengajuanController::class, 'revisi'])->name('admin.revisi.dokumen');
+        Route::put('tolak', [PengajuanController::class, 'tolak'])->name('admin.tolak.dokumen');
+        Route::put('selesai-verifikasi/{pengajuanID}', [PengajuanController::class, 'selesaiVerifikasi'])->name('admin.selesai.verifikasi');
+
+        Route::prefix('ajax')->group(function () {
+            Route::get('/setujui/{dokumenID}', [PengajuanController::class, 'setujui'])->name('admin.setujui.dokumen');
+        });
     });
 
     Route::prefix('jenis-rencana-pembangunan')->group(function () {

@@ -87,7 +87,7 @@
                                                 </td>
                                                 <td>
                                                     @if ($pengajuan->status == 'menunggu konfirmasi admin')
-                                                        <a href="{{ route('pemohon.create.pengajuan.andalalin', $pengajuan->id) }}"
+                                                        <a href="{{ route('admin.pengajuan.show', $pengajuan->id) }}"
                                                             class="btn btn-info btn-sm">Verifikasi Data</a>
                                                     @endif
                                                 </td>
