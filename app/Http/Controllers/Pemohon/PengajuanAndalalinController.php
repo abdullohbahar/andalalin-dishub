@@ -230,4 +230,26 @@ class PengajuanAndalalinController extends Controller
 
         return to_route('pemohon.pengajuan')->with('success', 'Terimakasih telah mengisi data yang sesuai. Harap menunggu konfirmasi admin, paling lambat 3 hari kerja');
     }
+
+    public function show($pengajuanID)
+    {
+        $pengajuan = Pengajuan::with(
+            'belongsToJenisRencana',
+            'belongsToUkuranMinimal',
+            'belongsToJenisJalan',
+            'belongsToSubJenisRencana',
+            'belongsToSubSubJenisRencana',
+            'hasOneDataPemohon.hasManyDokumenDataPemohon',
+            'hasOneDataPemohon.belongsToConsultan.hasOneProfile',
+            'belongsToUser.hasOneProfile'
+        )
+            ->findorfail($pengajuanID);
+
+        $data = [
+            'pengajuan' => $pengajuan,
+            'active' => 'pengajuan-permohonan',
+        ];
+
+        return view('pemohon.pengajuan.show', $data);
+    }
 }

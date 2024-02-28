@@ -292,18 +292,6 @@
                                                     {{ $pengajuan->hasOneDataPemohon->latitude }}
                                                 </td>
                                             </tr>
-                                            {{-- <tr>
-                                                <td>
-                                                    <b>Lokasi</b>
-                                                </td>
-                                                <td>
-                                                    <a target="_blank"
-                                                        href="https://www.google.com/maps/{{ '@' . $pengajuan->hasOneDataPemohon->latitude }},{{ $pengajuan->hasOneDataPemohon->longitude }}"
-                                                        class="btn btn-primary btn-sm">Lihat
-                                                        Lokasi Di Google
-                                                        Maps</a>
-                                                </td>
-                                            </tr> --}}
                                         </table>
                                     </div>
                                 </div>
@@ -320,15 +308,12 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <div style="float: right">
-                                            <button class="btn btn-danger mb-3" id="rejectBtn">Tolak Pengajuan
-                                                Permohonan</button>
-                                        </div>
                                         <table class="table table-striped table-bordered">
                                             <thead>
                                                 <tr>
                                                     <th>Nama Dokumen</th>
                                                     <th>Status</th>
+                                                    <th>Alasan</th>
                                                     <th>Lihat Dokumen</th>
                                                     <th>Aksi</th>
                                                 </tr>
@@ -345,32 +330,19 @@
                                                             @elseif($dokumen->status == 'revisi')
                                                                 <span class="badge bg-warning">Revisi</span>
                                                             @elseif($dokumen->status == 'ditolak')
-                                                                <span class="badge bg-danger">Ditolak</span>
+                                                                <span class="badge bg-danger text-light">Ditolak</span>
                                                             @endif
+                                                        </td>
+                                                        <td>
+                                                            {{ $dokumen->alasan }}
                                                         </td>
                                                         <td>
                                                             <a target="_blank" href="{{ $dokumen->dokumen }}">Lihat
                                                                 Dokumen</a>
                                                         </td>
                                                         <td>
-                                                            @if (!$dokumen->status)
-                                                                <div class="btn-group" role="group"
-                                                                    aria-label="Basic mixed styles example">
-                                                                    <button type="button" id="approveBtn"
-                                                                        class="btn btn-sm btn-success"
-                                                                        data-id="{{ $dokumen->id }}">Setujui</button>
-                                                                    <button type="button" class="btn btn-sm btn-warning"
-                                                                        class="" id="revisiBtn"
-                                                                        data-id="{{ $dokumen->id }}">Revisi</button>
-                                                                </div>
-                                                            @elseif($dokumen->status == 'disetujui')
-                                                                Anda Telah Menyetujui Dokumen Ini
-                                                            @elseif($dokumen->status == 'revisi')
-                                                                Harap Menunggu Pemohon
-                                                                Melakukan Upload Ulang
-                                                            @elseif($dokumen->status == 'ditolak')
-                                                                Anda Telah Menolak Dokumen Ini Harap Menunggu Pemohon
-                                                                Melakukan Upload Ulang
+                                                            @if ($dokumen->status == 'revisi' || $dokumen->status == 'ditolak')
+                                                                <button class="btn btn-info btn-sm">Upload Ulang</button>
                                                             @endif
                                                         </td>
                                                     </tr>
@@ -379,15 +351,6 @@
                                         </table>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card-footer">
-                                <form action="{{ route('admin.selesai.verifikasi', $pengajuan->id) }}" method="POST">
-                                    @csrf
-                                    @method('PUT')
-                                    <div style="float: right">
-                                        <button class="btn btn-success">Selesai Verifikasi Data</button>
-                                    </div>
-                                </form>
                             </div>
                         </div>
                     </div>

@@ -119,6 +119,8 @@ Route::prefix('pemohon')->middleware('choose.role')->group(function () {
 
             Route::get('upload-dokumen-pemohon/{idDataPemohon}', [PengajuanAndalalinController::class, 'uploadDokumenPemohon'])->name('pemohon.upload.dokumen.pemohon');
             Route::post('store-dokumen-pemohon', [PengajuanAndalalinController::class, 'storeDokumenPemohon'])->name('pemohon.store.dokumen.pemohon');
+
+            Route::get('/detail/{pengajuanID}', [PengajuanAndalalinController::class, 'show'])->name('pemohon.show.pengajuan.andalalin');
         });
     });
 
