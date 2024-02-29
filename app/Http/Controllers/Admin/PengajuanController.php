@@ -115,9 +115,12 @@ class PengajuanController extends Controller
 
         if (in_array('ditolak', $statusDokumen)) {
             $status = 'ditolak';
+            $this->kirimNotifikasiDitolak($pengajuan);
         } else if (in_array('revisi', $statusDokumen)) {
             $status = 'revisi';
+            $this->kirimNotifikasiRevisi($pengajuan);
         } else {
+            $this->kirimNotifikasiDisetujui($pengajuan);
             $status = 'disetujui';
         }
 
@@ -126,5 +129,111 @@ class PengajuanController extends Controller
         ]);
 
         return to_route('admin.pengajuan.index')->with('success', 'Terimakasih Telah Menyelesaikan Verifikasi');
+    }
+
+    public function kirimNotifikasiRevisi($pengajuan)
+    {
+        $nomorPemohon = $pengajuan->belongsToUser->hasOneProfile->no_telepon;
+
+        $namaDokumen = [];
+        foreach ($pengajuan->hasOneDataPemohon->hasManyDokumenDataPemohon as $dokumen) {
+            if ($dokumen->status == 'revisi') {
+                $namaDokumen[] = '- ' . $dokumen->nama_dokumen;
+            }
+        }
+
+        $implode = implode("\n", $namaDokumen);
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.fonnte.com/send',
+            CURLOPT_SSL_VERIFYPEER => FALSE,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array(
+                'target' => "$nomorPemohon", // nomer hp pemohon
+                'message' => "Admin telah melakukan verifikasi pada data yang anda unggah, adapun dokumen yang perlu DIREVISI yaitu:\n$implode\nHarap untuk mengunggah ulang dokumen tersebut.",
+                'countryCode' => '62', //optional
+            ),
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+    }
+
+    public function kirimNotifikasiDitolak($pengajuan)
+    {
+        $nomorPemohon = $pengajuan->belongsToUser->hasOneProfile->no_telepon;
+
+        foreach ($pengajuan->hasOneDataPemohon->hasManyDokumenDataPemohon as $dokumen) {
+            $alasan = $dokumen->alasan;
+        }
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.fonnte.com/send',
+            CURLOPT_SSL_VERIFYPEER => FALSE,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array(
+                'target' => "$nomorPemohon", // nomer hp pemohon
+                'message' => "Admin telah melakukan verifikasi pada data yang anda unggah, permohonan anda DITOLAK oleh Admin. Adapun alasan penolakannya sebagai berikut:\n$alasan\nHarap untuk melakukan pengisian data ulang.",
+                'countryCode' => '62', //optional
+            ),
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+    }
+
+    public function kirimNotifikasiDisetujui($pengajuan)
+    {
+        $nomorPemohon = $pengajuan->belongsToUser->hasOneProfile->no_telepon;
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.fonnte.com/send',
+            CURLOPT_SSL_VERIFYPEER => FALSE,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array(
+                'target' => "$nomorPemohon", // nomer hp pemohon
+                'message' => "Admin telah melakukan verifikasi pada data yang anda unggah, permohonan anda DISETUJUI oleh admin. Harap menunggu notifikasi berikutnya untuk jadwal tinjauan lapangan",
+                'countryCode' => '62', //optional
+            ),
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
     }
 }
