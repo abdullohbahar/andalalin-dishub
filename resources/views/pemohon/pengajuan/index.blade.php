@@ -90,8 +90,10 @@
                                                 <td>
                                                     <div class="btn-group" role="group"
                                                         aria-label="Basic mixed styles example">
-                                                        <a href="{{ route('pemohon.show.pengajuan.andalalin', $pengajuan->id) }}"
-                                                            class="btn btn-info btn-sm">Detail</a>
+                                                        @if ($pengajuan->status != 'input data belum selesai')
+                                                            <a href="{{ route('pemohon.show.pengajuan.andalalin', $pengajuan->id) }}"
+                                                                class="btn btn-info btn-sm">Detail</a>
+                                                        @endif
                                                         @if ($pengajuan->status == 'input data belum selesai')
                                                             <a href="{{ route('pemohon.create.pengajuan.andalalin', $pengajuan->id) }}"
                                                                 class="btn btn-warning btn-sm">Lanjutkan Mengisi Data</a>

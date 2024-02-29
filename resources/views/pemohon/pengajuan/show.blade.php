@@ -1,4 +1,4 @@
-@extends('admin.layout.app')
+@extends('pemohon.layout.app')
 
 @section('title')
     Verifikasi Pengajuan Permohonan
