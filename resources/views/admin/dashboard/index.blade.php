@@ -50,7 +50,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header pt-5">
-                                <h1>Pengajuan Menunggu Konfirmasi Admin</h1>
+                                <h1>Pengajuan Menunggu Konfirmasi</h1>
                             </div>
                             <div class="card-body" style="overflow-y: visible">
                                 <table class="table table-bordered table-striped">
@@ -87,7 +87,60 @@
                                                 </td>
                                                 <td>
                                                     @if ($pengajuan->status == 'menunggu konfirmasi admin')
-                                                        <a href="{{ route('pemohon.create.pengajuan.andalalin', $pengajuan->id) }}"
+                                                        <a href="{{ route('admin.pengajuan.show', $pengajuan->id) }}"
+                                                            class="btn btn-info btn-sm">Verifikasi Data</a>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header pt-5">
+                                <h1>Pengajuan Telah Direvisi</h1>
+                            </div>
+                            <div class="card-body" style="overflow-y: visible">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Nama Pemohon</th>
+                                            <th>Jenis Rencana Pembangunan</th>
+                                            <th>Nama Proyek</th>
+                                            <th>Status</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $no = 1;
+                                        @endphp
+                                        @foreach ($pengajuanDirevisi as $pengajuan)
+                                            <tr>
+                                                <td>
+                                                    {{ $no++ }}
+                                                </td>
+                                                <td>
+                                                    {{ $pengajuan->belongsToUser?->hasOneProfile?->nama ?? '' }}
+                                                </td>
+                                                <td>
+                                                    {{ $pengajuan->belongsToJenisRencana?->nama ?? '' }}
+                                                </td>
+                                                <td>
+                                                    {{ $pengajuan->hasOneDataPemohon?->nama_proyek ?? '' }}
+                                                </td>
+                                                <td class="text-capitalize">
+                                                    {{ $pengajuan->status }}
+                                                </td>
+                                                <td>
+                                                    @if ($pengajuan->status == 'telah direvisi')
+                                                        <a href="{{ route('admin.pengajuan.show', $pengajuan->id) }}"
                                                             class="btn btn-info btn-sm">Verifikasi Data</a>
                                                     @endif
                                                 </td>

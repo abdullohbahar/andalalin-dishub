@@ -15,9 +15,15 @@ class DashboardAdminController extends Controller
             ->orderBy('updated_at', 'desc')
             ->get();
 
+        $pengajuanDirevisi = Pengajuan::with('belongsToJenisRencana', 'hasOneDataPemohon', 'belongsToUser.hasOneProfile')
+            ->where('status', 'telah direvisi')
+            ->orderBy('updated_at', 'desc')
+            ->get();
+
         $data = [
             'active' => 'dashboard',
-            'pengajuans' => $pengajuans
+            'pengajuans' => $pengajuans,
+            'pengajuanDirevisi' => $pengajuanDirevisi
         ];
 
         return view('admin.dashboard.index', $data);

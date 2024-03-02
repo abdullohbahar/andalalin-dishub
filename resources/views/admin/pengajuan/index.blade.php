@@ -86,7 +86,7 @@
                                                     {{ $pengajuan->status }}
                                                 </td>
                                                 <td>
-                                                    @if ($pengajuan->status == 'menunggu konfirmasi admin')
+                                                    @if ($pengajuan->status == 'menunggu konfirmasi admin' || $pengajuan->status == 'telah direvisi')
                                                         <a href="{{ route('admin.pengajuan.show', $pengajuan->id) }}"
                                                             class="btn btn-info btn-sm">Verifikasi Data</a>
                                                     @endif
