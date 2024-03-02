@@ -323,6 +323,11 @@
                                             </thead>
                                             <tbody>
                                                 @foreach ($pengajuan->hasOneDataPemohon->hasManyDokumenDataPemohon as $dokumen)
+                                                    @php
+                                                        if ($dokumen->is_revised = 1) {
+                                                            $isRevised = 1;
+                                                        }
+                                                    @endphp
                                                     <tr>
                                                         <td>{{ $dokumen->nama_dokumen }}</td>
                                                         <td>
@@ -347,7 +352,10 @@
                                                             </td>
                                                             <td>
                                                                 @if ($dokumen->status == 'revisi' || $dokumen->status == 'ditolak')
-                                                                    <button class="btn btn-info btn-sm">Upload
+                                                                    <button id="revisiBtn" class="btn btn-info btn-sm"
+                                                                        data-dokumenid="{{ $dokumen->id }}"
+                                                                        data-namadokumen="{{ $dokumen->nama_dokumen }}"
+                                                                        data-namaproyek="{{ $pengajuan->hasOneDataPemohon->nama_proyek }}">Upload
                                                                         Ulang</button>
                                                                 @endif
                                                             </td>
@@ -359,6 +367,20 @@
                                     </div>
                                 </div>
                             </div>
+                            @if ($dokumen->status == 'revisi' || $dokumen->status == 'ditolak' || $isRevised == 1)
+                                <div class="card-footer">
+                                    <div style="float: right">
+                                        <form action="{{ route('pemohon.selesai.revisi', $pengajuan->id) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <button type="submit" class="btn btn-success btn-sm">
+                                                Selesai
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -369,8 +391,7 @@
         <!--end::Content-->
     </div>
     <!--end::Content wrapper-->
-    @include('admin.pengajuan.components.modal-revisi')
-    @include('admin.pengajuan.components.modal-tolak')
+    @include('pemohon.pengajuan.components.modal-revisi')
 @endsection
 
 @push('addons-js')
@@ -425,23 +446,33 @@
         })
 
         $("body").on("click", "#revisiBtn", function() {
-            var id = $(this).data("id");
+            var dokumenID = $(this).data("dokumenid");
+            var namaDokumen = $(this).data("namadokumen");
+            var namaProyek = $(this).data("namaproyek");
 
-            $("#revisiDokumenID").val(id)
+            $("#revisiDokumenID").val(dokumenID)
+            $("#namaDokumen").text(namaDokumen)
+            $("#namaDokumen1").text(namaDokumen)
+            $("#namaProyek").val(namaProyek)
+            $("#fieldNamaDokumen").val(namaDokumen)
+
             var myModal = new bootstrap.Modal(document.getElementById('modalRevisi'), {
                 keyboard: false
             })
 
             myModal.show()
         })
+    </script>
 
-        $("body").on("click", "#rejectBtn", function() {
+    <script>
+        function validateFile(input) {
+            const allowedExtensions = /(\.pdf)$/i;
 
-            var myModal = new bootstrap.Modal(document.getElementById('modalTolak'), {
-                keyboard: false
-            })
-
-            myModal.show()
-        })
+            if (!allowedExtensions.exec(input.value)) {
+                alert('Hanya file PDF yang diperbolehkan.');
+                input.value = '';
+                return false;
+            }
+        }
     </script>
 @endpush

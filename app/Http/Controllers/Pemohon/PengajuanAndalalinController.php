@@ -7,10 +7,12 @@ use App\Models\User;
 use App\Models\Pengajuan;
 use App\Models\JenisJalan;
 use App\Models\DataPemohon;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\DokumenDataPemohon;
 use App\Http\Controllers\Controller;
 use App\Models\JenisRencanaPembangunan;
+use Illuminate\Support\Facades\Storage;
 
 class PengajuanAndalalinController extends Controller
 {
@@ -289,5 +291,57 @@ class PengajuanAndalalinController extends Controller
         ];
 
         return view('pemohon.pengajuan.show', $data);
+    }
+
+    public function uploadRevisiDokumen(Request $request)
+    {
+        $userID = auth()->user()->id;
+
+        $lowerNamaDokumen = Str::lower($request->nama_dokumen);
+
+        if ($request->hasFile('file')) {
+
+            // lakukan pengecekan apakah dokumen dengan nama tersebut ada jika ada maka hapus terlebih dahulu baru upload ulang
+            $dokumen = new DokumenDataPemohon();
+
+            $path = $dokumen->where('id', $request->dokumen_id)->first()->dokumen;
+
+            // Ambil path relatif setelah "public/"
+            $relativePath = Str::after($path, 'file-uploads/');
+
+            // Dapatkan path penyimpanan fisik
+            $storagePath = public_path('storage/file-uploads/' . $relativePath);
+
+            // Periksa apakah file ada
+            if (file_exists($storagePath)) {
+                // Hapus file jika ada
+                unlink($storagePath);
+            }
+
+            $file = $request->file('file');
+            $filename = time() . " - $lowerNamaDokumen ." . $file->getClientOriginalExtension();
+            $location = 'file-uploads/Dokumen Permohonan/'  . $userID .  '/' . $request->nama_proyek . '/';
+            $filepath = $location . $filename;
+            $file->storeAs('public/' . $location, $filename);
+
+            $dokumen->where('id', $request->dokumen_id)->update([
+                'is_revised' => true,
+                'dokumen' => $filepath,
+                'is_verified' => false,
+                'status' => NULL,
+                'alasan' => NULL,
+            ]);
+
+            return redirect()->back()->with('success', 'Berhasil diupload');
+        }
+    }
+
+    public function selesaiRevisi($idPengajuan)
+    {
+        Pengajuan::where('id', $idPengajuan)->update([
+            'status' => 'telah direvisi'
+        ]);
+
+        return to_route('pemohon.pengajuan')->with('success', 'Terimakasih Telah Melakukan Revisi Dokumen');
     }
 }
