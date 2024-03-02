@@ -50,9 +50,87 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header pt-5">
-                                <h1>Pengajuan Baru</h1>
+                                <h1>Pengajuan Ditolak</h1>
                             </div>
                             <div class="card-body" style="overflow-y: visible">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Nama Proyek</th>
+                                            <th>Jenis Rencana Pembangunan</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($pengajuanDitolak as $ditolak)
+                                            <tr>
+                                                <td>{{ $ditolak->belongsToJenisRencana->nama }}</td>
+                                                <td>{{ $ditolak->hasOneDataPemohon->nama_proyek }}</td>
+                                                <td>
+                                                    <a href="{{ route('pemohon.show.pengajuan.andalalin', $ditolak->id) }}"
+                                                        class="btn btn-success btn-sm">Perbaiki Data</a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-5">
+                        <div class="card">
+                            <div class="card-header pt-5">
+                                <h1>Pengajuan Direvisi</h1>
+                            </div>
+                            <div class="card-body" style="overflow-y: visible">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Nama Proyek</th>
+                                            <th>Jenis Rencana Pembangunan</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($pengajuanPerluRevisi as $revisi)
+                                            <tr>
+                                                <td>{{ $revisi->belongsToJenisRencana->nama }}</td>
+                                                <td>{{ $revisi->hasOneDataPemohon->nama_proyek }}</td>
+                                                <td>
+                                                    <a href="{{ route('pemohon.show.pengajuan.andalalin', $revisi->id) }}"
+                                                        class="btn btn-success btn-sm">Revisi Data</a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-5">
+                        <div class="card">
+                            <div class="card-header pt-5">
+                                <h1>Pengajuan Disetujui</h1>
+                            </div>
+                            <div class="card-body" style="overflow-y: visible">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Nama Proyek</th>
+                                            <th>Jenis Rencana Pembangunan</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($pengajuanDisetujui as $disetujui)
+                                            <tr>
+                                                <td>{{ $disetujui->belongsToJenisRencana->nama }}</td>
+                                                <td>{{ $disetujui->hasOneDataPemohon->nama_proyek }}</td>
+                                                <td></td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

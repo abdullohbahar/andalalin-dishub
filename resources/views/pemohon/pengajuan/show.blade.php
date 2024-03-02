@@ -313,9 +313,12 @@
                                                 <tr>
                                                     <th>Nama Dokumen</th>
                                                     <th>Status</th>
-                                                    <th>Alasan</th>
                                                     <th>Lihat Dokumen</th>
-                                                    <th>Aksi</th>
+                                                    @if ($pengajuan->status == 'disetujui' || $pengajuan->status == 'menunggu konfirmasi admin')
+                                                    @else
+                                                        <th>Alasan</th>
+                                                        <th>Aksi</th>
+                                                    @endif
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -334,17 +337,21 @@
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            {{ $dokumen->alasan }}
-                                                        </td>
-                                                        <td>
                                                             <a target="_blank" href="{{ $dokumen->dokumen }}">Lihat
                                                                 Dokumen</a>
                                                         </td>
-                                                        <td>
-                                                            @if ($dokumen->status == 'revisi' || $dokumen->status == 'ditolak')
-                                                                <button class="btn btn-info btn-sm">Upload Ulang</button>
-                                                            @endif
-                                                        </td>
+                                                        @if ($pengajuan->status == 'disetujui' || $pengajuan->status == 'menunggu konfirmasi admin')
+                                                        @else
+                                                            <td>
+                                                                {{ $dokumen->alasan }}
+                                                            </td>
+                                                            <td>
+                                                                @if ($dokumen->status == 'revisi' || $dokumen->status == 'ditolak')
+                                                                    <button class="btn btn-info btn-sm">Upload
+                                                                        Ulang</button>
+                                                                @endif
+                                                            </td>
+                                                        @endif
                                                     </tr>
                                                 @endforeach
                                             </tbody>
