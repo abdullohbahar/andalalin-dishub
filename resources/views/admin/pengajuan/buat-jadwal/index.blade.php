@@ -1,4 +1,4 @@
-@extends('pemohon.layout.app')
+@extends('admin.layout.app')
 
 @section('title')
     Buat Jadwal Tinjauan Lapangan
@@ -103,10 +103,11 @@
             <div id="kt_app_content_container" class="app-container container-fluid">
                 <div class="row">
                     <div class="col-12">
+                        @include('admin.layout.stepper')
                         <div class="card">
                             <div class="card-header pt-5">
                                 <h1>Buat Jadwal Tinjauan Lapangan - {{ $pengajuan->hasOneDataPemohon->nama_proyek }}</h1>
-                                <div style="float: right">
+                                {{-- <div style="float: right">
                                     <form action="{{ route('pemohon.selesai.revisi', $pengajuan->id) }}" method="POST">
                                         @csrf
                                         @method('PUT')
@@ -114,7 +115,7 @@
                                             Selesai
                                         </button>
                                     </form>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         <div class="card-body">

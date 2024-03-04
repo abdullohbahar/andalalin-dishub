@@ -49,6 +49,7 @@
             <div id="kt_app_content_container" class="app-container container-fluid">
                 <div class="row">
                     <div class="col-12">
+                        @include('admin.layout.stepper')
                         <div class="card">
                             <div class="card-header pt-5">
                                 <h1>Verifikasi Pengajuan Permohonan</h1>

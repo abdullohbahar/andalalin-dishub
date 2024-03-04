@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Pengajuan;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\JadwalTinajuanLapangan;
-use App\Models\Pengajuan;
-use Illuminate\Http\Request;
 
 class CreateJadwalController extends Controller
 {
@@ -36,11 +37,11 @@ class CreateJadwalController extends Controller
     public function store(Request $request)
     {
         $jadwal = new JadwalTinajuanLapangan();
-        $cekPengajuan = $jadwal->where('pengajuan_id', $request->pengajuan_id)->first();
+        // $cekPengajuan = $jadwal->where('pengajuan_id', $request->pengajuan_id)->first();
 
-        if ($cekPengajuan) {
-            return redirect()->back()->with('failed', 'Anda telah menambahkan jadwal untuk pengajuan ini');
-        }
+        // if ($cekPengajuan) {
+        //     return redirect()->back()->with('failed', 'Anda telah menambahkan jadwal untuk pengajuan ini');
+        // }
 
         JadwalTinajuanLapangan::create([
             'pengajuan_id' => $request->pengajuan_id,
@@ -48,7 +49,48 @@ class CreateJadwalController extends Controller
             'jam' => $request->jam
         ]);
 
+        $data = $jadwal->with('belongsToPengajuan.belongsToUser.hasOneProfile', 'belongsToPengajuan.hasOneDataPemohon')->where('pengajuan_id', $request->pengajuan_id)->first();
+
+        $this->kirimNotifikasiJadwalDibuat($data);
+
+        // selanjutnya membuat stepper untuk tinjauan lapangan bersama
+        dd($data);
+
         return redirect()->back()->with('success', 'Berhasil Menambahkan Jadwal');
+    }
+
+    public function kirimNotifikasiJadwalDibuat($jadwal)
+    {
+        $nomorPemohon = $jadwal->belongsToPengajuan->belongsToUser->hasOneProfile->no_telepon;
+        $namaProyek = $jadwal->belongsToPengajuan->hasOneDataPemohon->nama_proyek;
+        $upperNamaProyek = Str::upper($namaProyek);
+        $namaWebsite = env('APP_URL');
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.fonnte.com/send',
+            CURLOPT_SSL_VERIFYPEER => FALSE,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array(
+                'target' => "$nomorPemohon", // nomer hp pemohon
+                'message' => "Admin telah membuat jadwal tinajaun lapangan pada proyek $upperNamaProyek, Harap melakukan pengecekan pada website $namaWebsite , untuk mengunduh jadwal tinjauan lapangan!",
+                'countryCode' => '62', //optional
+            ),
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
     }
 
     public function getDetailJadwal($jadwalID)

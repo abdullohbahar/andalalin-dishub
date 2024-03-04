@@ -117,22 +117,32 @@ class PengajuanController extends Controller
         if (in_array('ditolak', $statusDokumen)) {
             $this->kirimNotifikasiDitolak($pengajuan);
             $status = 'ditolak';
-            $tambahan = '';
+
+            Pengajuan::where('id', $pengajuanID)->update([
+                'status' => $status
+            ]);
+
+            return to_route('admin.pengajuan.index')->with('success', 'Terimakasih Telah Melakukan Verifikasi. Harap Menunggu Pemohon Mengajukan Permohonan Ulang');
         } else if (in_array('revisi', $statusDokumen)) {
             $this->kirimNotifikasiRevisi($pengajuan);
             $status = 'revisi';
-            $tambahan = '';
+
+            Pengajuan::where('id', $pengajuanID)->update([
+                'status' => $status
+            ]);
+
+            return to_route('admin.buat.jadwal', $pengajuanID)->with('success', 'Terimakasih Telah Melakukan Verifikasi.');
         } else {
             $this->kirimNotifikasiDisetujui($pengajuan);
             $status = 'disetujui';
             $tambahan = 'Silahkan membuatkan jadwal tinjauan lapangan untuk pemohon';
+
+            Pengajuan::where('id', $pengajuanID)->update([
+                'status' => $status
+            ]);
+
+            return to_route('admin.buat.jadwal', $pengajuanID)->with('success', 'Terimakasih Telah Melakukan Verifikasi. ' . $tambahan);
         }
-
-        Pengajuan::where('id', $pengajuanID)->update([
-            'status' => $status
-        ]);
-
-        return to_route('admin.pengajuan.index')->with('success', 'Terimakasih Telah Menyelesaikan Verifikasi.' . $tambahan);
     }
 
     public function kirimNotifikasiRevisi($pengajuan)
