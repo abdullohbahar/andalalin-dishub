@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CreateJadwalController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Guest\LoginController;
@@ -47,8 +48,15 @@ Route::prefix('admin')->group(function () {
         Route::put('tolak', [PengajuanController::class, 'tolak'])->name('admin.tolak.dokumen');
         Route::put('selesai-verifikasi/{pengajuanID}', [PengajuanController::class, 'selesaiVerifikasi'])->name('admin.selesai.verifikasi');
 
+        Route::prefix('buat-jadwal')->group(function () {
+            Route::get('{pengajuanID}', [CreateJadwalController::class, 'index'])->name('admin.buat.jadwal');
+            Route::post('store-jadwal', [CreateJadwalController::class, 'store'])->name('admin.store.jadwal');
+            Route::delete('/destroy/{jadwalID}', [CreateJadwalController::class, 'hapusJadwal'])->name('admin.destroy.jadwal');
+        });
+
         Route::prefix('ajax')->group(function () {
             Route::get('/setujui/{dokumenID}', [PengajuanController::class, 'setujui'])->name('admin.setujui.dokumen');
+            Route::get('/get-detai-jadwal/{jadwalID}', [CreateJadwalController::class, 'getDetailJadwal'])->name('admin.get.detail.jadwal');
         });
     });
 

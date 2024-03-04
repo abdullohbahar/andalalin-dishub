@@ -50,6 +50,11 @@ class Pengajuan extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function hasOneJadwalTinjauan(): HasOne
+    {
+        return $this->hasOne(JadwalTinajuanLapangan::class);
+    }
+
     protected function deadline(): Attribute
     {
         return Attribute::make(

@@ -86,10 +86,18 @@
                                                     {{ $pengajuan->status }}
                                                 </td>
                                                 <td>
-                                                    @if ($pengajuan->status == 'menunggu konfirmasi admin' || $pengajuan->status == 'telah direvisi')
+                                                    <div class="btn-group" role="group">
                                                         <a href="{{ route('admin.pengajuan.show', $pengajuan->id) }}"
-                                                            class="btn btn-info btn-sm">Verifikasi Data</a>
-                                                    @endif
+                                                            class="btn btn-primary btn-sm">Detail</a>
+                                                        @if ($pengajuan->status == 'menunggu konfirmasi admin' || $pengajuan->status == 'telah direvisi')
+                                                            <a href="{{ route('admin.pengajuan.show', $pengajuan->id) }}"
+                                                                class="btn btn-info btn-sm">Verifikasi Data</a>
+                                                        @endif
+                                                        @if ($pengajuan->status == 'disetujui' || $pengajuan->status == 'telah direvisi' || $pengajuan->status == 'direvisi')
+                                                            <a href="{{ route('admin.buat.jadwal', $pengajuan->id) }}"
+                                                                class="btn btn-info btn-warning">Buat Jadwal</a>
+                                                        @endif
+                                                    </div>
                                                 </td>
                                             </tr>
                                         @endforeach

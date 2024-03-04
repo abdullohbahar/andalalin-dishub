@@ -321,8 +321,11 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div style="float: right">
-                                            <button class="btn btn-danger mb-3" id="rejectBtn">Tolak Pengajuan
-                                                Permohonan</button>
+                                            @if ($pengajuan->status == 'disetujui')
+                                            @else
+                                                <button class="btn btn-danger mb-3" id="rejectBtn">Tolak Pengajuan
+                                                    Permohonan</button>
+                                            @endif
                                         </div>
                                         <table class="table table-striped table-bordered">
                                             <thead>
@@ -381,13 +384,16 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <form action="{{ route('admin.selesai.verifikasi', $pengajuan->id) }}" method="POST">
-                                    @csrf
-                                    @method('PUT')
-                                    <div style="float: right">
-                                        <button class="btn btn-success">Selesai Verifikasi Data</button>
-                                    </div>
-                                </form>
+                                @if ($pengajuan->status == 'disetujui')
+                                @else
+                                    <form action="{{ route('admin.selesai.verifikasi', $pengajuan->id) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <div style="float: right">
+                                            <button class="btn btn-success">Selesai Verifikasi Data</button>
+                                        </div>
+                                    </form>
+                                @endif
                             </div>
                         </div>
                     </div>
