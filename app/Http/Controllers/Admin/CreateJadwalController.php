@@ -37,11 +37,11 @@ class CreateJadwalController extends Controller
     public function store(Request $request)
     {
         $jadwal = new JadwalTinajuanLapangan();
-        // $cekPengajuan = $jadwal->where('pengajuan_id', $request->pengajuan_id)->first();
+        $cekPengajuan = $jadwal->where('pengajuan_id', $request->pengajuan_id)->first();
 
-        // if ($cekPengajuan) {
-        //     return redirect()->back()->with('failed', 'Anda telah menambahkan jadwal untuk pengajuan ini');
-        // }
+        if ($cekPengajuan) {
+            return redirect()->back()->with('failed', 'Anda telah menambahkan jadwal untuk pengajuan ini');
+        }
 
         JadwalTinajuanLapangan::create([
             'pengajuan_id' => $request->pengajuan_id,
@@ -54,9 +54,7 @@ class CreateJadwalController extends Controller
         $this->kirimNotifikasiJadwalDibuat($data);
 
         // selanjutnya membuat stepper untuk tinjauan lapangan bersama
-        dd($data);
-
-        return redirect()->back()->with('success', 'Berhasil Menambahkan Jadwal');
+        return to_route('admin.tinjauan.lapangan', $request->pengajuan_id)->with('success', 'Berhasil Menambahkan Jadwal, Harap Lakukan Tinjauan Lapangan Sesuai Jadwal Yang Telah Dibuat');
     }
 
     public function kirimNotifikasiJadwalDibuat($jadwal)

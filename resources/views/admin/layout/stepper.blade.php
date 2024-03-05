@@ -9,9 +9,9 @@
                 <div class="step-counter">2</div>
                 <div class="step-name text-center">Buat Jadwal Tinjauan Lapangan</div>
             </div>
-            <div class="stepper-item">
+            <div class="stepper-item {{ Route::is('admin.tinjauan.lapangan') ? 'active' : 'completed' }}">
                 <div class="step-counter">3</div>
-                <div class="step-name text-center">Third</div>
+                <div class="step-name text-center">Tinjauan Lapangan</div>
             </div>
             <div class="stepper-item">
                 <div class="step-counter">4</div>

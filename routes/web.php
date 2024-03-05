@@ -19,6 +19,7 @@ use App\Http\Controllers\Pemohon\PengajuanAndalalinController;
 use App\Http\Controllers\Admin\JenisRencanaPembangunanController;
 use App\Http\Controllers\Admin\PengajuanController;
 use App\Http\Controllers\Admin\SubJenisRencanaPembangunanController;
+use App\Http\Controllers\Admin\TinjauanLapanganController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +53,11 @@ Route::prefix('admin')->group(function () {
             Route::get('{pengajuanID}', [CreateJadwalController::class, 'index'])->name('admin.buat.jadwal');
             Route::post('store-jadwal', [CreateJadwalController::class, 'store'])->name('admin.store.jadwal');
             Route::delete('/destroy/{jadwalID}', [CreateJadwalController::class, 'hapusJadwal'])->name('admin.destroy.jadwal');
+        });
+
+        Route::prefix('tinjauan-lapangan')->group(function () {
+            Route::get('/{pengajuanID}', [TinjauanLapanganController::class, 'index'])->name('admin.tinjauan.lapangan');
+            Route::post('/telah-melakukan-tinjauan/{jadwalID}', [TinjauanLapanganController::class, 'telahMelakukanTinjauan'])->name('admin.telah.melakukan.tinjauan');
         });
 
         Route::prefix('ajax')->group(function () {
