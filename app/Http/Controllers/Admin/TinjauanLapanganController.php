@@ -11,7 +11,6 @@ class TinjauanLapanganController extends Controller
 {
     public function index($pengajuanID)
     {
-        // dd($pengajuanID);
         $pengajuan = Pengajuan::with(
             'hasOneDataPemohon.belongsToConsultan.hasOneProfile',
             'hasOneJadwalTinjauan'

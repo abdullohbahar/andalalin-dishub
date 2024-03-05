@@ -13,9 +13,9 @@
                 <div class="step-counter">3</div>
                 <div class="step-name text-center">Tinjauan Lapangan</div>
             </div>
-            <div class="stepper-item">
+            <div class="stepper-item {{ Route::is('admin.jadwal.sidang') ? 'active' : 'completed' }}">
                 <div class="step-counter">4</div>
-                <div class="step-name text-center">Forth</div>
+                <div class="step-name text-center">Jadwal Sidang</div>
             </div>
         </div>
     </div>

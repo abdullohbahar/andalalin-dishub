@@ -1,7 +1,7 @@
 @extends('admin.layout.app')
 
 @section('title')
-    Buat Jadwal Tinjauan Lapangan
+    Tinjauan Lapangan
 @endsection
 
 @push('addons-css')
@@ -72,7 +72,7 @@
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-                        Buat Jadwal Tinjauan Lapangan</h1>
+                        Tinjauan Lapangan</h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -87,7 +87,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Buat Jadwal Tinjauan Lapangan</li>
+                        <li class="breadcrumb-item text-muted">Tinjauan Lapangan</li>
                         <!--end::Item-->
                     </ul>
                     <!--end::Breadcrumb-->
@@ -149,10 +149,10 @@
                                                     lapangan</button>
                                             </form>
                                         @else
-                                            <form action="" method="POST" style="float: right">
-                                                @csrf
-                                                <button class="btn btn-success btn-sm">Selanjutnya</button>
-                                            </form>
+                                            <div style="float: right">
+                                                <a href="{{ route('admin.jadwal.sidang', $pengajuan->id) }}"
+                                                    class="btn btn-sm btn-success">Selanjutnya</a>
+                                            </div>
                                         @endif
                                     </div>
                                 </div>
@@ -174,7 +174,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Menangkap formulir saat di-submit
             var form = document.getElementById(
-            'tinjauanLapangan'); // Ganti 'tinjauanLapangan' dengan ID formulir Anda
+                'tinjauanLapangan'); // Ganti 'tinjauanLapangan' dengan ID formulir Anda
 
             form.addEventListener('submit', function(event) {
                 event.preventDefault(); // Mencegah formulir untuk langsung di-submit

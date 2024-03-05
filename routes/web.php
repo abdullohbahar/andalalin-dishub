@@ -8,6 +8,7 @@ use App\Http\Controllers\Role\PilihRoleController;
 use App\Http\Controllers\Admin\JenisJalanController;
 use App\Http\Controllers\Admin\UkuranMinimalController;
 use App\Http\Controllers\Admin\DashboardAdminController;
+use App\Http\Controllers\Admin\JadwalSidangController;
 use App\Http\Controllers\Pemohon\Ajax\ShowUkuranMinimal;
 use App\Http\Controllers\Pemohon\Ajax\ShowSubJenisRencana;
 use App\Http\Controllers\Pemohon\ProfilePemohonController;
@@ -58,6 +59,11 @@ Route::prefix('admin')->group(function () {
         Route::prefix('tinjauan-lapangan')->group(function () {
             Route::get('/{pengajuanID}', [TinjauanLapanganController::class, 'index'])->name('admin.tinjauan.lapangan');
             Route::post('/telah-melakukan-tinjauan/{jadwalID}', [TinjauanLapanganController::class, 'telahMelakukanTinjauan'])->name('admin.telah.melakukan.tinjauan');
+        });
+
+        Route::prefix('jadwal-sidang')->group(function () {
+            Route::get('/{pengajuanID}', [JadwalSidangController::class, 'index'])->name('admin.jadwal.sidang');
+            Route::post('buat-jadwal/{pengajuanID}', [JadwalSidangController::class, 'store'])->name('admin.store.jadwal.sidang');
         });
 
         Route::prefix('ajax')->group(function () {
