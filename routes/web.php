@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AktivitasController;
 use App\Http\Controllers\Admin\CreateJadwalController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
@@ -43,6 +44,8 @@ Route::post('auth', [LoginController::class, 'authenticate'])->name('authenticat
 Route::prefix('admin')->group(function () {
     Route::get('dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
 
+    Route::get('aktivitas/{pengajuanID}', AktivitasController::class)->name('admin.aktivitas.verifikasi');
+
     Route::prefix('pengajuan')->group(function () {
         Route::get('/', [PengajuanController::class, 'index'])->name('admin.pengajuan.index');
         Route::get('/detail/{pengajuanID}', [PengajuanController::class, 'show'])->name('admin.pengajuan.show');
@@ -63,7 +66,9 @@ Route::prefix('admin')->group(function () {
 
         Route::prefix('jadwal-sidang')->group(function () {
             Route::get('/{pengajuanID}', [JadwalSidangController::class, 'index'])->name('admin.jadwal.sidang');
-            Route::post('buat-jadwal/{pengajuanID}', [JadwalSidangController::class, 'store'])->name('admin.store.jadwal.sidang');
+            Route::post('buat-jadwal-sidang/{pengajuanID}', [JadwalSidangController::class, 'store'])->name('admin.store.jadwal.sidang');
+            Route::get('detail/{pengajuanID}', [JadwalSidangController::class, 'jadwalSidang'])->name('admin.detail.jadwal.sidang');
+            Route::post('telah-melakukan-sidang/{pengajuanID}', [JadwalSidangController::class, 'telahMelakukanSidang'])->name('admin.telah.melakukan.sidang');
         });
 
         Route::prefix('ajax')->group(function () {

@@ -42,14 +42,14 @@
                         </table>
                     </div>
                 </div>
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-12">
                         Klik tombol dibawah ini jika anda ingin menghapus jadwal ini <br>
                         <button id="btnHapus" class="btn btn-sm btn-danger">
                             Hapus
                         </button>
                     </div>
-                </div>
+                </div> --}}
             </div>
 
             <div class="modal-footer">

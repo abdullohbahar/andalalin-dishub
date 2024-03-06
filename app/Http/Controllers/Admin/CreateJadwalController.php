@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\JadwalTinajuanLapangan;
+use App\Models\RiwayatVerifikasi;
 
 class CreateJadwalController extends Controller
 {
@@ -47,6 +48,12 @@ class CreateJadwalController extends Controller
             'pengajuan_id' => $request->pengajuan_id,
             'tanggal' => $request->tanggal,
             'jam' => $request->jam
+        ]);
+
+        RiwayatVerifikasi::updateorcreate([
+            'pengajuan_id' => $request->pengajuan_id,
+        ], [
+            'step' => 'Tinjauan Lapangan'
         ]);
 
         $data = $jadwal->with('belongsToPengajuan.belongsToUser.hasOneProfile', 'belongsToPengajuan.hasOneDataPemohon')->where('pengajuan_id', $request->pengajuan_id)->first();

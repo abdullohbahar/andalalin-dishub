@@ -391,7 +391,7 @@
                                         @csrf
                                         @method('PUT')
                                         <div style="float: right">
-                                            <button class="btn btn-success">Selesai Verifikasi Data</button>
+                                            <button class="btn btn-success">Selanjutnya</button>
                                         </div>
                                     </form>
                                 @endif

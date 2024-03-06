@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\JadwalTinajuanLapangan;
 use App\Models\Pengajuan;
 use Illuminate\Http\Request;
+use App\Models\RiwayatVerifikasi;
+use App\Http\Controllers\Controller;
+use App\Models\JadwalTinajuanLapangan;
 
 class TinjauanLapanganController extends Controller
 {
@@ -27,8 +28,16 @@ class TinjauanLapanganController extends Controller
 
     public function telahMelakukanTinjauan($jadwalID)
     {
+        $jadwal = JadwalTinajuanLapangan::findorfail($jadwalID);
+
         JadwalTinajuanLapangan::where('id', $jadwalID)->update([
             'is_review' => true
+        ]);
+
+        RiwayatVerifikasi::updateorcreate([
+            'pengajuan_id' => $jadwal->pengajuan_id,
+        ], [
+            'step' => 'Buat Jadwal Sidang'
         ]);
 
         return redirect()->back()->with('success', 'Terimakasih telah melakukan peninjauan lapangan');

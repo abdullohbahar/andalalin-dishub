@@ -60,6 +60,11 @@ class Pengajuan extends Model
         return $this->hasOne(JadwalSidang::class);
     }
 
+    public function hasOneRiwayatVerifikasi(): HasOne
+    {
+        return $this->hasOne(RiwayatVerifikasi::class);
+    }
+
     protected function deadline(): Attribute
     {
         return Attribute::make(
