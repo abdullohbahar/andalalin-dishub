@@ -8,6 +8,7 @@ use App\Models\JenisJalan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\JenisRencanaPembangunan;
+use App\Models\RiwayatInputData;
 
 class PengajuanPemohonController extends Controller
 {
@@ -42,6 +43,12 @@ class PengajuanPemohonController extends Controller
             'user_id' => $userID,
             'jenis_pengajuan' => 'andalalin',
             'status' => 'input data belum selesai'
+        ]);
+
+        RiwayatInputData::updateorcreate([
+            'pengajuan_id' => $pengajuan->id
+        ], [
+            'step' => 'Buat Pengajuan Baru'
         ]);
 
         return to_route('pemohon.create.pengajuan.andalalin', $pengajuan->id);

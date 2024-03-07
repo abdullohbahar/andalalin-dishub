@@ -9,6 +9,7 @@ use App\Models\JenisJalan;
 use App\Models\DataPemohon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\RiwayatInputData;
 use App\Models\DokumenDataPemohon;
 use App\Http\Controllers\Controller;
 use App\Models\JenisRencanaPembangunan;
@@ -50,6 +51,12 @@ class PengajuanAndalalinController extends Controller
         }
 
         $pengajuan = Pengajuan::where('id', $pengajuanID)->update($data);
+
+        RiwayatInputData::updateorcreate([
+            'pengajuan_id' => $pengajuanID
+        ], [
+            'step' => 'Input Data Permohonan Dan Data Konsultan'
+        ]);
 
         return to_route('pemohon.pilih.konsultan.pengajuan.andalalin', $pengajuanID);
     }
@@ -112,6 +119,12 @@ class PengajuanAndalalinController extends Controller
             'tanggal_surat_permohonan' => $request->tanggal_surat_permohonan,
             'longitude' => $request->longitude,
             'latitude' => $request->latitude,
+        ]);
+
+        RiwayatInputData::updateorcreate([
+            'pengajuan_id' => $request->pengajuan_id
+        ], [
+            'step' => 'Upload Dokumen Permohonan'
         ]);
 
         $this->kirimNotifikasiKeKonsultan($request->pengajuan_id);
@@ -265,6 +278,12 @@ class PengajuanAndalalinController extends Controller
         Pengajuan::where('id', $dataPemohon->pengajuan_id)->update([
             'status' => 'menunggu konfirmasi admin',
             'deadline' => $nextWorkingDay->toDateString(),
+        ]);
+
+        RiwayatInputData::updateorcreate([
+            'pengajuan_id' => $dataPemohon->pengajuan_id
+        ], [
+            'step' => 'Menunggu Verifikasi Data'
         ]);
 
         $this->kirimNotifikasiKeAdmin($dataPemohon->pengajuan_id);

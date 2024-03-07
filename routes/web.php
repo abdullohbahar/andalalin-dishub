@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\PengajuanController;
 use App\Http\Controllers\Admin\SubJenisRencanaPembangunanController;
 use App\Http\Controllers\Admin\TinjauanLapanganController;
 use App\Http\Controllers\Konsultan\DashboardKonsultan;
+use App\Http\Controllers\Pemohon\RiwayatInputDataController;
 
 /*
 |--------------------------------------------------------------------------
@@ -137,8 +138,11 @@ Route::prefix('pemohon')->middleware('choose.role', 'pemohon')->group(function (
         Route::get('/create-tipe-andalalin', [PengajuanPemohonController::class, 'createTipeAndalalin'])->name('pemohon.create.tipe.andalalin');
 
         Route::prefix('andalalin')->group(function () {
+            Route::get('riwayat-input-data/{pengajuanID}', RiwayatInputDataController::class)->name('pemohon.riwayat.input.data');
+
             Route::get('/create/{id}', [PengajuanAndalalinController::class, 'createAndalalin'])->name('pemohon.create.pengajuan.andalalin');
             Route::put('/store/{pengajuanID}', [PengajuanAndalalinController::class, 'updateAndalalin'])->name('pemohon.store.pengajuan.andalalin');
+
 
             Route::get('/pilih-konsultan/{idPengajuan}', [PengajuanAndalalinController::class, 'pilihKonsultan'])->name('pemohon.pilih.konsultan.pengajuan.andalalin');
             Route::post('/store-pemohon', [PengajuanAndalalinController::class, 'storeDataPemohon'])->name('pemohon.store.data.pemohon.andalalin');
