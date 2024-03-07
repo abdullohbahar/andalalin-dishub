@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\JenisRencanaPembangunanController;
 use App\Http\Controllers\Admin\PengajuanController;
 use App\Http\Controllers\Admin\SubJenisRencanaPembangunanController;
 use App\Http\Controllers\Admin\TinjauanLapanganController;
+use App\Http\Controllers\Konsultan\DashboardKonsultan;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +42,7 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('keycloak.logout'
 
 Route::post('auth', [LoginController::class, 'authenticate'])->name('authenticate');
 
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware('admin')->group(function () {
     Route::get('dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
 
     Route::get('aktivitas/{pengajuanID}', AktivitasController::class)->name('admin.aktivitas.verifikasi');
@@ -127,7 +128,7 @@ Route::prefix('admin')->group(function () {
 Route::get('pilih-role', [PilihRoleController::class, 'index'])->name('pilih-role');
 Route::get('pilih-role/{role}', [PilihRoleController::class, 'store'])->name('store.pilih.role');
 
-Route::prefix('pemohon')->middleware('choose.role')->group(function () {
+Route::prefix('pemohon')->middleware('choose.role', 'pemohon')->group(function () {
     Route::get('dashboard', [DashboardPemohonController::class, 'index'])->middleware('check.profile')->name('pemohon.dashboard');
 
     Route::prefix('pengajuan')->middleware('check.profile')->group(function () {
@@ -151,15 +152,19 @@ Route::prefix('pemohon')->middleware('choose.role')->group(function () {
         });
     });
 
-    Route::prefix('profile')->group(function () {
-        Route::get('/', [ProfilePemohonController::class, 'index'])->name('pemohon.profile');
-        Route::get('/edit/{id}', [ProfilePemohonController::class, 'edit'])->name('pemohon.edit.profile');
-        Route::put('/update/{id}', [ProfilePemohonController::class, 'update'])->name('pemohon.update.profile');
-    });
-
     Route::prefix('ajax')->group(function () {
         Route::get('/show-sub-jenis-rencana/{idJenis}', ShowSubJenisRencana::class)->name('show.sub.jenis.rencana');
         Route::get('/show-sub-sub-jenis-rencana/{idSubJenisRencana}', ShowSubSubJenisRencana::class)->name('show.sub.sub.jenis.rencana');
         Route::get('/show-ukuran-minimal/{jenis}/{idSubJenisRencana}', ShowUkuranMinimal::class)->name('show.ukuran.minimal');
     });
+});
+
+Route::prefix('konsultan')->middleware('choose.role', 'konsultan')->group(function () {
+    Route::get('dashboard', [DashboardKonsultan::class, 'index'])->middleware('check.profile')->name('konsultan.dashboard');
+});
+
+Route::prefix('profile')->middleware('auth')->group(function () {
+    Route::get('/', [ProfilePemohonController::class, 'index'])->name('pemohon.profile');
+    Route::get('/edit/{id}', [ProfilePemohonController::class, 'edit'])->name('pemohon.edit.profile');
+    Route::put('/update/{id}', [ProfilePemohonController::class, 'update'])->name('pemohon.update.profile');
 });

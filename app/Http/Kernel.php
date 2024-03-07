@@ -2,8 +2,11 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\CheckProfileMiddleware;
 use App\Http\Middleware\ChooseRoleMiddleware;
+use App\Http\Middleware\KonsultanMiddleware;
+use App\Http\Middleware\PemohonMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -66,6 +69,9 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'check.profile' => CheckProfileMiddleware::class,
-        'choose.role' => ChooseRoleMiddleware::class
+        'choose.role' => ChooseRoleMiddleware::class,
+        'admin' => AdminMiddleware::class,
+        'pemohon' => PemohonMiddleware::class,
+        'konsultan' => KonsultanMiddleware::class,
     ];
 }

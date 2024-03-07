@@ -58,7 +58,7 @@ class PengajuanAndalalinController extends Controller
     {
         $userID = auth()->user()->id;
         $konsultans = User::with('hasOneProfile')
-            // ->where('role', 'konsultan')
+            ->where('role', 'konsultan')
             ->get();
 
         $pengajuan = Pengajuan::with('belongsToUkuranMinimal', 'belongsToJenisJalan', 'belongsToJenisRencana', 'belongsToSubJenisRencana', 'belongsToSubSubJenisRencana')
