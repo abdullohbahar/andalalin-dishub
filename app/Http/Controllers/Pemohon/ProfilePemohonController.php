@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class ProfilePemohonController extends Controller
 {
@@ -41,6 +42,8 @@ class ProfilePemohonController extends Controller
             'no_telepon' => 'required',
             'alamat' => 'required',
             'file_ktp' => 'required',
+            'username' => 'required|unique:users,username',
+            'password' => 'required|min:8'
         ], [
             'nama.required' => 'Nama harus diisi',
             'no_ktp.required' => 'Nomor KTP harus diisi',
@@ -140,6 +143,16 @@ class ProfilePemohonController extends Controller
         Profile::updateorcreate([
             'user_id' => $id,
         ], $data);
+
+        $dataUser = [
+            'username' => $request->username
+        ];
+
+        if ($request->password) {
+            $dataUser['password'] = Hash::make($request->password);
+        }
+
+        User::where('id', $id)->update($dataUser);
 
         return to_route('pemohon.profile')->with('success', 'Berhasil Mengisi Profile');
     }

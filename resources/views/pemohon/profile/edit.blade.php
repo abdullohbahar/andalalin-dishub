@@ -116,6 +116,37 @@
                                                 </div>
                                             @enderror
                                         </div>
+                                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-3">
+                                            <label for="" class="form-label">
+                                                Username <span style="color: red">*</span>
+                                            </label>
+                                            <input type="text" name="username"
+                                                class="form-control @error('username') is-invalid @enderror"
+                                                placeholder="Masukkan Username Anda"
+                                                value="{{ old('username', $user->username ?? '') }}" id="">
+                                            @error('username')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-3">
+                                            <label for="" class="form-label">
+                                                Password
+                                                @if (!$user->password)
+                                                    <span style="color: red">*</span>
+                                                @endif
+                                            </label>
+                                            <input type="password" name="password"
+                                                {{ $user->password == null ? 'required' : '' }}
+                                                class="form-control @error('password') is-invalid @enderror"
+                                                placeholder="Masukkan password Anda" id="">
+                                            @error('password')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
                                         <div class="col-12">
                                             <hr>
                                         </div>
