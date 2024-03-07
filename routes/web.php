@@ -146,6 +146,8 @@ Route::prefix('pemohon')->middleware('choose.role', 'pemohon')->group(function (
             Route::get('upload-dokumen-pemohon/{idDataPemohon}', [PengajuanAndalalinController::class, 'uploadDokumenPemohon'])->name('pemohon.upload.dokumen.pemohon');
             Route::post('store-dokumen-pemohon', [PengajuanAndalalinController::class, 'storeDokumenPemohon'])->name('pemohon.store.dokumen.pemohon');
 
+            Route::get('menunggu-verifikasi-data/{pengajuanID}', [PengajuanAndalalinController::class, 'menungguVerifikasiData'])->name('pemohon.menunggu.verifikasi.data');
+
             Route::get('/detail/{pengajuanID}', [PengajuanAndalalinController::class, 'show'])->name('pemohon.show.pengajuan.andalalin');
             Route::put('upload-dokumen-revisi', [PengajuanAndalalinController::class, 'uploadRevisiDokumen'])->name('pemohon.upload.dokumen.revisi');
             Route::put('selesai-revisi/{pengajuanID}', [PengajuanAndalalinController::class, 'selesaiRevisi'])->name('pemohon.selesai.revisi');

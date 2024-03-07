@@ -47,7 +47,8 @@
             <!--begin::Content container-->
             <div id="kt_app_content_container" class="app-container container-fluid">
                 <div class="row">
-                    <div class="col-sm-12 mt-3">
+                    <div class="col-12 mt-3">
+                        @include('pemohon.layout.stepper')
                         <div class="card">
                             <div class="card-header">
                                 <h2 class="mt-5">Buat Pengajuan Andalalin Baru</h2>

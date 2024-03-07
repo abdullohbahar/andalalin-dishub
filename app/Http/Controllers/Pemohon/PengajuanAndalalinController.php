@@ -114,7 +114,44 @@ class PengajuanAndalalinController extends Controller
             'latitude' => $request->latitude,
         ]);
 
-        return to_route('pemohon.upload.dokumen.pemohon', $dataPemohon->id);
+        $this->kirimNotifikasiKeKonsultan($request->pengajuan_id);
+
+        return to_route('pemohon.upload.dokumen.pemohon', $dataPemohon->id)->with('success', 'Silahkan melakukan koordinasi dengan konsultan untuk upload dokumen');
+    }
+
+    public function kirimNotifikasiKeKonsultan($pengajuanID)
+    {
+        $pengajuan = Pengajuan::with('belongsToUser', 'hasOneDataPemohon.belongsToConsultan')->where('id', $pengajuanID)->first();
+
+        $namaPemohon = $pengajuan->belongsToUser->hasOneProfile->nama;
+        $namaProyek = $pengajuan->hasOneDataPemohon->nama_proyek;
+        $nomerHpKonsultan = $pengajuan->hasOneDataPemohon->belongsToConsultan->hasOneProfile->no_telepon;
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.fonnte.com/send',
+            CURLOPT_SSL_VERIFYPEER => FALSE,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array(
+                'target' => "$nomerHpKonsultan", // nomer hp konsultan
+                'message' => "Anda telah dipilih sebagai konsultan proyek, dengan rincian data berikut:\nNama Pemohon: $namaPemohon\nNama Proyek: $namaProyek\nHarap lakukan pengecekan pada website dan koordinasi dengan pemohon untuk dokumen yang diupload.",
+                'countryCode' => '62', //optional
+            ),
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
     }
 
     public function uploadDokumenPemohon($idDataPemohon)
@@ -232,7 +269,19 @@ class PengajuanAndalalinController extends Controller
 
         $this->kirimNotifikasiKeAdmin($dataPemohon->pengajuan_id);
 
-        return to_route('pemohon.pengajuan')->with('success', 'Terimakasih telah mengisi data yang sesuai. Harap menunggu konfirmasi admin, paling lambat 3 hari kerja');
+        return to_route('pemohon.menunggu.verifikasi.data', $dataPemohon->pengajuan_id)->with('success', 'Terimakasih telah mengisi data yang sesuai. Harap menunggu konfirmasi admin, paling lambat 3 hari kerja');
+    }
+
+    public function menungguVerifikasiData($pengajuanID)
+    {
+        $pengajuan = Pengajuan::findorfail($pengajuanID);
+
+        $data = [
+            'active' => 'pengajuan',
+            'pengajuan' => $pengajuan
+        ];
+
+        return view('pemohon.pengajuan.andalalin.menunggu-verifikasi', $data);
     }
 
     public function kirimNotifikasiKeAdmin($pengajuanID)

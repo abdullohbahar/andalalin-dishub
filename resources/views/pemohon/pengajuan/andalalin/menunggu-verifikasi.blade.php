@@ -1,7 +1,7 @@
 @extends('pemohon.layout.app')
 
 @section('title')
-    Buat Pengajuan Baru
+    Verifikasi Data
 @endsection
 
 @push('addons-css')
@@ -17,7 +17,7 @@
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-                        Buat Pengajuan Baru</h1>
+                        Verifikasi Data</h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -32,7 +32,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Buat Pengajuan Baru</li>
+                        <li class="breadcrumb-item text-muted">Verifikasi Data</li>
                         <!--end::Item-->
                     </ul>
                     <!--end::Breadcrumb-->
@@ -47,33 +47,26 @@
             <!--begin::Content container-->
             <div id="kt_app_content_container" class="app-container container-fluid">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-12 mt-3">
                         @include('pemohon.layout.stepper')
-                    </div>
-                    <div class="col-12">
                         <div class="card">
-                            <div class="card-header pt-5">
-                                <h1>Pilih Tipe</h1>
+                            <div class="card-header">
+                                <h2 class="mt-5">Verifikasi Data</h2>
+                            </div>
+                            <div class="card-body">
+                                <h2 class="text-center">
+                                    <b>Harap Menunggu Admin Untuk Memverifikasi Data Yang Telah Anda Ajukan!</b>
+                                </h2>
+                            </div>
+                            <div class="card-footer"
+                                {{ $pengajuan->status == 'revisi' || $pengajuan->status == 'disetujui' ? '' : 'hidden' }}>
+                                <form action="" style="float: right;">
+                                    <button class="btn btn-success btn-sm">Selanjutnya</button>
+                                </form>
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-sm-12 mt-3 col-md-6">
-                        <a href="{{ route('pemohon.create.tipe.andalalin') }}" class="card bg-primary">
-                            <div class="card-body text-center">
-                                <h1>Andalalin</h1>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-sm-12 mt-3 col-md-6">
-                        <a href="" class="card text-white bg-primary">
-                            <div class="card-body text-center">
-                                <h1>Non Andalalin</h1>
-                            </div>
-                        </a>
-                    </div>
                 </div>
-
             </div>
             <!--end::Content container-->
         </div>
