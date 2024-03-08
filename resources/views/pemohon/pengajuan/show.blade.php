@@ -367,7 +367,7 @@
                                     </div>
                                 </div>
                             </div>
-                            @if ($dokumen->status == 'revisi' || $dokumen->status == 'ditolak' || $isRevised == 1)
+                            {{-- @if ($dokumen->status == 'revisi' || $dokumen->status == 'ditolak' || $isRevised == 1)
                                 <div class="card-footer">
                                     <div style="float: right">
                                         <form action="{{ route('pemohon.selesai.revisi', $pengajuan->id) }}"
@@ -380,7 +380,7 @@
                                         </form>
                                     </div>
                                 </div>
-                            @endif
+                            @endif --}}
                         </div>
                     </div>
                 </div>

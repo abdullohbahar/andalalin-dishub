@@ -143,12 +143,13 @@ Route::prefix('pemohon')->middleware('choose.role', 'pemohon')->group(function (
             Route::get('/create/{id}', [PengajuanAndalalinController::class, 'createAndalalin'])->name('pemohon.create.pengajuan.andalalin');
             Route::put('/store/{pengajuanID}', [PengajuanAndalalinController::class, 'updateAndalalin'])->name('pemohon.store.pengajuan.andalalin');
 
-
             Route::get('/pilih-konsultan/{idPengajuan}', [PengajuanAndalalinController::class, 'pilihKonsultan'])->name('pemohon.pilih.konsultan.pengajuan.andalalin');
             Route::post('/store-pemohon', [PengajuanAndalalinController::class, 'storeDataPemohon'])->name('pemohon.store.data.pemohon.andalalin');
 
-            Route::get('upload-dokumen-pemohon/{idDataPemohon}', [PengajuanAndalalinController::class, 'uploadDokumenPemohon'])->name('pemohon.upload.dokumen.pemohon');
+            Route::get('upload-dokumen-pemohon/{pengajuanID}', [PengajuanAndalalinController::class, 'uploadDokumenPemohon'])->name('pemohon.upload.dokumen.pemohon');
             Route::post('store-dokumen-pemohon', [PengajuanAndalalinController::class, 'storeDokumenPemohon'])->name('pemohon.store.dokumen.pemohon');
+
+            Route::post('after-upload-dokumen', [PengajuanAndalalinController::class, 'afterUploadDokumen'])->name('after.upload.dokumen');
 
             Route::get('menunggu-verifikasi-data/{pengajuanID}', [PengajuanAndalalinController::class, 'menungguVerifikasiData'])->name('pemohon.menunggu.verifikasi.data');
 

@@ -129,7 +129,7 @@ class PengajuanAndalalinController extends Controller
 
         $this->kirimNotifikasiKeKonsultan($request->pengajuan_id);
 
-        return to_route('pemohon.upload.dokumen.pemohon', $dataPemohon->id)->with('success', 'Silahkan melakukan koordinasi dengan konsultan untuk upload dokumen');
+        return to_route('pemohon.upload.dokumen.pemohon', $request->pengajuan_id)->with('success', 'Silahkan melakukan koordinasi dengan konsultan untuk upload dokumen');
     }
 
     public function kirimNotifikasiKeKonsultan($pengajuanID)
@@ -167,13 +167,24 @@ class PengajuanAndalalinController extends Controller
         curl_close($curl);
     }
 
-    public function uploadDokumenPemohon($idDataPemohon)
+    public function uploadDokumenPemohon($pengajuanID)
     {
-        $dataPemohon = DataPemohon::findorfail($idDataPemohon);
+        $dataPemohon = DataPemohon::with('hasManyDokumenDataPemohon')->where('pengajuan_id', $pengajuanID)->firstorfail();
+
+        $suratPermohonan = $dataPemohon->hasManyDokumenDataPemohon->where('nama_dokumen', 'Surat Permohonan')->first()?->dokumen;
+        $dokumenSitePlan = $dataPemohon->hasManyDokumenDataPemohon->where('nama_dokumen', 'Dokumen Site Plan')->first()?->dokumen;
+        $suratAspekTataRuang = $dataPemohon->hasManyDokumenDataPemohon->where('nama_dokumen', 'Surat Aspek Tata Ruang')->first()?->dokumen;
+        $sertifikatTanah = $dataPemohon->hasManyDokumenDataPemohon->where('nama_dokumen', 'Sertifikat Tanah')->first()?->dokumen;
+        $kkop = $dataPemohon->hasManyDokumenDataPemohon->where('nama_dokumen', 'KKOP')->first()?->dokumen;
 
         $data = [
             'active' => 'pengajuan',
-            'dataPemohon' => $dataPemohon
+            'dataPemohon' => $dataPemohon,
+            'suratPermohonan' => $suratPermohonan,
+            'dokumenSitePlan' => $dokumenSitePlan,
+            'suratAspekTataRuang' => $suratAspekTataRuang,
+            'sertifikatTanah' => $sertifikatTanah,
+            'kkop' => $kkop
         ];
 
         return view('pemohon.pengajuan.andalalin.upload-dokumen-pemohon', $data);
@@ -191,10 +202,11 @@ class PengajuanAndalalinController extends Controller
             $filepath = $location . $filename;
             $file->storeAs('public/' . $location, $filename);
 
-            DokumenDataPemohon::create([
+            DokumenDataPemohon::updateorcreate([
                 'data_pemohon_id' => $request->data_pemohon_id,
                 'user_id' => $userID,
                 'nama_dokumen' => 'Surat Permohonan',
+            ], [
                 'dokumen' => $filepath,
                 'is_verified' => false
             ]);
@@ -207,10 +219,11 @@ class PengajuanAndalalinController extends Controller
             $filepath = $location . $filename;
             $file->storeAs('public/' . $location, $filename);
 
-            DokumenDataPemohon::create([
+            DokumenDataPemohon::updateorcreate([
                 'data_pemohon_id' => $request->data_pemohon_id,
                 'user_id' => $userID,
                 'nama_dokumen' => 'Dokumen Site Plan',
+            ], [
                 'dokumen' => $filepath,
                 'is_verified' => false
             ]);
@@ -223,10 +236,11 @@ class PengajuanAndalalinController extends Controller
             $filepath = $location . $filename;
             $file->storeAs('public/' . $location, $filename);
 
-            DokumenDataPemohon::create([
+            DokumenDataPemohon::updateorcreate([
                 'data_pemohon_id' => $request->data_pemohon_id,
                 'user_id' => $userID,
                 'nama_dokumen' => 'Surat Aspek Tata Ruang',
+            ], [
                 'dokumen' => $filepath,
                 'is_verified' => false
             ]);
@@ -239,10 +253,11 @@ class PengajuanAndalalinController extends Controller
             $filepath = $location . $filename;
             $file->storeAs('public/' . $location, $filename);
 
-            DokumenDataPemohon::create([
+            DokumenDataPemohon::updateorcreate([
                 'data_pemohon_id' => $request->data_pemohon_id,
                 'user_id' => $userID,
                 'nama_dokumen' => 'Sertifikat Tanah',
+            ], [
                 'dokumen' => $filepath,
                 'is_verified' => false
             ]);
@@ -255,14 +270,22 @@ class PengajuanAndalalinController extends Controller
             $filepath = $location . $filename;
             $file->storeAs('public/' . $location, $filename);
 
-            DokumenDataPemohon::create([
+            DokumenDataPemohon::updateorcreate([
                 'data_pemohon_id' => $request->data_pemohon_id,
                 'user_id' => $userID,
                 'nama_dokumen' => 'KKOP',
+            ], [
                 'dokumen' => $filepath,
                 'is_verified' => false
             ]);
         }
+
+        return redirect()->back()->with('success', 'File berhasil diupload');
+    }
+
+    public function afterUploadDokumen(Request $request)
+    {
+        $dataPemohon = DataPemohon::findorfail($request->data_pemohon_id);
 
         // Mendapatkan tanggal hari ini
         $today = Carbon::now();

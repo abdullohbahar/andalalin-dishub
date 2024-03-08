@@ -287,7 +287,7 @@
                                                         Permohonan</label>
                                                     <input type="date" class="form-control"
                                                         name="tanggal_surat_permohonan"
-                                                        value="{{ old('tanggal_surat_permohonan', $dataPemohon->tanggal_surat_permohonan ?? '') }}"
+                                                        value="{{ old('tanggal_surat_permohonan', $dataPemohon->getRawOriginal('tanggal_surat_permohonan') ?? '') }}"
                                                         required id="">
                                                 </div>
                                                 <div class="row">
@@ -308,7 +308,7 @@
                                                         <label for="" class="form-label">latitude</label>
                                                         <input type="text" readonly class="form-control"
                                                             name="latitude"
-                                                            value="{{ old('latitude', $dataPemohon->latitidue ?? '') }}"
+                                                            value="{{ old('latitude', $dataPemohon->latitude ?? '') }}"
                                                             required id="latitude">
                                                     </div>
                                                     <div class="col-12 mt-2">
