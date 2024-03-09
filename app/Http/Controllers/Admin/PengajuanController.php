@@ -106,13 +106,24 @@ class PengajuanController extends Controller
             'belongsToSubSubJenisRencana',
             'hasOneDataPemohon.hasManyDokumenDataPemohon',
             'hasOneDataPemohon.belongsToConsultan.hasOneProfile',
-            'belongsToUser.hasOneProfile'
+            'belongsToUser.hasOneProfile',
+            'hasOneDataPemohon.belongsToConsultan'
         )
             ->findorfail($pengajuanID);
+
 
         $statusDokumen = [];
         foreach ($pengajuan->hasOneDataPemohon->hasManyDokumenDataPemohon as $dokumen) {
             $statusDokumen[] = $dokumen->status;
+        }
+
+        // Menggunakan array_filter untuk memeriksa apakah semua nilai adalah null
+        $isSemuaNull = count(array_filter($statusDokumen, function ($status) {
+            return $status !== null;
+        })) === 0;
+
+        if ($isSemuaNull) {
+            return redirect()->back()->with('terminated', 'Harap melakukan verifikasi pada dokumen yang ada');
         }
 
         if (in_array('ditolak', $statusDokumen)) {
@@ -161,6 +172,8 @@ class PengajuanController extends Controller
     public function kirimNotifikasiRevisi($pengajuan)
     {
         $nomorPemohon = $pengajuan->belongsToUser->hasOneProfile->no_telepon;
+        $nomorKonsultan = $pengajuan->hasOneDataPemohon->belongsToConsultan->hasOneProfile->no_telepon;
+
         $namaProyek = $pengajuan->hasOneDataPemohon->nama_proyek;
         $upperNamaProyek = Str::upper($namaProyek);
 
@@ -186,8 +199,8 @@ class PengajuanController extends Controller
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => array(
-                'target' => "$nomorPemohon", // nomer hp pemohon
-                'message' => "Admin telah melakukan verifikasi pada data yang anda unggah pada proyek $upperNamaProyek, adapun dokumen yang perlu DIREVISI yaitu:\n$implode\nHarap untuk mengunggah ulang dokumen tersebut.",
+                'target' => "$nomorPemohon, $nomorKonsultan", // nomer hp pemohon
+                'message' => "Admin telah melakukan verifikasi pada data telah unggah pada proyek $upperNamaProyek, adapun dokumen yang perlu DIREVISI yaitu:\n$implode\nHarap untuk mengunggah ulang dokumen tersebut.",
                 'countryCode' => '62', //optional
             ),
             CURLOPT_HTTPHEADER => array(
@@ -203,6 +216,8 @@ class PengajuanController extends Controller
     public function kirimNotifikasiDitolak($pengajuan)
     {
         $nomorPemohon = $pengajuan->belongsToUser->hasOneProfile->no_telepon;
+        $nomorKonsultan = $pengajuan->hasOneDataPemohon->belongsToConsultan->hasOneProfile->no_telepon;
+
         $namaProyek = $pengajuan->hasOneDataPemohon->nama_proyek;
         $upperNamaProyek = Str::upper($namaProyek);
 
@@ -223,8 +238,8 @@ class PengajuanController extends Controller
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => array(
-                'target' => "$nomorPemohon", // nomer hp pemohon
-                'message' => "Admin telah melakukan verifikasi pada data yang anda unggah pada proyek $upperNamaProyek, permohonan anda DITOLAK oleh Admin. Adapun alasan penolakannya sebagai berikut:\n$alasan\nHarap untuk melakukan pengisian data ulang.",
+                'target' => "$nomorPemohon, $nomorKonsultan", // nomer hp pemohon
+                'message' => "Admin telah melakukan verifikasi pada data yang telah diunggah pada proyek $upperNamaProyek, permohonan anda DITOLAK oleh Admin. Adapun alasan penolakannya sebagai berikut:\n$alasan\nHarap untuk melakukan pengisian data ulang.",
                 'countryCode' => '62', //optional
             ),
             CURLOPT_HTTPHEADER => array(
@@ -240,6 +255,8 @@ class PengajuanController extends Controller
     public function kirimNotifikasiDisetujui($pengajuan)
     {
         $nomorPemohon = $pengajuan->belongsToUser->hasOneProfile->no_telepon;
+        $nomorKonsultan = $pengajuan->hasOneDataPemohon->belongsToConsultan->hasOneProfile->no_telepon;
+
         $namaProyek = $pengajuan->hasOneDataPemohon->nama_proyek;
         $upperNamaProyek = Str::upper($namaProyek);
 
@@ -256,8 +273,8 @@ class PengajuanController extends Controller
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => array(
-                'target' => "$nomorPemohon", // nomer hp pemohon
-                'message' => "Admin telah melakukan verifikasi pada data yang anda unggah pada proyek $upperNamaProyek, permohonan anda DISETUJUI oleh admin. Harap menunggu notifikasi berikutnya untuk jadwal tinjauan lapangan",
+                'target' => "$nomorPemohon, $nomorKonsultan", // nomer hp pemohon
+                'message' => "Admin telah melakukan verifikasi pada data yang telah diunggah pada proyek $upperNamaProyek, permohonan anda DISETUJUI oleh admin. Harap menunggu notifikasi berikutnya untuk jadwal tinjauan lapangan",
                 'countryCode' => '62', //optional
             ),
             CURLOPT_HTTPHEADER => array(

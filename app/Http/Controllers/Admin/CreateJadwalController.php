@@ -71,6 +71,13 @@ class CreateJadwalController extends Controller
         $upperNamaProyek = Str::upper($namaProyek);
         $namaWebsite = env('APP_URL');
 
+        $pengajuan = Pengajuan::with(
+            'hasOneDataPemohon.belongsToConsultan.hasOneProfile',
+        )
+            ->findorfail($jadwal->pengajuan_id);
+
+        $nomorKonsultan = $pengajuan->hasOneDataPemohon->belongsToConsultan->hasOneProfile->no_telepon;
+
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -84,7 +91,7 @@ class CreateJadwalController extends Controller
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => array(
-                'target' => "$nomorPemohon", // nomer hp pemohon
+                'target' => "$nomorPemohon, $nomorKonsultan", // nomer hp pemohon
                 'message' => "Admin telah membuat jadwal tinajaun lapangan pada proyek $upperNamaProyek, Harap melakukan pengecekan pada website $namaWebsite , untuk mengunduh jadwal tinjauan lapangan!",
                 'countryCode' => '62', //optional
             ),

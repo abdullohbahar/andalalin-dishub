@@ -378,9 +378,10 @@ License: For each use you must have a valid license purchased only from above li
     @if (session()->has('terminated'))
         <script>
             Swal.fire({
+                position: "center",
                 icon: 'warning',
-                title: 'Oops...',
-                text: 'Anda Tidak Bisa Melihat Detail Pekerjaan Karena Kontrak Telah Diputus!',
+                title: '{{ session('terminated') }}',
+                timer: 5000,
             })
         </script>
     @endif
