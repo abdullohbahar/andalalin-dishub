@@ -193,7 +193,15 @@ class PengajuanAndalalinController extends Controller
     public function storeDokumenPemohon(Request $request)
     {
         $dataPemohon = DataPemohon::findorfail($request->data_pemohon_id);
-        $userID = auth()->user()->id;
+
+        $role = auth()->user()->role;
+
+        if ($role == 'pemohon') {
+            $userID = auth()->user()->id;
+        } else if ($role == 'konsultan') {
+            $userID = $dataPemohon->user_id;
+        }
+
 
         if ($request->hasFile('surat_permohonan')) {
             $file = $request->file('surat_permohonan');
@@ -311,7 +319,9 @@ class PengajuanAndalalinController extends Controller
 
         $this->kirimNotifikasiKeAdmin($dataPemohon->pengajuan_id);
 
-        return to_route('pemohon.menunggu.verifikasi.data', $dataPemohon->pengajuan_id)->with('success', 'Terimakasih telah mengisi data yang sesuai. Harap menunggu konfirmasi admin, paling lambat 3 hari kerja');
+        $role = auth()->user()->role;
+
+        return to_route($role . '.menunggu.verifikasi.data', $dataPemohon->pengajuan_id)->with('success', 'Terimakasih telah mengisi data yang sesuai. Harap menunggu konfirmasi admin, paling lambat 3 hari kerja');
     }
 
     public function menungguVerifikasiData($pengajuanID)

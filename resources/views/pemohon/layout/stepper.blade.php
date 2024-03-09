@@ -14,11 +14,13 @@
                 <div class="step-counter">3</div>
                 <div class="step-name text-center">Input Data Permohonan Dan Data Konsultan</div>
             </div>
-            <div class="stepper-item {{ Route::is('pemohon.upload.dokumen.pemohon') ? 'active' : 'completed' }}">
+            <div
+                class="stepper-item {{ Route::is('pemohon.upload.dokumen.pemohon') || Route::is('konsultan.upload.dokumen.pemohon') ? 'active' : 'completed' }}">
                 <div class="step-counter">4</div>
                 <div class="step-name text-center">Upload Dokumen Permohonan</div>
             </div>
-            <div class="stepper-item {{ Route::is('pemohon.menunggu.verifikasi.data') ? 'active' : 'completed' }}">
+            <div
+                class="stepper-item {{ Route::is('pemohon.menunggu.verifikasi.data') || Route::is('konsultan.menunggu.verifikasi.data') ? 'active' : 'completed' }}">
                 <div class="step-counter">5</div>
                 <div class="step-name text-center">Verifikasi Data</div>
             </div>

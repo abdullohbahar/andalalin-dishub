@@ -14,6 +14,9 @@
 @endpush
 
 @section('content')
+    @php
+        $role = auth()->user()->role;
+    @endphp
     <div class="d-flex flex-column flex-column-fluid">
         <!--begin::Toolbar-->
         <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
@@ -81,7 +84,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6 mt-5">
-                                        <form action="{{ route('pemohon.store.dokumen.pemohon') }}" method="POST"
+                                        <form action="{{ route($role . '.store.dokumen.pemohon') }}" method="POST"
                                             enctype="multipart/form-data">
                                             @csrf
                                             <input type="hidden" name="data_pemohon_id" value="{{ $dataPemohon->id }}">
@@ -100,7 +103,7 @@
                                         </form>
                                     </div>
                                     <div class="col-sm-12 col-md-6 mt-5">
-                                        <form action="{{ route('pemohon.store.dokumen.pemohon') }}" method="POST"
+                                        <form action="{{ route($role . '.store.dokumen.pemohon') }}" method="POST"
                                             enctype="multipart/form-data">
                                             @csrf
                                             <input type="hidden" name="data_pemohon_id" value="{{ $dataPemohon->id }}">
@@ -119,7 +122,7 @@
                                         </form>
                                     </div>
                                     <div class="col-sm-12 col-md-6 mt-5">
-                                        <form action="{{ route('pemohon.store.dokumen.pemohon') }}" method="POST"
+                                        <form action="{{ route($role . '.store.dokumen.pemohon') }}" method="POST"
                                             enctype="multipart/form-data">
                                             @csrf
                                             <input type="hidden" name="data_pemohon_id" value="{{ $dataPemohon->id }}">
@@ -138,7 +141,7 @@
                                         </form>
                                     </div>
                                     <div class="col-sm-12 col-md-6 mt-5">
-                                        <form action="{{ route('pemohon.store.dokumen.pemohon') }}" method="POST"
+                                        <form action="{{ route($role . '.store.dokumen.pemohon') }}" method="POST"
                                             enctype="multipart/form-data">
                                             @csrf
                                             <input type="hidden" name="data_pemohon_id" value="{{ $dataPemohon->id }}">
@@ -157,7 +160,7 @@
                                         </form>
                                     </div>
                                     <div class="col-sm-12 col-md-6 mt-5">
-                                        <form action="{{ route('pemohon.store.dokumen.pemohon') }}" method="POST"
+                                        <form action="{{ route($role . '.store.dokumen.pemohon') }}" method="POST"
                                             enctype="multipart/form-data">
                                             @csrf
                                             <input type="hidden" name="data_pemohon_id" value="{{ $dataPemohon->id }}">

@@ -168,6 +168,14 @@ Route::prefix('pemohon')->middleware('choose.role', 'pemohon')->group(function (
 
 Route::prefix('konsultan')->middleware('choose.role', 'konsultan')->group(function () {
     Route::get('dashboard', [DashboardKonsultan::class, 'index'])->middleware('check.profile')->name('konsultan.dashboard');
+
+    Route::prefix('/pengajuan/andalalin')->group(function () {
+        Route::get('upload-dokumen-pemohon/{pengajuanID}', [PengajuanAndalalinController::class, 'uploadDokumenPemohon'])->name('konsultan.upload.dokumen.pemohon');
+        Route::post('store-dokumen-pemohon', [PengajuanAndalalinController::class, 'storeDokumenPemohon'])->name('konsultan.store.dokumen.pemohon');
+
+        Route::post('after-upload-dokumen', [PengajuanAndalalinController::class, 'afterUploadDokumen'])->name('after.upload.dokumen');
+        Route::get('menunggu-verifikasi-data/{pengajuanID}', [PengajuanAndalalinController::class, 'menungguVerifikasiData'])->name('konsultan.menunggu.verifikasi.data');
+    });
 });
 
 Route::prefix('profile')->middleware('auth')->group(function () {

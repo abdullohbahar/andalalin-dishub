@@ -50,6 +50,40 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header pt-5">
+                                <h1>Pengajuan Baru</h1>
+                            </div>
+                            <div class="card-body" style="overflow-y: visible">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Nama Pemohon</th>
+                                            <th>Nama Proyek</th>
+                                            <th>Jenis Rencana Pembangunan</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($pengajuanBaru as $baru)
+                                            <tr>
+                                                <td>{{ $baru->belongsToUser->hasOneProfile->nama }}</td>
+                                                <td>{{ $baru->belongsToJenisRencana->nama }}</td>
+                                                <td>{{ $baru->hasOneDataPemohon->nama_proyek }}</td>
+                                                <td>
+                                                    @if ($baru->hasOneRiwayatInputData->step == 'Upload Dokumen Permohonan')
+                                                        <a href="{{ route('konsultan.upload.dokumen.pemohon', $baru->id) }}"
+                                                            class="btn btn-success btn-sm">Upload Dokumen Permohonan</a>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-5">
+                        <div class="card">
+                            <div class="card-header pt-5">
                                 <h1>Pengajuan Ditolak</h1>
                             </div>
                             <div class="card-body" style="overflow-y: visible">
