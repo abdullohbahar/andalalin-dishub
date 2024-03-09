@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\DokumenDataPemohon;
 use App\Http\Controllers\Controller;
+use App\Models\RiwayatInputData;
 use App\Models\RiwayatVerifikasi;
 
 class PengajuanController extends Controller
@@ -149,6 +150,12 @@ class PengajuanController extends Controller
                 'step' => 'Buat Jadwal Tinjauan Lapangan'
             ]);
 
+            RiwayatInputData::updateorcreate([
+                'pengajuan_id' => $pengajuanID,
+            ], [
+                'step' => 'Jadwal Tinjauan Lapangan'
+            ]);
+
             return to_route('admin.buat.jadwal', $pengajuanID)->with('success', 'Terimakasih Telah Melakukan Verifikasi.');
         } else {
             $this->kirimNotifikasiDisetujui($pengajuan);
@@ -163,6 +170,12 @@ class PengajuanController extends Controller
                 'pengajuan_id' => $pengajuanID,
             ], [
                 'step' => 'Buat Jadwal Tinjauan Lapangan'
+            ]);
+
+            RiwayatInputData::updateorcreate([
+                'pengajuan_id' => $pengajuanID,
+            ], [
+                'step' => 'Jadwal Tinjauan Lapangan'
             ]);
 
             return to_route('admin.buat.jadwal', $pengajuanID)->with('success', 'Terimakasih Telah Melakukan Verifikasi. ' . $tambahan);

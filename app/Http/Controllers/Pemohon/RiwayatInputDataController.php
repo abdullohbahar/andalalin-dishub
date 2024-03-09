@@ -28,6 +28,8 @@ class RiwayatInputDataController extends Controller
             return to_route('pemohon.upload.dokumen.pemohon', $pengajuan->hasOneDataPemohon->id);
         } else if ($riwayat == 'Menunggu Verifikasi Data') {
             return to_route('pemohon.menunggu.verifikasi.data', $pengajuanID);
+        } else if ($riwayat == 'Jadwal Tinjauan Lapangan') {
+            return to_route('pemohon.jadwal.tinjauan.lapangan', $pengajuanID);
         } else if ($riwayat == 'Sidang') {
             return to_route('admin.detail.jadwal.sidang', $pengajuanID);
         } else if ($riwayat == 'Berita Acara') {

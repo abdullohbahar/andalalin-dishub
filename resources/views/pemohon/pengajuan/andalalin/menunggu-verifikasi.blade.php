@@ -59,10 +59,12 @@
                                 </h2>
                             </div>
                             <div class="card-footer"
-                                {{ $pengajuan->status == 'revisi' || $pengajuan->status == 'disetujui' ? '' : 'hidden' }}>
-                                <form action="" style="float: right;">
+                                {{ $pengajuan->status == 'revisi' || $pengajuan->status == 'disetujui' || $pengajuan->status == 'terverifikasi' ? '' : 'hidden' }}>
+                                {{-- <form action="{{ route('pemohon.jadwal.tinjauan.lapangan') }}" method="POST"
+                                    style="float: right;">
+                                    @csrf
                                     <button class="btn btn-success btn-sm">Selanjutnya</button>
-                                </form>
+                                </form> --}}
                             </div>
                         </div>
                     </div>

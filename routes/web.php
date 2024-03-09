@@ -23,7 +23,9 @@ use App\Http\Controllers\Admin\PengajuanController;
 use App\Http\Controllers\Admin\SubJenisRencanaPembangunanController;
 use App\Http\Controllers\Admin\TinjauanLapanganController;
 use App\Http\Controllers\Konsultan\DashboardKonsultan;
+use App\Http\Controllers\Pemohon\JadwalTinjauanLapangan;
 use App\Http\Controllers\Pemohon\RiwayatInputDataController;
+use App\Models\JadwalTinajuanLapangan;
 
 /*
 |--------------------------------------------------------------------------
@@ -156,6 +158,8 @@ Route::prefix('pemohon')->middleware('choose.role', 'pemohon')->group(function (
             Route::get('/detail/{pengajuanID}', [PengajuanAndalalinController::class, 'show'])->name('pemohon.show.pengajuan.andalalin');
             Route::put('upload-dokumen-revisi', [PengajuanAndalalinController::class, 'uploadRevisiDokumen'])->name('pemohon.upload.dokumen.revisi');
             Route::put('selesai-revisi/{pengajuanID}', [PengajuanAndalalinController::class, 'selesaiRevisi'])->name('pemohon.selesai.revisi');
+
+            Route::get('jadwal-tinjauan-lapangan/{pengajuanID}', [JadwalTinjauanLapangan::class, 'index'])->name('pemohon.jadwal.tinjauan.lapangan');
         });
     });
 
@@ -175,6 +179,8 @@ Route::prefix('konsultan')->middleware('choose.role', 'konsultan')->group(functi
 
         Route::post('after-upload-dokumen', [PengajuanAndalalinController::class, 'afterUploadDokumen'])->name('after.upload.dokumen');
         Route::get('menunggu-verifikasi-data/{pengajuanID}', [PengajuanAndalalinController::class, 'menungguVerifikasiData'])->name('konsultan.menunggu.verifikasi.data');
+
+        Route::get('jadwal-tinjauan-lapangan/{pengajuanID}', [JadwalTinjauanLapangan::class, 'index'])->name('konsultan.jadwal.tinjauan.lapangan');
     });
 });
 

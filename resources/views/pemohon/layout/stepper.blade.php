@@ -24,9 +24,10 @@
                 <div class="step-counter">5</div>
                 <div class="step-name text-center">Verifikasi Data</div>
             </div>
-            <div class="stepper-item {{ Route::is('pemohon.menunggu.verifikasi.data') ? 'active' : 'completed' }}">
+            <div
+                class="stepper-item {{ Route::is('pemohon.jadwal.tinjauan.lapangan') || Route::is('konsultan.jadwal.tinjauan.lapangan') ? 'active' : 'completed' }}">
                 <div class="step-counter">6</div>
-                <div class="step-name text-center">Jadwal Sidang</div>
+                <div class="step-name text-center">Tinjauan Lapangan</div>
             </div>
         </div>
     </div>
