@@ -8,6 +8,7 @@ use App\Models\JadwalSidang;
 use Illuminate\Http\Request;
 use App\Models\RiwayatVerifikasi;
 use App\Http\Controllers\Controller;
+use App\Models\RiwayatInputData;
 
 class JadwalSidangController extends Controller
 {
@@ -149,6 +150,12 @@ class JadwalSidangController extends Controller
         ]);
 
         RiwayatVerifikasi::updateorcreate([
+            'pengajuan_id' => $pengajuanID,
+        ], [
+            'step' => 'Berita Acara'
+        ]);
+
+        RiwayatInputData::updateorcreate([
             'pengajuan_id' => $pengajuanID,
         ], [
             'step' => 'Berita Acara'

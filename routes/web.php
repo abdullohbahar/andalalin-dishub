@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\PengajuanController;
 use App\Http\Controllers\Admin\SubJenisRencanaPembangunanController;
 use App\Http\Controllers\Admin\TinjauanLapanganController;
 use App\Http\Controllers\Konsultan\DashboardKonsultan;
+use App\Http\Controllers\Pemohon\JadwalSidangController as PemohonJadwalSidangController;
 use App\Http\Controllers\Pemohon\JadwalTinjauanLapangan;
 use App\Http\Controllers\Pemohon\RiwayatInputDataController;
 use App\Models\JadwalTinajuanLapangan;
@@ -160,6 +161,7 @@ Route::prefix('pemohon')->middleware('choose.role', 'pemohon')->group(function (
             Route::put('selesai-revisi/{pengajuanID}', [PengajuanAndalalinController::class, 'selesaiRevisi'])->name('pemohon.selesai.revisi');
 
             Route::get('jadwal-tinjauan-lapangan/{pengajuanID}', [JadwalTinjauanLapangan::class, 'index'])->name('pemohon.jadwal.tinjauan.lapangan');
+            Route::get('jadwal-sidang/{pengajuanID}', [PemohonJadwalSidangController::class, 'index'])->name('pemohon.jadwal.sidang');
         });
     });
 
@@ -181,6 +183,8 @@ Route::prefix('konsultan')->middleware('choose.role', 'konsultan')->group(functi
         Route::get('menunggu-verifikasi-data/{pengajuanID}', [PengajuanAndalalinController::class, 'menungguVerifikasiData'])->name('konsultan.menunggu.verifikasi.data');
 
         Route::get('jadwal-tinjauan-lapangan/{pengajuanID}', [JadwalTinjauanLapangan::class, 'index'])->name('konsultan.jadwal.tinjauan.lapangan');
+
+        Route::get('jadwal-sidang/{pengajuanID}', [PemohonJadwalSidangController::class, 'index'])->name('konsultan.jadwal.sidang');
     });
 });
 

@@ -29,6 +29,11 @@
                 <div class="step-counter">6</div>
                 <div class="step-name text-center">Tinjauan Lapangan</div>
             </div>
+            <div
+                class="stepper-item {{ Route::is('pemohon.jadwal.sidang') || Route::is('konsultan.jadwal.sidang') ? 'active' : 'completed' }}">
+                <div class="step-counter">7</div>
+                <div class="step-name text-center">Sidang</div>
+            </div>
         </div>
     </div>
 </div>

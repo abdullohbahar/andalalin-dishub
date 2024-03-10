@@ -73,9 +73,13 @@
                                                         <a href="{{ route('konsultan.upload.dokumen.pemohon', $baru->id) }}"
                                                             class="btn btn-success btn-sm">Upload Dokumen Permohonan</a>
                                                     @endif
-                                                    @if ($baru->hasOneRiwayatInputData->step == 'Jadwal Tinjauan Lapangan')
+                                                    @if ($baru->hasOneRiwayatVerifikasi->step == 'Tinjauan Lapangan')
                                                         <a href="{{ route('konsultan.jadwal.tinjauan.lapangan', $baru->id) }}"
                                                             class="btn btn-success btn-sm">Jadwal Tinjauan Lapangan</a>
+                                                    @endif
+                                                    @if ($baru->hasOneRiwayatVerifikasi->step == 'Sidang')
+                                                        <a href="{{ route('konsultan.jadwal.sidang', $baru->id) }}"
+                                                            class="btn btn-success btn-sm">Jadwal Sidang</a>
                                                     @endif
                                                 </td>
                                             </tr>
