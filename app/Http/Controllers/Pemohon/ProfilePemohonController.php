@@ -154,6 +154,6 @@ class ProfilePemohonController extends Controller
 
         User::where('id', $id)->update($dataUser);
 
-        return to_route('pemohon.profile')->with('success', 'Berhasil Mengisi Profile');
+        return to_route('profile')->with('success', 'Berhasil Mengisi Profile');
     }
 }

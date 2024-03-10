@@ -23,10 +23,10 @@ use App\Http\Controllers\Admin\PengajuanController;
 use App\Http\Controllers\Admin\SubJenisRencanaPembangunanController;
 use App\Http\Controllers\Admin\TinjauanLapanganController;
 use App\Http\Controllers\Konsultan\DashboardKonsultan;
+use App\Http\Controllers\Konsultan\PengajuanAndalalinKonsultanController;
 use App\Http\Controllers\Pemohon\JadwalSidangController as PemohonJadwalSidangController;
 use App\Http\Controllers\Pemohon\JadwalTinjauanLapangan;
 use App\Http\Controllers\Pemohon\RiwayatInputDataController;
-use App\Models\JadwalTinajuanLapangan;
 
 /*
 |--------------------------------------------------------------------------
@@ -175,21 +175,25 @@ Route::prefix('pemohon')->middleware('choose.role', 'pemohon')->group(function (
 Route::prefix('konsultan')->middleware('choose.role', 'konsultan')->group(function () {
     Route::get('dashboard', [DashboardKonsultan::class, 'index'])->middleware('check.profile')->name('konsultan.dashboard');
 
-    Route::prefix('/pengajuan/andalalin')->group(function () {
-        Route::get('upload-dokumen-pemohon/{pengajuanID}', [PengajuanAndalalinController::class, 'uploadDokumenPemohon'])->name('konsultan.upload.dokumen.pemohon');
-        Route::post('store-dokumen-pemohon', [PengajuanAndalalinController::class, 'storeDokumenPemohon'])->name('konsultan.store.dokumen.pemohon');
+    Route::prefix('pengajuan')->group(function () {
+        Route::prefix('andalalin')->group(function () {
+            Route::get('/', [PengajuanAndalalinKonsultanController::class, 'index'])->name('konsultan.pengajuan');
 
-        Route::post('after-upload-dokumen', [PengajuanAndalalinController::class, 'afterUploadDokumen'])->name('after.upload.dokumen');
-        Route::get('menunggu-verifikasi-data/{pengajuanID}', [PengajuanAndalalinController::class, 'menungguVerifikasiData'])->name('konsultan.menunggu.verifikasi.data');
+            Route::get('upload-dokumen-pemohon/{pengajuanID}', [PengajuanAndalalinController::class, 'uploadDokumenPemohon'])->name('konsultan.upload.dokumen.pemohon');
+            Route::post('store-dokumen-pemohon', [PengajuanAndalalinController::class, 'storeDokumenPemohon'])->name('konsultan.store.dokumen.pemohon');
 
-        Route::get('jadwal-tinjauan-lapangan/{pengajuanID}', [JadwalTinjauanLapangan::class, 'index'])->name('konsultan.jadwal.tinjauan.lapangan');
+            Route::post('after-upload-dokumen', [PengajuanAndalalinController::class, 'afterUploadDokumen'])->name('after.upload.dokumen');
+            Route::get('menunggu-verifikasi-data/{pengajuanID}', [PengajuanAndalalinController::class, 'menungguVerifikasiData'])->name('konsultan.menunggu.verifikasi.data');
 
-        Route::get('jadwal-sidang/{pengajuanID}', [PemohonJadwalSidangController::class, 'index'])->name('konsultan.jadwal.sidang');
+            Route::get('jadwal-tinjauan-lapangan/{pengajuanID}', [JadwalTinjauanLapangan::class, 'index'])->name('konsultan.jadwal.tinjauan.lapangan');
+
+            Route::get('jadwal-sidang/{pengajuanID}', [PemohonJadwalSidangController::class, 'index'])->name('konsultan.jadwal.sidang');
+        });
     });
 });
 
 Route::prefix('profile')->middleware('auth')->group(function () {
-    Route::get('/', [ProfilePemohonController::class, 'index'])->name('pemohon.profile');
-    Route::get('/edit/{id}', [ProfilePemohonController::class, 'edit'])->name('pemohon.edit.profile');
-    Route::put('/update/{id}', [ProfilePemohonController::class, 'update'])->name('pemohon.update.profile');
+    Route::get('/', [ProfilePemohonController::class, 'index'])->name('profile');
+    Route::get('/edit/{id}', [ProfilePemohonController::class, 'edit'])->name('edit.profile');
+    Route::put('/update/{id}', [ProfilePemohonController::class, 'update'])->name('update.profile');
 });

@@ -1,4 +1,8 @@
-@extends('pemohon.layout.app')
+@php
+    $role = auth()->user()->role;
+@endphp
+
+@extends("$role.layout.app")
 
 @section('title')
     Profile
@@ -52,7 +56,7 @@
                             <div class="card-header pt-5">
                                 <h1>Profil</h1>
                                 <div class="card-toolbar">
-                                    <a href="{{ route('pemohon.edit.profile', $userID) }}" class="btn btn-warning text-dark">
+                                    <a href="{{ route('edit.profile', $userID) }}" class="btn btn-warning text-dark">
                                         Ubah Profile
                                     </a>
                                 </div>

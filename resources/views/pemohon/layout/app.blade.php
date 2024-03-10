@@ -260,7 +260,7 @@ License: For each use you must have a valid license purchased only from above li
                                         <div class="menu-item">
                                             <!--begin:Menu link-->
                                             <a class="menu-link {{ $active == 'profile' ? 'active' : '' }}"
-                                                href="{{ route('pemohon.profile') }}">
+                                                href="{{ route('profile') }}">
                                                 <span class="menu-icon">
                                                     <i class="fas fa-user"></i>
                                                 </span>

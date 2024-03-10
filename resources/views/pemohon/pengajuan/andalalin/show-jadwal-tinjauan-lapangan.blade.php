@@ -1,4 +1,8 @@
-@extends('pemohon.layout.app')
+@php
+    $role = auth()->user()->role;
+@endphp
+
+@extends("$role.layout.app")
 
 @section('title')
     Tinjauan Lapangan

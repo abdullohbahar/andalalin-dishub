@@ -1,4 +1,8 @@
-@extends('pemohon.layout.app')
+@php
+    $role = auth()->user()->role;
+@endphp
+
+@extends("$role.layout.app")
 
 @section('title')
     Profile
@@ -56,7 +60,7 @@
                                 <h1>Lengkapi Profil Anda</h1>
                             </div>
                             <div class="card-body" style="overflow-y: visible">
-                                <form action="{{ route('pemohon.update.profile', auth()->user()->id) }}" method="POST"
+                                <form action="{{ route('update.profile', auth()->user()->id) }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')

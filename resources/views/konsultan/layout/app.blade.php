@@ -30,6 +30,8 @@ License: For each use you must have a valid license purchased only from above li
     <link href="{{ asset('./assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('./assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('./assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('./assets/css/stepper.css') }}" rel="stylesheet" type="text/css" />
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <style>
@@ -248,7 +250,7 @@ License: For each use you must have a valid license purchased only from above li
                                         <div class="menu-item">
                                             <!--begin:Menu link-->
                                             <a class="menu-link {{ $active == 'pengajuan' ? 'active' : '' }}"
-                                                href="{{ route('pemohon.pengajuan') }}">
+                                                href="{{ route('konsultan.pengajuan') }}">
                                                 <span class="menu-icon">
                                                     <i class="fas fa-list"></i>
                                                 </span>
@@ -259,7 +261,7 @@ License: For each use you must have a valid license purchased only from above li
                                         <div class="menu-item">
                                             <!--begin:Menu link-->
                                             <a class="menu-link {{ $active == 'profile' ? 'active' : '' }}"
-                                                href="{{ route('pemohon.profile') }}">
+                                                href="{{ route('profile') }}">
                                                 <span class="menu-icon">
                                                     <i class="fas fa-user"></i>
                                                 </span>
