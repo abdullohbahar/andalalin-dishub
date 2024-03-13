@@ -24,6 +24,7 @@ use App\Http\Controllers\Admin\SubJenisRencanaPembangunanController;
 use App\Http\Controllers\Admin\TinjauanLapanganController;
 use App\Http\Controllers\Konsultan\DashboardKonsultan;
 use App\Http\Controllers\Konsultan\PengajuanAndalalinKonsultanController;
+use App\Http\Controllers\PemberitahuanJadwalTinjauan;
 use App\Http\Controllers\Pemohon\JadwalSidangController as PemohonJadwalSidangController;
 use App\Http\Controllers\Pemohon\JadwalTinjauanLapangan;
 use App\Http\Controllers\Pemohon\RiwayatInputDataController;
@@ -197,3 +198,6 @@ Route::prefix('profile')->middleware('auth')->group(function () {
     Route::get('/edit/{id}', [ProfilePemohonController::class, 'edit'])->name('edit.profile');
     Route::put('/update/{id}', [ProfilePemohonController::class, 'update'])->name('update.profile');
 });
+
+
+Route::get('download-pemberitahuan-jadwal-tinjauan/{pengajuanID}', PemberitahuanJadwalTinjauan::class)->name('download.pemberitahuan.jadwal.tinjauan');

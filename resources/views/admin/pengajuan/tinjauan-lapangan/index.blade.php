@@ -136,6 +136,14 @@
                                                     : {{ $pengajuan->hasOneJadwalTinjauan->jam }}
                                                 </td>
                                             </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                    <a href="{{ route('download.pemberitahuan.jadwal.tinjauan', $pengajuan->id) }}"
+                                                        target="_blank" class="btn btn-info btn-sm">Unduh
+                                                        Pemberitahuan Jadwal Tinjauan</a>
+                                                </td>
+                                            </tr>
                                         </table>
                                     </div>
                                     <div class="col-12 mt-5">
