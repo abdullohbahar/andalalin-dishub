@@ -24,7 +24,7 @@ class PemberitahuanJadwalTinjauan extends Controller
         $aksaraPath = public_path('img/aksara-dishub.png');
         $encodeAksara = base64_encode(file_get_contents($aksaraPath));
 
-        $pengajuan = Pengajuan::with('hasOneJadwalTinjauan', 'hasOneDataPemohon', 'belongsToUser.hasOneProfile', 'belongsToConsultan.hasOneProfile')->findOrFail($pengajuanID);
+        $pengajuan = Pengajuan::with('hasOneJadwalTinjauan', 'hasOneDataPemohon.belongsToConsultan.hasOneProfile', 'belongsToUser.hasOneProfile')->findOrFail($pengajuanID);
 
         \Carbon\Carbon::setLocale('id');
         $tanggal = \Carbon\Carbon::parse($pengajuan->hasOneJadwalTinjauan->tanggal)->translatedFormat('L F Y');
@@ -33,7 +33,7 @@ class PemberitahuanJadwalTinjauan extends Controller
 
         $kepada = [];
         $kepada['pimpinan'] = $pengajuan->hasOneDataPemohon->nama_pimpinan;
-        $kepada['konsultan'] = $pengajuan->belongsToConsultan->hasOneProfile->nama;
+        $kepada['konsultan'] = $pengajuan->hasOneDataPemohon->belongsToConsultan->hasOneProfile->nama;
         $kepada['pemohon'] = $pengajuan->belongsToUser->hasOneProfile->nama;
 
         $data = [
@@ -48,7 +48,7 @@ class PemberitahuanJadwalTinjauan extends Controller
 
         $pdf = PDF::loadView('document-template.jadwal-tinjauan', $data);
 
-        return $pdf->stream('Jadwal Tinjauan Lapangan.pdf');
+        return $pdf->download('Jadwal Tinjauan Lapangan.pdf');
 
         return view('document-template.jadwal-tinjauan', $data);
     }

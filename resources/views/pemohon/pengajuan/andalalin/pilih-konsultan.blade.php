@@ -289,10 +289,21 @@
                                                 <div class="col-12 mt-5">
                                                     <label for="" class="form-label">Tanggal Surat
                                                         Permohonan</label>
+                                                    @php
+                                                        $tanggal = $dataPemohon->tanggal_surat_permohonan ?? null;
+
+                                                        if ($tanggal) {
+                                                            $tanggal = $dataPemohon->getRawOriginal(
+                                                                'tanggal_surat_permohonan',
+                                                            );
+                                                        } else {
+                                                            $tanggal = '';
+                                                        }
+                                                    @endphp
                                                     <input type="date" class="form-control"
                                                         name="tanggal_surat_permohonan"
-                                                        value="{{ old('tanggal_surat_permohonan', $dataPemohon->getRawOriginal('tanggal_surat_permohonan') ?? '') }}"
-                                                        required id="">
+                                                        value="{{ old('tanggal_surat_permohonan', $tanggal) }}" required
+                                                        id="">
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-12 mt-5">

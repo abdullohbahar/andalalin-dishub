@@ -185,7 +185,7 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <form action="{{ route('after.upload.dokumen') }}" method="POST"
+                                <form action="{{ route($role . '.after.upload.dokumen') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <input type="hidden" name="data_pemohon_id" value="{{ $dataPemohon->id }}">

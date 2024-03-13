@@ -114,46 +114,56 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-12">
-                                        <table class="table table-bordered">
-                                            <tr>
-                                                <td>Nama Proyek</td>
-                                                <td>
-                                                    : {{ $pengajuan->hasOneDataPemohon->nama_proyek }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Jenis Sidang</td>
-                                                <td class="text-capitalize">
-                                                    : {{ $pengajuan->hasOneJadwalSidang->tipe }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tanggal Sidang</td>
-                                                <td>
-                                                    : {{ $pengajuan->hasOneJadwalSidang->tanggal }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Jam Sidang</td>
-                                                <td>
-                                                    : {{ $pengajuan->hasOneJadwalSidang->jam }}
-                                                </td>
-                                            </tr>
-                                            <tr {{ $pengajuan->hasOneJadwalSidang->tipe == 'offline' ? '' : 'hidden' }}>
-                                                <td>Alamat Sidang</td>
-                                                <td>
-                                                    : {{ $pengajuan->hasOneJadwalSidang->alamat }}
-                                                </td>
-                                            </tr>
-                                            <tr {{ $pengajuan->hasOneJadwalSidang->tipe == 'online' ? '' : 'hidden' }}>
-                                                <td>URL Online Meeting</td>
-                                                <td>
-                                                    : {{ $pengajuan->hasOneJadwalSidang->url }}
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
+
+                                    @if ($pengajuan->hasOneJadwalSidang?->jam)
+                                        <div class="col-12">
+                                            <table class="table table-bordered">
+                                                <tr>
+                                                    <td>Nama Proyek</td>
+                                                    <td>
+                                                        : {{ $pengajuan->hasOneDataPemohon->nama_proyek }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Jenis Sidang</td>
+                                                    <td class="text-capitalize">
+                                                        : {{ $pengajuan->hasOneJadwalSidang?->tipe }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tanggal Sidang</td>
+                                                    <td>
+                                                        : {{ $pengajuan->hasOneJadwalSidang?->tanggal }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Jam Sidang</td>
+                                                    <td>
+                                                        : {{ $pengajuan->hasOneJadwalSidang?->jam }}
+                                                    </td>
+                                                </tr>
+                                                <tr
+                                                    {{ $pengajuan->hasOneJadwalSidang?->tipe == 'offline' ? '' : 'hidden' }}>
+                                                    <td>Alamat Sidang</td>
+                                                    <td>
+                                                        : {{ $pengajuan->hasOneJadwalSidang?->alamat }}
+                                                    </td>
+                                                </tr>
+                                                <tr {{ $pengajuan->hasOneJadwalSidang?->tipe == 'online' ? '' : 'hidden' }}>
+                                                    <td>URL Online Meeting</td>
+                                                    <td>
+                                                        : {{ $pengajuan->hasOneJadwalSidang?->url }}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    @else
+                                        <div class="col-12">
+                                            <h1>
+                                                Harap menunggu admin untuk membuatkan jadwal sidang!!!
+                                            </h1>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>

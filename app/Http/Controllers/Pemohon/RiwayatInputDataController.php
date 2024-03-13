@@ -16,7 +16,7 @@ class RiwayatInputDataController extends Controller
      */
     public function __invoke($pengajuanID)
     {
-        $pengajuan = Pengajuan::with('hasOneRiwayatInputData', 'hasOneDataPemohon')->findOrFail($pengajuanID);
+        $pengajuan = Pengajuan::with('hasOneRiwayatInputData', 'hasOneDataPemohon', 'hasOneRiwayatVerifikasi')->findOrFail($pengajuanID);
 
         $riwayat = $pengajuan->hasOneRiwayatInputData->step ?? null;
 
@@ -28,7 +28,7 @@ class RiwayatInputDataController extends Controller
             return to_route('pemohon.upload.dokumen.pemohon', $pengajuan->hasOneDataPemohon->id);
         } else if ($riwayat == 'Menunggu Verifikasi Data') {
             return to_route('pemohon.menunggu.verifikasi.data', $pengajuanID);
-        } else if ($riwayat == 'Jadwal Tinjauan Lapangan') {
+        } else if ($riwayat == 'Jadwal Tinjauan Lapangan' || $pengajuan->hasOneRiwayatVerifikasi == 'Buat Jadwal Sidang') {
             return to_route('pemohon.jadwal.tinjauan.lapangan', $pengajuanID);
         } else if ($riwayat == 'Sidang') {
             return to_route('pemohon.jadwal.sidang', $pengajuanID);
