@@ -143,7 +143,8 @@
                                             <tr>
                                                 <td></td>
                                                 <td>
-                                                    <a href="" target="_blank" class="btn btn-info btn-sm">Unduh
+                                                    <a href="{{ route('download.pemberitahuan.jadwal.tinjauan', $pengajuan->id) }}"
+                                                        target="_blank" class="btn btn-info btn-sm">Unduh
                                                         Pemberitahuan Jadwal Tinjauan</a>
                                                 </td>
                                             </tr>

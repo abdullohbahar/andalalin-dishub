@@ -45,12 +45,12 @@
             border-top: 1px solid black;
             border-bottom: 5px solid black;
             padding: 1px 0;
-            width: 92%;
+            width: 100%;
         }
 
         .tanggal-surat {
             margin-top: 15px;
-            width: 85%;
+            width: 100%;
             /* border: 2px solid #3498db; */
             text-align: right
         }
@@ -63,13 +63,13 @@
 
         .nomor {
             margin-top: 15px;
-            width: 85%;
+            width: 100%;
             text-align: right
         }
 
         .isi {
             margin-top: 15px;
-            width: 85%;
+            width: 100%;
             /* border: 2px solid #3498db; */
             text-align: left
         }
@@ -79,10 +79,10 @@
 <body>
     {{-- KOP --}}
     <div>
-        <table style="width: 92%">
+        <table style="width: 100%">
             <tr>
                 <td style="width: 15%">
-                    <img src="{{ asset('img/kab-bantul.png') }}" class="logo">
+                    <img src="data:image/jpeg;base64,{{ $logo }}" class="logo">
                 </td>
                 <td class="text-center">
                     <p style="font-size: 16pt !important; margin-top: 0px;">
@@ -94,7 +94,7 @@
                         </b>
                     </p>
                     <p>
-                        <img src="{{ asset('img/aksara-dishub.png') }}" class="aksara">
+                        <img src="data:image/jpeg;base64,{{ $aksara }}" class="aksara">
                     </p>
                     <p style="font-size: 12pt; margin-top: -20px;">
                         Jalan Lingkar Timur, Manding, Trirenggo, Bantul
@@ -113,7 +113,7 @@
 
     {{-- tanggal --}}
     <div class="tanggal-surat">
-        Bantul, 22 Januari 2024
+        Bantul, {{ $tanggalSurat }}
     </div>
 
     <div class="nomor">
@@ -121,7 +121,7 @@
             <table style="width: 100%; text-align: left !important;">
                 <tr>
                     <td style="width: 20%">Nomor</td>
-                    <td>:</td>
+                    <td style="width: 2%">:</td>
                     <td>Disini Nomor</td>
                 </tr>
                 <tr>
@@ -149,11 +149,12 @@
                         <br>
                         Yth.
                         <br>
-                        <ol>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                        </ol>
+                        @php
+                            $no = 1;
+                        @endphp
+                        @foreach ($kepada as $index => $kepada)
+                            {{ $no++ }}. {{ $kepada }} <br>
+                        @endforeach
                         di - <u>Bantul</u>
                     </td>
                 </tr>
@@ -171,22 +172,22 @@
             <tr>
                 <td style="width: 10%">Hari</td>
                 <td style="width: 2%">:</td>
-                <td>Kamis</td>
+                <td>{{ $hari }}</td>
             </tr>
             <tr>
                 <td>Tanggal</td>
                 <td>:</td>
-                <td>25 Januari 2024</td>
+                <td>{{ $tanggal }}</td>
             </tr>
             <tr>
                 <td>Pukul</td>
                 <td>:</td>
-                <td>09.00 WIB</td>
+                <td>{{ $pengajuan->hasOneJadwalTinjauan->jam }} WIB</td>
             </tr>
             <tr>
                 <td>Tempat</td>
                 <td>:</td>
-                <td>Lapangan</td>
+                <td>{{ $pengajuan->hasOneDataPemohon->alamat }}</td>
             </tr>
             <tr>
                 <td>Acara</td>

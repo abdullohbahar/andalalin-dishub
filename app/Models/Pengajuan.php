@@ -50,6 +50,11 @@ class Pengajuan extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function belongsToConsultan(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'konsultan_id', 'id');
+    }
+
     public function hasOneJadwalTinjauan(): HasOne
     {
         return $this->hasOne(JadwalTinajuanLapangan::class);
