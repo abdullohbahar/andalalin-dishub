@@ -161,6 +161,7 @@ class JadwalSidangController extends Controller
             'step' => 'Berita Acara'
         ]);
 
-        return redirect()->back()->with('success', 'Terimakasih telah melakukan sidang. Harap mengisi berita acara di langkah berikutnya, harap mengisi berita acara sebelum 2x24 jam!');
+        // return redirect()->back()->with('success', 'Terimakasih telah melakukan sidang. Harap mengisi berita acara di langkah berikutnya, harap mengisi berita acara sebelum 2x24 jam!');
+        return redirect()->back()->with('success', 'Terimakasih telah melakukan sidang. Harap klik tombol selanjutnya untuk ke langkah berikutnya!');
     }
 }

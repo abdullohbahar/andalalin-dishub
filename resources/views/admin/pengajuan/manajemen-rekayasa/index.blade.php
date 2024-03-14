@@ -1,7 +1,7 @@
 @extends('admin.layout.app')
 
 @section('title')
-    Sidang
+    Pilih Manajemen Rekayasa
 @endsection
 
 @push('addons-css')
@@ -72,7 +72,7 @@
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-                        Sidang</h1>
+                        Pilih Manajemen Rekayasa</h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -87,7 +87,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Sidang</li>
+                        <li class="breadcrumb-item text-muted">Pilih Manajemen Rekayasa</li>
                         <!--end::Item-->
                     </ul>
                     <!--end::Breadcrumb-->
@@ -106,65 +106,22 @@
                         @include('admin.layout.stepper')
                         <div class="card">
                             <div class="card-header pt-5">
-                                <h1>Sidang</h1>
+                                <h1>Pilih Manajemen Rekayasa</h1>
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-12">
-                                        <table class="table table-bordered">
-                                            <tr>
-                                                <td>Nama Proyek</td>
-                                                <td>
-                                                    : {{ $pengajuan->hasOneDataPemohon->nama_proyek }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Jenis Sidang</td>
-                                                <td class="text-capitalize">
-                                                    : {{ $pengajuan->hasOneJadwalSidang->tipe }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tanggal Sidang</td>
-                                                <td>
-                                                    : {{ $pengajuan->hasOneJadwalSidang->tanggal }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Jam Sidang</td>
-                                                <td>
-                                                    : {{ $pengajuan->hasOneJadwalSidang->jam }}
-                                                </td>
-                                            </tr>
-                                            <tr {{ $pengajuan->hasOneJadwalSidang->tipe == 'offline' ? '' : 'hidden' }}>
-                                                <td>Alamat Sidang</td>
-                                                <td>
-                                                    : {{ $pengajuan->hasOneJadwalSidang->alamat }}
-                                                </td>
-                                            </tr>
-                                            <tr {{ $pengajuan->hasOneJadwalSidang->tipe == 'online' ? '' : 'hidden' }}>
-                                                <td>URL Online Meeting</td>
-                                                <td>
-                                                    : {{ $pengajuan->hasOneJadwalSidang->url }}
-                                                </td>
-                                            </tr>
-                                        </table>
+                                    <div class="col-6">
+                                        <label for="" class="form-label">Jenis</label>
+                                        <select name="jenis" class="form-control" id="">
+                                            <option value="">--Pilih Jenis--</option>
+                                            <option value="Pra Kontruksi">Pra Kontruksi</option>
+                                            <option value="">Kontruksi</option>
+                                            <option value="">Operasional</option>
+                                        </select>
                                     </div>
-                                    <div class="col-12 mt-5">
-                                        @if (!$pengajuan->hasOneJadwalSidang->is_meeting)
-                                            <form id="formSidang"
-                                                action="{{ route('admin.telah.melakukan.sidang', $pengajuan->id) }}"
-                                                method="POST">
-                                                @csrf
-                                                <p>Klik tombol ini jika anda telah melakukan Sidang</p>
-                                                <button class="btn btn-info btn-sm">Sudah melakukan sidang</button>
-                                            </form>
-                                        @else
-                                            <div style="float: right">
-                                                <a href="{{ route('admin.kontruksi', $pengajuan->id) }}"
-                                                    class="btn btn-sm btn-success">Selanjutnya</a>
-                                            </div>
-                                        @endif
+                                    <div class="col-12 mt-3">
+                                        <label for="" class="form-label">Isi Tahap Operasional</label>
+                                        <textarea name="ckeditor" id="keterangan"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -181,11 +138,13 @@
 @endsection
 
 @push('addons-js')
+    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Menangkap formulir saat di-submit
             var form = document.getElementById(
-                'formSidang'); // Ganti 'formSidang' dengan ID formulir Anda
+                'tinjauanLapangan'); // Ganti 'tinjauanLapangan' dengan ID formulir Anda
 
             form.addEventListener('submit', function(event) {
                 event.preventDefault(); // Mencegah formulir untuk langsung di-submit
@@ -206,6 +165,16 @@
                     }
                 });
             });
+        });
+    </script>
+    <script>
+        CKEDITOR.replace('ckeditor', {
+            on: {
+                instanceReady: function(evt) {
+                    // Atur tinggi setelah instansi CKEditor siap
+                    evt.editor.resize('100%', '500px');
+                }
+            }
         });
     </script>
 @endpush

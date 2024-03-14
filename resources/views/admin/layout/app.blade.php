@@ -398,7 +398,7 @@ License: For each use you must have a valid license purchased only from above li
                 icon: "success",
                 title: '{{ session('success') }}',
                 showConfirmButton: false,
-                timer: 1500,
+                timer: 5000,
             });
         </script>
     @endif
@@ -410,7 +410,7 @@ License: For each use you must have a valid license purchased only from above li
                 icon: "error",
                 title: '{{ session('failed') }}',
                 showConfirmButton: false,
-                timer: 1500,
+                timer: 5000,
             });
         </script>
     @endif

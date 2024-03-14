@@ -19,6 +19,7 @@ use App\Http\Controllers\Pemohon\PengajuanPemohonController;
 use App\Http\Controllers\Pemohon\Ajax\ShowSubSubJenisRencana;
 use App\Http\Controllers\Pemohon\PengajuanAndalalinController;
 use App\Http\Controllers\Admin\JenisRencanaPembangunanController;
+use App\Http\Controllers\Admin\KontruksiController;
 use App\Http\Controllers\Admin\PengajuanController;
 use App\Http\Controllers\Admin\SubJenisRencanaPembangunanController;
 use App\Http\Controllers\Admin\TinjauanLapanganController;
@@ -75,6 +76,10 @@ Route::prefix('admin')->middleware('admin')->group(function () {
             Route::post('buat-jadwal-sidang/{pengajuanID}', [JadwalSidangController::class, 'store'])->name('admin.store.jadwal.sidang');
             Route::get('detail/{pengajuanID}', [JadwalSidangController::class, 'jadwalSidang'])->name('admin.detail.jadwal.sidang');
             Route::post('telah-melakukan-sidang/{pengajuanID}', [JadwalSidangController::class, 'telahMelakukanSidang'])->name('admin.telah.melakukan.sidang');
+        });
+
+        Route::prefix('kontruksi')->group(function () {
+            Route::get('/{pengajuanID}', [KontruksiController::class, 'index'])->name('admin.kontruksi');
         });
 
         Route::prefix('ajax')->group(function () {
