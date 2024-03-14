@@ -38,6 +38,14 @@ License: For each use you must have a valid license purchased only from above li
             display: none;
             overflow: hidden;
         }
+
+        .ck-restricted-editing_mode_standard {
+            height: 600px !important;
+        }
+
+        .ck-content {
+            height: 600px !important;
+        }
     </style>
 
     <title>

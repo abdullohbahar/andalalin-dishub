@@ -12,4 +12,9 @@ class JenisRencanaPembangunan extends Model
     protected $fillable = [
         'nama'
     ];
+
+    public function hasOneTemplateBeritaAcara()
+    {
+        return $this->hasOne(TemplateBeritaAcara::class, 'jenis_rencana_id', 'id');
+    }
 }

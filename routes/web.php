@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\JenisRencanaPembangunanController;
 use App\Http\Controllers\Admin\KontruksiController;
 use App\Http\Controllers\Admin\PengajuanController;
 use App\Http\Controllers\Admin\SubJenisRencanaPembangunanController;
+use App\Http\Controllers\Admin\TemplateBeritaAcaraController;
 use App\Http\Controllers\Admin\TinjauanLapanganController;
 use App\Http\Controllers\Konsultan\DashboardKonsultan;
 use App\Http\Controllers\Konsultan\PengajuanAndalalinKonsultanController;
@@ -29,6 +30,7 @@ use App\Http\Controllers\PemberitahuanJadwalTinjauan;
 use App\Http\Controllers\Pemohon\JadwalSidangController as PemohonJadwalSidangController;
 use App\Http\Controllers\Pemohon\JadwalTinjauanLapangan;
 use App\Http\Controllers\Pemohon\RiwayatInputDataController;
+use App\Models\TemplateBeritaAcara;
 
 /*
 |--------------------------------------------------------------------------
@@ -122,6 +124,11 @@ Route::prefix('admin')->middleware('admin')->group(function () {
                     Route::get('/{idSub}/{jenis}', [UkuranMinimalController::class, 'index'])->name('admin.sub.sub.ukuran.minimal');
                 });
             });
+        });
+
+        Route::prefix('template')->group(function () {
+            Route::get('/{jenisRencanaPembangunanID}', [TemplateBeritaAcaraController::class, 'index'])->name('admin.template.berita.acara');
+            Route::post('store/{jenisRencanaPembangunanID}', [TemplateBeritaAcaraController::class, 'update'])->name('admin.update.template.berita.acara');
         });
     });
 
