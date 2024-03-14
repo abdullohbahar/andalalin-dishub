@@ -121,6 +121,10 @@ class PengajuanAndalalinController extends Controller
             'latitude' => $request->latitude,
         ]);
 
+        Pengajuan::where('id', $request->pengajuan_id)->update([
+            'konsultan_id' => $request->konsultan_id
+        ]);
+
         RiwayatInputData::updateorcreate([
             'pengajuan_id' => $request->pengajuan_id
         ], [

@@ -1,7 +1,17 @@
-@extends('admin.layout.app')
+@php
+    $role = auth()->user()->role;
+
+    if ($role == 'konsultan') {
+        $stepper = 'pemohon';
+    } else {
+        $stepper = $role;
+    }
+@endphp
+
+@extends("$role.layout.app")
 
 @section('title')
-    Pilih Manajemen Rekayasa
+    Menunggu Verifikasi Penilai
 @endsection
 
 @push('addons-css')
@@ -72,7 +82,7 @@
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-                        Pilih Manajemen Rekayasa</h1>
+                        Menunggu Verifikasi Penilai</h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -87,7 +97,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Pilih Manajemen Rekayasa</li>
+                        <li class="breadcrumb-item text-muted">Menunggu Verifikasi Penilai</li>
                         <!--end::Item-->
                     </ul>
                     <!--end::Breadcrumb-->
@@ -103,25 +113,16 @@
             <div id="kt_app_content_container" class="app-container container-fluid">
                 <div class="row">
                     <div class="col-12">
-                        @include('admin.layout.stepper')
+                        @include($stepper . '.layout.stepper')
                         <div class="card">
                             <div class="card-header pt-5">
-                                <h1>Pilih Manajemen Rekayasa</h1>
+                                <h1>Menunggu Verifikasi Penilai</h1>
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-6">
-                                        <label for="" class="form-label">Jenis</label>
-                                        <select name="jenis" class="form-control" id="">
-                                            <option value="">--Pilih Jenis--</option>
-                                            <option value="Pra Kontruksi">Pra Kontruksi</option>
-                                            <option value="">Kontruksi</option>
-                                            <option value="">Operasional</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-12 mt-3">
-                                        <label for="" class="form-label">Isi Tahap Operasional</label>
-                                        <textarea name="ckeditor" id="keterangan"></textarea>
+                                    <div class="col-12 text-center text-capitalize">
+                                        <h1>Penilai Sedang Memverifikasi Berita Acara Yang anda ajukan. <br> harap menunggu
+                                            notifikasi atau cek secara berkala</h1>
                                     </div>
                                 </div>
                             </div>
@@ -138,13 +139,11 @@
 @endsection
 
 @push('addons-js')
-    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Menangkap formulir saat di-submit
             var form = document.getElementById(
-                'tinjauanLapangan'); // Ganti 'tinjauanLapangan' dengan ID formulir Anda
+                'formSidang'); // Ganti 'formSidang' dengan ID formulir Anda
 
             form.addEventListener('submit', function(event) {
                 event.preventDefault(); // Mencegah formulir untuk langsung di-submit
@@ -165,16 +164,6 @@
                     }
                 });
             });
-        });
-    </script>
-    <script>
-        CKEDITOR.replace('ckeditor', {
-            on: {
-                instanceReady: function(evt) {
-                    // Atur tinggi setelah instansi CKEditor siap
-                    evt.editor.resize('100%', '500px');
-                }
-            }
         });
     </script>
 @endpush

@@ -21,9 +21,9 @@
                 <div class="step-counter">5</div>
                 <div class="step-name text-center">Sidang</div>
             </div>
-            <div class="stepper-item {{ Route::is('admin.kontruksi') ? 'active' : 'completed' }}">
+            <div class="stepper-item {{ Route::is('admin.berita.acara') ? 'active' : 'completed' }}">
                 <div class="step-counter">6</div>
-                <div class="step-name text-center">Pilih Manajemen Rekayasa</div>
+                <div class="step-name text-center">Berita Acara</div>
             </div>
         </div>
     </div>

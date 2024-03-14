@@ -34,6 +34,16 @@
                 <div class="step-counter">7</div>
                 <div class="step-name text-center">Sidang</div>
             </div>
+            <div
+                class="stepper-item {{ Route::is('pemohon.berita.acara') || Route::is('konsultan.berita.acara') ? 'active' : 'completed' }}">
+                <div class="step-counter">8</div>
+                <div class="step-name text-center">Berita Acara</div>
+            </div>
+            <div
+                class="stepper-item {{ Route::is('pemohon.menunggu.verifikasi.penilai') || Route::is('konsultan.menunggu.verifikasi.penilai') ? 'active' : 'completed' }}">
+                <div class="step-counter">9</div>
+                <div class="step-name text-center">Verifikasi Berita Acara</div>
+            </div>
         </div>
     </div>
 </div>

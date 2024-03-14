@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AktivitasController;
+use App\Http\Controllers\Admin\BeritaAcaraController;
 use App\Http\Controllers\Admin\CreateJadwalController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
@@ -80,8 +81,11 @@ Route::prefix('admin')->middleware('admin')->group(function () {
             Route::post('telah-melakukan-sidang/{pengajuanID}', [JadwalSidangController::class, 'telahMelakukanSidang'])->name('admin.telah.melakukan.sidang');
         });
 
-        Route::prefix('kontruksi')->group(function () {
-            Route::get('/{pengajuanID}', [KontruksiController::class, 'index'])->name('admin.kontruksi');
+        Route::prefix('berita-acara')->group(function () {
+            Route::get('/{pengajuanID}', [BeritaAcaraController::class, 'index'])->name('admin.berita.acara');
+            Route::post('/update/{pengajuanID}', [BeritaAcaraController::class, 'update'])->name('admin.update.berita.acara');
+            Route::post('telahMengisi/{pengajuanID}', [BeritaAcaraController::class, 'telahMengisi'])->name('admin.telah.mengisi.berita.acara');
+            Route::get('menunggu-verifikasi-penilai/{pengajuanID}', [BeritaAcaraController::class, 'menungguVerifikasiPenilai'])->name('admin.menunggu.verifikasi.penilai');
         });
 
         Route::prefix('ajax')->group(function () {
@@ -175,6 +179,13 @@ Route::prefix('pemohon')->middleware('choose.role', 'pemohon')->group(function (
 
             Route::get('jadwal-tinjauan-lapangan/{pengajuanID}', [JadwalTinjauanLapangan::class, 'index'])->name('pemohon.jadwal.tinjauan.lapangan');
             Route::get('jadwal-sidang/{pengajuanID}', [PemohonJadwalSidangController::class, 'index'])->name('pemohon.jadwal.sidang');
+
+            Route::prefix('berita-acara')->group(function () {
+                Route::get('/{pengajuanID}', [BeritaAcaraController::class, 'index'])->name('pemohon.berita.acara');
+                Route::post('/update/{pengajuanID}', [BeritaAcaraController::class, 'update'])->name('pemohon.update.berita.acara');
+                Route::post('telahMengisi/{pengajuanID}', [BeritaAcaraController::class, 'telahMengisi'])->name('pemohon.telah.mengisi.berita.acara');
+                Route::get('menunggu-verifikasi-penilai/{pengajuanID}', [BeritaAcaraController::class, 'menungguVerifikasiPenilai'])->name('pemohon.menunggu.verifikasi.penilai');
+            });
         });
     });
 
@@ -201,6 +212,13 @@ Route::prefix('konsultan')->middleware('choose.role', 'konsultan')->group(functi
             Route::get('jadwal-tinjauan-lapangan/{pengajuanID}', [JadwalTinjauanLapangan::class, 'index'])->name('konsultan.jadwal.tinjauan.lapangan');
 
             Route::get('jadwal-sidang/{pengajuanID}', [PemohonJadwalSidangController::class, 'index'])->name('konsultan.jadwal.sidang');
+
+            Route::prefix('berita-acara')->group(function () {
+                Route::get('/{pengajuanID}', [BeritaAcaraController::class, 'index'])->name('konsultan.berita.acara');
+                Route::post('/update/{pengajuanID}', [BeritaAcaraController::class, 'update'])->name('konsultan.update.berita.acara');
+                Route::post('telahMengisi/{pengajuanID}', [BeritaAcaraController::class, 'telahMengisi'])->name('konsultan.telah.mengisi.berita.acara');
+                Route::get('menunggu-verifikasi-penilai/{pengajuanID}', [BeritaAcaraController::class, 'menungguVerifikasiPenilai'])->name('konsultan.menunggu.verifikasi.penilai');
+            });
         });
     });
 });

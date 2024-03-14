@@ -33,7 +33,9 @@ class RiwayatInputDataController extends Controller
         } else if ($riwayat == 'Sidang') {
             return to_route('pemohon.jadwal.sidang', $pengajuanID);
         } else if ($riwayat == 'Berita Acara') {
-            return "berita acara";
+            return to_route('pemohon.berita.acara', $pengajuanID);
+        } else if ($riwayat == 'Menunggu Verifikasi Penilai') {
+            return to_route('pemohon.menunggu.verifikasi.penilai', $pengajuanID);
         }
     }
 }

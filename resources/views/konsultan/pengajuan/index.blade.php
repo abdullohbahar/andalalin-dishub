@@ -103,6 +103,14 @@
                                                                 <a href="{{ route('konsultan.jadwal.sidang', $pengajuan->id) }}"
                                                                     class="btn btn-success btn-sm">Jadwal Sidang</a>
                                                             @endif
+                                                            @if ($pengajuan->hasOneRiwayatVerifikasi->step == 'Berita Acara')
+                                                                <a href="{{ route('konsultan.berita.acara', $pengajuan->id) }}"
+                                                                    class="btn btn-success btn-sm">Berita Acara</a>
+                                                            @endif
+                                                            @if ($pengajuan->hasOneRiwayatVerifikasi->step == 'Menunggu Verifikasi Penilai')
+                                                                <a href="{{ route('konsultan.menunggu.verifikasi.penilai', $pengajuan->id) }}"
+                                                                    class="btn btn-success btn-sm">Berita Acara</a>
+                                                            @endif
                                                         </div>
                                                     @endif
                                                 </td>
