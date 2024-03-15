@@ -22,7 +22,7 @@ class CheckProfileMiddleware
         $user = User::with('hasOneProfile')->where('id', $userID)->first();
 
         if ($user->hasOneProfile == null) {
-            return to_route('pemohon.edit.profile', $userID);
+            return to_route('edit.profile', $userID);
         }
 
         return $next($request);

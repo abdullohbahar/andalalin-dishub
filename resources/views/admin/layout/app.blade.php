@@ -265,6 +265,18 @@ License: For each use you must have a valid license purchased only from above li
                                             </a>
                                             <!--end:Menu link-->
                                         </div>
+                                        <!--begin:Menu link-->
+                                        <div class="menu-item">
+                                            <!--begin:Menu link-->
+                                            <a class="menu-link {{ $active == 'user' ? 'active' : '' }}"
+                                                href="{{ route('admin.user.index') }}">
+                                                <span class="menu-icon">
+                                                    <i class="fas fa-users"></i>
+                                                </span>
+                                                <span class="menu-title">User</span>
+                                            </a>
+                                            <!--end:Menu link-->
+                                        </div>
                                         <div data-kt-menu-trigger="click"
                                             class="menu-item menu-accordion {{ $active == 'cv-consultant' || 'supervising-consultant' ? 'hover show' : '' }}">
                                             <!--begin:Menu link-->

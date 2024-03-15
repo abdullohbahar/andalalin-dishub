@@ -25,6 +25,7 @@ use App\Http\Controllers\Admin\PengajuanController;
 use App\Http\Controllers\Admin\SubJenisRencanaPembangunanController;
 use App\Http\Controllers\Admin\TemplateBeritaAcaraController;
 use App\Http\Controllers\Admin\TinjauanLapanganController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Konsultan\DashboardKonsultan;
 use App\Http\Controllers\Konsultan\PengajuanAndalalinKonsultanController;
 use App\Http\Controllers\PemberitahuanJadwalTinjauan;
@@ -144,6 +145,13 @@ Route::prefix('admin')->middleware('admin')->group(function () {
         Route::put('/update/{id}', [JenisJalanController::class, 'update'])->name('admin.update.jenis.jalan');
         Route::delete('/destroy/{id}', [JenisJalanController::class, 'destroy'])->name('admin.destroy.jenis.jalan');
     });
+
+    Route::prefix('user')->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('admin.user.index');
+        Route::get('/create', [UserController::class, 'create'])->name('admin.user.create');
+        Route::post('/store', [UserController::class, 'store'])->name('admin.user.store');
+        Route::delete('/destroy/{id}', [UserController::class, 'destroy'])->name('admin.user.destroy');
+    });
 });
 
 Route::get('pilih-role', [PilihRoleController::class, 'index'])->name('pilih-role');
@@ -229,6 +237,6 @@ Route::prefix('profile')->middleware('auth')->group(function () {
     Route::put('/update/{id}', [ProfilePemohonController::class, 'update'])->name('update.profile');
 });
 
-Route::prefix('download')->group(function () {
+Route::prefix('download')->middleware('auth')->group(function () {
     Route::get('pemberitahuan-jadwal-tinjauan/{pengajuanID}', PemberitahuanJadwalTinjauan::class)->name('download.pemberitahuan.jadwal.tinjauan');
 });
