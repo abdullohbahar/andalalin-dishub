@@ -9,18 +9,58 @@ use App\Models\DokumenDataPemohon;
 use App\Http\Controllers\Controller;
 use App\Models\RiwayatInputData;
 use App\Models\RiwayatVerifikasi;
+use DataTables;
 
 class PengajuanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $pengajuans = Pengajuan::with('belongsToJenisRencana', 'hasOneDataPemohon', 'belongsToUser.hasOneProfile')
-            ->orderBy('updated_at', 'desc')
-            ->get();
+        if ($request->ajax()) {
+
+            $query = Pengajuan::with('belongsToJenisRencana', 'hasOneDataPemohon', 'belongsToUser.hasOneProfile')
+                ->orderBy('updated_at', 'desc')
+                ->get();
+
+            // return $query;
+            return Datatables::of($query)
+                ->addColumn('nama', function ($item) {
+                    return $item->belongsToUser?->hasOneProfile?->nama ?? '';
+                })
+                ->addColumn('jenis', function ($item) {
+                    return $item->belongsToJenisRencana?->nama ?? '';
+                })
+                ->addColumn('proyek', function ($item) {
+                    return $item->hasOneDataPemohon?->nama_proyek ?? '';
+                })
+                ->addColumn('status', function ($item) {
+                    return $item->status ?? '';
+                })
+                ->addColumn('aksi', function ($item) {
+                    $detailBtn = "<a href='/admin/pengajuan/detail/$item->id' class='btn btn-primary btn-sm'>Detail</a>";
+
+                    if ($item->status != 'ditolak') {
+                        if ($item->status != 'input data belum selesai') {
+                            $btnVerifikasi = "<a href='/admin/aktivitas/$item->id' class='btn btn-info btn-sm'>Verifikasi</a>";
+                        } else {
+                            $btnVerifikasi = '';
+                        }
+                    } else {
+                        $btnVerifikasi = '';
+                    }
+
+                    return "
+                        <div class='btn-group' role='group'>
+                            $detailBtn
+                            $btnVerifikasi
+                        </div>
+                    ";
+                })
+                ->rawColumns(['nama', 'jenis', 'proyek', 'status', 'aksi'])
+                ->make();
+        }
 
         $data = [
             'active' => 'pengajuan-permohonan',
-            'pengajuans' => $pengajuans
         ];
 
         return view('admin.pengajuan.index', $data);

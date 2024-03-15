@@ -87,5 +87,5 @@
 @endsection
 
 @push('addons-js')
-    <script src="{{ asset('./assets/js/pages/user.js') }}"></script>
+    <script src="{{ asset('./assets/js/pages/admin/user.js') }}"></script>
 @endpush

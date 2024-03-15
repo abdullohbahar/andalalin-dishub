@@ -53,7 +53,7 @@
                                 <h1>Pengajuan Permohonan</h1>
                             </div>
                             <div class="card-body" style="overflow-y: visible">
-                                <table class="table table-bordered table-striped">
+                                <table id="kt_datatable_dom_positioning" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -65,40 +65,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @php
-                                            $no = 1;
-                                        @endphp
-                                        @foreach ($pengajuans as $pengajuan)
-                                            <tr>
-                                                <td>
-                                                    {{ $no++ }}
-                                                </td>
-                                                <td>
-                                                    {{ $pengajuan->belongsToUser?->hasOneProfile?->nama ?? '' }}
-                                                </td>
-                                                <td>
-                                                    {{ $pengajuan->belongsToJenisRencana?->nama ?? '' }}
-                                                </td>
-                                                <td>
-                                                    {{ $pengajuan->hasOneDataPemohon?->nama_proyek ?? '' }}
-                                                </td>
-                                                <td class="text-capitalize">
-                                                    {{ $pengajuan->status }}
-                                                </td>
-                                                <td>
-                                                    <div class="btn-group" role="group">
-                                                        <a href="{{ route('admin.pengajuan.show', $pengajuan->id) }}"
-                                                            class="btn btn-primary btn-sm">Detail</a>
-                                                        @if ($pengajuan->status != 'ditolak')
-                                                            @if ($pengajuan->status != 'input data belum selesai')
-                                                                <a href="{{ route('admin.aktivitas.verifikasi', $pengajuan->id) }}"
-                                                                    class="btn btn-info btn-sm">Verifikasi</a>
-                                                            @endif
-                                                        @endif
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
+
                                     </tbody>
                                 </table>
                             </div>
@@ -115,4 +82,5 @@
 @endsection
 
 @push('addons-js')
+    <script src="{{ asset('./assets/js/pages/admin/pengajuan.js') }}"></script>
 @endpush
