@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class SubSubJenisRencana extends Model
 {
@@ -13,4 +14,9 @@ class SubSubJenisRencana extends Model
         'sub_jenis_rencana_id',
         'nama',
     ];
+
+    public function hasOneUkuranMinimal(): HasOne
+    {
+        return $this->hasOne(UkuranMinimal::class, 'sub_jenis_rencana_id', 'id');
+    }
 }

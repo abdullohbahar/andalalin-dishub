@@ -13,6 +13,11 @@ class JenisRencanaPembangunan extends Model
         'nama'
     ];
 
+    public function hasManySubJenisRencana()
+    {
+        return $this->hasMany(SubJenisRencanaPembangunan::class, 'jenis_rencana_id', 'id');
+    }
+
     public function hasOneTemplateBeritaAcara()
     {
         return $this->hasOne(TemplateBeritaAcara::class, 'jenis_rencana_id', 'id');

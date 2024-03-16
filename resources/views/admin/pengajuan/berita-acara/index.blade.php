@@ -75,8 +75,10 @@
 
                                 <!--begin::Content-->
                                 <span>
-                                    Harap klik tombol simpan jika anda mengubah berita acara, jika tidak maka berita acara
-                                    yang telah anda ubah akan kembali seperti semula
+                                    <ol>
+                                        <li>Harap klik tombol simpan jika anda telah mengisi berita acara</li>
+                                        <li>Setelah itu klik tombol selanjutnya untuk melanjutkan ke langkah berikutnya</li>
+                                    </ol>
                                 </span>
                                 <!--end::Content-->
                             </div>
@@ -101,8 +103,41 @@
                                     method="POST">
                                     @csrf
                                     <div class="row">
-                                        <div class="col-12">
-                                            <textarea name="body" class="editor" style="width: 100%;">{{ old('body', $pengajuan->hasOneBeritaAcara->body ?? $pengajuan->belongsToJenisRencana->hasOneTemplateBeritaAcara->body) }}</textarea>
+                                        <div class="col-12 mt-3">
+                                            <label for="" class="form-label">Pilih Pemohon / Konsultan /
+                                                Pemrakarsa
+                                                <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
+                                                    data-bs-target="#modalPilihKonsultan">Klik
+                                                    Untuk Memilih</button>
+                                            </label>
+                                            <input type="text" name="user"
+                                                class="form-control @error('user') is-invalid @enderror" id="nama_user"
+                                                readonly required
+                                                value="{{ old('user', $pengajuan->hasOneBeritaAcara?->belongsToUser->hasOneProfile->nama) }}">
+                                            <input type="hidden" name="user_id"
+                                                value="{{ old('user_id', $pengajuan->hasOneBeritaAcara?->belongsToUser->id) }}"
+                                                id="user_id">
+                                            @error('user')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-12 mt-3">
+                                            <label for="" class="form-label">Tanggal</label>
+                                            <input type="date" name="tanggal"
+                                                class="form-control @error('tanggal') is-invalid @enderror"
+                                                value="{{ old('tanggal', $pengajuan->hasOneBeritaAcara?->tanggal ?? date('Y-m-d')) }}"
+                                                id="">
+                                            @error('tanggal')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-12 mt-3">
+                                            <label for="" class="form-label">Tahapan Operasional</label>
+                                            <textarea name="body" class="editor" style="width: 100%;">{{ old('body', $pengajuan->hasOneBeritaAcara?->body ?? $pengajuan->belongsToJenisRencana->hasOneTemplateBeritaAcara->body) }}</textarea>
                                         </div>
                                     </div>
                                     <div class="row mt-5">
@@ -113,13 +148,15 @@
                                 </form>
                             </div>
                             <div class="card-footer">
-                                <form action="{{ route($role . '.telah.mengisi.berita.acara', $pengajuan->id) }}"
-                                    method="POST" id="telahMengisi">
-                                    @csrf
-                                    <div class="row" style="float: right">
-                                        <button class="btn btn-success">Selanjutnya</button>
-                                    </div>
-                                </form>
+                                @if ($pengajuan->hasOneBeritaAcara != null)
+                                    <form action="{{ route($role . '.telah.mengisi.berita.acara', $pengajuan->id) }}"
+                                        method="POST" id="telahMengisi">
+                                        @csrf
+                                        <div class="row" style="float: right">
+                                            <button class="btn btn-success">Selanjutnya</button>
+                                        </div>
+                                    </form>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -131,10 +168,12 @@
         <!--end::Content-->
     </div>
     <!--end::Content wrapper-->
+    @include('admin.pengajuan.berita-acara.components.modal-pilih-user')
 @endsection
 
 @push('addons-js')
     <script src="{{ asset('ckeditor/build/ckeditor.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/pilih-user.js') }}"></script>
 
     <script>
         ClassicEditor.create(document.querySelector(".editor"), {

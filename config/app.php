@@ -196,7 +196,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
-
+        Riskihajar\Terbilang\TerbilangServiceProvider::class,
 
     ],
 
@@ -213,6 +213,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        'Terbilang' => Riskihajar\Terbilang\Facades\Terbilang::class,
     ])->toArray(),
 
 ];

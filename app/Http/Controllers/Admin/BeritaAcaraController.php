@@ -8,16 +8,23 @@ use Illuminate\Http\Request;
 use App\Models\RiwayatInputData;
 use App\Models\RiwayatVerifikasi;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 
 class BeritaAcaraController extends Controller
 {
     public function index($pengajuanID)
     {
-        $pengajuan = Pengajuan::with('belongsToJenisRencana.hasOneTemplateBeritaAcara', 'hasOneBeritaAcara')->findorfail($pengajuanID);
+        $pengajuan = Pengajuan::with('belongsToJenisRencana.hasOneTemplateBeritaAcara', 'hasOneBeritaAcara.belongsToUser.hasOneProfile')->findorfail($pengajuanID);
+
+        $users = User::where('role', 'pemohon')
+            ->orwhere('role', 'konsultan')
+            ->orwhere('role', 'pemrakarsa')
+            ->get();
 
         $data = [
             'active' => 'pengajuan',
-            'pengajuan' => $pengajuan
+            'pengajuan' => $pengajuan,
+            'users' => $users
         ];
 
         return view('admin.pengajuan.berita-acara.index', $data);
@@ -25,11 +32,43 @@ class BeritaAcaraController extends Controller
 
     public function update(Request $request, $pengajuanID)
     {
-        BeritaAcara::updateorcreate([
-            'pengajuan_id' => $pengajuanID
+        $request->validate([
+            'user' => 'required',
+            'tanggal' => 'required',
         ], [
-            'body' => $request->body
+            'user.required' => 'Harap memilih pemohon / konslutan / pemrakarsa',
+            'tanggal.required' => 'Tanggal harus diisi'
         ]);
+
+        // lakukan pengecekan apakah berita acara sudah ada atau belum
+        $beritaAcara = new BeritaAcara();
+
+        if ($beritaAcara->where('pengajuan_id', $pengajuanID)->first()) {
+            BeritaAcara::where('pengajuan_id', $pengajuanID)
+                ->update([
+                    'body' => $request->body,
+                    'user_id' => $request->user_id,
+                    'tanggal' => $request->tanggal,
+                ]);
+        } else {
+            $nomor_terbesar = BeritaAcara::max('nomor');
+
+            // Jika tidak ada nomor sebelumnya, maka nomor baru adalah 1
+            if (!$nomor_terbesar) {
+                $nomor_baru = 1;
+            } else {
+                // Jika ada nomor sebelumnya, nomor baru adalah nomor terbesar ditambah 1
+                $nomor_baru = $nomor_terbesar + 1;
+            }
+
+            BeritaAcara::create([
+                'body' => $request->body,
+                'user_id' => $request->user_id,
+                'tanggal' => $request->tanggal,
+                'nomor' => $nomor_baru,
+                'pengajuan_id' => $pengajuanID
+            ]);
+        }
 
         return redirect()->back()->with('success', 'Berhasil disimpan');
     }

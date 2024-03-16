@@ -15,4 +15,9 @@ class BeritaAcara extends Model
     {
         return $this->belongsTo(Pengajuan::class);
     }
+
+    public function belongsToUser()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

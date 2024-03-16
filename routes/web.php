@@ -28,6 +28,7 @@ use App\Http\Controllers\Admin\TinjauanLapanganController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Konsultan\DashboardKonsultan;
 use App\Http\Controllers\Konsultan\PengajuanAndalalinKonsultanController;
+use App\Http\Controllers\Pdf\BeritaAcaraController as PdfBeritaAcaraController;
 use App\Http\Controllers\PemberitahuanJadwalTinjauan;
 use App\Http\Controllers\Pemohon\JadwalSidangController as PemohonJadwalSidangController;
 use App\Http\Controllers\Pemohon\JadwalTinjauanLapangan;
@@ -239,4 +240,6 @@ Route::prefix('profile')->middleware('auth')->group(function () {
 
 Route::prefix('download')->middleware('auth')->group(function () {
     Route::get('pemberitahuan-jadwal-tinjauan/{pengajuanID}', PemberitahuanJadwalTinjauan::class)->name('download.pemberitahuan.jadwal.tinjauan');
+
+    Route::get('berita-acara/{pengajuanID}', PdfBeritaAcaraController::class)->name('download.berita.acara');
 });
