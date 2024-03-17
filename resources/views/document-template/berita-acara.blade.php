@@ -97,13 +97,14 @@
             PENANGANAN DAMPAK LALU LINTAS {{ $jenisBangkitan }} PEMBANGUNAN DAN OPERASIONAL <br>
             {{ $namaProyek }} <br>
             {{ $alamatProyek }} <br>
-            No : BA.01/ {{ $ukuranMinimal }} /DISHUB-BTL/{{ $yearNow }}
+            No : BA.0{{ $nomor }}/ {{ $ukuranMinimal }} /DISHUB-BTL/{{ $yearNow }}
         </p>
     </div>
 
     <div style="text-align: justify">
         <p>
-            Pada hari ini <span style="text-transform: capitalize">{{ $hari }} Tanggal {{ $tanggal }} Bulan
+            Pada hari ini <span style="text-transform: capitalize">{{ $hari }} Tanggal {{ $tanggal }}
+                Bulan
                 {{ $bulan }} Tahun
                 {{ $tahun }}</span>, bertempat di
             Bantul, kami yang bertandatangan di bawah ini :

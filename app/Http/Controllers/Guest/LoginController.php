@@ -39,6 +39,15 @@ class LoginController extends Controller
                 case 'admin':
                     return redirect()->route('admin.dashboard');
                     break;
+                case 'penilai1':
+                    return redirect()->route('penilai.dashboard');
+                    break;
+                case 'penilai2':
+                    return redirect()->route('penilai.dashboard');
+                    break;
+                case 'penilai3':
+                    return redirect()->route('penilai.dashboard');
+                    break;
                 default:
                     return redirect()->back()->with('error', 'Username atau password salah');
             }

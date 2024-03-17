@@ -118,7 +118,7 @@ License: For each use you must have a valid license purchased only from above li
                             <!--end::Login options-->
                             <!--end::Separator-->
                             <!--begin::Input group=-->
-                            @if (session()->has('message'))
+                            @if (session()->has('error'))
                                 <div class="fv-row">
                                     <div class="alert alert-danger" role="alert">
                                         Username atau password salah

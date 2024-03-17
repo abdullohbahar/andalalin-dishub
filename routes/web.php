@@ -33,6 +33,7 @@ use App\Http\Controllers\PemberitahuanJadwalTinjauan;
 use App\Http\Controllers\Pemohon\JadwalSidangController as PemohonJadwalSidangController;
 use App\Http\Controllers\Pemohon\JadwalTinjauanLapangan;
 use App\Http\Controllers\Pemohon\RiwayatInputDataController;
+use App\Http\Controllers\Penilai\DashboardPenilaiController;
 use App\Models\TemplateBeritaAcara;
 
 /*
@@ -230,6 +231,13 @@ Route::prefix('konsultan')->middleware('choose.role', 'konsultan')->group(functi
             });
         });
     });
+});
+
+Route::prefix('penilai')->group(function () {
+    Route::get('dashboard', [DashboardPenilaiController::class, 'index'])->name('penilai.dashboard');
+
+    Route::get('berita-acara/{pengajuanID}', [DashboardPenilaiController::class, 'showBeritaAcara'])->name('penilai.berita.acara');
+    Route::post('berita-acara/approve/{pengajuanID}', [DashboardPenilaiController::class, 'approve'])->name('penilai.approve.berita.acara');
 });
 
 Route::prefix('profile')->middleware('auth')->group(function () {
