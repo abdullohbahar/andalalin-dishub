@@ -240,7 +240,7 @@ License: For each use you must have a valid license purchased only from above li
                                         <div class="menu-item">
                                             <!--begin:Menu link-->
                                             <a class="menu-link {{ $active == 'dashboard' ? 'active' : '' }}"
-                                                href="{{ route('admin.dashboard') }}">
+                                                href="{{ route('penilai.dashboard') }}">
                                                 <span class="menu-icon">
                                                     <i class="ki-duotone ki-element-11 fs-2">
                                                         <span class="path1"></span>
@@ -389,6 +389,17 @@ License: For each use you must have a valid license purchased only from above li
                 position: "center",
                 icon: 'warning',
                 title: '{{ session('terminated') }}',
+                timer: 5000,
+            })
+        </script>
+    @endif
+
+    @if (session()->has('notification'))
+        <script>
+            Swal.fire({
+                position: "center",
+                icon: 'warning',
+                title: '{{ session('notification') }}',
                 timer: 5000,
             })
         </script>

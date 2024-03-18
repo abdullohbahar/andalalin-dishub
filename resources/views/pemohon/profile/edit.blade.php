@@ -1,5 +1,9 @@
 @php
     $role = auth()->user()->role;
+
+    if ($role == 'penilai1' || $role == 'penilai2' || $role == 'penilai3') {
+        $role = 'penilai';
+    }
 @endphp
 
 @extends("$role.layout.app")
@@ -9,6 +13,21 @@
 @endsection
 
 @push('addons-css')
+    <link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/south-street/jquery-ui.css"
+        rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/jquery.signature.css">
+
+    <style>
+        .kbw-signature {
+            width: 400px;
+            height: 400px;
+        }
+
+        #sig canvas {
+            width: 100% !important;
+            height: auto;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -134,23 +153,52 @@
                                                 </div>
                                             @enderror
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-3">
                                             <label for="" class="form-label">
                                                 Password
                                                 @if (!$user->password)
                                                     <span style="color: red">*</span>
+                                                @else
+                                                    <small>Biarkan kosong jika tidak ingin mengubah password</small>
                                                 @endif
                                             </label>
-                                            <input type="password" name="password"
-                                                {{ $user->password == null ? 'required' : '' }}
-                                                class="form-control @error('password') is-invalid @enderror"
-                                                placeholder="Masukkan password Anda" id="">
-                                            @error('password')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
+                                            <div class="input-group mb-5">
+                                                <input type="password" name="password"
+                                                    {{ $user->password == null ? 'required' : '' }}
+                                                    class="form-control @error('password') is-invalid @enderror"
+                                                    placeholder="Masukkan password Anda" id="password">
+                                                <span class="input-group-text view-password" id="basic-addon2">
+                                                    <i id="icon" class="fas fa-eye"></i>
+                                                </span>
+                                                @error('password')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                            @include('admin.user.components.password-requirement')
                                         </div>
+                                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-4">
+                                            <label for="" class="form-label">Konfirmasi Password</label>
+                                            <div class="input-group mb-5">
+                                                <input type="password" name="password_confirmation"
+                                                    class="form-control @error('password_confirmation') is-invalid @enderror"
+                                                    id="password_confirmation" autocomplete="new-password">
+                                                <span class="input-group-text view-password-confirmation"
+                                                    id="basic-addon2">
+                                                    <i id="icon-password-confirmation" class="fas fa-eye"></i>
+                                                </span>
+                                                @error('password_confirmation')
+                                                    <div class="invalid-feedback text-capitalize">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-12">
                                             <hr>
                                         </div>
@@ -163,6 +211,11 @@
                                         @includeWhen(
                                             $user->role == 'konsultan',
                                             'pemohon.profile.components.file-upload-konsultan')
+                                        @includeWhen(
+                                            $user->role == 'penilai1' ||
+                                                $role == 'penilai2' ||
+                                                $role == 'penilai3',
+                                            'pemohon.profile.components.ttd')
                                         <div class="col-12 mt-5">
                                             <button type="submit" class="btn btn-success mt-5"
                                                 style="width: 100%">Simpan</button>
@@ -183,4 +236,21 @@
 @endsection
 
 @push('addons-js')
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.signature.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.ui.touch-punch.min.js"></script>
+
+    <script type="text/javascript">
+        var sig = $('#sig').signature({
+            syncField: '#signature64',
+            syncFormat: 'PNG'
+        });
+        $('#clear').click(function(e) {
+            e.preventDefault();
+            sig.signature('clear');
+            $("#signature64").val('');
+        });
+    </script>
+
+    <script src="{{ asset('./assets/js/pages/view-password.js') }}"></script>
 @endpush

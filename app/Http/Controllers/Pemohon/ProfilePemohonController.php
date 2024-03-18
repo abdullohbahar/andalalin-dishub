@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Pemohon;
 
 use App\Http\Controllers\Controller;
 use App\Models\Profile;
+use App\Models\TandaTangan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -24,7 +25,7 @@ class ProfilePemohonController extends Controller
 
     public function edit($id)
     {
-        $user = User::with('hasOneProfile')->findorfail($id);
+        $user = User::with('hasOneProfile', 'hasOneTtd')->findorfail($id);
 
         $data = [
             'active' => 'profile',
@@ -41,16 +42,50 @@ class ProfilePemohonController extends Controller
             'no_ktp' => 'required',
             'no_telepon' => 'required',
             'alamat' => 'required',
-            'file_ktp' => 'required',
-            'username' => 'required|unique:users,username',
-            'password' => 'required|min:8'
         ], [
             'nama.required' => 'Nama harus diisi',
             'no_ktp.required' => 'Nomor KTP harus diisi',
             'no_telepon.required' => 'Nomor Telepon harus diisi',
             'alamat.required' => 'Alamat harus diisi',
-            'file_ktp.required' => 'KTP harus diisi',
         ]);
+
+        $user = User::with('hasOneTtd')->where('id', $id)->first();
+
+        if (!$user->file_ktp) {
+            $request->validate([
+                'file_ktp' => 'required',
+            ], [
+                'file_ktp.required' => 'KTP harus diisi',
+            ]);
+        }
+
+        if (!$user->hasOneTtd) {
+            $request->validate([
+                'signed' => 'required'
+            ], [
+                'signed.required' => 'Tanda Tangan harus diisi'
+            ]);
+        }
+
+        if ($user->username != $request->username) {
+            $request->validate([
+                'username' => 'required|unique:users,username',
+            ], [
+                'username.required' => 'Username harus diisi',
+                'username.unique' => 'Username sudah dipakai'
+            ]);
+        }
+
+        if ($request->password != null || $user->username == null) {
+            $request->validate([
+                'password' => 'required|confirmed|min:10|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
+            ], [
+                'password.required' => 'password harus diisi',
+                'password.confirmed' => 'password tidak sama',
+                'password.min' => 'password minimal 10 karakter',
+                'password.regex' => 'password harus terdiri dari huruf besar, huruf kecil, dan angka',
+            ]);
+        }
 
         $role = auth()->user()->role;
 
@@ -138,6 +173,13 @@ class ProfilePemohonController extends Controller
             $filename = time() . "." . $file->getClientOriginalExtension();
             $file->storeAs('public/file-uploads/ijazah-terakhir', $filename);
             $data['file_ijazah_terakhir'] = $filename;
+        }
+
+        if ($request->signed) {
+            TandaTangan::create([
+                'user_id' => $user->id,
+                'ttd' => $request->signed,
+            ]);
         }
 
         Profile::updateorcreate([

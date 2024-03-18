@@ -7,12 +7,22 @@ use App\Models\BeritaAcara;
 use App\Models\Pengajuan;
 use App\Models\RiwayatInputData;
 use App\Models\RiwayatVerifikasi;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DashboardPenilaiController extends Controller
 {
     public function index()
     {
+        $userID = auth()->user()->id;
+
+        $user = User::with('hasOneProfile')->findOrFail($userID);
+
+        if ($user->hasOneProfile->no_ktp == '-' || $user->hasOneProfile->no_ktp == null) {
+            return to_route('edit.profile', $userID)->with('notification', 'harap melengkapi profile terlebih dahulu');
+        }
+
+
         $role = auth()->user()->role;
 
         if ($role == 'penilai1') {
