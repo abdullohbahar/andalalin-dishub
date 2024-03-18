@@ -82,11 +82,6 @@ class BeritaAcaraController extends Controller
 
         Config::set('terbilang.locale', 'id');
 
-        // is approve
-        $isPenilai1Approve = $pengajuan->hasOneBeritaAcara->is_penilai_1_approve;
-        $isPenilai2Approve = $pengajuan->hasOneBeritaAcara->is_penilai_2_approve;
-        $isPenilai3Approve = $pengajuan->hasOneBeritaAcara->is_penilai_3_approve;
-
         $data = [
             'aksara' => $encodeAksara,
             'logo' => $encodeLogo,
