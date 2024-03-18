@@ -19,8 +19,8 @@
 
     <style>
         .kbw-signature {
-            width: 400px;
-            height: 400px;
+            width: 250px;
+            height: 250px;
         }
 
         #sig canvas {

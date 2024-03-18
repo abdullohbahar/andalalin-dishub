@@ -49,9 +49,9 @@ class ProfilePemohonController extends Controller
             'alamat.required' => 'Alamat harus diisi',
         ]);
 
-        $user = User::with('hasOneTtd')->where('id', $id)->first();
+        $user = User::with('hasOneTtd', 'hasOneProfile')->where('id', $id)->first();
 
-        if (!$user->file_ktp) {
+        if (!$user->hasOneProfile->file_ktp) {
             $request->validate([
                 'file_ktp' => 'required',
             ], [
@@ -176,8 +176,9 @@ class ProfilePemohonController extends Controller
         }
 
         if ($request->signed) {
-            TandaTangan::create([
+            TandaTangan::updateorcreate([
                 'user_id' => $user->id,
+            ], [
                 'ttd' => $request->signed,
             ]);
         }

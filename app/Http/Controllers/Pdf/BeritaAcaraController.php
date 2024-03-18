@@ -78,9 +78,14 @@ class BeritaAcaraController extends Controller
         $tahapOperasional = $pengajuan->hasOneBeritaAcara->body;
         $nomor = $pengajuan->hasOneBeritaAcara->nomor;
 
-        $penilais = User::with('hasOneProfile')->where('role', 'like', '%penilai%')->orderBy('role', 'asc')->get();
+        $penilais = User::with('hasOneProfile', 'hasOneTtd')->where('role', 'like', '%penilai%')->orderBy('role', 'asc')->get();
 
         Config::set('terbilang.locale', 'id');
+
+        // is approve
+        $isPenilai1Approve = $pengajuan->hasOneBeritaAcara->is_penilai_1_approve;
+        $isPenilai2Approve = $pengajuan->hasOneBeritaAcara->is_penilai_2_approve;
+        $isPenilai3Approve = $pengajuan->hasOneBeritaAcara->is_penilai_3_approve;
 
         $data = [
             'aksara' => $encodeAksara,
@@ -96,7 +101,8 @@ class BeritaAcaraController extends Controller
             'yearNow' => date('Y'),
             'tahapOperasional' => $tahapOperasional,
             'penilais' => $penilais,
-            'nomor' => $nomor
+            'nomor' => $nomor,
+            'pengajuan' => $pengajuan
         ];
 
         $pdf = PDF::loadView('document-template.berita-acara', $data);

@@ -1,13 +1,13 @@
 <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-3">
     <label for="" class="form-label">
         Foto KTP
-        @if (!$user->file_ktp)
+        @if (!$user->hasOneProfile->file_ktp)
             <span style="color: red">*</span>
         @else
             <small>Biarkan kosong jika tidak ingin mengubah tanda tangan</small>
         @endif
     </label>
-    <input {{ $user->file_ktp == null ? 'required' : '' }} type="file" name="file_ktp"
+    <input {{ $user->hasOneProfile->file_ktp == null ? 'required' : '' }} type="file" name="file_ktp"
         class="form-control @error('file_ktp') is-invalid @enderror" id="">
     @error('file_ktp')
         <div class="invalid-feedback">
@@ -23,7 +23,7 @@
         @else
             <small>Biarkan kosong jika tidak ingin mengubah tanda tangan</small>
         @endif
-    </label>
+    </label><br>
     <div id="sig"></div>
     <br />
     <button id="clear">Hapus Tanda Tangan</button>

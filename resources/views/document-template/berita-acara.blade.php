@@ -257,7 +257,14 @@
                     <td>{{ $no++ }}</td>
                     <td>{{ $penilai->hasOneProfile->nama }}</td>
                     <td style="text-transform: capitalize">{{ $penilai->role }}</td>
-                    <td></td>
+                    <td style="text-align: center;">
+                        @php
+                            $approval_column = 'is_penilai_' . $no . '_approve';
+                        @endphp
+                        @if ($pengajuan->hasOneBeritaAcara->$approval_column)
+                            <img src="{{ $penilai->hasOneTtd?->ttd }}" style="width: 75%;">
+                        @endif
+                    </td>
                 </tr>
             @endforeach
         </table>
