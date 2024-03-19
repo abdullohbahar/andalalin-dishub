@@ -34,6 +34,10 @@ class AktivitasController extends Controller
             return to_route('admin.berita.acara', $pengajuanID);
         } else if ($riwayat == 'Menunggu Verifikasi Penilai') {
             return to_route('admin.menunggu.verifikasi.penilai', $pengajuanID);
+        } else if ($riwayat == 'Menunggu Verifikasi Penilai') {
+            return to_route('admin.menunggu.verifikasi.penilai', $pengajuanID);
+        } else if ($riwayat == 'Menunggu Surat Kesanggupan') {
+            return to_route('admin.menunggu.surat.kesanggupan', $pengajuanID);
         }
     }
 }

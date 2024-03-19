@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\JenisRencanaPembangunanController;
 use App\Http\Controllers\Admin\KontruksiController;
 use App\Http\Controllers\Admin\PengajuanController;
 use App\Http\Controllers\Admin\SubJenisRencanaPembangunanController;
+use App\Http\Controllers\Admin\SuratKesanggupanAdminController;
 use App\Http\Controllers\Admin\TemplateBeritaAcaraController;
 use App\Http\Controllers\Admin\TinjauanLapanganController;
 use App\Http\Controllers\Admin\UserController;
@@ -90,6 +91,10 @@ Route::prefix('admin')->middleware('admin')->group(function () {
             Route::post('/update/{pengajuanID}', [BeritaAcaraController::class, 'update'])->name('admin.update.berita.acara');
             Route::post('telahMengisi/{pengajuanID}', [BeritaAcaraController::class, 'telahMengisi'])->name('admin.telah.mengisi.berita.acara');
             Route::get('menunggu-verifikasi-penilai/{pengajuanID}', [BeritaAcaraController::class, 'menungguVerifikasiPenilai'])->name('admin.menunggu.verifikasi.penilai');
+        });
+
+        Route::prefix('surat-kesanggupan')->group(function () {
+            Route::get('menunggu-surat-kesanggupan/{pengajuanID}', [SuratKesanggupanAdminController::class, 'menungguSuratKesanggupan'])->name('admin.menunggu.surat.kesanggupan');
         });
 
         Route::prefix('ajax')->group(function () {
