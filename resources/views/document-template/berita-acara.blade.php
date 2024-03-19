@@ -116,11 +116,11 @@
                 <td class="text-center">Jabatan</td>
             </tr>
             <?php $no = 1; ?>
-            @foreach ($penilais as $penilai)
+            @foreach ($penilais as $row => $penilai)
                 <tr>
                     <td>{{ $no++ }}</td>
                     <td>{{ $penilai->hasOneProfile->nama }}</td>
-                    <td style="text-transform: capitalize">{{ $penilai->role }}</td>
+                    <td style="text-transform: capitalize">Penilai {{ $row + 1 }}</td>
                 </tr>
             @endforeach
         </table>
@@ -252,14 +252,14 @@
                 <td class="text-center">Tanda Tangan</td>
             </tr>
             <?php $no = 1; ?>
-            @foreach ($penilais as $penilai)
+            @foreach ($penilais as $index => $penilai)
                 <tr>
                     <td>{{ $no++ }}</td>
                     <td>{{ $penilai->hasOneProfile->nama }}</td>
-                    <td style="text-transform: capitalize">{{ $penilai->role }}</td>
+                    <td style="text-transform: capitalize">Penilai {{ $index + 1 }}</td>
                     <td style="text-align: center;">
                         @php
-                            $approval_column = 'is_penilai_' . $no . '_approve';
+                            $approval_column = 'is_penilai_' . $index + 1 . '_approve';
                         @endphp
                         @if ($pengajuan->hasOneBeritaAcara->$approval_column)
                             <img src="{{ $penilai->hasOneTtd?->ttd }}" style="width: 75%;">
