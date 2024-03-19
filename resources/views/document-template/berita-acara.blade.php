@@ -240,6 +240,25 @@
             {{ $alamatProyek }}. Pemrakarsa
             wajib melakukan ketentuan yang tertuang didalam berita acara ini.
         </p>
+        {{-- ttd --}}
+        <div style="margin-bottom: 50px">
+            <table style="width: 100%">
+                <tr>
+                    <td style="width: 50%"></td>
+                    <td style="text-align: center; width: 50%">
+                        <span style="text-transform: capitalize">{{ $pengajuan->belongsToUser->role }}</span>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        {{ $pengajuan->belongsToUser->hasOneProfile->nama }}
+                    </td>
+                </tr>
+            </table>
+        </div>
         <div class="text-center">
             Pemeriksa/Penilai
         </div>

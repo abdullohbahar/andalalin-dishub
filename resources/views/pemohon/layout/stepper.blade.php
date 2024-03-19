@@ -39,10 +39,11 @@
                 <div class="step-counter">8</div>
                 <div class="step-name text-center">Berita Acara</div>
             </div>
-            <div
-                class="stepper-item {{ Route::is('pemohon.menunggu.verifikasi.penilai') || Route::is('konsultan.menunggu.verifikasi.penilai') ? 'active' : 'completed' }}">
-                <div class="step-counter">9</div>
-                <div class="step-name text-center">Verifikasi Berita Acara</div>
+        </div>
+        <div class="stepper-wrapper">
+            <div class="stepper-item {{ Route::is('pemohon.unduh.berita.acara') ? 'active' : 'completed' }}">
+                <div class="step-counter">10</div>
+                <div class="step-name text-center">Unduh & Upload Berita Acara</div>
             </div>
         </div>
     </div>

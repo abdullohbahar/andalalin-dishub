@@ -30,6 +30,7 @@ use App\Http\Controllers\Konsultan\DashboardKonsultan;
 use App\Http\Controllers\Konsultan\PengajuanAndalalinKonsultanController;
 use App\Http\Controllers\Pdf\BeritaAcaraController as PdfBeritaAcaraController;
 use App\Http\Controllers\PemberitahuanJadwalTinjauan;
+use App\Http\Controllers\Pemohon\BeritaAcaraPemohonController;
 use App\Http\Controllers\Pemohon\JadwalSidangController as PemohonJadwalSidangController;
 use App\Http\Controllers\Pemohon\JadwalTinjauanLapangan;
 use App\Http\Controllers\Pemohon\RiwayatInputDataController;
@@ -195,6 +196,15 @@ Route::prefix('pemohon')->middleware('choose.role', 'pemohon')->group(function (
                 Route::post('/update/{pengajuanID}', [BeritaAcaraController::class, 'update'])->name('pemohon.update.berita.acara');
                 Route::post('telahMengisi/{pengajuanID}', [BeritaAcaraController::class, 'telahMengisi'])->name('pemohon.telah.mengisi.berita.acara');
                 Route::get('menunggu-verifikasi-penilai/{pengajuanID}', [BeritaAcaraController::class, 'menungguVerifikasiPenilai'])->name('pemohon.menunggu.verifikasi.penilai');
+
+                Route::get('unduh/{pengajuanID}', [BeritaAcaraPemohonController::class, 'index'])->name('pemohon.unduh.berita.acara');
+                Route::post('unggah/{pengajuanID}', [BeritaAcaraPemohonController::class, 'unggahBeritaAcara'])->name('pemohon.unggah.berita.acara');
+            });
+
+            Route::prefix('surat-kesanggupan')->group(function () {
+                Route::get('/', function () {
+                    return "helo";
+                })->name('pemohon.surat.kesanggupan');
             });
         });
     });
