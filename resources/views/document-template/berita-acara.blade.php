@@ -133,22 +133,19 @@
             <li>Peraturan Pemerintah Nomor 5 Tahun 2021 Tentang Penyelenggaraan Perizinan Berusaha Berbasis Risiko;</li>
             <li>Peraturan Pemerintah Nomor 30 Tahun 2021 Tentang Penyelenggaraan Bidang Lalu Lintas Angkutan Jalan;</li>
             <li>Peraturan Menteri Nomor 17 Tahun 2021 Tentang Penyelenggaraan Analisis Dampak Lalu Lintas;</li>
-            <li>Surat permohonan Pesetujuan Standar Teknis/Rekomendasi Teknis/ Andalalin atas Dokumen Standar Teknis/
-                Rekomendasi Teknis/ Andalalin Penanganan Dampak Lalu Lintas Bangkitan Rendah/ Bangkitan Sedang/
-                Bangkitan Tinggi Pembangunan Dan Operasional Mikrosite Indostation, Jalan Wachid Hasyim, Sumuran Rt 004
-                Prsl: 06203, Kalurahan Palbapang, Kapanewon Bantul, Kabupaten Bantul, Daerah Istimewa Yogyakarta;</li>
+            <li>Surat permohonan Pesetujuan {{ $ukuranMinimal }} atas Dokumen {{ $ukuranMinimal }} Penanganan Dampak
+                Lalu Lintas {{ $jenisBangkitan }} Pembangunan Dan Operasional {{ $namaProyek }},
+                {{ $alamatProyek }};</li>
             <li>
-                Dokumen Standar Teknis/Rekomendasi Teknis/ Andalalin Penanganan Dampak Lalu Lintas Bangkitan Rendah/
-                Bangkitan Sedang/ Bangkitan Tinggi Pembangunan Dan Operasional Mikrosite Indostation, Jalan Wachid
-                Hasyim, Sumuran Rt 004 Prsl: 06203, Kalurahan Palbapang, Kapanewon Bantul, Kabupaten Bantul, Daerah
-                Istimewa Yogyakarta.
+                Dokumen {{ $ukuranMinimal }} Penanganan Dampak Lalu Lintas {{ $jenisBangkitan }} Pembangunan Dan
+                Operasional {{ $namaProyek }}, {{ $alamatProyek }}.
             </li>
         </ol>
         <p style="line-height: 1.6">
-            Telah mengadakan penelitian dan penilaian Dokumen Standar Teknis/Rekomendasi Teknis/ Andalalin Penanganan
-            Dampak Lalu Lintas Bangkitan Rendah/ Bangkitan Sedang/ Bangkitan Tinggi Pembangunan Dan Operasional
-            Mikrosite Indostation, Jalan Wachid Hasyim, Sumuran Rt 004 Prsl: 06203, Kalurahan Palbapang, Kapanewon
-            Bantul, Kabupaten Bantul, Daerah Istimewa Yogyakarta dengan luas lahan 211,47 m2 dengan luas bangunan 44 m2.
+            Telah mengadakan penelitian dan penilaian Dokumen {{ $ukuranMinimal }} Penanganan
+            Dampak Lalu Lintas {{ $jenisBangkitan }} Pembangunan Dan Operasional
+            {{ $namaProyek }}, {{ $alamatProyek }} dengan luas lahan {{ $luasLahan }} dengan luas bangunan
+            {{ $luasBangunan }}.
             Dalam berita acara tersebut pemerakarsa sanggup untuk melakukan manajemen rekayasa meliputi :
         </p>
         <p>
@@ -157,7 +154,7 @@
         <ol style="line-height: 1.6">
             <li>Memenuhi segala persyaratan perizinan yang diwajibkan sebelum melaksanakan pembangunan; </li>
             <li>Melakukan sosialisasi Kepada masyarakat sekitar yang terdampak terkait dengan adanya pelaksanaan
-                kontruksi pembangunan MIKROSITE INDOSTASION.</li>
+                kontruksi pembangunan {{ $namaProyek }}.</li>
         </ol>
         <p>
             <b>TAHAP KONSTRUKSI</b>

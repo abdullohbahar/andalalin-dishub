@@ -82,6 +82,9 @@ class BeritaAcaraController extends Controller
 
         Config::set('terbilang.locale', 'id');
 
+        $luasLahan = $pengajuan->hasOneDataPemohon->luas_tanah;
+        $luasBangunan = $pengajuan->hasOneDataPemohon->luas_bangunan;
+
         $data = [
             'aksara' => $encodeAksara,
             'logo' => $encodeLogo,
@@ -97,7 +100,9 @@ class BeritaAcaraController extends Controller
             'tahapOperasional' => $tahapOperasional,
             'penilais' => $penilais,
             'nomor' => $nomor,
-            'pengajuan' => $pengajuan
+            'pengajuan' => $pengajuan,
+            'luasLahan' => $luasLahan,
+            'luasBangunan' => $luasBangunan,
         ];
 
         $pdf = PDF::loadView('document-template.berita-acara', $data);

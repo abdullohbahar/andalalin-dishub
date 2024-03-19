@@ -115,7 +115,7 @@ class DashboardPenilaiController extends Controller
             RiwayatVerifikasi::updateorcreate([
                 'pengajuan_id' => $pengajuanID
             ], [
-                'step' => 'Unduh Berita Acara'
+                'step' => 'Surat Kesanggupan'
             ]);
 
             $this->kirimNotifikasiKePemohon($pengajuanID);
