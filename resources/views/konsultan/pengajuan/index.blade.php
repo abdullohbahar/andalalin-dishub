@@ -53,7 +53,7 @@
                                 <h1>Pengajuan</h1>
                             </div>
                             <div class="card-body" style="overflow-y: visible">
-                                <table class="table table-bordered table-striped">
+                                <table class="table table-bordered table-striped" id="kt_datatable_dom_positioning">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -73,9 +73,7 @@
                                                 <td>
                                                     {{ $no++ }}
                                                 </td>
-                                                <td>
                                                 <td>{{ $pengajuan->belongsToUser->hasOneProfile->nama }}</td>
-                                                </td>
                                                 <td>
                                                     {{ $pengajuan->belongsToJenisRencana?->nama ?? '' }}
                                                 </td>
@@ -132,4 +130,5 @@
 @endsection
 
 @push('addons-js')
+    <script src="{{ asset('./assets/js/pages/konsultan/pengajuan.js') }}"></script>
 @endpush

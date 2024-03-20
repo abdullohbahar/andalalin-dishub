@@ -18,7 +18,9 @@ class PengajuanAndalalinKonsultanController extends Controller
             'belongsToJenisRencana',
             'hasOneRiwayatVerifikasi',
             'hasOneRiwayatInputData'
-        )->where('konsultan_id', $userID)->get();
+        )->where('konsultan_id', $userID)
+            ->orderBy('updated_at', 'desc')
+            ->get();
 
         $data = [
             'active' => 'pengajuan',

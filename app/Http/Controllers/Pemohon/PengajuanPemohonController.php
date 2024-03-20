@@ -55,11 +55,8 @@ class PengajuanPemohonController extends Controller
 
         $userID = auth()->user()->id;
 
-        $pengajuans = Pengajuan::with('belongsToJenisRencana', 'hasOneDataPemohon')->where('user_id', $userID)->get();
-
         $data = [
             'active' => 'pengajuan',
-            'pengajuans' => $pengajuans
         ];
 
         return view('pemohon.pengajuan.index', $data);

@@ -47,7 +47,7 @@
             <!--begin::Content container-->
             <div id="kt_app_content_container" class="app-container container-fluid">
                 <div class="row">
-                    <div class="col-12">
+                    {{-- <div class="col-12">
                         <div class="card">
                             <div class="card-header pt-5">
                                 <h1>Pengajuan Baru</h1>
@@ -175,7 +175,7 @@
                                 </table>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
 
             </div>
