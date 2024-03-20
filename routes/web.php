@@ -30,11 +30,13 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Konsultan\DashboardKonsultan;
 use App\Http\Controllers\Konsultan\PengajuanAndalalinKonsultanController;
 use App\Http\Controllers\Pdf\BeritaAcaraController as PdfBeritaAcaraController;
+use App\Http\Controllers\Pdf\SuratKesanggupanController;
 use App\Http\Controllers\PemberitahuanJadwalTinjauan;
 use App\Http\Controllers\Pemohon\BeritaAcaraPemohonController;
 use App\Http\Controllers\Pemohon\JadwalSidangController as PemohonJadwalSidangController;
 use App\Http\Controllers\Pemohon\JadwalTinjauanLapangan;
 use App\Http\Controllers\Pemohon\RiwayatInputDataController;
+use App\Http\Controllers\Pemohon\SuratKesanggupanPemohonController;
 use App\Http\Controllers\Penilai\DashboardPenilaiController;
 use App\Models\TemplateBeritaAcara;
 
@@ -207,9 +209,7 @@ Route::prefix('pemohon')->middleware('choose.role', 'pemohon')->group(function (
             });
 
             Route::prefix('surat-kesanggupan')->group(function () {
-                Route::get('/', function () {
-                    return "helo";
-                })->name('pemohon.surat.kesanggupan');
+                Route::get('/{pengajuanID}', [SuratKesanggupanPemohonController::class, 'index'])->name('pemohon.surat.kesanggupan');
             });
         });
     });
@@ -265,4 +265,5 @@ Route::prefix('download')->middleware('auth')->group(function () {
     Route::get('pemberitahuan-jadwal-tinjauan/{pengajuanID}', PemberitahuanJadwalTinjauan::class)->name('download.pemberitahuan.jadwal.tinjauan');
 
     Route::get('berita-acara/{pengajuanID}', PdfBeritaAcaraController::class)->name('download.berita.acara');
+    Route::get('surat-kesanggupan/{pengajuanID}', SuratKesanggupanController::class)->name('download.surat.kesanggupan');
 });

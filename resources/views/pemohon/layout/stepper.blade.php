@@ -43,7 +43,11 @@
         <div class="stepper-wrapper">
             <div class="stepper-item {{ Route::is('pemohon.unduh.berita.acara') ? 'active' : 'completed' }}">
                 <div class="step-counter">10</div>
-                <div class="step-name text-center">Unduh & Upload Berita Acara</div>
+                <div class="step-name text-center">Unduh & Unggah Berita Acara</div>
+            </div>
+            <div class="stepper-item {{ Route::is('pemohon.surat.kesanggupan') ? 'active' : 'completed' }}">
+                <div class="step-counter">11</div>
+                <div class="step-name text-center">Unduh & Unggah Surat Kesanggupan</div>
             </div>
         </div>
     </div>

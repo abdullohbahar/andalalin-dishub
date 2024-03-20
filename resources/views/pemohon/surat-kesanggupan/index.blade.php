@@ -11,7 +11,7 @@
 @extends("$role.layout.app")
 
 @section('title')
-    Berita Acara
+    Surat Kesanggupan
 @endsection
 
 @push('addons-css')
@@ -82,7 +82,7 @@
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-                        Berita Acara</h1>
+                        Surat Kesanggupan</h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -97,7 +97,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Berita Acara</li>
+                        <li class="breadcrumb-item text-muted">Surat Kesanggupan</li>
                         <!--end::Item-->
                     </ul>
                     <!--end::Breadcrumb-->
@@ -129,10 +129,8 @@
 
                                 <!--begin::Content-->
                                 <ol style="font-size: 12pt">
-                                    <li>Harap melakukan unduh pada berita acara dibawah yang telah disetujui oleh penilai.
-                                    </li>
-                                    <li>Tanda Tangan pada berita acara yang telah diunduh tadi</li>
-                                    <li>Unggah berita acara yang telah diberi tanda tangan</li>
+                                    <li>Harap melakukan unduh pada surat kesanggupan dibawah.</li>
+                                    <li>Unggah surat kesanggupan yang telah bermaterai</li>
                                     <li>Jika semua sudah dilakukan maka selanjutnya klik tombol selanjutnya</li>
                                 </ol>
                                 <!--end::Content-->
@@ -142,7 +140,7 @@
                         <!--end::Alert-->
                         <div class="card">
                             <div class="card-header pt-5">
-                                <h1>Unduh Berita Acara</h1>
+                                <h1>Unduh Surat Kesanggupan</h1>
                             </div>
                             <div class="card-body">
                                 <div class="row">
@@ -157,7 +155,7 @@
                             @csrf
                             <div class="card mt-5">
                                 <div class="card-header">
-                                    <h1 class="mt-5">Unggah Berita Acara</h1>
+                                    <h1 class="mt-5">Unggah Surat Kesanggupan</h1>
                                 </div>
                                 <div class="card-body">
                                     <div class="col-sm-12 col-md-6">
