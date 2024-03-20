@@ -55,7 +55,7 @@
                                 </h2>
                             </div>
                             <div class="card-body">
-                                <table class="table table-bordered table-striped">
+                                <table class="table table-bordered table-striped" id="tableNotApprove">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -101,7 +101,7 @@
                                 </h2>
                             </div>
                             <div class="card-body">
-                                <table class="table table-bordered table-striped">
+                                <table class="table table-bordered table-striped" id="tableApprove">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -142,4 +142,5 @@
 @endsection
 
 @push('addons-js')
+    <script src="{{ asset('./assets/js/pages/penilai/pengajuan.js') }}"></script>
 @endpush
