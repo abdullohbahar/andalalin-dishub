@@ -9,11 +9,50 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\JenisRencanaPembangunan;
 use App\Models\RiwayatInputData;
+use DataTables;
+
 
 class PengajuanPemohonController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->ajax()) {
+            $userID = auth()->user()->id;
+
+            $query = Pengajuan::with('belongsToJenisRencana', 'hasOneDataPemohon')
+                ->orderBy('updated_at', 'desc')
+                ->where('user_id', $userID)->get();
+
+            // return $query;
+            return Datatables::of($query)
+                ->addColumn('jenis', function ($item) {
+                    return $item->belongsToJenisRencana?->nama ?? '';
+                })
+                ->addColumn('proyek', function ($item) {
+                    return $item->hasOneDataPemohon?->nama_proyek ?? '';
+                })
+                ->addColumn('status', function ($item) {
+                    return $item->status ?? '';
+                })
+                ->addColumn('aksi', function ($item) {
+
+                    if ($item->status != 'input data belum selesai') {
+                        $detailBtn = "<a href='/pemohon/pengajuan/andalalin/detail/$item->id' class='btn btn-primary btn-sm'>Detail</a>";
+                    }
+
+                    $verifikasiBtn = "<a href='/pemohon/pengajuan/andalalin/riwayat-input-data/$item->id' class='btn btn-warning btn-sm'>Aktivitas Permohonan</a>";
+
+                    return "
+                        <div class='btn-group' role='group'>
+                            $detailBtn
+                            $verifikasiBtn
+                        </div>
+                    ";
+                })
+                ->rawColumns(['jenis', 'proyek', 'status', 'aksi'])
+                ->make();
+        }
+
         $userID = auth()->user()->id;
 
         $pengajuans = Pengajuan::with('belongsToJenisRencana', 'hasOneDataPemohon')->where('user_id', $userID)->get();

@@ -59,7 +59,7 @@
                                 </div>
                             </div>
                             <div class="card-body" style="overflow-y: visible">
-                                <table class="table table-bordered table-striped">
+                                <table class="table table-bordered table-striped" id="kt_datatable_dom_positioning">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -70,36 +70,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @php
-                                            $no = 1;
-                                        @endphp
-                                        @foreach ($pengajuans as $pengajuan)
-                                            <tr>
-                                                <td>
-                                                    {{ $no++ }}
-                                                </td>
-                                                <td>
-                                                    {{ $pengajuan->belongsToJenisRencana?->nama ?? '' }}
-                                                </td>
-                                                <td>
-                                                    {{ $pengajuan->hasOneDataPemohon?->nama_proyek ?? '' }}
-                                                </td>
-                                                <td class="text-capitalize">
-                                                    {{ $pengajuan->status }}
-                                                </td>
-                                                <td>
-                                                    <div class="btn-group" role="group"
-                                                        aria-label="Basic mixed styles example">
-                                                        @if ($pengajuan->status != 'input data belum selesai')
-                                                            <a href="{{ route('pemohon.show.pengajuan.andalalin', $pengajuan->id) }}"
-                                                                class="btn btn-info btn-sm">Detail</a>
-                                                        @endif
-                                                        <a href="{{ route('pemohon.riwayat.input.data', $pengajuan->id) }}"
-                                                            class="btn btn-warning btn-sm">Aktivitas Permohonan</a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -116,4 +86,5 @@
 @endsection
 
 @push('addons-js')
+    <script src="{{ asset('./assets/js/pages/pemohon/pengajuan.js') }}"></script>
 @endpush

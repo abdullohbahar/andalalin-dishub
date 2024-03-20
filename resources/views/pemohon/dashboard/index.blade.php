@@ -126,7 +126,10 @@
                                             <tr>
                                                 <td>{{ $disetujui->belongsToJenisRencana->nama }}</td>
                                                 <td>{{ $disetujui->hasOneDataPemohon->nama_proyek }}</td>
-                                                <td></td>
+                                                <td>
+                                                    <a href="{{ route('pemohon.riwayat.input.data', $disetujui->id) }}"
+                                                        class="btn btn-warning btn-sm">Aktivitas Permohonan</a>
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
