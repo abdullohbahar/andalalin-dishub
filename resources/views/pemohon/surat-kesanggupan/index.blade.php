@@ -129,8 +129,10 @@
 
                                 <!--begin::Content-->
                                 <ol style="font-size: 12pt">
-                                    <li>Harap melakukan unduh pada surat kesanggupan dibawah.</li>
-                                    <li>Unggah surat kesanggupan yang telah bermaterai</li>
+                                    <li>Harap mengisi nomor surat pernyataan kesanggupan</li>
+                                    <li>Setelah itu klik simpan nomor surat</li>
+                                    <li>Jika sudah maka lakukan unduh pada surat kesanggupan</li>
+                                    <li>Kemudian Unggah surat kesanggupan yang telah bermaterai</li>
                                     <li>Jika semua sudah dilakukan maka selanjutnya klik tombol selanjutnya</li>
                                 </ol>
                                 <!--end::Content-->
@@ -143,14 +145,35 @@
                                 <h1>Unduh Surat Kesanggupan</h1>
                             </div>
                             <div class="card-body">
+                                <form action="{{ route('pemohon.store.nomor.surat.kesanggupan', $pengajuanID) }}"
+                                    method="POST">
+                                    @csrf
+                                    <div class="row mb-5">
+                                        <div class="col-sm-12 col-md-6">
+                                            <label for="" class="form-label">Nomor Surat Pernyataan
+                                                Kesanggupan</label>
+                                            <input type="text" class="form-control"
+                                                value="{{ $pengajuan->hasOneSuratKesanggupan?->nomor_surat }}"
+                                                name="nomor_surat" id="" required>
+                                        </div>
+                                        <div class="col-12 mt-5">
+                                            <button class="btn btn-success">Simpan Nomor Surat</button>
+                                            @if ($pengajuan->hasOneSuratKesanggupan?->nomor_surat)
+                                                <a href="{{ route('download.surat.kesanggupan', $pengajuanID) }}"
+                                                    target="_blank" class="btn btn-info">Unduh Surat Pernyataan
+                                                    Kesanggupan</a>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </form>
                                 <div class="row">
-                                    <iframe src="{{ route('download.surat.kesanggupan', $pengajuanID) }}" width="100%"
-                                        height="600px">
+                                    <iframe src="{{ route('download.surat.kesanggupan', $pengajuanID) }}#toolbar=0"
+                                        width="100%" height="600px">
                                     </iframe>
                                 </div>
                             </div>
                         </div>
-                        <form action="{{ route('pemohon.unggah.berita.acara', $pengajuanID) }}" id="unggah"
+                        <form action="{{ route('pemohon.store.file.surat.kesanggupan', $pengajuanID) }}" id="unggah"
                             method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="card mt-5">
@@ -159,10 +182,10 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="col-sm-12 col-md-6">
-                                        <input class="form-control @error('file_uploads') is-invalid @enderror"
-                                            type="file" name="file_uploads" accept=".pdf" onchange="validateFile(this)"
-                                            id="" required>
-                                        @error('file_uploads')
+                                        <input class="form-control @error('file') is-invalid @enderror" type="file"
+                                            name="file" accept=".pdf" onchange="validateFile(this)" id=""
+                                            required>
+                                        @error('file')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>

@@ -95,7 +95,7 @@
             SURAT PERNYATAAN KESANGGUPAN <br>
         </p>
     </div>
-    <p class="text-center">disini nomor dinamis dari instansi</p>
+    <p class="text-center">Nomor : {{ $pengajuan->hasOneSuratKesanggupan->nomor_surat ?? '-' }}</p>
 
     <div style="text-align: justify">
         <p>
@@ -118,7 +118,8 @@
         <p style="line-height: 1.6">
             Dengan ini bertindak untuk dan atas nama instansi, bahwa berdasarkan surat permohonan Persetujuan Teknis
             Penanganan Dampak Lalu Lintas {{ $jenisBangkitan }} nomor:
-            (diambilkan dari inputan saat Pengajuan) tentang kegiatan {{ $namaProyek }}, dengan ini menyatakan sanggup
+            {{ $pengajuan->hasOneDataPemohon->nomor_surat_permohonan }} tentang kegiatan {{ $namaProyek }}, dengan ini
+            menyatakan sanggup
             untuk melaksanakan semua kewajiban, yaitu :
         </p>
         <p>

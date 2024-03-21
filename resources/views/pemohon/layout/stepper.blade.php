@@ -49,6 +49,10 @@
                 <div class="step-counter">11</div>
                 <div class="step-name text-center">Unduh & Unggah Surat Kesanggupan</div>
             </div>
+            <div class="stepper-item {{ Route::is('pemohon.menungu.verifikasi') ? 'active' : 'completed' }}">
+                <div class="step-counter">12</div>
+                <div class="step-name text-center">Verifikasi Surat Kesanggupan</div>
+            </div>
         </div>
     </div>
 </div>

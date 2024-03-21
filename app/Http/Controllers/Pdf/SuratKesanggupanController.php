@@ -34,7 +34,8 @@ class SuratKesanggupanController extends Controller
             'belongsToSubJenisRencana.hasOneUkuranMinimal',
             'belongsToSubSubJenisRencana.hasOneUkuranMinimal',
             'hasOneBeritaAcara',
-            'hasOnePemrakarsa'
+            'hasOnePemrakarsa',
+            'hasOneSuratKesanggupan'
         )->findOrFail($pengajuanID);
 
         // mencari ukuran minimal

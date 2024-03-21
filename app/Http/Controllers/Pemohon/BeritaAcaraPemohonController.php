@@ -52,7 +52,7 @@ class BeritaAcaraPemohonController extends Controller
         RiwayatVerifikasi::updateorcreate([
             'pengajuan_id' => $pengajuanID
         ], [
-            'step' => 'Surat Kesanggupan'
+            'step' => 'Menunggu Surat Kesanggupan'
         ]);
 
         return to_route('pemohon.surat.kesanggupan', $pengajuanID)->with('success', 'Terimakasih telah mengunggah berita acara');

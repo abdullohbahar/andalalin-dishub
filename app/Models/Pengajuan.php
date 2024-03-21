@@ -85,6 +85,11 @@ class Pengajuan extends Model
         return $this->hasOne(Pemrakarsa::class);
     }
 
+    public function hasOneSuratKesanggupan()
+    {
+        return $this->hasOne(SuratKesanggupan::class);
+    }
+
     protected function deadline(): Attribute
     {
         return Attribute::make(

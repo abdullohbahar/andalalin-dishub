@@ -210,6 +210,9 @@ Route::prefix('pemohon')->middleware('choose.role', 'pemohon')->group(function (
 
             Route::prefix('surat-kesanggupan')->group(function () {
                 Route::get('/{pengajuanID}', [SuratKesanggupanPemohonController::class, 'index'])->name('pemohon.surat.kesanggupan');
+                Route::post('nomor-surat/{pengajuanID}', [SuratKesanggupanPemohonController::class, 'storeNomorSurat'])->name('pemohon.store.nomor.surat.kesanggupan');
+                Route::post('unggah/{pengajuanID}', [SuratKesanggupanPemohonController::class, 'storeFileSurat'])->name('pemohon.store.file.surat.kesanggupan');
+                Route::get('menunggu-verifikasi/{pengajuanID}', [SuratKesanggupanPemohonController::class, 'menungguVerifikasi'])->name('pemohon.menungu.verifikasi');
             });
         });
     });
