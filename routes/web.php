@@ -96,7 +96,15 @@ Route::prefix('admin')->middleware('admin')->group(function () {
         });
 
         Route::prefix('surat-kesanggupan')->group(function () {
+            Route::get('/{pengajuanID}', [SuratKesanggupanAdminController::class, 'index'])->name('admin.surat.kesanggupan');
             Route::get('menunggu-surat-kesanggupan/{pengajuanID}', [SuratKesanggupanAdminController::class, 'menungguSuratKesanggupan'])->name('admin.menunggu.surat.kesanggupan');
+            Route::post('approve/{pengajuanID}', [SuratKesanggupanAdminController::class, 'approve'])->name('admin.approve.surat.kesanggupan');
+        });
+
+        Route::prefix('surat-persetujuan')->group(function () {
+            Route::get('/{pengajuanID}', function () {
+                return "surat persetujuan";
+            })->name('admin.surat.persetujuan');
         });
 
         Route::prefix('ajax')->group(function () {
