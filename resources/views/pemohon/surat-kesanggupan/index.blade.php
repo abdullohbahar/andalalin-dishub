@@ -144,7 +144,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <iframe src="{{ route('download.berita.acara', $pengajuanID) }}" width="100%"
+                                    <iframe src="{{ route('download.surat.kesanggupan', $pengajuanID) }}" width="100%"
                                         height="600px">
                                     </iframe>
                                 </div>

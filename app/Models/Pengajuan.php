@@ -80,6 +80,11 @@ class Pengajuan extends Model
         return $this->hasOne(BeritaAcara::class);
     }
 
+    public function hasOnePemrakarsa()
+    {
+        return $this->hasOne(Pemrakarsa::class);
+    }
+
     protected function deadline(): Attribute
     {
         return Attribute::make(

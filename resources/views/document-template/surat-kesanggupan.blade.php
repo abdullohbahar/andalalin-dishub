@@ -58,7 +58,7 @@
 
 <body>
     {{-- KOP --}}
-    <div>
+    {{-- <div>
         <table style="width: 100%">
             <tr>
                 <td style="width: 15%">
@@ -84,69 +84,42 @@
                 </td>
             </tr>
         </table>
-    </div>
+    </div> --}}
 
     {{-- garis tebal --}}
-    <div class="garis">
-    </div>
+    {{-- <div class="garis">
+    </div> --}}
 
-    <div class="text-center header" style="font-weight: bold;  text-transform: uppercase;">
+    <div class="text-center header" style="font-weight: bold;  text-transform: uppercase; margin-top:170px">
         <p style="line-height: 0.7cm">
-            BERITA ACARA PEMERIKSAAN <br>
-            DOKUMEN {{ $ukuranMinimal }} <br>
-            PENANGANAN DAMPAK LALU LINTAS {{ $jenisBangkitan }} PEMBANGUNAN DAN OPERASIONAL <br>
-            {{ $namaProyek }} <br>
-            {{ $alamatProyek }} <br>
-            No : BA.0{{ $nomor }}/ {{ $ukuranMinimal }} /DISHUB-BTL/{{ $yearNow }}
+            SURAT PERNYATAAN KESANGGUPAN <br>
         </p>
     </div>
+    <p class="text-center">disini nomor dinamis dari instansi</p>
 
     <div style="text-align: justify">
         <p>
-            Pada hari ini <span style="text-transform: capitalize">{{ $hari }} Tanggal {{ $tanggal }}
-                Bulan
-                {{ $bulan }} Tahun
-                {{ $tahun }}</span>, bertempat di
-            Bantul, kami yang bertandatangan di bawah ini :
+            Saya yang bertanda tangan dibawah ini :
         </p>
-        <table style="width: 100%;" border="1">
+        <table style="width: 100%;">
             <tr>
-                <td style="width: 5%" class="text-center">No</td>
-                <td style="width: 40%;" class="text-center">Nama</td>
-                <td class="text-center">Jabatan</td>
+                <td style="width: 15%">Nama</td>
+                <td>: {{ $pengajuan->hasOnePemrakarsa->nama_penanggung_jawab }}</td>
             </tr>
-            <?php $no = 1; ?>
-            @foreach ($penilais as $row => $penilai)
-                <tr>
-                    <td>{{ $no++ }}</td>
-                    <td>{{ $penilai->hasOneProfile->nama }}</td>
-                    <td style="text-transform: capitalize">Penilai {{ $row + 1 }}</td>
-                </tr>
-            @endforeach
+            <tr>
+                <td>Jabatan</td>
+                <td>: {{ $pengajuan->hasOnePemrakarsa->jabatan }} </td>
+            </tr>
+            <tr>
+                <td>Alamat</td>
+                <td>: {{ $pengajuan->hasOnePemrakarsa->alamat }}</td>
+            </tr>
         </table>
-        <p>
-            Bertindak sebagai Penilai Dokumen Analisis Dampak Lalu Lintas berdasarkan :
-        </p>
-        <ol type="a" style="line-height: 1.6">
-            <li>Undang-undang RI nomor 22 tahun 2009 tentang Lalu Lintas Angkutan Jalan dan Angkutan Jalan ;</li>
-            <li>Undang-Undang Nomor 11 Tahun 2020 Tentang Cipta Kerja;</li>
-            <li>Peraturan Pemerintah Nomor 5 Tahun 2021 Tentang Penyelenggaraan Perizinan Berusaha Berbasis Risiko;</li>
-            <li>Peraturan Pemerintah Nomor 30 Tahun 2021 Tentang Penyelenggaraan Bidang Lalu Lintas Angkutan Jalan;</li>
-            <li>Peraturan Menteri Nomor 17 Tahun 2021 Tentang Penyelenggaraan Analisis Dampak Lalu Lintas;</li>
-            <li>Surat permohonan Pesetujuan {{ $ukuranMinimal }} atas Dokumen {{ $ukuranMinimal }} Penanganan Dampak
-                Lalu Lintas {{ $jenisBangkitan }} Pembangunan Dan Operasional {{ $namaProyek }},
-                {{ $alamatProyek }};</li>
-            <li>
-                Dokumen {{ $ukuranMinimal }} Penanganan Dampak Lalu Lintas {{ $jenisBangkitan }} Pembangunan Dan
-                Operasional {{ $namaProyek }}, {{ $alamatProyek }}.
-            </li>
-        </ol>
         <p style="line-height: 1.6">
-            Telah mengadakan penelitian dan penilaian Dokumen {{ $ukuranMinimal }} Penanganan
-            Dampak Lalu Lintas {{ $jenisBangkitan }} Pembangunan Dan Operasional
-            {{ $namaProyek }}, {{ $alamatProyek }} dengan luas lahan {{ $luasLahan }} dengan luas bangunan
-            {{ $luasBangunan }}.
-            Dalam berita acara tersebut pemerakarsa sanggup untuk melakukan manajemen rekayasa meliputi :
+            Dengan ini bertindak untuk dan atas nama instansi, bahwa berdasarkan surat permohonan Persetujuan Teknis
+            Penanganan Dampak Lalu Lintas {{ $jenisBangkitan }} nomor:
+            (diambilkan dari inputan saat Pengajuan) tentang kegiatan {{ $namaProyek }}, dengan ini menyatakan sanggup
+            untuk melaksanakan semua kewajiban, yaitu :
         </p>
         <p>
             <b>TAHAP PRAKONSTRUKSI</b>

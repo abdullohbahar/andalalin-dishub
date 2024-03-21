@@ -6,11 +6,14 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Pengajuan;
 use App\Models\JenisJalan;
+use App\Models\Pemrakarsa;
 use App\Models\DataPemohon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\RiwayatInputData;
 use App\Models\DokumenDataPemohon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\JenisRencanaPembangunan;
 use Illuminate\Support\Facades\Storage;
@@ -101,39 +104,58 @@ class PengajuanAndalalinController extends Controller
     {
         $userID = auth()->user()->id;
 
-        $dataPemohon = DataPemohon::updateorcreate([
-            'user_id' => $userID,
-            'pengajuan_id' => $request->pengajuan_id,
-        ], [
-            'user_id' => $userID,
-            'pengajuan_id' => $request->pengajuan_id,
-            'konsultan_id' => $request->konsultan_id,
-            'nama_pimpinan' => $request->nama_pimpinan,
-            'jabatan_pimpinan' => $request->jabatan_pimpinan,
-            'nama_proyek' => $request->nama_proyek,
-            'nama_jalan' => $request->nama_jalan,
-            'luas_bangunan' => $request->luas_bangunan,
-            'luas_tanah' => $request->luas_tanah,
-            'alamat' => $request->alamat,
-            'nomor_surat_permohonan' => $request->nomor_surat_permohonan,
-            'tanggal_surat_permohonan' => $request->tanggal_surat_permohonan,
-            'longitude' => $request->longitude,
-            'latitude' => $request->latitude,
-        ]);
+        try {
+            DB::beginTransaction();
 
-        Pengajuan::where('id', $request->pengajuan_id)->update([
-            'konsultan_id' => $request->konsultan_id
-        ]);
+            $dataPemohon = DataPemohon::updateorcreate([
+                'user_id' => $userID,
+                'pengajuan_id' => $request->pengajuan_id,
+            ], [
+                'user_id' => $userID,
+                'pengajuan_id' => $request->pengajuan_id,
+                'konsultan_id' => $request->konsultan_id,
+                'nama_pimpinan' => $request->nama_pimpinan,
+                'jabatan_pimpinan' => $request->jabatan_pimpinan,
+                'nama_proyek' => $request->nama_proyek,
+                'nama_jalan' => $request->nama_jalan,
+                'luas_bangunan' => $request->luas_bangunan,
+                'luas_tanah' => $request->luas_tanah,
+                'alamat' => $request->alamat,
+                'nomor_surat_permohonan' => $request->nomor_surat_permohonan,
+                'tanggal_surat_permohonan' => $request->tanggal_surat_permohonan,
+                'longitude' => $request->longitude,
+                'latitude' => $request->latitude,
+            ]);
 
-        RiwayatInputData::updateorcreate([
-            'pengajuan_id' => $request->pengajuan_id
-        ], [
-            'step' => 'Upload Dokumen Permohonan'
-        ]);
+            $dataPemrakarsa = Pemrakarsa::updateorcreate([
+                'pengajuan_id' => $request->pengajuan_id,
+            ], [
+                'pemrakarsa' => $request->pemrakarsa,
+                'nama_penanggung_jawab' => $request->nama_penanggung_jawab,
+                'jabatan' => $request->jabatan_pemrakarsa,
+                'alamat' => $request->alamat_pemrakarsa
+            ]);
 
-        $this->kirimNotifikasiKeKonsultan($request->pengajuan_id);
+            Pengajuan::where('id', $request->pengajuan_id)->update([
+                'konsultan_id' => $request->konsultan_id
+            ]);
 
-        return to_route('pemohon.upload.dokumen.pemohon', $request->pengajuan_id)->with('success', 'Silahkan melakukan koordinasi dengan konsultan untuk upload dokumen');
+            RiwayatInputData::updateorcreate([
+                'pengajuan_id' => $request->pengajuan_id
+            ], [
+                'step' => 'Upload Dokumen Permohonan'
+            ]);
+
+            $this->kirimNotifikasiKeKonsultan($request->pengajuan_id);
+
+            DB::commit();
+
+            return to_route('pemohon.upload.dokumen.pemohon', $request->pengajuan_id)->with('success', 'Silahkan melakukan koordinasi dengan konsultan untuk upload dokumen');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            Log::warning($th);
+            return redirect()->back()->withInput()->with('failed', 'Terjadi Kesalahan Sistem, Harap Coba Lakukan Input Data Lagi');
+        }
     }
 
     public function kirimNotifikasiKeKonsultan($pengajuanID)
@@ -173,7 +195,7 @@ class PengajuanAndalalinController extends Controller
 
     public function uploadDokumenPemohon($pengajuanID)
     {
-        $dataPemohon = DataPemohon::with('hasManyDokumenDataPemohon')->where('pengajuan_id', $pengajuanID)->firstorfail();
+        $dataPemohon = DataPemohon::with('hasManyDokumenDataPemohon')->where('pengajuan_id', $pengajuanID)->first();
 
         $suratPermohonan = $dataPemohon->hasManyDokumenDataPemohon->where('nama_dokumen', 'Surat Permohonan')->first()?->dokumen;
         $dokumenSitePlan = $dataPemohon->hasManyDokumenDataPemohon->where('nama_dokumen', 'Dokumen Site Plan')->first()?->dokumen;

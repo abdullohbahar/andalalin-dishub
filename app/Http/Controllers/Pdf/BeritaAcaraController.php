@@ -36,7 +36,8 @@ class BeritaAcaraController extends Controller
             'belongsToJenisRencana',
             'belongsToSubJenisRencana.hasOneUkuranMinimal',
             'belongsToSubSubJenisRencana.hasOneUkuranMinimal',
-            'hasOneBeritaAcara'
+            'hasOneBeritaAcara',
+            'hasOnePemrakarsa'
         )->findOrFail($pengajuanID);
 
         // mencari ukuran minimal

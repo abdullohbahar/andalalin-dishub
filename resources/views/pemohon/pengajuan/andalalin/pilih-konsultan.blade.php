@@ -204,6 +204,47 @@
                             <div class="card">
                                 <div class="card-header">
                                     <h2 class="mt-5">
+                                        <b>Data Pemrakarsa / Instansi</b>
+                                    </h2>
+                                </div>
+                                <div class="card-body">
+                                    <form action="">
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-6">
+                                                <label for="" class="form-label mt-3">Pemrakarsa /
+                                                    Instansi</label>
+                                                <input type="text" class="form-control"
+                                                    value="{{ old('pemrakarsa') }}" name="pemrakarsa" id=""
+                                                    required>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <label for="" class="form-label mt-3">Nama Penanggung
+                                                    Jawab</label>
+                                                <input type="text" class="form-control"
+                                                    value="{{ old('nama_penanggung_jawab') }}"
+                                                    name="nama_penanggung_jawab" id="" required>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <label for="" class="form-label mt-3">Jabatan</label>
+                                                <input type="text" class="form-control"
+                                                    value="{{ old('jabatan_pemrakarsa') }}" name="jabatan_pemrakarsa"
+                                                    id="" required>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <label for="" class="form-label mt-3">Alamat</label>
+                                                <textarea class="form-control" required name="alamat_pemrakarsa" id="" cols="30" rows="2">{{ old('alamat_pemrakarsa') }}</textarea>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 class="mt-5">
                                         <b>Data Pengajuan Andalalin</b>
                                     </h2>
                                 </div>
