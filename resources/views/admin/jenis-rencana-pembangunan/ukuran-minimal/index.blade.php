@@ -32,7 +32,8 @@
                                             <label for="" class="form-label">Ukuran Minimal</label>
                                             <input type="text" name="keterangan"
                                                 class="form-control @error('keterangan') is-invalid @enderror"
-                                                value="{{ old('keterangan') }}" id="">
+                                                value="{{ old('keterangan') }}" id=""
+                                                placeholder="Contoh: Di atas 300m2 luas lantai bangunan">
                                             @error('keterangan')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -40,12 +41,24 @@
                                             @enderror
                                         </div>
                                         <div class="col-sm-12 mt-3">
-                                            <input type="hidden" name="id_sub" value="{{ $queries->id }}">
                                             <label for="" class="form-label">Kategori</label>
                                             <input type="text" name="kategori"
                                                 class="form-control @error('kategori') is-invalid @enderror"
-                                                value="{{ old('kategori') }}" id="">
+                                                value="{{ old('kategori') }}" id=""
+                                                placeholder="Contoh: Bangkitan Tinggi">
                                             @error('kategori')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-sm-12 mt-3">
+                                            <label for="" class="form-label">Tipe</label>
+                                            <input type="text" name="tipe"
+                                                class="form-control @error('tipe') is-invalid @enderror"
+                                                value="{{ old('tipe') }}" id=""
+                                                placeholder="Contoh: Dokumen Andalalin">
+                                            @error('tipe')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -71,9 +84,10 @@
                                     <thead>
                                         <tr class="fw-bold fs-6 text-gray-800 px-7">
                                             <th style="width: 10%">#</th>
-                                            <th style="width: 30%">Ukuran Minimal</th>
-                                            <th style="width: 30%">Keterangan</th>
-                                            <th style="width: 30%">Aksi</th>
+                                            <th style="width: 22%">Ukuran Minimal</th>
+                                            <th style="width: 22%">Kategori</th>
+                                            <th style="width: 22%">Tipe</th>
+                                            <th style="width: 22%">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -85,6 +99,7 @@
                                                 <td>{{ $no++ }}</td>
                                                 <td>{{ $ukuran->keterangan }}</td>
                                                 <td>{{ $ukuran->kategori }}</td>
+                                                <td>{{ $ukuran->tipe }}</td>
                                                 <td>
                                                     <div class="btn-group" role="group" aria-label="Basic example">
                                                         <a href="{{ route('admin.edit.ukuran.minimal', [

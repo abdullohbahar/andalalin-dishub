@@ -49,6 +49,18 @@
                                                 </div>
                                             @enderror
                                         </div>
+                                        <div class="col-sm-12 mt-3">
+                                            <label for="" class="form-label">Tipe</label>
+                                            <input type="text" name="tipe"
+                                                class="form-control @error('tipe') is-invalid @enderror"
+                                                value="{{ old('tipe', $ukuranMinimal->tipe) }}" id=""
+                                                placeholder="Contoh: Dokumen Andalalin">
+                                            @error('tipe')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
                                         <div class="col-12 mt-3">
                                             <button type="submit" class="btn btn-success">
                                                 Simpan

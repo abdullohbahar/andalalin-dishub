@@ -40,6 +40,8 @@ class AktivitasController extends Controller
             return to_route('admin.menunggu.surat.kesanggupan', $pengajuanID);
         } else if ($riwayat == 'Verifikasi Surat Kesanggupan') {
             return to_route('admin.surat.kesanggupan', $pengajuanID);
+        } else if ($riwayat == 'Surat Persetujuan') {
+            return to_route('admin.surat.persetujuan', $pengajuanID);
         }
     }
 }

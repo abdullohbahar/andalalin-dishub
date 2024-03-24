@@ -6,11 +6,13 @@ use PDF;
 use App\Models\User;
 use App\Models\Pengajuan;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Riskihajar\Terbilang\Facades\Terbilang;
+use Romans\Filter\IntToRoman;
 
-class SuratKesanggupanController extends Controller
+class SuratPersetujuanController extends Controller
 {
     /**
      * Handle the incoming request.
@@ -38,28 +40,11 @@ class SuratKesanggupanController extends Controller
             'hasOneSuratKesanggupan'
         )->findOrFail($pengajuanID);
 
-        // mencari ukuran minimal
-        $ukuranMinimal = $pengajuan->belongsToSubJenisRencana->hasOneUkuranMinimal->kategori;
+        // mencari tipe ukuran minimal
+        $ukuranMinimal = $pengajuan->belongsToSubJenisRencana->hasOneUkuranMinimal->tipe;
 
-        preg_match_all("/\((.*?)\)/", $ukuranMinimal, $matches);
-
-        if (isset($matches[1][0])) {
-            $ukuranMinimal = $matches[1][0]; // Hasilnya adalah "Dokumen Andalalin"
-        } else {
-            $ukuranMinimal = '';
-        }
-
-
-        // mencari jenis bangkitan
+        // mencari jenis bangkitan tinggi rendah sedang dll
         $jenisBangkitan = $pengajuan->belongsToSubJenisRencana->hasOneUkuranMinimal->kategori;
-
-        preg_match("/^(.*?)\(/", $jenisBangkitan, $matches);
-
-        if (isset($matches[1])) {
-            $jenisBangkitan = $matches[1]; // Hasilnya adalah "Dokumen Andalalin"
-        } else {
-            $jenisBangkitan = '';
-        }
 
         // mengambil nama proyek
         $namaProyek = $pengajuan->hasOneDataPemohon->nama_proyek ?? '';
@@ -71,8 +56,15 @@ class SuratKesanggupanController extends Controller
         \Carbon\Carbon::setLocale('id');
         $tanggal = \Carbon\Carbon::parse($pengajuan->hasOneBeritaAcara->tanggal)->translatedFormat('L');
         $hari = \Carbon\Carbon::parse($pengajuan->hasOneBeritaAcara->tanggal)->translatedFormat('l');
-        $bulan = \Carbon\Carbon::parse($pengajuan->hasOneBeritaAcara->tanggal)->translatedFormat('F');
+        $bulanString = \Carbon\Carbon::parse($pengajuan->hasOneBeritaAcara->tanggal)->translatedFormat('F');
+        $bulanInteger = \Carbon\Carbon::parse($pengajuan->hasOneBeritaAcara->tanggal)->format('m');
         $tahun = \Carbon\Carbon::parse($pengajuan->hasOneBeritaAcara->tanggal)->translatedFormat('Y');
+
+        // tanggal surat permohonan
+        $tanggalSuratPermohonan = Carbon::parse($pengajuan->hasOneDataPemohon->tanggal_surat_permohonan)->translatedFormat('L F Y');
+
+        $roman = new IntToRoman();
+        $bulanRoman = $roman->filter($bulanInteger);
 
         $tahapOperasional = $pengajuan->hasOneBeritaAcara->body;
         $nomor = sprintf("%02d", $pengajuan->hasOneBeritaAcara->nomor);
@@ -89,7 +81,10 @@ class SuratKesanggupanController extends Controller
             'logo' => $encodeLogo,
             'hari' => $hari,
             'tanggal' => Terbilang::make($tanggal),
-            'bulan' => $bulan,
+            'bulanString' => $bulanString,
+            'bulanInteger' => $bulanInteger,
+            'bulanRoman' => $bulanRoman,
+            'tahunInteger' => $tahun,
             'tahun' => Terbilang::make($tahun),
             'ukuranMinimal' => $ukuranMinimal,
             'jenisBangkitan' => $jenisBangkitan,
@@ -102,12 +97,13 @@ class SuratKesanggupanController extends Controller
             'pengajuan' => $pengajuan,
             'luasLahan' => $luasLahan,
             'luasBangunan' => $luasBangunan,
+            'tanggalSuratPermohonan' => $tanggalSuratPermohonan
         ];
 
-        $pdf = PDF::loadView('document-template.surat-kesanggupan', $data);
+        $pdf = PDF::loadView('document-template.surat-persetujuan', $data);
 
         return $pdf->stream('Surat Kesanggupan.pdf');
 
-        return view('document-template.surat-kesanggupan', $data);
+        return view('document-template.surat-persetujuan', $data);
     }
 }

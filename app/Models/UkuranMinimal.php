@@ -13,6 +13,7 @@ class UkuranMinimal extends Model
         'sub_sub_jenis_rencana_id',
         'sub_jenis_rencana_id',
         'keterangan',
-        'kategori'
+        'kategori',
+        'tipe'
     ];
 }

@@ -14,13 +14,15 @@ class UkuranMinimalController extends Controller
     {
         if ($jenis == 'sub') {
             $queries = SubJenisRencanaPembangunan::findorfail($id);
+            $ukuranMinimal = UkuranMinimal::where('sub_jenis_rencana_id', $id)
+                ->get();
         } else if ($jenis == 'subsub') {
+            $ukuranMinimal = UkuranMinimal::where('sub_sub_jenis_rencana_id', $id)
+                ->get();
             $queries = SubSubJenisRencana::findorfail($id);
         }
 
-        $ukuranMinimal = UkuranMinimal::where('sub_jenis_rencana_id', $id)
-            ->orWhere('sub_sub_jenis_rencana_id', $id)
-            ->get();
+
 
         $data = [
             'active' => 'jenis-rencana-pembangunan',
@@ -36,22 +38,26 @@ class UkuranMinimalController extends Controller
     {
         $request->validate([
             'kategori' => 'required',
-            'keterangan' => 'required'
+            'keterangan' => 'required',
+            'tipe' => 'required',
         ], [
             'kategori.required' => 'Kategori harus diisi',
             'keterangan.required' => 'Ukuran minimal harus diisi',
+            'tipe.required' => 'Tipe harus diisi',
         ]);
 
         if ($request->jenis == 'sub') {
             UkuranMinimal::create([
                 'kategori' => $request->kategori,
                 'keterangan' => $request->keterangan,
+                'tipe' => $request->tipe,
                 'sub_jenis_rencana_id' => $request->id_sub
             ]);
         } else if ($request->jenis == 'subsub') {
             UkuranMinimal::create([
                 'kategori' => $request->kategori,
                 'keterangan' => $request->keterangan,
+                'tipe' => $request->tipe,
                 'sub_sub_jenis_rencana_id' => $request->id_sub
             ]);
         }
@@ -77,16 +83,19 @@ class UkuranMinimalController extends Controller
     {
         $request->validate([
             'kategori' => 'required',
-            'keterangan' => 'required'
+            'keterangan' => 'required',
+            'tipe' => 'required'
         ], [
             'kategori.required' => 'Kategori harus diisi',
             'keterangan.required' => 'Ukuran minimal harus diisi',
+            'tipe.required' => 'Tipe harus diisi',
         ]);
 
         UkuranMinimal::where('id', $id)
             ->update([
                 'kategori' => $request->kategori,
                 'keterangan' => $request->keterangan,
+                'tipe' => $request->tipe,
             ]);
 
         // redirect belum fix ----

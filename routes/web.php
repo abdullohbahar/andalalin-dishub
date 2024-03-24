@@ -24,6 +24,7 @@ use App\Http\Controllers\Admin\KontruksiController;
 use App\Http\Controllers\Admin\PengajuanController;
 use App\Http\Controllers\Admin\SubJenisRencanaPembangunanController;
 use App\Http\Controllers\Admin\SuratKesanggupanAdminController;
+use App\Http\Controllers\Admin\SuratPersetujuanAdminController;
 use App\Http\Controllers\Admin\TemplateBeritaAcaraController;
 use App\Http\Controllers\Admin\TinjauanLapanganController;
 use App\Http\Controllers\Admin\UserController;
@@ -31,6 +32,7 @@ use App\Http\Controllers\Konsultan\DashboardKonsultan;
 use App\Http\Controllers\Konsultan\PengajuanAndalalinKonsultanController;
 use App\Http\Controllers\Pdf\BeritaAcaraController as PdfBeritaAcaraController;
 use App\Http\Controllers\Pdf\SuratKesanggupanController;
+use App\Http\Controllers\Pdf\SuratPersetujuanController;
 use App\Http\Controllers\PemberitahuanJadwalTinjauan;
 use App\Http\Controllers\Pemohon\BeritaAcaraPemohonController;
 use App\Http\Controllers\Pemohon\JadwalSidangController as PemohonJadwalSidangController;
@@ -102,9 +104,7 @@ Route::prefix('admin')->middleware('admin')->group(function () {
         });
 
         Route::prefix('surat-persetujuan')->group(function () {
-            Route::get('/{pengajuanID}', function () {
-                return "surat persetujuan";
-            })->name('admin.surat.persetujuan');
+            Route::get('/{pengajuanID}', [SuratPersetujuanAdminController::class, 'index'])->name('admin.surat.persetujuan');
         });
 
         Route::prefix('ajax')->group(function () {
@@ -277,4 +277,5 @@ Route::prefix('download')->middleware('auth')->group(function () {
 
     Route::get('berita-acara/{pengajuanID}', PdfBeritaAcaraController::class)->name('download.berita.acara');
     Route::get('surat-kesanggupan/{pengajuanID}', SuratKesanggupanController::class)->name('download.surat.kesanggupan');
+    Route::get('surat-persetujuan/{pengajuanID}', SuratPersetujuanController::class)->name('download.surat.persetujuan');
 });
