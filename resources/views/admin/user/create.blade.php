@@ -95,8 +95,8 @@
                                                 <option value="penilai1">Penilai 1</option>
                                                 <option value="penilai2">Penilai 2</option>
                                                 <option value="penilai3">Penilai 3</option>
-                                                <option value="kasi mrll">Kasi MRLL</option>
-                                                <option value="kabid LL">Kabid LL</option>
+                                                <option value="kasi">Kasi MRLL</option>
+                                                <option value="kabid">Kabid LL</option>
                                                 <option value="kadis">Kadis</option>
                                                 <option value="konsultan">Konsultan</option>
                                                 <option value="pemohon">Pemohon</option>

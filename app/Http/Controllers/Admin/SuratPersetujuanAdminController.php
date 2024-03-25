@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\User;
 use App\Models\Pengajuan;
 use Illuminate\Http\Request;
 use App\Models\RiwayatInputData;
+use App\Models\SuratPersetujuan;
 use App\Models\RiwayatVerifikasi;
 use App\Http\Controllers\Controller;
 
@@ -36,6 +38,12 @@ class SuratPersetujuanAdminController extends Controller
             'step' => 'Menunggu Persetujuan Surat Persetujuan'
         ]);
 
+        SuratPersetujuan::create([
+            'pengajuan_id' => $pengajuanID
+        ]);
+
+        $this->kirimNotifikasiKeKasi($pengajuanID);
+
         return to_route('admin.menunggu.persetujuan.surat.persetujuan', $pengajuanID)->with('success', 'Harap menunggu persetujuan dari KASI, KABID dan KADIS');
     }
 
@@ -51,11 +59,13 @@ class SuratPersetujuanAdminController extends Controller
         return view('admin.pengajuan.surat-persetujuan.show', $data);
     }
 
-    public function kirimNotifikasiKeKadis($pengajuanID)
+    public function kirimNotifikasiKeKasi($pengajuanID)
     {
         $pengajuan = Pengajuan::with('belongsToUser.hasOneProfile', 'hasOneDataPemohon')->findOrFail($pengajuanID);
 
-        $nomorHpPemohon = $pengajuan->belongsToUser->hasOneProfile->nomor_telepon;
+        $user = User::with('hasOneProfile')->where('role', 'kasi')->first();
+
+        $nomorHpKasi = $user?->hasOneProfile?->no_telepon ?? '';
         $namaProyek = $pengajuan->hasOneDataPemohon->nama_proyek;
 
         $curl = curl_init();
@@ -71,8 +81,8 @@ class SuratPersetujuanAdminController extends Controller
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => array(
-                'target' => "$nomorHpPemohon", // nomer hp pemohon
-                'message' => "Admin telah menyetujui surat pernyataan kesanggupan yang telah anda unggah pada proyek $namaProyek.\nHarap menunggu notifikasi berikutnya untuk download laporan dokumen akhir!",
+                'target' => "$nomorHpKasi", // nomer hp pemohon
+                'message' => "Admin telah membuat surat persetujuan pada proyek $namaProyek.\nHarap melakukan persetujuan pada surat persetujuan tersebut!",
                 'countryCode' => '62', //optional
             ),
             CURLOPT_HTTPHEADER => array(

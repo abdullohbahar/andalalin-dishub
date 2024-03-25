@@ -28,6 +28,7 @@ use App\Http\Controllers\Admin\SuratPersetujuanAdminController;
 use App\Http\Controllers\Admin\TemplateBeritaAcaraController;
 use App\Http\Controllers\Admin\TinjauanLapanganController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Kasi\DashboardKasiController;
 use App\Http\Controllers\Konsultan\DashboardKonsultan;
 use App\Http\Controllers\Konsultan\PengajuanAndalalinKonsultanController;
 use App\Http\Controllers\Pdf\BeritaAcaraController as PdfBeritaAcaraController;
@@ -272,6 +273,13 @@ Route::prefix('profile')->middleware('auth')->group(function () {
     Route::get('/', [ProfilePemohonController::class, 'index'])->name('profile');
     Route::get('/edit/{id}', [ProfilePemohonController::class, 'edit'])->name('edit.profile');
     Route::put('/update/{id}', [ProfilePemohonController::class, 'update'])->name('update.profile');
+});
+
+Route::prefix('kasi')->group(function () {
+    Route::get('dashboard', [DashboardKasiController::class, 'index'])->name('kasi.dashboard');
+
+    Route::get('surat-persetujuan/{pengajuanID}', [DashboardKasiController::class, 'showSuratPersetujuan'])->name('kasi.surat.persetujuan');
+    Route::post('surat-persetujuan/approve/{pengajuanID}', [DashboardKasiController::class, 'approve'])->name('kasi.approve.surat.persetujuan');
 });
 
 Route::prefix('download')->middleware('auth')->group(function () {

@@ -59,12 +59,16 @@ class ProfilePemohonController extends Controller
             ]);
         }
 
-        if (!$user->hasOneTtd) {
-            $request->validate([
-                'signed' => 'required'
-            ], [
-                'signed.required' => 'Tanda Tangan harus diisi'
-            ]);
+        $role = auth()->user()->role;
+
+        if ($role == 'penilai1' || $role == 'penilai2' || $role == 'penilai3') {
+            if (!$user->hasOneTtd) {
+                $request->validate([
+                    'signed' => 'required'
+                ], [
+                    'signed.required' => 'Tanda Tangan harus diisi'
+                ]);
+            }
         }
 
         if ($user->username != $request->username) {
