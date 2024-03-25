@@ -11,7 +11,7 @@
 @extends("$role.layout.app")
 
 @section('title')
-    Menunggu Verifikasi Penilai
+    Menunggu Persetujuan Surat Persetujuan
 @endsection
 
 @push('addons-css')
@@ -82,7 +82,7 @@
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-                        Menunggu Verifikasi Penilai</h1>
+                        Menunggu Persetujuan Surat Persetujuan</h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -97,7 +97,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Menunggu Verifikasi Penilai</li>
+                        <li class="breadcrumb-item text-muted">Menunggu Persetujuan Surat Persetujuan</li>
                         <!--end::Item-->
                     </ul>
                     <!--end::Breadcrumb-->
@@ -116,13 +116,14 @@
                         @include($stepper . '.layout.stepper')
                         <div class="card">
                             <div class="card-header pt-5">
-                                <h1>Menunggu Verifikasi Penilai</h1>
+                                <h1>Menunggu Persetujuan Surat Persetujuan</h1>
                             </div>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-12 text-center text-capitalize">
-                                        <h1>Penilai Sedang Memverifikasi Berita Acara Yang anda ajukan. <br> harap menunggu
-                                            notifikasi atau cek secara berkala</h1>
+                                        <h1>
+                                            Harap menunggu persetujuan dari KASI, KABID, dan KADIS
+                                        </h1>
                                     </div>
                                 </div>
                             </div>

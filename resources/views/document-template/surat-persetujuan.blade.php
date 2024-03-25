@@ -31,6 +31,10 @@
             font-family: "Times New Roman", Times, serif;
         }
 
+        table {
+            border-collapse: collapse;
+        }
+
         .header {
             font-family: "Bookman Old Style", Times, serif;
             font-size: 11pt;
@@ -100,8 +104,8 @@
     <div class="text-center header" style="text-transform: uppercase;">
         <p style="line-height: 0.65cm">keputusan kepala dinas perhubungan kabupaten bantul
             <br>
-            Nomor : Sk.{{ $nomor }}/standar
-            teknis/{{ $jenisBangkitan }}/{{ $ukuranMinimal }}/dishub-btl/{{ $bulanRoman }}/{{ $tahunInteger }}
+            Nomor :
+            Sk.{{ $nomor }}/{{ $ukuranMinimal }}/dishub-btl/{{ $bulanRoman }}/{{ $tahunInteger }}
         </p>
     </div>
     <p class="text-center" style="text-transform: uppercase; line-height: 0.65cm">
@@ -109,8 +113,8 @@
         <br>
         tentang
         <br>
-        PERSETUJUAN STANDAR TEKNIS
-        DOKUMEN STANDAR TEKNIS PENANGANAN DAMPAK LALU LINTAS {{ $jenisBangkitan }} PEMBANGUNAN DAN OPERASIONAL
+        PERSETUJUAN {{ $ukuranMinimal }}
+        DOKUMEN {{ $ukuranMinimal }} PENANGANAN DAMPAK LALU LINTAS {{ $jenisBangkitan }} PEMBANGUNAN DAN OPERASIONAL
         {{ $namaProyek }} <br>
         {{ $alamatProyek }}
     </p>
@@ -137,14 +141,16 @@
                             Lintas {{ $jenisBangkitan }} Pembangunan dan Operasional {{ $namaProyek }};
                         </li>
                         <li>
-                            bahwa Tim Evaluasi telah melakukan penilaian dan tinjauan lapangan terhadap Dokumen Standar
-                            Teknis Penanganan Dampak Lalu Lintas {{ $jenisBangkitan }} Pembangunan Dan Operasional
+                            bahwa Tim Evaluasi telah melakukan penilaian dan tinjauan lapangan terhadap Dokumen
+                            {{ $ukuranMinimal }} Penanganan Dampak Lalu Lintas {{ $jenisBangkitan }} Pembangunan Dan
+                            Operasional
                             {{ $namaProyek }}, {{ $alamatProyek }}
                         </li>
                         <li>
                             berdasarkan pertimbangan sebagaimana dimaksud pada huruf a, huruf b, dan huruf c, perlu
-                            menetapkan Keputusan Kepala Dinas Perhubungan Kabupaten Bantul tentang Persetujuan Standar
-                            Teknis Penanganan Dampak Lalu Lintas {{ $jenisBangkitan }} Pembangunan Dan Operasional
+                            menetapkan Keputusan Kepala Dinas Perhubungan Kabupaten Bantul tentang Persetujuan
+                            {{ $ukuranMinimal }} Penanganan Dampak Lalu Lintas {{ $jenisBangkitan }} Pembangunan Dan
+                            Operasional
                             {{ $namaProyek }} Yang Berlokasi Di {{ $alamatProyek }}
                         </li>
                     </ol>
@@ -201,14 +207,15 @@
                             berita acara Nomor
                             BA.0{{ $nomor }}/{{ $ukuranMinimal }}/DISHUB-BTL/{{ $bulanRoman }}/{{ $tahunInteger }}
                             tentang Penilaian Dokumen
-                            Standar
-                            Teknis Penanganan Dampak Lalu Lintas {{ $jenisBangkitan }} Pembangunan Dan Operasional
+                            {{ $ukuranMinimal }} Penanganan Dampak Lalu Lintas {{ $jenisBangkitan }} Pembangunan Dan
+                            Operasional
                             {{ $namaProyek }} Yang Berlokasi Di {{ $alamatProyek }}
                         </li>
                         <li>
                             Surat Pernyataan Kesanggupan {{ $pengajuan->hasOnePemrakarsa->pemrakarsa }} Nomor :
                             {{ $pengajuan->hasOneDataPemohon->nomor_surat_permohonan }}
-                            perihal Kesanggupan Melaksanakan Kewajiban dalam Rekomendasi Standar Teknis Penanganan
+                            perihal Kesanggupan Melaksanakan Kewajiban dalam Rekomendasi {{ $ukuranMinimal }}
+                            Penanganan
                             Dampak Lalu Lintas {{ $jenisBangkitan }} Pembangunan Dan Operasional {{ $namaProyek }}
                             Yang
                             Berlokasi Di {{ $alamatProyek }}
@@ -226,7 +233,8 @@
                 <td style="width: 2%; vertical-align:top;">:</td>
                 <td
                     style="width: 83%; padding-right: 15px; padding-left: 15px; line-height: 23px; text-transform:uppercase">
-                    PERSETUJUAN STANDAR TEKNIS TENTANG DOKUMEN STANDAR TEKNIS PENANGANAN DAMPAK LALU LINTAS
+                    PERSETUJUAN {{ $ukuranMinimal }} TENTANG DOKUMEN {{ $ukuranMinimal }} PENANGANAN DAMPAK LALU
+                    LINTAS
                     {{ $jenisBangkitan }} PEMBANGUNAN DAN OPERASIONAL {{ $namaProyek }} YANG BERLOKASI DI
                     {{ $namaProyek }}
                 </td>
@@ -264,8 +272,10 @@
                             <td>{{ $pengajuan->hasOnePemrakarsa->no_telepon }}</td>
                         </tr>
                     </table>
-                    dinyatakan telah memenuhi persyaratan untuk mendapatkan Persetujuan Standar Teknis Tentang Dokumen
-                    Standar Teknis Penanganan Dampak Lalu Lintas {{ $jenisBangkitan }} Pembangunan Dan Operasional
+                    dinyatakan telah memenuhi persyaratan untuk mendapatkan Persetujuan {{ $ukuranMinimal }} Tentang
+                    Dokumen
+                    {{ $ukuranMinimal }} Penanganan Dampak Lalu Lintas {{ $jenisBangkitan }} Pembangunan Dan
+                    Operasional
                     Mikrosite
                     Indostation Yang Berlokasi Di {{ $namaProyek }} dengan luas lahan sebesar {{ $luasLahan }}
                     (dua ratus sebelas koma empat puluh tujuh meter persegi)
@@ -401,14 +411,14 @@
                 <td style="width: 50%"></td>
                 <td style="width: 50%; text-align:justify; line-height: 0.75cm" class="text-uppercase">
                     KEPUTUSAN KEPALA DINAS PERHUBUNGAN KABUPATEN BANTUL <br>
-                    Nomor : Sk.{{ $nomor }} / standar
-                    teknis / {{ $jenisBangkitan }} / {{ $ukuranMinimal }} / dishub-btl / {{ $bulanRoman }} /
+                    Nomor : Sk.{{ $nomor }} / {{ $ukuranMinimal }} / dishub-btl /
+                    {{ $bulanRoman }} /
                     {{ $tahunInteger }}
                     <br>
                     TAHUN 2023 <br>
                     TENTANG <br>
-                    PERSETUJUAN STANDAR TEKNIS <br>
-                    DOKUMEN STANDAR TEKNIS PENANGANAN DAMPAK LALU LINTAS {{ $jenisBangkitan }} PEMBANGUNAN DAN
+                    PERSETUJUAN {{ $ukuranMinimal }} <br>
+                    DOKUMEN {{ $ukuranMinimal }} PENANGANAN DAMPAK LALU LINTAS {{ $jenisBangkitan }} PEMBANGUNAN DAN
                     OPERASIONAL
                     {{ $namaProyek }} <br>
                     {{ $alamatProyek }}

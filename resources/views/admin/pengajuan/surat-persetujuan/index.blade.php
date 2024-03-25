@@ -65,8 +65,18 @@
                                 <h1>Surat Persetujuan</h1>
                             </div>
                             <div class="card-body">
+                                <iframe src="{{ route('download.surat.persetujuan', $pengajuan->id) }}" width="100%"
+                                    height="700px">
+                                </iframe>
                             </div>
                             <div class="card-footer">
+                                <div style="float: right">
+                                    <form action="{{ route('admin.next.surat.persetujuan', $pengajuan->id) }}"
+                                        id="approve" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-success">Selanjutnya</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -117,7 +127,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Menangkap formulir saat di-submit
             var form = document.getElementById(
-                'jadwalSidang'); // Ganti 'jadwalSidang' dengan ID formulir Anda
+                'approve'); // Ganti 'approve' dengan ID formulir Anda
 
             form.addEventListener('submit', function(event) {
                 event.preventDefault(); // Mencegah formulir untuk langsung di-submit
@@ -135,30 +145,6 @@
                     if (result.isConfirmed) {
                         // Jika pengguna mengklik "Ya", formulir akan di-submit
                         form.submit();
-                    }
-                });
-            });
-
-            // Menangkap formulir saat di-submit
-            var telahMengisi = document.getElementById(
-                'telahMengisi'); // Ganti 'jadwalSidang' dengan ID telahMengisiulir Anda
-
-            telahMengisi.addEventListener('submit', function(event) {
-                event.preventDefault(); // Mencegah telahMengisiulir untuk langsung di-submit
-
-                // Menampilkan konfirmasi SweetAlert
-                Swal.fire({
-                    title: 'Apakah Anda yakin?',
-                    text: 'Klik "Ya" untuk konfirmasi.',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Ya'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Jika pengguna mengklik "Ya", formulir akan di-submit
-                        telahMengisi.submit();
                     }
                 });
             });

@@ -105,6 +105,8 @@ Route::prefix('admin')->middleware('admin')->group(function () {
 
         Route::prefix('surat-persetujuan')->group(function () {
             Route::get('/{pengajuanID}', [SuratPersetujuanAdminController::class, 'index'])->name('admin.surat.persetujuan');
+            Route::post('next/{pengajuanID}', [SuratPersetujuanAdminController::class, 'next'])->name('admin.next.surat.persetujuan');
+            Route::get('menunggu-persetujuan/{pengajuanID}', [SuratPersetujuanAdminController::class, 'show'])->name('admin.menunggu.persetujuan.surat.persetujuan');
         });
 
         Route::prefix('ajax')->group(function () {
