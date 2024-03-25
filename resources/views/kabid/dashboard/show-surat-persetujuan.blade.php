@@ -1,4 +1,4 @@
-@extends('kasi.layout.app')
+@extends('kabid.layout.app')
 
 @section('title')
     Surat Persetujuan
@@ -52,7 +52,7 @@
                             <div class="card-header">
                                 <h1></h1>
                                 <div class="card-toolbar">
-                                    <form action="{{ route('kasi.approve.surat.persetujuan', $pengajuanID) }}"
+                                    <form action="{{ route('kabid.approve.surat.persetujuan', $pengajuanID) }}"
                                         method="POST" id="approve">
                                         @csrf
                                         <button class="btn btn-info">Approve Surat Persetujuan</button>

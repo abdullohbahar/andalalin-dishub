@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('profiles', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('nama');
-            $table->string('no_ktp');
-            $table->text('alamat');
-            $table->string('no_telepon');
+            $table->string('nama')->nullable();
+            $table->string('no_ktp')->nullable();
+            $table->text('alamat')->nullable();
+            $table->string('no_telepon')->nullable();
             $table->string('no_sertifikat')->nullable();
             $table->string('masa_berlaku_sertifikat')->nullable();
             $table->string('tingkatan')->nullable();

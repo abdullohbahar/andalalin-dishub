@@ -88,9 +88,6 @@ class UserController extends Controller
         Profile::create([
             'user_id' => $user->id,
             'nama' => $request->nama,
-            'no_ktp' => '-',
-            'alamat' => '-',
-            'no_telepon' => '-',
         ]);
 
         return to_route('admin.user.index')->with('success', 'Berhasil menambah user');

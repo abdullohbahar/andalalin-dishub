@@ -1,17 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Kasi;
+namespace App\Http\Controllers\Kabid;
 
 use App\Models\User;
 use App\Models\Pengajuan;
 use Illuminate\Http\Request;
-use App\Models\RiwayatInputData;
-use App\Models\SuratKesanggupan;
 use App\Models\SuratPersetujuan;
-use App\Models\RiwayatVerifikasi;
 use App\Http\Controllers\Controller;
 
-class DashboardKasiController extends Controller
+class DashboardKabidController extends Controller
 {
     public function index()
     {
@@ -26,14 +23,16 @@ class DashboardKasiController extends Controller
         $belumApprove = SuratPersetujuan::with([
             'belongsToPengajuan.hasOneDataPemohon',
             'belongsToPengajuan.belongsToUser.hasOneProfile',
-        ])->where('is_kasi_approve', 0)
+        ])
+            ->where('is_kasi_approve', 1)
+            ->where('is_kabid_approve', 0)
             ->orderBy('created_at', 'asc')
             ->get();
 
         $sudahApprove = SuratPersetujuan::with([
             'belongsToPengajuan.hasOneDataPemohon',
             'belongsToPengajuan.belongsToUser.hasOneProfile',
-        ])->where('is_kasi_approve', 1)
+        ])->where('is_kabid_approve', 1)
             ->orderBy('created_at', 'asc')
             ->get();
 
@@ -43,7 +42,7 @@ class DashboardKasiController extends Controller
             'sudahApprove' => $sudahApprove,
         ];
 
-        return view('kasi.dashboard.index', $data);
+        return view('kabid.dashboard.index', $data);
     }
 
     public function showSuratPersetujuan($pengajuanID)
@@ -56,26 +55,26 @@ class DashboardKasiController extends Controller
             'pengajuanID' => $pengajuanID
         ];
 
-        return view('kasi.dashboard.show-surat-persetujuan', $data);
+        return view('kabid.dashboard.show-surat-persetujuan', $data);
     }
 
 
     public function approve($pengajuanID)
     {
         SuratPersetujuan::where('pengajuan_id', $pengajuanID)->update([
-            'is_kasi_approve' => true
+            'is_kabid_approve' => true
         ]);
 
-        $this->kirimNotifikasiKeKabid($pengajuanID);
+        $this->kirimNotifikasiKeKadis($pengajuanID);
 
-        return to_route('kasi.dashboard')->with('success', 'Berhasil melakukan approve');
+        return to_route('kabid.dashboard')->with('success', 'Berhasil melakukan approve');
     }
 
-    public function kirimNotifikasiKeKabid($pengajuanID)
+    public function kirimNotifikasiKeKadis($pengajuanID)
     {
         $pengajuan = Pengajuan::with('belongsToUser.hasOneProfile', 'hasOneDataPemohon')->findorfail($pengajuanID);
 
-        $user = User::with('hasOneProfile')->where('role', 'kabid')->first();
+        $user = User::with('hasOneProfile')->where('role', 'kadis')->first();
 
         $nomorHpKasi = $user?->hasOneProfile?->no_telepon ?? '';
 
