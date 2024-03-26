@@ -29,6 +29,7 @@ use App\Http\Controllers\Admin\TemplateBeritaAcaraController;
 use App\Http\Controllers\Admin\TinjauanLapanganController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Kabid\DashboardKabidController;
+use App\Http\Controllers\Kadis\DashboardKadisController;
 use App\Http\Controllers\Kasi\DashboardKasiController;
 use App\Http\Controllers\Konsultan\DashboardKonsultan;
 use App\Http\Controllers\Konsultan\PengajuanAndalalinKonsultanController;
@@ -288,6 +289,13 @@ Route::prefix('kabid')->group(function () {
 
     Route::get('surat-persetujuan/{pengajuanID}', [DashboardKabidController::class, 'showSuratPersetujuan'])->name('kabid.surat.persetujuan');
     Route::post('surat-persetujuan/approve/{pengajuanID}', [DashboardKabidController::class, 'approve'])->name('kabid.approve.surat.persetujuan');
+});
+
+Route::prefix('kadis')->group(function () {
+    Route::get('dashboard', [DashboardKadisController::class, 'index'])->name('kadis.dashboard');
+
+    Route::get('surat-persetujuan/{pengajuanID}', [DashboardKadisController::class, 'showSuratPersetujuan'])->name('kadis.surat.persetujuan');
+    Route::post('surat-persetujuan/approve/{pengajuanID}', [DashboardKadisController::class, 'approve'])->name('kadis.approve.surat.persetujuan');
 });
 
 Route::prefix('download')->middleware('auth')->group(function () {

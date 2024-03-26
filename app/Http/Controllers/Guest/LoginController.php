@@ -50,8 +50,12 @@ class LoginController extends Controller
                     break;
                 case 'kasi':
                     return redirect()->route('kasi.dashboard');
+                    break;
                 case 'kabid':
                     return redirect()->route('kabid.dashboard');
+                    break;
+                case 'kadis':
+                    return redirect()->route('kadis.dashboard');
                     break;
                 default:
                     return redirect()->back()->with('error', 'Username atau password salah');

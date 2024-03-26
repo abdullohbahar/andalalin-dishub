@@ -217,7 +217,9 @@
                                                 $user->role == 'penilai3',
                                             'pemohon.profile.components.ttd')
                                         @includeWhen(
-                                            $user->role == 'kasi' || $user->role == 'kabid',
+                                            $user->role == 'kasi' ||
+                                                $user->role == 'kabid' ||
+                                                $user->role == 'kadis',
                                             'pemohon.profile.components.file-upload-kasi')
                                         <div class="col-12 mt-5">
                                             <button type="submit" class="btn btn-success mt-5"

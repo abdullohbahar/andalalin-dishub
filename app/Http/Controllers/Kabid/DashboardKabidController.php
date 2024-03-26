@@ -76,7 +76,7 @@ class DashboardKabidController extends Controller
 
         $user = User::with('hasOneProfile')->where('role', 'kadis')->first();
 
-        $nomorHpKasi = $user?->hasOneProfile?->no_telepon ?? '';
+        $nomorHPKadis = $user?->hasOneProfile?->no_telepon ?? '';
 
         $namaProyek = $pengajuan->hasOneDataPemohon->nama_proyek;
 
@@ -93,8 +93,8 @@ class DashboardKabidController extends Controller
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => array(
-                'target' => "$nomorHpKasi", // nomer hp pemohon
-                'message' => "Kasi telah melakukan approve Surat Persetujuan pada proyek $namaProyek.\nHarap melakukan persetujuan pada surat persetujuan tersebut!",
+                'target' => "$nomorHPKadis", // nomer hp pemohon
+                'message' => "Kabid telah melakukan approve Surat Persetujuan pada proyek $namaProyek.\nHarap melakukan persetujuan pada surat persetujuan tersebut!",
                 'countryCode' => '62', //optional
             ),
             CURLOPT_HTTPHEADER => array(
