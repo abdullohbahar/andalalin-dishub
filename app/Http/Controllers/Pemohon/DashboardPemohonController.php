@@ -24,7 +24,7 @@ class DashboardPemohonController extends Controller
         $pengajuan = new Pengajuan();
 
         $pengajuanDitolak = $pengajuan->with('hasOneDataPemohon', 'belongsToJenisRencana')->where('user_id', $userID)->where('status', 'ditolak')->orderBy('updated_at', 'asc')->get();
-        $pengajuanDisetujui = $pengajuan->with('hasOneDataPemohon', 'belongsToJenisRencana')->where('user_id', $userID)->where('status', 'disetujui')->orderBy('updated_at', 'asc')->get();
+        $pengajuanDisetujui = $pengajuan->with('hasOneDataPemohon', 'belongsToJenisRencana', 'hasOneRiwayatVerifikasi')->where('user_id', $userID)->where('status', 'disetujui')->orderBy('updated_at', 'asc')->get();
         $pengajuanPerluRevisi = $pengajuan->with('hasOneDataPemohon', 'belongsToJenisRencana')->where('user_id', $userID)->where('status', 'revisi')->orderBy('updated_at', 'asc')->get();
 
         $data = [

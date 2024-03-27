@@ -408,7 +408,8 @@ class PengajuanAndalalinController extends Controller
             'belongsToSubSubJenisRencana',
             'hasOneDataPemohon.hasManyDokumenDataPemohon',
             'hasOneDataPemohon.belongsToConsultan.hasOneProfile',
-            'belongsToUser.hasOneProfile'
+            'belongsToUser.hasOneProfile',
+            'hasOneSuratPersetujuan',
         )
             ->findorfail($pengajuanID);
 

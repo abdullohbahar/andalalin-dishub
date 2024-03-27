@@ -49,7 +49,10 @@
             <div id="kt_app_content_container" class="app-container container-fluid">
                 <div class="row">
                     <div class="col-12">
-                        @include('admin.layout.stepper')
+                        @if ($pengajuan->status == 'disetujui')
+                        @else
+                            @include('admin.layout.stepper')
+                        @endif
                         <div class="card">
                             <div class="card-header pt-5">
                                 <h1>Verifikasi Pengajuan Permohonan</h1>
@@ -379,6 +382,18 @@
                                                         </td>
                                                     </tr>
                                                 @endforeach
+                                                <tr>
+                                                    @if ($pengajuan->hasOneSuratPersetujuan?->is_kadis_approve)
+                                                        <td>Surat Persetujuan</td>
+                                                        <td>-</td>
+                                                        <td><a target="_blank"
+                                                                href="{{ route('download.surat.persetujuan', $pengajuan->id) }}">Lihat
+                                                                Dokumen</a></td>
+                                                        <td>
+                                                            Anda Telah Menyetujui Dokumen Ini
+                                                        </td>
+                                                    @endif
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>

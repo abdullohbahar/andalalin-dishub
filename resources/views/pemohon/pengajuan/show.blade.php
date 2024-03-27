@@ -1,7 +1,7 @@
 @extends('pemohon.layout.app')
 
 @section('title')
-    Verifikasi Pengajuan Permohonan
+    Detail Pengajuan Permohonan
 @endsection
 
 @push('addons-css')
@@ -18,7 +18,7 @@
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-                        Verifikasi Pengajuan Permohonan</h1>
+                        Detail Pengajuan Permohonan</h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -51,7 +51,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header pt-5">
-                                <h1>Verifikasi Pengajuan Permohonan</h1>
+                                <h1>Detail Pengajuan Permohonan</h1>
                             </div>
                             <div class="card-body" style="overflow-y: visible">
                                 <div class="row">
@@ -362,6 +362,15 @@
                                                         @endif
                                                     </tr>
                                                 @endforeach
+                                                <tr>
+                                                    @if ($pengajuan->hasOneSuratPersetujuan?->is_kadis_approve)
+                                                        <td>Surat Persetujuan</td>
+                                                        <td>-</td>
+                                                        <td><a target="_blank"
+                                                                href="{{ route('download.surat.persetujuan', $pengajuan->id) }}">Lihat
+                                                                Dokumen</a></td>
+                                                    @endif
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>

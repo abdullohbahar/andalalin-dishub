@@ -17,7 +17,7 @@ class PengajuanController extends Controller
     {
         if ($request->ajax()) {
 
-            $query = Pengajuan::with('belongsToJenisRencana', 'hasOneDataPemohon', 'belongsToUser.hasOneProfile')
+            $query = Pengajuan::with('belongsToJenisRencana', 'hasOneDataPemohon', 'belongsToUser.hasOneProfile', 'hasOneRiwayatInputData')
                 ->orderBy('updated_at', 'desc')
                 ->get();
 
@@ -40,7 +40,11 @@ class PengajuanController extends Controller
 
                     if ($item->status != 'ditolak') {
                         if ($item->status != 'input data belum selesai') {
-                            $btnVerifikasi = "<a href='/admin/aktivitas/$item->id' class='btn btn-info btn-sm'>Verifikasi</a>";
+                            if ($item->hasOneRiwayatInputData?->step != 'Selesai') {
+                                $btnVerifikasi = "<a href='/admin/aktivitas/$item->id' class='btn btn-info btn-sm'>Verifikasi</a>";
+                            } else {
+                                $btnVerifikasi = '';
+                            }
                         } else {
                             $btnVerifikasi = '';
                         }
@@ -76,7 +80,8 @@ class PengajuanController extends Controller
             'belongsToSubSubJenisRencana',
             'hasOneDataPemohon.hasManyDokumenDataPemohon',
             'hasOneDataPemohon.belongsToConsultan.hasOneProfile',
-            'belongsToUser.hasOneProfile'
+            'belongsToUser.hasOneProfile',
+            'hasOneSuratPersetujuan',
         )
             ->findorfail($pengajuanID);
 

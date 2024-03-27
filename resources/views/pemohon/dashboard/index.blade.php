@@ -127,8 +127,10 @@
                                                 <td>{{ $disetujui->belongsToJenisRencana->nama }}</td>
                                                 <td>{{ $disetujui->hasOneDataPemohon->nama_proyek }}</td>
                                                 <td>
-                                                    <a href="{{ route('pemohon.riwayat.input.data', $disetujui->id) }}"
-                                                        class="btn btn-warning btn-sm">Aktivitas Permohonan</a>
+                                                    @if ($disetujui->hasOneRiwayatVerifikasi->step != 'Selesai')
+                                                        <a href="{{ route('pemohon.riwayat.input.data', $disetujui->id) }}"
+                                                            class="btn btn-warning btn-sm">Aktivitas Permohonan</a>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach
