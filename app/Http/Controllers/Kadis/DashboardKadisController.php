@@ -74,13 +74,13 @@ class DashboardKadisController extends Controller
         RiwayatInputData::updateorcreate([
             'pengajuan_id' => $pengajuanID
         ], [
-            'step' => 'Selesai'
+            'step' => 'Surat Persetujuan'
         ]);
 
         RiwayatVerifikasi::updateorcreate([
             'pengajuan_id' => $pengajuanID
         ], [
-            'step' => 'Selesai'
+            'step' => 'Surat Persetujuan'
         ]);
 
         return to_route('kadis.dashboard')->with('success', 'Berhasil melakukan approve');

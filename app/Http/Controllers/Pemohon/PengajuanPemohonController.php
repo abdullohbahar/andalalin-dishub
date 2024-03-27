@@ -19,7 +19,7 @@ class PengajuanPemohonController extends Controller
         if ($request->ajax()) {
             $userID = auth()->user()->id;
 
-            $query = Pengajuan::with('belongsToJenisRencana', 'hasOneDataPemohon')
+            $query = Pengajuan::with('belongsToJenisRencana', 'hasOneDataPemohon', 'hasOneRiwayatInputData')
                 ->orderBy('updated_at', 'desc')
                 ->where('user_id', $userID)->get();
 
@@ -38,7 +38,11 @@ class PengajuanPemohonController extends Controller
 
                     if ($item->status != 'input data belum selesai') {
                         $detailBtn = "<a href='/pemohon/pengajuan/andalalin/detail/$item->id' class='btn btn-primary btn-sm'>Detail</a>";
-                        $verifikasiBtn = "<a href='/pemohon/pengajuan/andalalin/riwayat-input-data/$item->id' class='btn btn-warning btn-sm'>Aktivitas Permohonan</a>";
+                        if ($item->hasOneRiwayatInputData->step == 'Selesai') {
+                            $verifikasiBtn = '';
+                        } else {
+                            $verifikasiBtn = "<a href='/pemohon/pengajuan/andalalin/riwayat-input-data/$item->id' class='btn btn-warning btn-sm'>Aktivitas Permohonan</a>";
+                        }
                     } else {
                         $detailBtn = "<a href='/pemohon/pengajuan/andalalin/riwayat-input-data/$item->id' class='btn btn-info btn-sm'>Lanjutkan Mengisi Data</a>";
                         $verifikasiBtn = '';

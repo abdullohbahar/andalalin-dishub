@@ -43,7 +43,9 @@ use App\Http\Controllers\Pemohon\JadwalSidangController as PemohonJadwalSidangCo
 use App\Http\Controllers\Pemohon\JadwalTinjauanLapangan;
 use App\Http\Controllers\Pemohon\RiwayatInputDataController;
 use App\Http\Controllers\Pemohon\SuratKesanggupanPemohonController;
+use App\Http\Controllers\Pemohon\SuratPersetujuanController as PemohonSuratPersetujuanController;
 use App\Http\Controllers\Penilai\DashboardPenilaiController;
+use App\Models\SuratPersetujuan;
 use App\Models\TemplateBeritaAcara;
 
 /*
@@ -228,6 +230,12 @@ Route::prefix('pemohon')->middleware('choose.role', 'pemohon')->group(function (
                 Route::post('unggah/{pengajuanID}', [SuratKesanggupanPemohonController::class, 'storeFileSurat'])->name('pemohon.store.file.surat.kesanggupan');
                 Route::get('menunggu-verifikasi/{pengajuanID}', [SuratKesanggupanPemohonController::class, 'menungguVerifikasi'])->name('pemohon.menungu.verifikasi');
             });
+
+            Route::prefix('surat-persetujuan')->group(function () {
+                Route::get('/{pengajuanID}', [PemohonSuratPersetujuanController::class, 'index'])->name('pemohon.surat.persetujuan');
+                Route::get('menunggu/{pengajuanID}', [PemohonSuratPersetujuanController::class, 'menunggu'])->name('pemohon.menunggu.surat.persetujuan');
+                Route::post('selesai/{pengajuanID}', [PemohonSuratPersetujuanController::class, 'selesai'])->name('pemohon.selesai.surat.persetujuan');
+            });
         });
     });
 
@@ -260,6 +268,12 @@ Route::prefix('konsultan')->middleware('choose.role', 'konsultan')->group(functi
                 Route::post('/update/{pengajuanID}', [BeritaAcaraController::class, 'update'])->name('konsultan.update.berita.acara');
                 Route::post('telahMengisi/{pengajuanID}', [BeritaAcaraController::class, 'telahMengisi'])->name('konsultan.telah.mengisi.berita.acara');
                 Route::get('menunggu-verifikasi-penilai/{pengajuanID}', [BeritaAcaraController::class, 'menungguVerifikasiPenilai'])->name('konsultan.menunggu.verifikasi.penilai');
+            });
+
+
+            Route::prefix('surat-persetujuan')->group(function () {
+                Route::get('/{pengajuanID}', [PemohonSuratPersetujuanController::class, 'index'])->name('konsultan.surat.persetujuan');
+                Route::get('menunggu/{pengajuanID}', [PemohonSuratPersetujuanController::class, 'menunggu'])->name('konsultan.menunggu.surat.persetujuan');
             });
         });
     });

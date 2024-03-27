@@ -87,27 +87,35 @@
                                                     @if ($pengajuan->status != 'ditolak')
                                                         <div class="btn-group" role="group"
                                                             aria-label="Basic mixed styles example">
-                                                            @if ($pengajuan->hasOneRiwayatInputData->step == 'Upload Dokumen Permohonan')
+                                                            @if ($pengajuan->hasOneRiwayatInputData?->step == 'Upload Dokumen Permohonan')
                                                                 <a href="{{ route('konsultan.upload.dokumen.pemohon', $pengajuan->id) }}"
                                                                     class="btn btn-success btn-sm">Upload Dokumen
                                                                     Permohonan</a>
                                                             @endif
-                                                            @if ($pengajuan->hasOneRiwayatVerifikasi->step == 'Tinjauan Lapangan')
+                                                            @if ($pengajuan->hasOneRiwayatVerifikasi?->step == 'Tinjauan Lapangan')
                                                                 <a href="{{ route('konsultan.jadwal.tinjauan.lapangan', $pengajuan->id) }}"
                                                                     class="btn btn-success btn-sm">Jadwal Tinjauan
                                                                     Lapangan</a>
                                                             @endif
-                                                            @if ($pengajuan->hasOneRiwayatVerifikasi->step == 'Sidang')
+                                                            @if ($pengajuan->hasOneRiwayatVerifikasi?->step == 'Sidang')
                                                                 <a href="{{ route('konsultan.jadwal.sidang', $pengajuan->id) }}"
                                                                     class="btn btn-success btn-sm">Jadwal Sidang</a>
                                                             @endif
-                                                            @if ($pengajuan->hasOneRiwayatVerifikasi->step == 'Berita Acara')
+                                                            @if ($pengajuan->hasOneRiwayatVerifikasi?->step == 'Berita Acara')
                                                                 <a href="{{ route('konsultan.berita.acara', $pengajuan->id) }}"
                                                                     class="btn btn-success btn-sm">Berita Acara</a>
                                                             @endif
-                                                            @if ($pengajuan->hasOneRiwayatVerifikasi->step == 'Menunggu Verifikasi Penilai')
+                                                            @if ($pengajuan->hasOneRiwayatVerifikasi?->step == 'Menunggu Verifikasi Penilai')
                                                                 <a href="{{ route('konsultan.menunggu.verifikasi.penilai', $pengajuan->id) }}"
                                                                     class="btn btn-success btn-sm">Berita Acara</a>
+                                                            @endif
+                                                            @if ($pengajuan->hasOneRiwayatVerifikasi?->step == 'Menunggu Persetujuan Surat Persetujuan')
+                                                                <a href="{{ route('konsultan.menunggu.surat.persetujuan', $pengajuan->id) }}"
+                                                                    class="btn btn-success btn-sm">Surat Persetujuan</a>
+                                                            @endif
+                                                            @if ($pengajuan->hasOneRiwayatVerifikasi?->step == 'Surat Persetujuan')
+                                                                <a href="{{ route('konsultan.surat.persetujuan', $pengajuan->id) }}"
+                                                                    class="btn btn-success btn-sm">Surat Persetujuan</a>
                                                             @endif
                                                         </div>
                                                     @endif

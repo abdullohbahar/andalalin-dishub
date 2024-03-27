@@ -51,7 +51,12 @@
             </div>
             <div class="stepper-item {{ Route::is('pemohon.menungu.verifikasi') ? 'active' : 'completed' }}">
                 <div class="step-counter">12</div>
-                <div class="step-name text-center">Verifikasi Surat Kesanggupan</div>
+                <div class="step-name text-center">Surat Kesanggupan</div>
+            </div>
+            <div
+                class="stepper-item {{ Route::is('pemohon.menunggu.surat.persetujuan') || Route::is('pemohon.surat.persetujuan') || Route::is('konsultan.menunggu.surat.persetujuan') || Route::is('konsultan.surat.persetujuan') ? 'active' : 'completed' }}">
+                <div class="step-counter">13</div>
+                <div class="step-name text-center">Surat Persetujuan - Selesai</div>
             </div>
         </div>
     </div>
