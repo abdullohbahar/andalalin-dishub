@@ -31,6 +31,7 @@ class DashboardKabidController extends Controller
 
         $sudahApprove = SuratPersetujuan::with([
             'belongsToPengajuan.hasOneDataPemohon',
+            'belongsToPengajuan.hasOneSuratPersetujuan',
             'belongsToPengajuan.belongsToUser.hasOneProfile',
         ])->where('is_kabid_approve', 1)
             ->orderBy('created_at', 'asc')

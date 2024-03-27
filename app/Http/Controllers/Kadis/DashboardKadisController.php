@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Kadis;
 use App\Models\User;
 use App\Models\Pengajuan;
 use Illuminate\Http\Request;
+use App\Models\RiwayatInputData;
 use App\Models\SuratPersetujuan;
+use App\Models\RiwayatVerifikasi;
 use App\Http\Controllers\Controller;
 
 class DashboardKadisController extends Controller
@@ -32,6 +34,7 @@ class DashboardKadisController extends Controller
         $sudahApprove = SuratPersetujuan::with([
             'belongsToPengajuan.hasOneDataPemohon',
             'belongsToPengajuan.belongsToUser.hasOneProfile',
+            'belongsToPengajuan.hasOneSuratPersetujuan'
         ])->where('is_kadis_approve', 1)
             ->orderBy('created_at', 'asc')
             ->get();
@@ -67,6 +70,18 @@ class DashboardKadisController extends Controller
 
         $this->kirimNotifikasiKePemohonKonsultan($pengajuanID);
         $this->kirimNotifikasiKeSemua($pengajuanID);
+
+        RiwayatInputData::updateorcreate([
+            'pengajuan_id' => $pengajuanID
+        ], [
+            'step' => 'Selesai'
+        ]);
+
+        RiwayatVerifikasi::updateorcreate([
+            'pengajuan_id' => $pengajuanID
+        ], [
+            'step' => 'Selesai'
+        ]);
 
         return to_route('kadis.dashboard')->with('success', 'Berhasil melakukan approve');
     }

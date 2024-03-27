@@ -33,6 +33,7 @@ use App\Http\Controllers\Kadis\DashboardKadisController;
 use App\Http\Controllers\Kasi\DashboardKasiController;
 use App\Http\Controllers\Konsultan\DashboardKonsultan;
 use App\Http\Controllers\Konsultan\PengajuanAndalalinKonsultanController;
+use App\Http\Controllers\LaporanDokumenAkhir;
 use App\Http\Controllers\Pdf\BeritaAcaraController as PdfBeritaAcaraController;
 use App\Http\Controllers\Pdf\SuratKesanggupanController;
 use App\Http\Controllers\Pdf\SuratPersetujuanController;
@@ -296,6 +297,10 @@ Route::prefix('kadis')->group(function () {
 
     Route::get('surat-persetujuan/{pengajuanID}', [DashboardKadisController::class, 'showSuratPersetujuan'])->name('kadis.surat.persetujuan');
     Route::post('surat-persetujuan/approve/{pengajuanID}', [DashboardKadisController::class, 'approve'])->name('kadis.approve.surat.persetujuan');
+});
+
+Route::prefix('laporan-dokumen-akhir')->group(function () {
+    Route::get('/{pengajuanID}', [LaporanDokumenAkhir::class, 'index'])->name('laporan.dokumen.akhir');
 });
 
 Route::prefix('download')->middleware('auth')->group(function () {

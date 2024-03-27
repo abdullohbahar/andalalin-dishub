@@ -32,6 +32,7 @@ class DashboardKasiController extends Controller
 
         $sudahApprove = SuratPersetujuan::with([
             'belongsToPengajuan.hasOneDataPemohon',
+            'belongsToPengajuan.hasOneSuratPersetujuan',
             'belongsToPengajuan.belongsToUser.hasOneProfile',
         ])->where('is_kasi_approve', 1)
             ->orderBy('created_at', 'asc')

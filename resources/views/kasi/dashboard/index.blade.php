@@ -107,6 +107,7 @@
                                             <th>No</th>
                                             <th>Pemohon</th>
                                             <th>Nama Proyek</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -123,6 +124,15 @@
                                                 </td>
                                                 <td>
                                                     {{ $pengajuan->belongsToPengajuan->hasOneDataPemohon?->nama_proyek ?? '' }}
+                                                </td>
+                                                <td>
+                                                    @if ($pengajuan->belongsToPengajuan->hasOneSuratPersetujuan->is_kadis_approve)
+                                                        <div class="btn-group" role="group"
+                                                            aria-label="Basic mixed styles example">
+                                                            <a href="{{ route('laporan.dokumen.akhir', $pengajuan->belongsToPengajuan->id) }}"
+                                                                class="btn btn-success btn-sm">Laporan Dokumen Akhir</a>
+                                                        </div>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach
