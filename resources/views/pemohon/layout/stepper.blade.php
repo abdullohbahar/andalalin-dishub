@@ -56,7 +56,12 @@
             <div
                 class="stepper-item {{ Route::is('pemohon.menunggu.surat.persetujuan') || Route::is('pemohon.surat.persetujuan') || Route::is('konsultan.menunggu.surat.persetujuan') || Route::is('konsultan.surat.persetujuan') ? 'active' : 'completed' }}">
                 <div class="step-counter">13</div>
-                <div class="step-name text-center">Surat Persetujuan - Selesai</div>
+                <div class="step-name text-center">Surat Persetujuan</div>
+            </div>
+            <div
+                class="stepper-item {{ Route::is('pemohon.pengajuan.selesai') || Route::is('konsultan.pengajuan.selesai') ? 'active' : 'completed' }}">
+                <div class="step-counter">14</div>
+                <div class="step-name text-center">Selesai</div>
             </div>
         </div>
     </div>

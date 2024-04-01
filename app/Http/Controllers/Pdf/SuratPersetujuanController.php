@@ -3,14 +3,16 @@
 namespace App\Http\Controllers\Pdf;
 
 use PDF;
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Pengajuan;
-use App\Http\Controllers\Controller;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
-use Riskihajar\Terbilang\Facades\Terbilang;
 use Romans\Filter\IntToRoman;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Storage;
+use Riskihajar\Terbilang\Facades\Terbilang;
 
 class SuratPersetujuanController extends Controller
 {
@@ -37,7 +39,8 @@ class SuratPersetujuanController extends Controller
             'belongsToSubSubJenisRencana.hasOneUkuranMinimal',
             'hasOneBeritaAcara',
             'hasOnePemrakarsa',
-            'hasOneSuratKesanggupan'
+            'hasOneSuratKesanggupan',
+            'hasOneSuratPersetujuan'
         )->findOrFail($pengajuanID);
 
         // mencari tipe ukuran minimal
@@ -101,6 +104,21 @@ class SuratPersetujuanController extends Controller
         ];
 
         $pdf = PDF::loadView('document-template.surat-persetujuan', $data);
+
+        if ($pengajuan->hasOneSuratPersetujuan->tte) {
+            $directory = 'public/file-uploads/Surat Persetujuan/' . $pengajuan->user_id . '/' . $pengajuan->hasOneDataPemohon->nama_proyek;
+
+            // Membuat direktori jika belum ada
+            Storage::makeDirectory($directory);
+
+            $location = $directory . '/surat-persetujuan.pdf';
+
+            // Menyimpan file ke storage/app/public
+            $pdf->save(storage_path('app/' . $location));
+
+            $pengajuan->hasOneSuratPersetujuan->file = $location;
+            $pengajuan->hasOneSuratPersetujuan->save();
+        }
 
         return $pdf->stream('Surat Kesanggupan.pdf');
 

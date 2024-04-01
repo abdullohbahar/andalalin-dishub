@@ -50,6 +50,10 @@ class SuratPersetujuanController extends Controller
             'step' => 'Selesai'
         ]);
 
-        return to_route('pemohon.pengajuan')->with('success', 'Terimakasih Telah Menyelesaikan Permohonan. Untuk Langkah Selanjutnya Harap Untuk Mendownload Laporan Dokumen Akhir, Dihalaman Detail');
+        Pengajuan::where('id', $pengajuanID)->update([
+            'status' => 'Selesai'
+        ]);
+
+        return to_route('pemohon.pengajuan.selesai')->with('success', 'Terimakasih Telah Menyelesaikan Permohonan. Untuk Langkah Selanjutnya Harap Untuk Mendownload Laporan Dokumen Akhir');
     }
 }

@@ -32,17 +32,29 @@ class PengajuanPemohonController extends Controller
                     return $item->hasOneDataPemohon?->nama_proyek ?? '';
                 })
                 ->addColumn('status', function ($item) {
-                    return $item->status ?? '';
+                    if ($item->status == 'ditolak') {
+                        $color = 'danger';
+                    } else if ($item->status == 'disetujui') {
+                        $color = 'info';
+                    } else if ($item->status == 'revisi') {
+                        $color = 'warning';
+                    } else if ($item->status == 'Selesai') {
+                        $color = 'success';
+                    } else if ($item->status == 'input data belum selesai') {
+                        $color = 'secondary';
+                    }
+
+                    return "<span class='badge badge-$color'>$item->status</span>";
                 })
                 ->addColumn('aksi', function ($item) {
 
                     if ($item->status != 'input data belum selesai') {
                         $detailBtn = "<a href='/pemohon/pengajuan/andalalin/detail/$item->id' class='btn btn-primary btn-sm'>Detail</a>";
-                        if ($item->hasOneRiwayatInputData->step == 'Selesai') {
-                            $verifikasiBtn = '';
-                        } else {
-                            $verifikasiBtn = "<a href='/pemohon/pengajuan/andalalin/riwayat-input-data/$item->id' class='btn btn-warning btn-sm'>Aktivitas Permohonan</a>";
-                        }
+                        // if ($item->hasOneRiwayatInputData->step == 'Selesai') {
+                        //     $verifikasiBtn = '';
+                        // } else {
+                        $verifikasiBtn = "<a href='/pemohon/pengajuan/andalalin/riwayat-input-data/$item->id' class='btn btn-warning btn-sm'>Aktivitas Permohonan</a>";
+                        // }
                     } else {
                         $detailBtn = "<a href='/pemohon/pengajuan/andalalin/riwayat-input-data/$item->id' class='btn btn-info btn-sm'>Lanjutkan Mengisi Data</a>";
                         $verifikasiBtn = '';

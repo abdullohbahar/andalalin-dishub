@@ -22,6 +22,7 @@ use App\Http\Controllers\Pemohon\PengajuanAndalalinController;
 use App\Http\Controllers\Admin\JenisRencanaPembangunanController;
 use App\Http\Controllers\Admin\KontruksiController;
 use App\Http\Controllers\Admin\PengajuanController;
+use App\Http\Controllers\Admin\PengajuanSelesaiController;
 use App\Http\Controllers\Admin\SubJenisRencanaPembangunanController;
 use App\Http\Controllers\Admin\SuratKesanggupanAdminController;
 use App\Http\Controllers\Admin\SuratPersetujuanAdminController;
@@ -35,6 +36,7 @@ use App\Http\Controllers\Konsultan\DashboardKonsultan;
 use App\Http\Controllers\Konsultan\PengajuanAndalalinKonsultanController;
 use App\Http\Controllers\LaporanDokumenAkhir;
 use App\Http\Controllers\Pdf\BeritaAcaraController as PdfBeritaAcaraController;
+use App\Http\Controllers\Pdf\LaporanDokumenAkhir as PdfLaporanDokumenAkhir;
 use App\Http\Controllers\Pdf\SuratKesanggupanController;
 use App\Http\Controllers\Pdf\SuratPersetujuanController;
 use App\Http\Controllers\PemberitahuanJadwalTinjauan;
@@ -113,6 +115,10 @@ Route::prefix('admin')->middleware('admin')->group(function () {
             Route::get('/{pengajuanID}', [SuratPersetujuanAdminController::class, 'index'])->name('admin.surat.persetujuan');
             Route::post('next/{pengajuanID}', [SuratPersetujuanAdminController::class, 'next'])->name('admin.next.surat.persetujuan');
             Route::get('menunggu-persetujuan/{pengajuanID}', [SuratPersetujuanAdminController::class, 'show'])->name('admin.menunggu.persetujuan.surat.persetujuan');
+        });
+
+        Route::prefix('selesai')->group(function () {
+            Route::get('/{pengajuanID}', [PengajuanSelesaiController::class, 'index'])->name('admin.pengajuan.selesai');
         });
 
         Route::prefix('ajax')->group(function () {
@@ -236,6 +242,10 @@ Route::prefix('pemohon')->middleware('choose.role', 'pemohon')->group(function (
                 Route::get('menunggu/{pengajuanID}', [PemohonSuratPersetujuanController::class, 'menunggu'])->name('pemohon.menunggu.surat.persetujuan');
                 Route::post('selesai/{pengajuanID}', [PemohonSuratPersetujuanController::class, 'selesai'])->name('pemohon.selesai.surat.persetujuan');
             });
+
+            Route::prefix('selesai')->group(function () {
+                Route::get('/{pengajuanID}', [PengajuanSelesaiController::class, 'index'])->name('pemohon.pengajuan.selesai');
+            });
         });
     });
 
@@ -274,6 +284,10 @@ Route::prefix('konsultan')->middleware('choose.role', 'konsultan')->group(functi
             Route::prefix('surat-persetujuan')->group(function () {
                 Route::get('/{pengajuanID}', [PemohonSuratPersetujuanController::class, 'index'])->name('konsultan.surat.persetujuan');
                 Route::get('menunggu/{pengajuanID}', [PemohonSuratPersetujuanController::class, 'menunggu'])->name('konsultan.menunggu.surat.persetujuan');
+            });
+
+            Route::prefix('selesai')->group(function () {
+                Route::get('/{pengajuanID}', [PengajuanSelesaiController::class, 'index'])->name('konsultan.pengajuan.selesai');
             });
         });
     });
@@ -323,4 +337,5 @@ Route::prefix('download')->middleware('auth')->group(function () {
     Route::get('berita-acara/{pengajuanID}', PdfBeritaAcaraController::class)->name('download.berita.acara');
     Route::get('surat-kesanggupan/{pengajuanID}', SuratKesanggupanController::class)->name('download.surat.kesanggupan');
     Route::get('surat-persetujuan/{pengajuanID}', SuratPersetujuanController::class)->name('download.surat.persetujuan');
+    Route::get('laporan-dokumen-akhir/{pengajuanID}', PdfLaporanDokumenAkhir::class)->name('download.laporan.dokumen.akhir');
 });

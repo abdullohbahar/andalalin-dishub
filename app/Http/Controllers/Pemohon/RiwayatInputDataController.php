@@ -44,6 +44,8 @@ class RiwayatInputDataController extends Controller
             return to_route('pemohon.menunggu.surat.persetujuan', $pengajuanID);
         } else if ($riwayat == 'Surat Persetujuan') {
             return to_route('pemohon.surat.persetujuan', $pengajuanID);
+        } else if ($riwayat == 'Selesai') {
+            return to_route('pemohon.pengajuan.selesai', $pengajuanID);
         }
     }
 }

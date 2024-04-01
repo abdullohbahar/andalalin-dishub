@@ -34,6 +34,10 @@
                 <div class="step-counter">7</div>
                 <div class="step-name text-center">Surat Persetujuan</div>
             </div>
+            <div class="stepper-item {{ Route::is('admin.pengajuan.selesai') ? 'active' : 'completed' }}">
+                <div class="step-counter">8</div>
+                <div class="step-name text-center">Selesai</div>
+            </div>
         </div>
     </div>
 </div>
