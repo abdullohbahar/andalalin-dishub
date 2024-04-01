@@ -34,6 +34,11 @@ class DataPemohon extends Model
         return $this->hasMany(DokumenDataPemohon::class);
     }
 
+    public function hasOneDokumenDataPemohon()
+    {
+        return $this->hasOne(DokumenDataPemohon::class);
+    }
+
     protected function tanggalSuratPermohonan(): Attribute
     {
         return Attribute::make(

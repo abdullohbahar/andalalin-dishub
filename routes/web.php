@@ -36,6 +36,7 @@ use App\Http\Controllers\Konsultan\DashboardKonsultan;
 use App\Http\Controllers\Konsultan\PengajuanAndalalinKonsultanController;
 use App\Http\Controllers\LaporanDokumenAkhir;
 use App\Http\Controllers\Pdf\BeritaAcaraController as PdfBeritaAcaraController;
+use App\Http\Controllers\Pdf\CoverController;
 use App\Http\Controllers\Pdf\LaporanDokumenAkhir as PdfLaporanDokumenAkhir;
 use App\Http\Controllers\Pdf\SuratKesanggupanController;
 use App\Http\Controllers\Pdf\SuratPersetujuanController;
@@ -337,5 +338,7 @@ Route::prefix('download')->middleware('auth')->group(function () {
     Route::get('berita-acara/{pengajuanID}', PdfBeritaAcaraController::class)->name('download.berita.acara');
     Route::get('surat-kesanggupan/{pengajuanID}', SuratKesanggupanController::class)->name('download.surat.kesanggupan');
     Route::get('surat-persetujuan/{pengajuanID}', SuratPersetujuanController::class)->name('download.surat.persetujuan');
+
+    Route::get('cover/{pengajuanID}', CoverController::class)->name('cover');
     Route::get('laporan-dokumen-akhir/{pengajuanID}', PdfLaporanDokumenAkhir::class)->name('download.laporan.dokumen.akhir');
 });
