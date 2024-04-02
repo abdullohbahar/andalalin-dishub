@@ -62,7 +62,7 @@ use App\Models\TemplateBeritaAcara;
 |
 */
 
-Route::get('/', [LoginController::class, 'index']);
+Route::get('/', [LoginController::class, 'index'])->name('home');
 Route::get('/login', [AuthController::class, 'redirectToKeycloak'])->name('login.keycloak');
 Route::get('/callback', [AuthController::class, 'handleKeycloakCallback'])->name('keycloak.callback');
 Route::get('/logout', [AuthController::class, 'logout'])->name('keycloak.logout');

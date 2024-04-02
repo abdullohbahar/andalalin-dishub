@@ -48,12 +48,19 @@ class AuthController extends Controller
 
     public function logout()
     {
+        $role = auth()->user()->role;
+
         // Logout of your app.
         Auth::logout();
 
-        // The URL the user is redirected to after logout.
-        $redirectUri = env('APP_URL');
+        if ($role == 'pemohon' || $role == 'pemrakarsa' || $role == 'konsultan') {
+            # code...
+            // The URL the user is redirected to after logout.
+            $redirectUri = env('APP_URL');
 
-        return redirect(Socialite::driver('keycloak')->getLogoutUrl($redirectUri, env('KEYCLOAK_CLIENT_ID')));
+            return redirect(Socialite::driver('keycloak')->getLogoutUrl($redirectUri, env('KEYCLOAK_CLIENT_ID')));
+        } else {
+            return to_route('home');
+        }
     }
 }
