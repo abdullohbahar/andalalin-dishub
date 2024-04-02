@@ -27,6 +27,14 @@ class PemohonMiddleware
             return $next($request);
         } else if (Auth::check() && Auth::user()->role == 'konsultan') {
             return redirect()->route('konsultan.dashboard');
+        } else if (Auth::check() && Auth::user()->role == 'penilai') {
+            return redirect()->route('penilai.dashboard');
+        } else if (Auth::check() && Auth::user()->role == 'kasi') {
+            return redirect()->route('kasi.dashboard');
+        } else if (Auth::check() && Auth::user()->role == 'kabid') {
+            return redirect()->route('kabid.dashboard');
+        } else if (Auth::check() && Auth::user()->role == 'kadis') {
+            return redirect()->route('kadis.dashboard');
         }
 
         return redirect('/');

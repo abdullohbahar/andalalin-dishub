@@ -294,7 +294,7 @@ Route::prefix('konsultan')->middleware('choose.role', 'konsultan')->group(functi
     });
 });
 
-Route::prefix('penilai')->group(function () {
+Route::prefix('penilai')->middleware('penilai')->group(function () {
     Route::get('dashboard', [DashboardPenilaiController::class, 'index'])->name('penilai.dashboard');
 
     Route::get('berita-acara/{pengajuanID}', [DashboardPenilaiController::class, 'showBeritaAcara'])->name('penilai.berita.acara');
@@ -307,21 +307,21 @@ Route::prefix('profile')->middleware('auth')->group(function () {
     Route::put('/update/{id}', [ProfilePemohonController::class, 'update'])->name('update.profile');
 });
 
-Route::prefix('kasi')->group(function () {
+Route::prefix('kasi')->middleware('kasi')->group(function () {
     Route::get('dashboard', [DashboardKasiController::class, 'index'])->name('kasi.dashboard');
 
     Route::get('surat-persetujuan/{pengajuanID}', [DashboardKasiController::class, 'showSuratPersetujuan'])->name('kasi.surat.persetujuan');
     Route::post('surat-persetujuan/approve/{pengajuanID}', [DashboardKasiController::class, 'approve'])->name('kasi.approve.surat.persetujuan');
 });
 
-Route::prefix('kabid')->group(function () {
+Route::prefix('kabid')->middleware('kabid')->group(function () {
     Route::get('dashboard', [DashboardKabidController::class, 'index'])->name('kabid.dashboard');
 
     Route::get('surat-persetujuan/{pengajuanID}', [DashboardKabidController::class, 'showSuratPersetujuan'])->name('kabid.surat.persetujuan');
     Route::post('surat-persetujuan/approve/{pengajuanID}', [DashboardKabidController::class, 'approve'])->name('kabid.approve.surat.persetujuan');
 });
 
-Route::prefix('kadis')->group(function () {
+Route::prefix('kadis')->middleware('kadis')->group(function () {
     Route::get('dashboard', [DashboardKadisController::class, 'index'])->name('kadis.dashboard');
 
     Route::get('surat-persetujuan/{pengajuanID}', [DashboardKadisController::class, 'showSuratPersetujuan'])->name('kadis.surat.persetujuan');
