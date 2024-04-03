@@ -10,6 +10,7 @@ use App\Http\Middleware\KadisMiddleware;
 use App\Http\Middleware\KasiMiddleware;
 use App\Http\Middleware\KonsultanMiddleware;
 use App\Http\Middleware\PemohonMiddleware;
+use App\Http\Middleware\PemrakarsaMiddleware;
 use App\Http\Middleware\PenilaiMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -81,5 +82,6 @@ class Kernel extends HttpKernel
         'kasi' => KasiMiddleware::class,
         'kabid' => KabidMiddleware::class,
         'kadis' => KadisMiddleware::class,
+        'pemrakarsa' => PemrakarsaMiddleware::class,
     ];
 }

@@ -23,7 +23,7 @@ class KonsultanMiddleware
 
         if (Auth::check() && Auth::user()->role == 'admin') {
             return redirect()->route('admin.dashboard');
-        } else if (Auth::check() && Auth::user()->role == 'pemohon') {
+        } else if (Auth::check() && Auth::user()->role == 'pemohon' || Auth::user()->role == 'pemrakarsa') {
             return redirect()->route('pemohon.dashboard');
         } else if (Auth::check() && Auth::user()->role == 'konsultan') {
             return $next($request);

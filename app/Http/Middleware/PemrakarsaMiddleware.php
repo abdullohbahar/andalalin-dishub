@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class KadisMiddleware
+class PemrakarsaMiddleware
 {
     /**
      * Handle an incoming request.
@@ -23,7 +23,7 @@ class KadisMiddleware
 
         if (Auth::check() && Auth::user()->role == 'admin') {
             return redirect()->route('admin.dashboard');
-        } else if (Auth::check() && Auth::user()->role == 'pemohon' || Auth::user()->role == 'pemrakarsa') {
+        } else if (Auth::check() && Auth::user()->role == 'pemohon') {
             return redirect()->route('pemohon.dashboard');
         } else if (Auth::check() && Auth::user()->role == 'konsultan') {
             return redirect()->route('konsultan.dashboard');
@@ -34,6 +34,8 @@ class KadisMiddleware
         } else if (Auth::check() && Auth::user()->role == 'kabid') {
             return redirect()->route('kabid.dashboard');
         } else if (Auth::check() && Auth::user()->role == 'kadis') {
+            return redirect()->route('kadis.dashboard');
+        } else if (Auth::check() && Auth::user()->role == 'pemrakarsa') {
             return $next($request);
         }
 

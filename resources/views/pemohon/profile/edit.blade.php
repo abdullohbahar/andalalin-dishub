@@ -4,6 +4,10 @@
     if ($role == 'penilai1' || $role == 'penilai2' || $role == 'penilai3') {
         $role = 'penilai';
     }
+
+    if ($role == 'pemrakarsa') {
+        $role = 'pemohon';
+    }
 @endphp
 
 @extends("$role.layout.app")

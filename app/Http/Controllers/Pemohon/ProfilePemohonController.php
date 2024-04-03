@@ -51,7 +51,7 @@ class ProfilePemohonController extends Controller
 
         $user = User::with('hasOneTtd', 'hasOneProfile')->where('id', $id)->first();
 
-        if (!$user->hasOneProfile->file_ktp) {
+        if (!$user->hasOneProfile?->file_ktp) {
             $request->validate([
                 'file_ktp' => 'required',
             ], [
