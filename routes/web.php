@@ -190,7 +190,7 @@ Route::prefix('admin')->middleware('admin')->group(function () {
 Route::get('pilih-role', [PilihRoleController::class, 'index'])->name('pilih-role');
 Route::get('pilih-role/{role}', [PilihRoleController::class, 'store'])->name('store.pilih.role');
 
-Route::prefix('pemohon')->middleware('choose.role', 'pemohon')->group(function () {
+Route::middleware('choose.role', 'pemohon')->group(function () {
     Route::get('dashboard', [DashboardPemohonController::class, 'index'])->middleware('check.profile')->name('pemohon.dashboard');
 
     Route::prefix('pengajuan')->middleware('check.profile')->group(function () {
@@ -250,7 +250,7 @@ Route::prefix('pemohon')->middleware('choose.role', 'pemohon')->group(function (
         });
     });
 
-    Route::prefix('ajax')->group(function () {
+    Route::prefix('pemohon/ajax')->group(function () {
         Route::get('/show-sub-jenis-rencana/{idJenis}', ShowSubJenisRencana::class)->name('show.sub.jenis.rencana');
         Route::get('/show-sub-sub-jenis-rencana/{idSubJenisRencana}', ShowSubSubJenisRencana::class)->name('show.sub.sub.jenis.rencana');
         Route::get('/show-ukuran-minimal/{jenis}/{idSubJenisRencana}', ShowUkuranMinimal::class)->name('show.ukuran.minimal');

@@ -1,5 +1,9 @@
 @php
     $role = auth()->user()->role;
+
+    if ($role == 'pemrakarsa') {
+        $role = 'pemohon';
+    }
 @endphp
 
 @extends("$role.layout.app")

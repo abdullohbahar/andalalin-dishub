@@ -80,6 +80,9 @@ class PengajuanAndalalinController extends Controller
             ->where('pengajuan_id', $pengajuanID)
             ->first();
 
+        $dataPemrakarsa = Pemrakarsa::where('pengajuan_id', $pengajuanID)
+            ->first();
+
         if (stripos($pengajuan->belongsToUkuranMinimal->kategori, 'rendah')) {
             $klasifikasi = 'rendah';
         } else {
@@ -94,7 +97,8 @@ class PengajuanAndalalinController extends Controller
             'user' => $user,
             'klasifikasi' => $klasifikasi,
             'konsultans' => $konsultans,
-            'dataPemohon' => $dataPemohon
+            'dataPemohon' => $dataPemohon,
+            'dataPemrakarsa' => $dataPemrakarsa,
         ];
 
         return view('pemohon.pengajuan.andalalin.pilih-konsultan', $data);
@@ -133,7 +137,8 @@ class PengajuanAndalalinController extends Controller
                 'pemrakarsa' => $request->pemrakarsa,
                 'nama_penanggung_jawab' => $request->nama_penanggung_jawab,
                 'jabatan' => $request->jabatan_pemrakarsa,
-                'alamat' => $request->alamat_pemrakarsa
+                'alamat' => $request->alamat_pemrakarsa,
+                'no_telepon' => $request->no_telepon,
             ]);
 
             Pengajuan::where('id', $request->pengajuan_id)->update([
@@ -222,7 +227,7 @@ class PengajuanAndalalinController extends Controller
 
         $role = auth()->user()->role;
 
-        if ($role == 'pemohon') {
+        if ($role == 'pemohon' || $role == 'pemrakarsa') {
             $userID = auth()->user()->id;
         } else if ($role == 'konsultan') {
             $userID = $dataPemohon->user_id;
@@ -346,6 +351,10 @@ class PengajuanAndalalinController extends Controller
         $this->kirimNotifikasiKeAdmin($dataPemohon->pengajuan_id);
 
         $role = auth()->user()->role;
+
+        if ($role == 'pemrakarsa') {
+            $role = 'pemohon';
+        }
 
         return to_route($role . '.menunggu.verifikasi.data', $dataPemohon->pengajuan_id)->with('success', 'Terimakasih telah mengisi data yang sesuai. Harap menunggu konfirmasi admin, paling lambat 3 hari kerja');
     }

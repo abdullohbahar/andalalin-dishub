@@ -6,6 +6,10 @@
     } else {
         $stepper = $role;
     }
+
+    if ($role == 'pemrakarsa') {
+        $role = 'pemohon';
+    }
 @endphp
 
 @extends("$role.layout.app")

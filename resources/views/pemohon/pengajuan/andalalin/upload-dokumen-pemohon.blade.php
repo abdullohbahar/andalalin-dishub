@@ -1,5 +1,9 @@
 @php
     $role = auth()->user()->role;
+
+    if ($role == 'pemrakarsa') {
+        $role = 'pemohon';
+    }
 @endphp
 
 @extends("$role.layout.app")
@@ -20,6 +24,9 @@
 @section('content')
     @php
         $role = auth()->user()->role;
+        if ($role == 'pemrakarsa') {
+            $role = 'pemohon';
+        }
     @endphp
     <div class="d-flex flex-column flex-column-fluid">
         <!--begin::Toolbar-->
