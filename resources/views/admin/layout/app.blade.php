@@ -398,6 +398,19 @@ License: For each use you must have a valid license purchased only from above li
     <!--end::Vendors Javascript-->
     <!--end::Javascript-->
 
+    <script>
+        $(document).ready(function() {
+            // Cari langkah yang memiliki kelas 'active'
+            var $activeStep = $('.stepper-item.active');
+
+            // Cari semua langkah setelah langkah yang aktif
+            var $stepsAfterActive = $activeStep.nextAll('.stepper-item');
+
+            // Hapus kelas 'completed' dari semua langkah setelah langkah yang aktif
+            $stepsAfterActive.removeClass('completed');
+        });
+    </script>
+
     {{-- Show Modal when session has errors --}}
     @if (session()->has('errors'))
         <script>

@@ -352,6 +352,19 @@ License: For each use you must have a valid license purchased only from above li
         </script>
     @endif
 
+    <script>
+        $(document).ready(function() {
+            // Cari langkah yang memiliki kelas 'active'
+            var $activeStep = $('.stepper-item.active');
+
+            // Cari semua langkah setelah langkah yang aktif
+            var $stepsAfterActive = $activeStep.nextAll('.stepper-item');
+
+            // Hapus kelas 'completed' dari semua langkah setelah langkah yang aktif
+            $stepsAfterActive.removeClass('completed');
+        });
+    </script>
+
     @if (session()->has('success'))
         <script>
             Swal.fire({
