@@ -94,6 +94,7 @@ class PengajuanController extends Controller
             'hasOneDataPemohon.belongsToConsultan.hasOneProfile',
             'belongsToUser.hasOneProfile',
             'hasOneSuratPersetujuan',
+            'hasOnePemrakarsa'
         )
             ->findorfail($pengajuanID);
 

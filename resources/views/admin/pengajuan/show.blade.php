@@ -1,7 +1,7 @@
 @extends('admin.layout.app')
 
 @section('title')
-    Verifikasi Pengajuan Permohonan
+    Data Pengajuan Permohonan
 @endsection
 
 @push('addons-css')
@@ -18,7 +18,7 @@
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-                        Verifikasi Pengajuan Permohonan</h1>
+                        Data Pengajuan Permohonan</h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -33,7 +33,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">Verifikasi Pengajuan Permohonan</li>
+                        <li class="breadcrumb-item text-muted">Data Pengajuan Permohonan</li>
                         <!--end::Item-->
                     </ul>
                     <!--end::Breadcrumb-->
@@ -55,7 +55,7 @@
                         @endif
                         <div class="card">
                             <div class="card-header pt-5">
-                                <h1>Verifikasi Pengajuan Permohonan</h1>
+                                <h1>Data Pengajuan Permohonan</h1>
                             </div>
                             <div class="card-body" style="overflow-y: visible">
                                 <div class="row">
@@ -232,7 +232,7 @@
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <b>Lusa Bangunan</b>
+                                                    <b>Luas Bangunan</b>
                                                 </td>
                                                 <td>
                                                     : {{ $pengajuan->hasOneDataPemohon->luas_bangunan }}
@@ -308,6 +308,65 @@
                                                         Maps</a>
                                                 </td>
                                             </tr> --}}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-5">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="mt-5">
+                                    <b>Data Pemrakarsa</b>
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12">
+                                        <table class="table table-striped table-bordered">
+                                            <tr>
+                                                <td>
+                                                    <b>Pemrakarsa</b>
+                                                </td>
+                                                <td>
+                                                    :
+                                                    {{ $pengajuan->hasOnePemrakarsa?->pemrakarsa }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <b>Penanggung Jawab</b>
+                                                </td>
+                                                <td>
+                                                    :
+                                                    {{ $pengajuan->hasOnePemrakarsa?->nama_penanggung_jawab }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <b>Jabatan</b>
+                                                </td>
+                                                <td>
+                                                    : {{ $pengajuan->hasOnePemrakarsa?->jabatan }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <b>Alamat</b>
+                                                </td>
+                                                <td>
+                                                    : {{ $pengajuan->hasOnePemrakarsa?->alamat }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <b>Nomor telepon</b>
+                                                </td>
+                                                <td>
+                                                    : {{ $pengajuan->hasOnePemrakarsa?->no_telepon }}
+                                                </td>
+                                            </tr>
                                         </table>
                                     </div>
                                 </div>
