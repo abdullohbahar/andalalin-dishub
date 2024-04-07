@@ -35,7 +35,25 @@ class CoverController extends Controller
             'hasOneSuratKesanggupan'
         )->findOrFail($pengajuanID);
 
+
+        // mencari ukuran minimal
+        if ($pengajuan?->sub_sub_jenis_rencana) {
+            $tipe = $pengajuan->belongsToSubJenisRencana->hasOneUkuranMinimal->tipe;
+        } else {
+            $tipe = $pengajuan->belongsToSubSubJenisRencana->hasOneUkuranMinimal->tipe;
+        }
+
+        // mencari jenis bangkitan
+        if ($pengajuan?->sub_sub_jenis_rencana) {
+            $jenisBangkitan = $pengajuan->belongsToSubJenisRencana->hasOneUkuranMinimal->kategori;
+        } else {
+            $jenisBangkitan = $pengajuan->belongsToSubSubJenisRencana->hasOneUkuranMinimal->kategori;
+        }
+
+
         $data = [
+            'tipe' => $tipe,
+            'jenisBangkitan' => $jenisBangkitan,
             'pengajuan' => $pengajuan,
             'logoDishub' => $encodeLogo
         ];

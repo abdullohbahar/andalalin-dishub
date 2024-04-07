@@ -49,14 +49,14 @@ class PengajuanPemohonController extends Controller
                 ->addColumn('aksi', function ($item) {
 
                     if ($item->status != 'input data belum selesai') {
-                        $detailBtn = "<a href='/pemohon/pengajuan/andalalin/detail/$item->id' class='btn btn-primary btn-sm'>Detail</a>";
+                        $detailBtn = "<a href='/pengajuan/andalalin/detail/$item->id' class='btn btn-primary btn-sm'>Detail</a>";
                         // if ($item->hasOneRiwayatInputData->step == 'Selesai') {
                         //     $verifikasiBtn = '';
                         // } else {
-                        $verifikasiBtn = "<a href='/pemohon/pengajuan/andalalin/riwayat-input-data/$item->id' class='btn btn-warning btn-sm'>Aktivitas Permohonan</a>";
+                        $verifikasiBtn = "<a href='/pengajuan/andalalin/riwayat-input-data/$item->id' class='btn btn-warning btn-sm'>Aktivitas Permohonan</a>";
                         // }
                     } else {
-                        $detailBtn = "<a href='/pemohon/pengajuan/andalalin/riwayat-input-data/$item->id' class='btn btn-info btn-sm'>Lanjutkan Mengisi Data</a>";
+                        $detailBtn = "<a href='/pengajuan/andalalin/riwayat-input-data/$item->id' class='btn btn-info btn-sm'>Lanjutkan Mengisi Data</a>";
                         $verifikasiBtn = '';
                     }
 

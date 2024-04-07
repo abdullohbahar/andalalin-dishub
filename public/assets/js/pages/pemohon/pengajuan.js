@@ -4,7 +4,7 @@ $.ajaxSetup({
     },
 });
 
-var currentUrl = "/pemohon/pengajuan";
+var currentUrl = "/pengajuan";
 
 // Class definition
 var KTDatatablesServerSide = (function () {

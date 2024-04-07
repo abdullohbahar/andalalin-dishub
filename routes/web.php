@@ -20,7 +20,6 @@ use App\Http\Controllers\Pemohon\PengajuanPemohonController;
 use App\Http\Controllers\Pemohon\Ajax\ShowSubSubJenisRencana;
 use App\Http\Controllers\Pemohon\PengajuanAndalalinController;
 use App\Http\Controllers\Admin\JenisRencanaPembangunanController;
-use App\Http\Controllers\Admin\KontruksiController;
 use App\Http\Controllers\Admin\PengajuanController;
 use App\Http\Controllers\Admin\PengajuanSelesaiController;
 use App\Http\Controllers\Admin\SubJenisRencanaPembangunanController;

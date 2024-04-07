@@ -353,15 +353,24 @@ License: For each use you must have a valid license purchased only from above li
     @endif
 
     <script>
-        $(document).ready(function() {
-            // Cari langkah yang memiliki kelas 'active'
-            var $activeStep = $('.stepper-item.active');
+        // Mendapatkan semua elemen dengan kelas 'stepper-item'
+        const stepperItems = document.querySelectorAll('.stepper-item');
 
-            // Cari semua langkah setelah langkah yang aktif
-            var $stepsAfterActive = $activeStep.nextAll('.stepper-item');
+        let activeFound = false;
 
-            // Hapus kelas 'completed' dari semua langkah setelah langkah yang aktif
-            $stepsAfterActive.removeClass('completed');
+        // Melooping semua elemen
+        stepperItems.forEach(item => {
+            // Cek apakah elemen memiliki kelas 'active'
+            if (item.classList.contains('active')) {
+                // Setel flag 'activeFound' menjadi true
+                activeFound = true;
+            }
+
+            // Jika flag 'activeFound' adalah true dan elemen memiliki kelas 'completed'
+            if (activeFound && item.classList.contains('completed')) {
+                // Hapus kelas 'completed' dari elemen
+                item.classList.remove('completed');
+            }
         });
     </script>
 

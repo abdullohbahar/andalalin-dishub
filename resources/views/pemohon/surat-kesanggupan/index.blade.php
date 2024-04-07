@@ -9,6 +9,7 @@
 
     if ($role == 'pemrakarsa') {
         $role = 'pemohon';
+        $stepper = 'pemohon';
     }
 @endphp
 

@@ -161,7 +161,7 @@
                                             </form>
                                         @else
                                             <div style="float: right">
-                                                <a href="{{ route('admin.kontruksi', $pengajuan->id) }}"
+                                                <a href="{{ route('admin.berita.acara', $pengajuan->id) }}"
                                                     class="btn btn-sm btn-success">Selanjutnya</a>
                                             </div>
                                         @endif

@@ -13,13 +13,13 @@
         <b>
             <span style="font-size: 18pt">
                 Dokumen
-                {{ $pengajuan->belongsToSubJenisRencana->hasOneUkuranMinimal->tipe }}
+                {{ $tipe }}
             </span>
         </b>
         <br>
         <b>
             <span style="font-size: 14pt">
-                Penanganan Dampak Lalu Lintas {{ $pengajuan->belongsToSubJenisRencana->hasOneUkuranMinimal->tipe }} <br>
+                Penanganan Dampak Lalu Lintas {{ $jenisBangkitan }} <br>
                 Pembangunan & Operasional {{ $pengajuan->hasOneDataPemohon->nama_proyek }}
             </span>
         </b>

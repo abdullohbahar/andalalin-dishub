@@ -27,7 +27,7 @@ class PemohonMiddleware
             return $next($request);
         } else if (Auth::check() && Auth::user()->role == 'konsultan') {
             return redirect()->route('konsultan.dashboard');
-        } else if (Auth::check() && Auth::user()->role == 'penilai') {
+        } else if (Auth::check() && Auth::user()->role == 'penilai' || Auth::user()->role == 'penilai1' || Auth::user()->role == 'penilai2' || Auth::user()->role == 'penilai3') {
             return redirect()->route('penilai.dashboard');
         } else if (Auth::check() && Auth::user()->role == 'kasi') {
             return redirect()->route('kasi.dashboard');

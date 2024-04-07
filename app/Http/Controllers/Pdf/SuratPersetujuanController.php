@@ -43,11 +43,20 @@ class SuratPersetujuanController extends Controller
             'hasOneSuratPersetujuan'
         )->findOrFail($pengajuanID);
 
-        // mencari tipe ukuran minimal
-        $ukuranMinimal = $pengajuan->belongsToSubJenisRencana->hasOneUkuranMinimal->tipe;
+        // mencari ukuran minimal
+        if ($pengajuan?->sub_sub_jenis_rencana) {
+            $ukuranMinimal = $pengajuan->belongsToSubJenisRencana->hasOneUkuranMinimal->tipe;
+        } else {
+            $ukuranMinimal = $pengajuan->belongsToSubSubJenisRencana->hasOneUkuranMinimal->tipe;
+        }
 
-        // mencari jenis bangkitan tinggi rendah sedang dll
-        $jenisBangkitan = $pengajuan->belongsToSubJenisRencana->hasOneUkuranMinimal->kategori;
+        // mencari jenis bangkitan
+        if ($pengajuan?->sub_sub_jenis_rencana) {
+            $jenisBangkitan = $pengajuan->belongsToSubJenisRencana->hasOneUkuranMinimal->kategori;
+        } else {
+            $jenisBangkitan = $pengajuan->belongsToSubSubJenisRencana->hasOneUkuranMinimal->kategori;
+        }
+
 
         // mengambil nama proyek
         $namaProyek = $pengajuan->hasOneDataPemohon->nama_proyek ?? '';
@@ -105,7 +114,7 @@ class SuratPersetujuanController extends Controller
 
         $pdf = PDF::loadView('document-template.surat-persetujuan', $data);
 
-        if ($pengajuan->hasOneSuratPersetujuan->tte) {
+        if (!$pengajuan->hasOneSuratPersetujuan?->tte) {
             $directory = 'public/file-uploads/Surat Persetujuan/' . $pengajuan->user_id . '/' . $pengajuan->hasOneDataPemohon->nama_proyek;
 
             // Membuat direktori jika belum ada

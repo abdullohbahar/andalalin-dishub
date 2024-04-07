@@ -41,26 +41,17 @@ class BeritaAcaraController extends Controller
         )->findOrFail($pengajuanID);
 
         // mencari ukuran minimal
-        $ukuranMinimal = $pengajuan->belongsToSubJenisRencana->hasOneUkuranMinimal->kategori;
-
-        preg_match_all("/\((.*?)\)/", $ukuranMinimal, $matches);
-
-        if (isset($matches[1][0])) {
-            $ukuranMinimal = $matches[1][0]; // Hasilnya adalah "Dokumen Andalalin"
+        if ($pengajuan?->sub_sub_jenis_rencana) {
+            $ukuranMinimal = $pengajuan->belongsToSubJenisRencana->hasOneUkuranMinimal->tipe;
         } else {
-            $ukuranMinimal = '';
+            $ukuranMinimal = $pengajuan->belongsToSubSubJenisRencana->hasOneUkuranMinimal->tipe;
         }
 
-
         // mencari jenis bangkitan
-        $jenisBangkitan = $pengajuan->belongsToSubJenisRencana->hasOneUkuranMinimal->kategori;
-
-        preg_match("/^(.*?)\(/", $jenisBangkitan, $matches);
-
-        if (isset($matches[1])) {
-            $jenisBangkitan = $matches[1]; // Hasilnya adalah "Dokumen Andalalin"
+        if ($pengajuan?->sub_sub_jenis_rencana) {
+            $jenisBangkitan = $pengajuan->belongsToSubJenisRencana->hasOneUkuranMinimal->kategori;
         } else {
-            $jenisBangkitan = '';
+            $jenisBangkitan = $pengajuan->belongsToSubSubJenisRencana->hasOneUkuranMinimal->kategori;
         }
 
         // mengambil nama proyek

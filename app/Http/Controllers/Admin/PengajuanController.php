@@ -43,6 +43,8 @@ class PengajuanController extends Controller
                         $color = 'success';
                     } else if ($item->status == 'input data belum selesai') {
                         $color = 'secondary';
+                    } else {
+                        $color = 'primary';
                     }
 
                     return "<span class='badge badge-$color'>$item->status</span>";
