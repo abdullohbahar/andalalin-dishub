@@ -311,9 +311,13 @@
                                                 </div>
                                                 <div class="col-12 mt-5">
                                                     <label for="" class="form-label">Luas Bangunan</label>
-                                                    <input type="text" class="form-control"
-                                                        value="{{ old('luas_bangunan', $dataPemohon->luas_bangunan ?? '') }}"
-                                                        name="luas_bangunan" required id="">
+                                                    <div class="input-group">
+                                                        <input type="number" class="form-control"
+                                                            value="{{ old('luas_bangunan', $dataPemohon->luas_bangunan ?? '') }}"
+                                                            name="luas_bangunan" required id="">
+                                                        <span class="input-group-text"
+                                                            id="basic-addon1">m<sup>2</sup></span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

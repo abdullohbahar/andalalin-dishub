@@ -278,7 +278,7 @@
                     Operasional
                     Mikrosite
                     Indostation Yang Berlokasi Di {{ $namaProyek }} dengan luas lahan sebesar {{ $luasLahan }}
-                    (dua ratus sebelas koma empat puluh tujuh meter persegi)
+                    ({{ $terbilangLuasLahan }} meter persegi)
                 </td>
             </tr>
             <tr>

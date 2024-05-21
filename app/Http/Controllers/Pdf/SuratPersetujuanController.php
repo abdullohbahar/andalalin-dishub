@@ -108,6 +108,7 @@ class SuratPersetujuanController extends Controller
             'nomor' => $nomor,
             'pengajuan' => $pengajuan,
             'luasLahan' => $luasLahan,
+            'terbilangLuasLahan' => Terbilang::make($luasLahan),
             'luasBangunan' => $luasBangunan,
             'tanggalSuratPermohonan' => $tanggalSuratPermohonan
         ];
