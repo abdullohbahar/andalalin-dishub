@@ -17,7 +17,7 @@
 @endsection
 
 @push('addons-css')
-    <link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/south-street/jquery-ui.css"
+    <link type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/south-street/jquery-ui.css"
         rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/jquery.signature.css">
 
