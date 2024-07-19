@@ -99,7 +99,7 @@
                                             enctype="multipart/form-data">
                                             @csrf
                                             <input type="hidden" name="data_pemohon_id" value="{{ $dataPemohon->id }}">
-                                            <label for="" class="form-label">Surat Permohonan</label>
+                                            <label for="" class="form-label">Surat Permohonan *</label>
                                             <div class="input-group mb-3">
                                                 <input type="file" name="surat_permohonan" class="form-control" required
                                                     accept=".pdf" onchange="validateFile(this)" id="">
@@ -110,7 +110,9 @@
                                                 <a target="_blank" href="{{ $suratPermohonan }}">
                                                     Lihat Surat Permohonan Yang Telah Diupload
                                                 </a>
+                                                <br>
                                             @endif
+                                            <i style="color: red">File harus berupa .pdf</i>
                                         </form>
                                     </div>
                                     <div class="col-sm-12 col-md-6 mt-5">
@@ -118,18 +120,21 @@
                                             enctype="multipart/form-data">
                                             @csrf
                                             <input type="hidden" name="data_pemohon_id" value="{{ $dataPemohon->id }}">
-                                            <label for="" class="form-label">Dokumen Site Plan</label>
+                                            <label for="" class="form-label">Dokumen Site Plan *</label>
                                             <div class="input-group mb-3">
                                                 <input type="file" name="dokumen_site_plan" class="form-control" required
                                                     accept=".pdf" onchange="validateFile(this)" id="">
                                                 <button class="input-group-text btn btn-success"
                                                     type="submit">Upload</button>
                                             </div>
+
                                             @if ($dokumenSitePlan)
                                                 <a target="_blank" href="{{ $dokumenSitePlan }}">
                                                     Lihat Dokumen Site Plan Yang Telah Diupload
                                                 </a>
+                                                <br>
                                             @endif
+                                            <i style="color: red">File harus berupa .pdf</i>
                                         </form>
                                     </div>
                                     <div class="col-sm-12 col-md-6 mt-5">
@@ -137,18 +142,21 @@
                                             enctype="multipart/form-data">
                                             @csrf
                                             <input type="hidden" name="data_pemohon_id" value="{{ $dataPemohon->id }}">
-                                            <label for="" class="form-label">Surat Aspek Tata Ruang</label>
+                                            <label for="" class="form-label">Surat Aspek Tata Ruang *</label>
                                             <div class="input-group mb-3">
                                                 <input type="file" name="surat_aspek_tata_ruang" class="form-control"
                                                     required accept=".pdf" onchange="validateFile(this)" id="">
                                                 <button class="input-group-text btn btn-success"
                                                     type="submit">Upload</button>
                                             </div>
+
                                             @if ($suratAspekTataRuang)
                                                 <a target="_blank" href="{{ $suratAspekTataRuang }}">
                                                     Lihat Surat Aspek Tata Ruang Yang Telah Diupload
                                                 </a>
+                                                <br>
                                             @endif
+                                            <i style="color: red">File harus berupa .pdf</i>
                                         </form>
                                     </div>
                                     <div class="col-sm-12 col-md-6 mt-5">
@@ -156,18 +164,21 @@
                                             enctype="multipart/form-data">
                                             @csrf
                                             <input type="hidden" name="data_pemohon_id" value="{{ $dataPemohon->id }}">
-                                            <label for="" class="form-label">Sertifikat Tanah</label>
+                                            <label for="" class="form-label">Sertifikat Tanah *</label>
                                             <div class="input-group mb-3">
                                                 <input type="file" name="sertifikat_tanah" class="form-control"
                                                     required accept=".pdf" onchange="validateFile(this)" id="">
                                                 <button class="input-group-text btn btn-success"
                                                     type="submit">Upload</button>
                                             </div>
+
                                             @if ($sertifikatTanah)
                                                 <a target="_blank" href="{{ $sertifikatTanah }}">
                                                     Lihat Sertifikat Tanah Yang Telah Diupload
                                                 </a>
+                                                <br>
                                             @endif
+                                            <i style="color: red">File harus berupa .pdf</i>
                                         </form>
                                     </div>
                                     <div class="col-sm-12 col-md-6 mt-5">
@@ -182,11 +193,14 @@
                                                 <button class="input-group-text btn btn-success"
                                                     type="submit">Upload</button>
                                             </div>
+
                                             @if ($kkop)
                                                 <a target="_blank" href="{{ $kkop }}">
                                                     Lihat KKOP Yang Telah Diupload
                                                 </a>
+                                                <br>
                                             @endif
+                                            <i style="color: red">File harus berupa .pdf</i>
                                         </form>
                                     </div>
                                 </div>

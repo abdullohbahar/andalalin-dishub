@@ -353,6 +353,29 @@ License: For each use you must have a valid license purchased only from above li
         </script>
     @endif
 
+    <script>
+        // Mendapatkan semua elemen dengan kelas 'stepper-item'
+        const stepperItems = document.querySelectorAll('.stepper-item');
+
+        let activeFound = false;
+
+        // Melooping semua elemen
+        stepperItems.forEach(item => {
+            // Cek apakah elemen memiliki kelas 'active'
+            if (item.classList.contains('active')) {
+                // Setel flag 'activeFound' menjadi true
+                activeFound = true;
+            }
+
+            // Jika flag 'activeFound' adalah true dan elemen memiliki kelas 'completed'
+            if (activeFound && item.classList.contains('completed')) {
+                // Hapus kelas 'completed' dari elemen
+                item.classList.remove('completed');
+            }
+        });
+    </script>
+
+
     @if (session()->has('success'))
         <script>
             Swal.fire({

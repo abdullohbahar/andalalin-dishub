@@ -48,6 +48,9 @@ class LoginController extends Controller
                 case 'penilai3':
                     return redirect()->route('penilai.dashboard');
                     break;
+                case 'konsultan':
+                    return redirect()->route('konsultan.dashboard');
+                    break;
                 case 'kasi':
                     return redirect()->route('kasi.dashboard');
                     break;
