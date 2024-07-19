@@ -141,6 +141,15 @@ License: For each use you must have a valid license purchased only from above li
                             <!--end::Input group=-->
                             <!--end::Wrapper-->
                             <!--begin::Submit button-->
+                            <div class="mb-3">
+                                {!! NoCaptcha::renderJs() !!}
+                                {!! NoCaptcha::display() !!}
+                                @if ($errors->has('g-recaptcha-response'))
+                                    <span class="help-block" style="color: red">
+                                        <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
                             <div class="d-grid mb-10">
                                 <button type="submit" class="btn btn-primary">Login
                                 </button>
