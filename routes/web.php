@@ -88,6 +88,7 @@ Route::prefix('admin')->middleware('admin')->group(function () {
 
         Route::prefix('tinjauan-lapangan')->group(function () {
             Route::get('/{pengajuanID}', [TinjauanLapanganController::class, 'index'])->name('admin.tinjauan.lapangan');
+            Route::put('/ubah-jadwal/{id}', [TinjauanLapanganController::class, 'updateJadwal'])->name('admin.ubah.tinjauan.lapangan');
             Route::post('/telah-melakukan-tinjauan/{jadwalID}', [TinjauanLapanganController::class, 'telahMelakukanTinjauan'])->name('admin.telah.melakukan.tinjauan');
         });
 

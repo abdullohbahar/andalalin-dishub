@@ -243,8 +243,6 @@
         }
 
         $("#nextForm").on("submit", function(event) {
-            event.preventDefault()
-
             // Mencari semua input hidden di dalam elemen dengan id 'formUpload'
             var hiddenInputs = $("#formUpload").find("input[type='hidden']");
 
@@ -255,6 +253,7 @@
                 }
 
                 if (!$(this).val()) {
+                    event.preventDefault()
                     alert($(this).data("tipe") + " Harap Diisi")
                     return false;
                 }
