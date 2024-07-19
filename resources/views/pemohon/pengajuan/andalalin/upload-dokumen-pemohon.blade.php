@@ -93,7 +93,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="row">
+                                <div class="row" id="formUpload">
                                     <div class="col-sm-12 col-md-6 mt-5">
                                         <form action="{{ route($role . '.store.dokumen.pemohon') }}" method="POST"
                                             enctype="multipart/form-data">
@@ -106,6 +106,8 @@
                                                 <button class="input-group-text btn btn-success"
                                                     type="submit">Upload</button>
                                             </div>
+                                            <input type="hidden" name="file-surat" data-tipe="Surat Permohonan"
+                                                value="{{ $suratPermohonan }}">
                                             @if ($suratPermohonan)
                                                 <a target="_blank" href="{{ $suratPermohonan }}">
                                                     Lihat Surat Permohonan Yang Telah Diupload
@@ -127,7 +129,8 @@
                                                 <button class="input-group-text btn btn-success"
                                                     type="submit">Upload</button>
                                             </div>
-
+                                            <input type="hidden" name="file-dokumen-site" data-tipe="Dokumen Site Plan"
+                                                value="{{ $dokumenSitePlan }}">
                                             @if ($dokumenSitePlan)
                                                 <a target="_blank" href="{{ $dokumenSitePlan }}">
                                                     Lihat Dokumen Site Plan Yang Telah Diupload
@@ -149,7 +152,8 @@
                                                 <button class="input-group-text btn btn-success"
                                                     type="submit">Upload</button>
                                             </div>
-
+                                            <input type="hidden" name="file-surat-aspek"
+                                                data-tipe="Surat Aspek Tata Ruang" value="{{ $suratAspekTataRuang }}">
                                             @if ($suratAspekTataRuang)
                                                 <a target="_blank" href="{{ $suratAspekTataRuang }}">
                                                     Lihat Surat Aspek Tata Ruang Yang Telah Diupload
@@ -171,7 +175,8 @@
                                                 <button class="input-group-text btn btn-success"
                                                     type="submit">Upload</button>
                                             </div>
-
+                                            <input type="hidden" name="file-sertifikat" data-tipe="Sertifikat Tanah"
+                                                value="{{ $sertifikatTanah }}">
                                             @if ($sertifikatTanah)
                                                 <a target="_blank" href="{{ $sertifikatTanah }}">
                                                     Lihat Sertifikat Tanah Yang Telah Diupload
@@ -207,7 +212,7 @@
                             </div>
                             <div class="card-footer">
                                 <form action="{{ route($role . '.after.upload.dokumen') }}" method="POST"
-                                    enctype="multipart/form-data">
+                                    enctype="multipart/form-data" id="nextForm">
                                     @csrf
                                     <input type="hidden" name="data_pemohon_id" value="{{ $dataPemohon->id }}">
                                     <button type="submit" class="btn btn-success"
@@ -236,5 +241,24 @@
                 return false;
             }
         }
+
+        $("#nextForm").on("submit", function(event) {
+            event.preventDefault()
+
+            // Mencari semua input hidden di dalam elemen dengan id 'formUpload'
+            var hiddenInputs = $("#formUpload").find("input[type='hidden']");
+
+            // Melakukan sesuatu dengan hasil pencarian, misalnya menampilkan di console
+            hiddenInputs.each(function() {
+                if ($(this).attr("name") == '_token' || $(this).attr("name") == 'data_pemohon_id') {
+                    return;
+                }
+
+                if (!$(this).val()) {
+                    alert($(this).data("tipe") + " Harap Diisi")
+                    return false;
+                }
+            });
+        })
     </script>
 @endpush
