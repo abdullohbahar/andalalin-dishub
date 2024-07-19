@@ -31,12 +31,14 @@ class UserController extends Controller
                 ->addColumn('no_telepon', function ($item) {
                     return $item->hasOneProfile?->no_telepon;
                 })
-                // ->addColumn('aksi', function ($item) {
-                //     return "
-                //         <button data-id='$item->id' id='delete' data-nama='$item->username' class='btn btn-danger btn-sm'>Hapus</button>
-                //     ";
-                // })
-                ->rawColumns(['nama', 'no_telepon'])
+                ->addColumn('aksi', function ($item) {
+                    $route = route('admin.user.edit', $item->id);
+
+                    return "
+                        <a href='$route' class='btn btn-warning btn-sm'>Edit</a>
+                    ";
+                })
+                ->rawColumns(['nama', 'no_telepon', 'aksi'])
                 ->make();
         }
 
@@ -91,6 +93,76 @@ class UserController extends Controller
         ]);
 
         return to_route('admin.user.index')->with('success', 'Berhasil menambah user');
+    }
+
+    public function edit($id)
+    {
+        $user = User::with('hasOneProfile')->findorfail($id);
+
+        $data = [
+            'active' => 'user',
+            'user' => $user
+        ];
+
+        return view('admin.user.edit', $data);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nama' => 'required',
+            'email' => 'required',
+            'username' => 'required',
+            'role' => 'required'
+        ], [
+            'nama.required' => 'nama harus diisi',
+            'email.required' => 'email harus diisi',
+            'role.required' => 'role harus diisi',
+            'username.required' => 'username harus diisi',
+        ]);
+
+        if ($request->password) {
+            $request->validate([
+                'password' => 'required|confirmed|min:10|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
+            ], [
+                'password.required' => 'password harus diisi',
+                'password.confirmed' => 'password tidak sama',
+                'password.min' => 'password minimal 10 karakter',
+                'password.regex' => 'password harus terdiri dari huruf besar, huruf kecil, dan angka',
+            ]);
+        }
+
+        $user = User::with('hasOneProfile')->findorfail($id);
+
+        if ($request->username != $user->username) {
+            $request->validate([
+                'username' => 'unique:users,username',
+            ], [
+                'username.unique' => 'username sudah dipakai',
+            ]);
+        }
+
+        if ($request->email != $user->hasOneProfile->email) {
+            $request->validate([
+                'email' => 'email|unique:users,email',
+            ], [
+                'email.email' => 'email tidak valid',
+                'email.unique' => 'email sudah dipakai',
+            ]);
+        }
+
+        $user->update([
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role
+        ]);
+
+        $user->hasOneProfile->update([
+            'nama' => $request->nama,
+        ]);
+
+        return to_route('admin.user.index')->with('success', 'Berhasil mengubah user');
     }
 
     public function destroy($id)
