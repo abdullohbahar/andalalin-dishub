@@ -42,16 +42,16 @@ class BeritaAcaraController extends Controller
 
         // mencari ukuran minimal
         if ($pengajuan?->sub_sub_jenis_rencana) {
-            $ukuranMinimal = $pengajuan->belongsToSubJenisRencana->hasOneUkuranMinimal->tipe;
+            $ukuranMinimal = $pengajuan?->belongsToSubJenisRencana?->hasOneUkuranMinimal?->tipe;
         } else {
-            $ukuranMinimal = $pengajuan->belongsToSubSubJenisRencana->hasOneUkuranMinimal->tipe;
+            $ukuranMinimal = $pengajuan?->belongsToSubSubJenisRencana?->hasOneUkuranMinimal?->tipe;
         }
 
         // mencari jenis bangkitan
         if ($pengajuan?->sub_sub_jenis_rencana) {
-            $jenisBangkitan = $pengajuan->belongsToSubJenisRencana->hasOneUkuranMinimal->kategori;
+            $jenisBangkitan = $pengajuan?->belongsToSubJenisRencana?->hasOneUkuranMinimal?->kategori;
         } else {
-            $jenisBangkitan = $pengajuan->belongsToSubSubJenisRencana->hasOneUkuranMinimal->kategori;
+            $jenisBangkitan = $pengajuan?->belongsToSubSubJenisRencana?->hasOneUkuranMinimal?->kategori;
         }
 
         // mengambil nama proyek

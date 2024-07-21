@@ -105,6 +105,11 @@
                                                                 <a href="{{ route('konsultan.berita.acara', $pengajuan->id) }}"
                                                                     class="btn btn-success btn-sm">Berita Acara</a>
                                                             @endif
+                                                            @if ($pengajuan->hasOneBeritaAcara)
+                                                                <a href="{{ route('download.berita.acara', $pengajuan->id) }}"
+                                                                    class="btn btn-info btn-sm" target="_blank">Unduh Berita
+                                                                    Acara</a>
+                                                            @endif
                                                             @if ($pengajuan->hasOneRiwayatVerifikasi?->step == 'Menunggu Verifikasi Penilai')
                                                                 <a href="{{ route('konsultan.menunggu.verifikasi.penilai', $pengajuan->id) }}"
                                                                     class="btn btn-success btn-sm">Berita Acara</a>

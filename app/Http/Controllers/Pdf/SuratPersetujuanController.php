@@ -45,16 +45,16 @@ class SuratPersetujuanController extends Controller
 
         // mencari ukuran minimal
         if ($pengajuan?->sub_sub_jenis_rencana) {
-            $ukuranMinimal = $pengajuan->belongsToSubJenisRencana->hasOneUkuranMinimal->tipe;
+            $ukuranMinimal = $pengajuan->belongsToSubJenisRencana?->hasOneUkuranMinimal?->tipe;
         } else {
-            $ukuranMinimal = $pengajuan->belongsToSubSubJenisRencana->hasOneUkuranMinimal->tipe;
+            $ukuranMinimal = $pengajuan->belongsToSubSubJenisRencana?->hasOneUkuranMinimal?->tipe;
         }
 
         // mencari jenis bangkitan
         if ($pengajuan?->sub_sub_jenis_rencana) {
-            $jenisBangkitan = $pengajuan->belongsToSubJenisRencana->hasOneUkuranMinimal->kategori;
+            $jenisBangkitan = $pengajuan->belongsToSubJenisRencana?->hasOneUkuranMinimal?->kategori;
         } else {
-            $jenisBangkitan = $pengajuan->belongsToSubSubJenisRencana->hasOneUkuranMinimal->kategori;
+            $jenisBangkitan = $pengajuan->belongsToSubSubJenisRencana?->hasOneUkuranMinimal?->kategori;
         }
 
 
@@ -126,8 +126,18 @@ class SuratPersetujuanController extends Controller
             // Menyimpan file ke storage/app/public
             $pdf->save(storage_path('app/' . $location));
 
-            $pengajuan->hasOneSuratPersetujuan->file = $location;
-            $pengajuan->hasOneSuratPersetujuan->save();
+            // Mengambil atau membuat objek SuratPersetujuan secara eksplisit
+            $suratPersetujuan = $pengajuan->hasOneSuratPersetujuan ?? new \App\Models\SuratPersetujuan();
+
+            // Memodifikasi objek dan menyimpannya
+            $suratPersetujuan->file = $location;
+
+            // Jika objek baru dibuat, kita harus menetapkan pengajuan_id (atau kunci asing lainnya)
+            if (!$suratPersetujuan->exists) {
+                $suratPersetujuan->pengajuan_id = $pengajuan->id;
+            }
+
+            $suratPersetujuan->save();
         }
 
         return $pdf->stream('Surat Kesanggupan.pdf');
