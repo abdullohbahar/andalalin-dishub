@@ -56,6 +56,12 @@
     </label>
     <input required type="file" name="file_ktp" class="form-control @error('file_ktp') is-invalid @enderror"
         id="">
+    @if ($user->hasOneProfile?->getRawOriginal('file_ktp'))
+        <a target="_blank" href="{{ $user->hasOneProfile?->file_ktp }}">
+            Lihat KTP Yang Telah Diupload
+        </a>
+        <br>
+    @endif
     @error('file_ktp')
         <div class="invalid-feedback">
             {{ $message }}
@@ -68,6 +74,12 @@
     </label>
     <input required type="file" name="file_sertifikat"
         class="form-control @error('file_sertifikat') is-invalid @enderror" id="">
+    @if ($user->hasOneProfile?->getRawOriginal('file_sertifikat'))
+        <a target="_blank" href="{{ $user->hasOneProfile?->file_sertifikat }}">
+            Lihat Sertifikat Yang Telah Diupload
+        </a>
+        <br>
+    @endif
     @error('file_sertifikat')
         <div class="invalid-feedback">
             {{ $message }}
@@ -80,6 +92,12 @@
     </label>
     <input required type="file" name="file_ijazah_terakhir"
         class="form-control @error('file_ijazah_terakhir') is-invalid @enderror" id="">
+    @if ($user->hasOneProfile?->getRawOriginal('file_ijazah_terakhir'))
+        <a target="_blank" href="{{ $user->hasOneProfile?->file_ijazah_terakhir }}">
+            Lihat Ijazah Terakhir Yang Telah Diupload
+        </a>
+        <br>
+    @endif
     @error('file_ijazah_terakhir')
         <div class="invalid-feedback">
             {{ $message }}

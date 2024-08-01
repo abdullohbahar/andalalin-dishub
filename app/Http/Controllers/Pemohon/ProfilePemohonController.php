@@ -140,86 +140,42 @@ class ProfilePemohonController extends Controller
         if ($request->hasFile('file_ktp')) {
             $file = $request->file('file_ktp');
             $filename = time() . "." . $file->getClientOriginalExtension();
-            $file->storeAs('public/file-uploads/ktp', $filename);
+            $file->storeAs('file-uploads/ktp', $filename, 'public');
             $data['file_ktp'] = $filename;
-
-            // Tentukan path lengkap file
-            $folder = storage_path('app/public/file-uploads/ktp/');
-            chmod($folder, 0644);
-            // Tentukan path lengkap file
-            $fullPath = storage_path('app/public/file-uploads/ktp/' . $filename);
-            // Ubah hak akses file menjadi 755
-            chmod($fullPath, 0644);
         }
 
         if ($request->hasFile('file_sertifikat_andalalin')) {
             $file = $request->file('file_sertifikat_andalalin');
             $filename = time() . "." . $file->getClientOriginalExtension();
-            $file->storeAs('public/file-uploads/sertifikat-andalalin', $filename);
+            $file->storeAs('file-uploads/sertifikat-andalalin', $filename, 'public');
             $data['file_sertifikat_andalalin'] = $filename;
-            // Tentukan path lengkap file
-            $fullPath = storage_path('app/public/file-uploads/sertifikat-andalalin/' . $filename);
-            // Ubah hak akses file menjadi 755
-            chmod($fullPath, 0644);
-            // Tentukan path lengkap file
-            $folder = storage_path('app/public/file-uploads/sertifikat-andalalin/');
-            chmod($folder, 0644);
         }
 
         if ($request->hasFile('file_cv')) {
             $file = $request->file('file_cv');
             $filename = time() . "." . $file->getClientOriginalExtension();
-            $file->storeAs('public/file-uploads/cv', $filename);
+            $file->storeAs('file-uploads/cv', $filename, 'public');
             $data['file_cv'] = $filename;
-            // Tentukan path lengkap file
-            $fullPath = storage_path('app/public/file-uploads/cv/' . $filename);
-            // Ubah hak akses file menjadi 755
-            chmod($fullPath, 0644);
-            // Tentukan path lengkap file
-            $folder = storage_path('app/public/file-uploads/cv/');
-            chmod($folder, 0644);
         }
 
         if ($request->hasFile('file_sk_kepala_dinas')) {
             $file = $request->file('file_sk_kepala_dinas');
             $filename = time() . "." . $file->getClientOriginalExtension();
-            $file->storeAs('public/file-uploads/sk-kepala-dinas', $filename);
+            $file->storeAs('file-uploads/sk-kepala-dinas', $filename, 'public');
             $data['file_sk_kepala_dinas'] = $filename;
-            // Tentukan path lengkap file
-            $fullPath = storage_path('app/public/file-uploads/sk-kepala-dinas/' . $filename);
-            // Ubah hak akses file menjadi 755
-            chmod($fullPath, 0644);
-            // Tentukan path lengkap file
-            $folder = storage_path('app/public/file-uploads/sk-kepala-dinas');
-            chmod($folder, 0644);
         }
 
         if ($request->hasFile('file_sertifikat')) {
             $file = $request->file('file_sertifikat');
             $filename = time() . "." . $file->getClientOriginalExtension();
-            $file->storeAs('public/file-uploads/sertifikat', $filename);
-            $data['file_sertifikat'] = $filename;
-            // Tentukan path lengkap file
-            $fullPath = storage_path('app/public/file-uploads/sertifikat/' . $filename);
-            // Ubah hak akses file menjadi 755
-            chmod($fullPath, 0644);
-            // Tentukan path lengkap file
-            $folder = storage_path('app/public/file-uploads/sertifikat');
-            chmod($folder, 0644);
+            $file->storeAs('file-uploads/sertifikat', $filename, 'public');
         }
 
         if ($request->hasFile('file_ijazah_terakhir')) {
             $file = $request->file('file_ijazah_terakhir');
             $filename = time() . "." . $file->getClientOriginalExtension();
-            $file->storeAs('public/file-uploads/ijazah-terakhir', $filename);
+            $file->storeAs('file-uploads/ijazah-terakhir', $filename, 'public');
             $data['file_ijazah_terakhir'] = $filename;
-            // Tentukan path lengkap file
-            $fullPath = storage_path('app/public/file-uploads/ijazah-terakhir/' . $filename);
-            // Ubah hak akses file menjadi 755
-            chmod($fullPath, 0644);
-            // Tentukan path lengkap file
-            $folder = storage_path('app/public/file-uploads/ijazah-terakhir');
-            chmod($folder, 0644);
         }
 
         if ($request->signed) {

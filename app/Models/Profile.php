@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 class Profile extends Model
 {
@@ -27,4 +28,46 @@ class Profile extends Model
         'file_sertifikat',
         'file_ijazah_terakhir',
     ];
+
+    protected function fileKtp(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => asset('storage/file-uploads/ktp/' . $value)
+        );
+    }
+
+    protected function fileSertifikatAndalalin(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => asset('storage/file-uploads/sertifikat-andalalin/' . $value)
+        );
+    }
+
+    protected function fileCv(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => asset('storage/file-uploads/cv/' . $value)
+        );
+    }
+
+    protected function fileSkKepalaDinas(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => asset('storage/file-uploads/sk-kepala-dinas/' . $value)
+        );
+    }
+
+    protected function fileSertifikat(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => asset('storage/file-uploads/sertifikat/' . $value)
+        );
+    }
+
+    protected function fileIjazahTerakhir(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => asset('storage/file-uploads/ijazah-terakhir/' . $value)
+        );
+    }
 }

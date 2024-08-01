@@ -4,6 +4,12 @@
     </label>
     <input required type="file" name="file_ktp" class="form-control @error('file_ktp') is-invalid @enderror"
         id="">
+    @if ($user->hasOneProfile?->getRawOriginal('file_ktp'))
+        <a target="_blank" href="{{ $user->hasOneProfile?->file_ktp }}">
+            Lihat KTP Yang Telah Diupload
+        </a>
+        <br>
+    @endif
     @error('file_ktp')
         <div class="invalid-feedback">
             {{ $message }}
