@@ -108,68 +108,68 @@ class PengajuanAndalalinController extends Controller
     {
         $userID = auth()->user()->id;
 
-        // try {
-        DB::beginTransaction();
+        try {
+            DB::beginTransaction();
 
-        $dataPemohon = DataPemohon::updateorcreate([
-            'user_id' => $userID,
-            'pengajuan_id' => $request->pengajuan_id,
-        ], [
-            'user_id' => $userID,
-            'pengajuan_id' => $request->pengajuan_id,
-            'konsultan_id' => $request->konsultan_id,
-            'nama_pimpinan' => $request->nama_pimpinan,
-            'jabatan_pimpinan' => $request->jabatan_pimpinan,
-            'nama_proyek' => $request->nama_proyek,
-            'nama_jalan' => $request->nama_jalan,
-            'luas_bangunan' => $request->luas_bangunan,
-            'luas_tanah' => $request->luas_tanah,
-            'alamat' => $request->alamat,
-            'nomor_surat_permohonan' => $request->nomor_surat_permohonan,
-            'tanggal_surat_permohonan' => $request->tanggal_surat_permohonan,
-            'longitude' => $request->longitude,
-            'latitude' => $request->latitude,
-        ]);
+            $dataPemohon = DataPemohon::updateorcreate([
+                'user_id' => $userID,
+                'pengajuan_id' => $request->pengajuan_id,
+            ], [
+                'user_id' => $userID,
+                'pengajuan_id' => $request->pengajuan_id,
+                'konsultan_id' => $request->konsultan_id,
+                'nama_pimpinan' => $request->nama_pimpinan,
+                'jabatan_pimpinan' => $request->jabatan_pimpinan,
+                'nama_proyek' => $request->nama_proyek,
+                'nama_jalan' => $request->nama_jalan,
+                'luas_bangunan' => $request->luas_bangunan,
+                'luas_tanah' => $request->luas_tanah,
+                'alamat' => $request->alamat,
+                'nomor_surat_permohonan' => $request->nomor_surat_permohonan,
+                'tanggal_surat_permohonan' => $request->tanggal_surat_permohonan,
+                'longitude' => $request->longitude,
+                'latitude' => $request->latitude,
+            ]);
 
-        $dataPemrakarsa = Pemrakarsa::updateorcreate([
-            'pengajuan_id' => $request->pengajuan_id,
-        ], [
-            'pemrakarsa' => $request->pemrakarsa,
-            'nama_penanggung_jawab' => $request->nama_penanggung_jawab,
-            'jabatan' => $request->jabatan_pemrakarsa,
-            'alamat' => $request->alamat_pemrakarsa,
-            'no_telepon' => $request->no_telepon,
-        ]);
+            $dataPemrakarsa = Pemrakarsa::updateorcreate([
+                'pengajuan_id' => $request->pengajuan_id,
+            ], [
+                'pemrakarsa' => $request->pemrakarsa,
+                'nama_penanggung_jawab' => $request->nama_penanggung_jawab,
+                'jabatan' => $request->jabatan_pemrakarsa,
+                'alamat' => $request->alamat_pemrakarsa,
+                'no_telepon' => $request->no_telepon,
+            ]);
 
-        Pengajuan::where('id', $request->pengajuan_id)->update([
-            'konsultan_id' => $request->konsultan_id
-        ]);
+            Pengajuan::where('id', $request->pengajuan_id)->update([
+                'konsultan_id' => $request->konsultan_id
+            ]);
 
-        RiwayatInputData::updateorcreate([
-            'pengajuan_id' => $request->pengajuan_id
-        ], [
-            'step' => 'Upload Dokumen Permohonan'
-        ]);
+            RiwayatInputData::updateorcreate([
+                'pengajuan_id' => $request->pengajuan_id
+            ], [
+                'step' => 'Upload Dokumen Permohonan'
+            ]);
 
-        $this->kirimNotifikasiKeKonsultan($request->pengajuan_id);
+            $this->kirimNotifikasiKeKonsultan($request->pengajuan_id);
 
-        DB::commit();
+            DB::commit();
 
-        return to_route('pemohon.upload.dokumen.pemohon', $request->pengajuan_id)->with('success', 'Silahkan melakukan koordinasi dengan konsultan untuk upload dokumen');
-        // } catch (\Throwable $th) {
-        //     DB::rollBack();
-        //     Log::warning($th);
-        //     return redirect()->back()->withInput()->with('failed', 'Terjadi Kesalahan Sistem, Harap Coba Lakukan Input Data Lagi');
-        // }
+            return to_route('pemohon.upload.dokumen.pemohon', $request->pengajuan_id)->with('success', 'Silahkan melakukan koordinasi dengan konsultan untuk upload dokumen');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            Log::warning($th);
+            return redirect()->back()->withInput()->with('failed', 'Terjadi Kesalahan Sistem, Harap Coba Lakukan Input Data Lagi');
+        }
     }
 
     public function kirimNotifikasiKeKonsultan($pengajuanID)
     {
         $pengajuan = Pengajuan::with('belongsToUser', 'hasOneDataPemohon.belongsToConsultan')->where('id', $pengajuanID)->first();
 
-        $namaPemohon = $pengajuan->belongsToUser->hasOneProfile->nama;
-        $namaProyek = $pengajuan->hasOneDataPemohon->nama_proyek;
-        $nomerHpKonsultan = $pengajuan->hasOneDataPemohon->belongsToConsultan->hasOneProfile->no_telepon;
+        $namaPemohon = $pengajuan->belongsToUser->hasOneProfile->nama ?? '';
+        $namaProyek = $pengajuan->hasOneDataPemohon->nama_proyek ?? '';
+        $nomerHpKonsultan = $pengajuan->hasOneDataPemohon->belongsToConsultan->hasOneProfile->no_telepon ?? '';
 
         $curl = curl_init();
 
