@@ -49,16 +49,7 @@ class SuratKesanggupanPemohonController extends Controller
             $filename = time() . " - Surat Kesanggupan." . $file->getClientOriginalExtension();
             $location = 'file-uploads/Surat Kesanggupan/'  . $pengajuan->user_id .  '/' . $pengajuan->hasOneDataPemohon->nama_proyek . '/';
             $filepath = $location . $filename;
-            $file->storeAs('public/' . $location, $filename);
-
-            // Tentukan path lengkap file
-            $fullPath = storage_path('app/public/' . $location . $filename);
-            $folder = storage_path('app/public/' . $location);
-
-            // Ubah hak akses file menjadi 755
-            chmod($fullPath, 0644);
-            chmod($folder, 0644);
-
+            $file->storeAs($location, $filename, 'public');
 
             SuratKesanggupan::where('pengajuan_id', $pengajuanID)->update([
                 'file' => $filepath

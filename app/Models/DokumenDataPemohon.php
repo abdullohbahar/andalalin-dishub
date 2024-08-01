@@ -26,7 +26,7 @@ class DokumenDataPemohon extends Model
     protected function dokumen(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => asset('/storage/' . $value)
+            get: fn ($value) => asset('storage/' . $value)
         );
     }
 }
