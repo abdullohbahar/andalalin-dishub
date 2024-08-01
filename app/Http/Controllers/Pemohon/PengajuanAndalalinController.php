@@ -243,9 +243,11 @@ class PengajuanAndalalinController extends Controller
 
             // Tentukan path lengkap file
             $fullPath = storage_path('app/public/' . $location . $filename);
+            $folder = storage_path('app/public/' . $location);
 
             // Ubah hak akses file menjadi 755
             chmod($fullPath, 0755);
+            chmod($folder, 0755);
 
             DokumenDataPemohon::updateorcreate([
                 'data_pemohon_id' => $request->data_pemohon_id,
@@ -264,6 +266,14 @@ class PengajuanAndalalinController extends Controller
             $filepath = $location . $filename;
             $file->storeAs('public/' . $location, $filename);
 
+            // Tentukan path lengkap file
+            $fullPath = storage_path('app/public/' . $location . $filename);
+            $folder = storage_path('app/public/' . $location);
+
+            // Ubah hak akses file menjadi 755
+            chmod($fullPath, 0755);
+            chmod($folder, 0755);
+
             DokumenDataPemohon::updateorcreate([
                 'data_pemohon_id' => $request->data_pemohon_id,
                 'user_id' => $userID,
@@ -280,6 +290,14 @@ class PengajuanAndalalinController extends Controller
             $location = 'file-uploads/Dokumen Permohonan/'  . $userID .  '/' . $dataPemohon->nama_proyek . '/';
             $filepath = $location . $filename;
             $file->storeAs('public/' . $location, $filename);
+
+            // Tentukan path lengkap file
+            $fullPath = storage_path('app/public/' . $location . $filename);
+            $folder = storage_path('app/public/' . $location);
+
+            // Ubah hak akses file menjadi 755
+            chmod($fullPath, 0755);
+            chmod($folder, 0755);
 
             DokumenDataPemohon::updateorcreate([
                 'data_pemohon_id' => $request->data_pemohon_id,
@@ -298,6 +316,14 @@ class PengajuanAndalalinController extends Controller
             $filepath = $location . $filename;
             $file->storeAs('public/' . $location, $filename);
 
+            // Tentukan path lengkap file
+            $fullPath = storage_path('app/public/' . $location . $filename);
+            $folder = storage_path('app/public/' . $location);
+
+            // Ubah hak akses file menjadi 755
+            chmod($fullPath, 0755);
+            chmod($folder, 0755);
+
             DokumenDataPemohon::updateorcreate([
                 'data_pemohon_id' => $request->data_pemohon_id,
                 'user_id' => $userID,
@@ -314,6 +340,14 @@ class PengajuanAndalalinController extends Controller
             $location = 'file-uploads/Dokumen Permohonan/'  . $userID .  '/' . $dataPemohon->nama_proyek . '/';
             $filepath = $location . $filename;
             $file->storeAs('public/' . $location, $filename);
+
+            // Tentukan path lengkap file
+            $fullPath = storage_path('app/public/' . $location . $filename);
+            $folder = storage_path('app/public/' . $location);
+
+            // Ubah hak akses file menjadi 755
+            chmod($fullPath, 0755);
+            chmod($folder, 0755);
 
             DokumenDataPemohon::updateorcreate([
                 'data_pemohon_id' => $request->data_pemohon_id,
