@@ -101,6 +101,7 @@ class ProfilePemohonController extends Controller
                 'sekolah_terakhir' => 'required',
                 'file_sertifikat' => 'required',
                 'file_ijazah_terakhir' => 'required',
+                'foto_profile' => 'mimes:jpg,jpeg,png|max:2048', // 2048 KB = 2 MB
             ], [
                 'no_sertifikat.required' => 'Nomor sertifikat harus diisi',
                 'masa_berlaku_sertifikat.required' => 'Masa berlaku sertifikat harus diisi',
@@ -108,6 +109,8 @@ class ProfilePemohonController extends Controller
                 'sekolah_terakhir.required' => 'Sekolah terakhir harus diisi',
                 'file_sertifikat.required' => 'Sertifikat harus diisi',
                 'file_ijazah.required' => 'Ijazah Sertifikat harus diisi',
+                'foto_profile.mimes' => 'File KTP harus bertipe: jpg, jpeg, png.',
+                'foto_profile.max' => 'Ukuran file KTP maksimal 2MB.',
             ]);
         } else if ($role == 'pemohon') {
             $request->validate([
@@ -176,6 +179,13 @@ class ProfilePemohonController extends Controller
             $filename = time() . "." . $file->getClientOriginalExtension();
             $file->storeAs('file-uploads/ijazah-terakhir', $filename, 'public');
             $data['file_ijazah_terakhir'] = $filename;
+        }
+
+        if ($request->hasFile('foto_profile')) {
+            $file = $request->file('foto_profile');
+            $filename = time() . "." . $file->getClientOriginalExtension();
+            $file->storeAs('file-uploads/foto-profile', $filename, 'public');
+            $data['foto_profile'] = $filename;
         }
 
         if ($request->signed) {

@@ -27,6 +27,7 @@ class Profile extends Model
         'file_sk_kepala_dinas',
         'file_sertifikat',
         'file_ijazah_terakhir',
+        'foto_profile'
     ];
 
     protected function fileKtp(): Attribute
@@ -68,6 +69,13 @@ class Profile extends Model
     {
         return Attribute::make(
             get: fn ($value) => asset('storage/file-uploads/ijazah-terakhir/' . $value)
+        );
+    }
+
+    protected function fotoProfile(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value ? asset('storage/file-uploads/foto-profile/' . $value) : asset('img/default.jpg')
         );
     }
 }
