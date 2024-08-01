@@ -145,11 +145,11 @@ class ProfilePemohonController extends Controller
 
             // Tentukan path lengkap file
             $folder = storage_path('app/public/file-uploads/ktp/');
-            chmod($folder, 0755);
+            chmod($folder, 0644);
             // Tentukan path lengkap file
             $fullPath = storage_path('app/public/file-uploads/ktp/' . $filename);
             // Ubah hak akses file menjadi 755
-            chmod($fullPath, 0755);
+            chmod($fullPath, 0644);
         }
 
         if ($request->hasFile('file_sertifikat_andalalin')) {
@@ -160,10 +160,10 @@ class ProfilePemohonController extends Controller
             // Tentukan path lengkap file
             $fullPath = storage_path('app/public/file-uploads/sertifikat-andalalin/' . $filename);
             // Ubah hak akses file menjadi 755
-            chmod($fullPath, 0755);
+            chmod($fullPath, 0644);
             // Tentukan path lengkap file
             $folder = storage_path('app/public/file-uploads/sertifikat-andalalin/');
-            chmod($folder, 0755);
+            chmod($folder, 0644);
         }
 
         if ($request->hasFile('file_cv')) {
@@ -174,10 +174,10 @@ class ProfilePemohonController extends Controller
             // Tentukan path lengkap file
             $fullPath = storage_path('app/public/file-uploads/cv/' . $filename);
             // Ubah hak akses file menjadi 755
-            chmod($fullPath, 0755);
+            chmod($fullPath, 0644);
             // Tentukan path lengkap file
             $folder = storage_path('app/public/file-uploads/cv/');
-            chmod($folder, 0755);
+            chmod($folder, 0644);
         }
 
         if ($request->hasFile('file_sk_kepala_dinas')) {
@@ -188,10 +188,10 @@ class ProfilePemohonController extends Controller
             // Tentukan path lengkap file
             $fullPath = storage_path('app/public/file-uploads/sk-kepala-dinas/' . $filename);
             // Ubah hak akses file menjadi 755
-            chmod($fullPath, 0755);
+            chmod($fullPath, 0644);
             // Tentukan path lengkap file
             $folder = storage_path('app/public/file-uploads/sk-kepala-dinas');
-            chmod($folder, 0755);
+            chmod($folder, 0644);
         }
 
         if ($request->hasFile('file_sertifikat')) {
@@ -202,10 +202,10 @@ class ProfilePemohonController extends Controller
             // Tentukan path lengkap file
             $fullPath = storage_path('app/public/file-uploads/sertifikat/' . $filename);
             // Ubah hak akses file menjadi 755
-            chmod($fullPath, 0755);
+            chmod($fullPath, 0644);
             // Tentukan path lengkap file
             $folder = storage_path('app/public/file-uploads/sertifikat');
-            chmod($folder, 0755);
+            chmod($folder, 0644);
         }
 
         if ($request->hasFile('file_ijazah_terakhir')) {
@@ -216,10 +216,10 @@ class ProfilePemohonController extends Controller
             // Tentukan path lengkap file
             $fullPath = storage_path('app/public/file-uploads/ijazah-terakhir/' . $filename);
             // Ubah hak akses file menjadi 755
-            chmod($fullPath, 0755);
+            chmod($fullPath, 0644);
             // Tentukan path lengkap file
             $folder = storage_path('app/public/file-uploads/ijazah-terakhir');
-            chmod($folder, 0755);
+            chmod($folder, 0644);
         }
 
         if ($request->signed) {

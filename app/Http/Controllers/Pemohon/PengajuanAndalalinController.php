@@ -246,8 +246,8 @@ class PengajuanAndalalinController extends Controller
             $folder = storage_path('app/public/' . $location);
 
             // Ubah hak akses file menjadi 755
-            chmod($fullPath, 0755);
-            chmod($folder, 0755);
+            chmod($fullPath, 0644);
+            chmod($folder, 0644);
 
             DokumenDataPemohon::updateorcreate([
                 'data_pemohon_id' => $request->data_pemohon_id,
@@ -271,8 +271,8 @@ class PengajuanAndalalinController extends Controller
             $folder = storage_path('app/public/' . $location);
 
             // Ubah hak akses file menjadi 755
-            chmod($fullPath, 0755);
-            chmod($folder, 0755);
+            chmod($fullPath, 0644);
+            chmod($folder, 0644);
 
             DokumenDataPemohon::updateorcreate([
                 'data_pemohon_id' => $request->data_pemohon_id,
@@ -296,8 +296,8 @@ class PengajuanAndalalinController extends Controller
             $folder = storage_path('app/public/' . $location);
 
             // Ubah hak akses file menjadi 755
-            chmod($fullPath, 0755);
-            chmod($folder, 0755);
+            chmod($fullPath, 0644);
+            chmod($folder, 0644);
 
             DokumenDataPemohon::updateorcreate([
                 'data_pemohon_id' => $request->data_pemohon_id,
@@ -321,8 +321,8 @@ class PengajuanAndalalinController extends Controller
             $folder = storage_path('app/public/' . $location);
 
             // Ubah hak akses file menjadi 755
-            chmod($fullPath, 0755);
-            chmod($folder, 0755);
+            chmod($fullPath, 0644);
+            chmod($folder, 0644);
 
             DokumenDataPemohon::updateorcreate([
                 'data_pemohon_id' => $request->data_pemohon_id,
@@ -346,8 +346,8 @@ class PengajuanAndalalinController extends Controller
             $folder = storage_path('app/public/' . $location);
 
             // Ubah hak akses file menjadi 755
-            chmod($fullPath, 0755);
-            chmod($folder, 0755);
+            chmod($fullPath, 0644);
+            chmod($folder, 0644);
 
             DokumenDataPemohon::updateorcreate([
                 'data_pemohon_id' => $request->data_pemohon_id,

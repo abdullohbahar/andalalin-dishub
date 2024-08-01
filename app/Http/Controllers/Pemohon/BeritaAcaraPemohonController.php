@@ -43,8 +43,8 @@ class BeritaAcaraPemohonController extends Controller
             $folder = storage_path('app/public/' . $location);
 
             // Ubah hak akses file menjadi 755
-            chmod($fullPath, 0755);
-            chmod($folder, 0755);
+            chmod($fullPath, 0644);
+            chmod($folder, 0644);
 
             BeritaAcara::where('pengajuan_id', $pengajuanID)->update([
                 'file_uploads' => $filepath
