@@ -241,6 +241,12 @@ class PengajuanAndalalinController extends Controller
             $filepath = $location . $filename;
             $file->storeAs('public/' . $location, $filename);
 
+            // Tentukan path lengkap file
+            $fullPath = storage_path('app/public/' . $location . $filename);
+
+            // Ubah hak akses file menjadi 755
+            chmod($fullPath, 0755);
+
             DokumenDataPemohon::updateorcreate([
                 'data_pemohon_id' => $request->data_pemohon_id,
                 'user_id' => $userID,

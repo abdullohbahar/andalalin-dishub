@@ -38,6 +38,12 @@ class BeritaAcaraPemohonController extends Controller
             $filepath = $location . $filename;
             $file->storeAs('public/' . $location, $filename);
 
+            // Tentukan path lengkap file
+            $fullPath = storage_path('app/public/' . $location . $filename);
+
+            // Ubah hak akses file menjadi 755
+            chmod($fullPath, 0755);
+
             BeritaAcara::where('pengajuan_id', $pengajuanID)->update([
                 'file_uploads' => $filepath
             ]);
