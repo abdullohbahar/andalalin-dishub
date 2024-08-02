@@ -63,6 +63,9 @@
 @endpush
 
 @section('content')
+    <?php
+    \Carbon\Carbon::setLocale('id');
+    ?>
     <div class="d-flex flex-column flex-column-fluid">
         <!--begin::Toolbar-->
         <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
@@ -127,7 +130,8 @@
                                             <tr>
                                                 <td>Tanggal Tinjauan</td>
                                                 <td>
-                                                    : {{ $pengajuan->hasOneJadwalTinjauan->tanggal }}
+                                                    :
+                                                    {{ \Carbon\Carbon::parse($pengajuan->hasOneJadwalTinjauan->getRawOriginal('tanggal'))->translatedFormat('d F Y') }}
                                                 </td>
                                             </tr>
                                             <tr>
