@@ -74,15 +74,15 @@
                                                     {{ $no++ }}
                                                 </td>
                                                 <td>
-                                                    {{ $pengajuan->belongsToPengajuan->belongsToUser->hasOneProfile->nama }}
+                                                    {{ $pengajuan->belongsToPengajuan?->belongsToUser?->hasOneProfile?->nama }}
                                                 </td>
                                                 <td>
-                                                    {{ $pengajuan->belongsToPengajuan->hasOneDataPemohon?->nama_proyek ?? '' }}
+                                                    {{ $pengajuan->belongsToPengajuan?->hasOneDataPemohon?->nama_proyek ?? '' }}
                                                 </td>
                                                 <td>
                                                     <div class="btn-group" role="group"
                                                         aria-label="Basic mixed styles example">
-                                                        <a href="{{ route('kadis.surat.persetujuan', $pengajuan->belongsToPengajuan->id) }}"
+                                                        <a href="{{ route('kadis.surat.persetujuan', $pengajuan->belongsToPengajuan?->id) }}"
                                                             class="btn btn-info btn-sm">Approve Surat Persetujuan</a>
                                                     </div>
                                                 </td>
@@ -120,16 +120,16 @@
                                                     {{ $no++ }}
                                                 </td>
                                                 <td>
-                                                    {{ $pengajuan->belongsToPengajuan->belongsToUser->hasOneProfile->nama }}
+                                                    {{ $pengajuan->belongsToPengajuan?->belongsToUser?->hasOneProfile?->nama }}
                                                 </td>
                                                 <td>
-                                                    {{ $pengajuan->belongsToPengajuan->hasOneDataPemohon?->nama_proyek ?? '' }}
+                                                    {{ $pengajuan->belongsToPengajuan?->hasOneDataPemohon?->nama_proyek ?? '' }}
                                                 </td>
                                                 <td>
-                                                    @if ($pengajuan->belongsToPengajuan->hasOneSuratPersetujuan->is_kadis_approve)
+                                                    @if ($pengajuan->belongsToPengajuan?->hasOneSuratPersetujuan?->is_kadis_approve)
                                                         <div class="btn-group" role="group"
                                                             aria-label="Basic mixed styles example">
-                                                            <a href="{{ route('laporan.dokumen.akhir', $pengajuan->belongsToPengajuan->id) }}"
+                                                            <a href="{{ route('laporan.dokumen.akhir', $pengajuan->belongsToPengajuan?->id) }}"
                                                                 class="btn btn-success btn-sm">Laporan Dokumen Akhir</a>
                                                         </div>
                                                     @endif
