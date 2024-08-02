@@ -26,7 +26,8 @@
                 <div class="step-counter">6</div>
                 <div class="step-name text-center">Berita Acara</div>
             </div>
-            <div class="stepper-item {{ Route::is('admin.menunggu.surat.kesanggupan') ? 'active' : 'completed' }}">
+            <div
+                class="stepper-item {{ Route::is('admin.menunggu.surat.kesanggupan') || Route::is('admin.surat.kesanggupan') ? 'active' : 'completed' }}">
                 <div class="step-counter">6</div>
                 <div class="step-name text-center">Surat Kesanggupan</div>
             </div>
