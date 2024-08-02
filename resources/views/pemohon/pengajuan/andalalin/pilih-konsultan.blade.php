@@ -369,23 +369,25 @@
                                                     </div>
                                                     <div class="col-6">
                                                         <label for="" class="form-label">longitude</label>
-                                                        <input type="text" readonly class="form-control"
-                                                            name="longitude"
+                                                        <input type="text" class="form-control" name="longitude"
                                                             value="{{ old('longitude', $dataPemohon->longitude ?? '') }}"
                                                             required id="longitude">
                                                     </div>
                                                     <div class="col-6">
                                                         <label for="" class="form-label">latitude</label>
-                                                        <input type="text" readonly class="form-control"
-                                                            name="latitude"
+                                                        <input type="text" class="form-control" name="latitude"
                                                             value="{{ old('latitude', $dataPemohon->latitude ?? '') }}"
                                                             required id="latitude">
                                                     </div>
-                                                    <div class="col-12 mt-2">
+                                                    <div class="col-sm-12 col-md-6 mt-3">
                                                         <button type="button" id="getLocation"
-                                                            class="btn btn-sm btn-info">Klik
-                                                            untuk mengambil
-                                                            longitude dan latitude lokasi</button>
+                                                            class="btn btn-sm btn-info" style="width:100%">Ambil
+                                                            Lokasi</button>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-6 mt-3">
+                                                        <button id="seeLocation" type="button" style="width:100%"
+                                                            class="btn btn-sm btn-primary">Lihat
+                                                            Lokasi</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -423,6 +425,14 @@
             } else {
                 console.log("Geolocation is not supported by this browser.");
             }
+        })
+
+        $("#seeLocation").on("click", function() {
+            var latitude = $("#latitude").val()
+            var longitude = $("#longitude").val()
+
+            var url = `https://www.google.com/maps?q=${latitude},${longitude}`
+            window.open(url, '_blank').focus()
         })
     </script>
 
