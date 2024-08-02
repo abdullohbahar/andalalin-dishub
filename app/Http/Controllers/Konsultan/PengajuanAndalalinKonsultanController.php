@@ -19,6 +19,9 @@ class PengajuanAndalalinKonsultanController extends Controller
             'hasOneRiwayatVerifikasi',
             'hasOneRiwayatInputData'
         )->where('konsultan_id', $userID)
+            ->whereHas('hasOneDataPemohon', function ($query) {
+                $query->whereNotNull('nama_proyek')->where('nama_proyek', '!=', '');
+            })
             ->orderBy('updated_at', 'desc')
             ->get();
 

@@ -26,7 +26,9 @@ class DashboardKonsultan extends Controller
         $pengajuanDitolak = $pengajuan->with('hasOneDataPemohon', 'belongsToUser', 'belongsToJenisRencana')->where('konsultan_id', $userID)->where('status', 'ditolak')->orderBy('updated_at', 'asc')->get();
         $pengajuanDisetujui = $pengajuan->with('hasOneDataPemohon', 'belongsToUser', 'belongsToJenisRencana')->where('konsultan_id', $userID)->where('status', 'disetujui')->orderBy('updated_at', 'asc')->get();
         $pengajuanPerluRevisi = $pengajuan->with('hasOneDataPemohon', 'belongsToUser', 'belongsToJenisRencana')->where('konsultan_id', $userID)->where('status', 'revisi')->orderBy('updated_at', 'asc')->get();
-        $pengajuanBaru = $pengajuan->with('hasOneDataPemohon', 'belongsToUser.hasOneProfile', 'belongsToJenisRencana', 'hasOneRiwayatVerifikasi', 'hasOneRiwayatInputData')->where('konsultan_id', $userID)->orderBy('updated_at', 'asc')->get();
+        $pengajuanBaru = $pengajuan->with('hasOneDataPemohon', 'belongsToUser.hasOneProfile', 'belongsToJenisRencana', 'hasOneRiwayatVerifikasi', 'hasOneRiwayatInputData')->whereHas('hasOneDataPemohon', function ($query) {
+            $query->whereNotNull('nama_proyek')->where('nama_proyek', '!=', '');
+        })->where('konsultan_id', $userID)->orderBy('updated_at', 'asc')->get();
 
         $data = [
             'active' => 'dashboard',

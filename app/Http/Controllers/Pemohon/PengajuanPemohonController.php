@@ -19,9 +19,17 @@ class PengajuanPemohonController extends Controller
         if ($request->ajax()) {
             $userID = auth()->user()->id;
 
-            $query = Pengajuan::with('belongsToJenisRencana', 'hasOneDataPemohon', 'hasOneRiwayatInputData')
+            $query = Pengajuan::with([
+                'belongsToJenisRencana',
+                'hasOneDataPemohon',
+                'hasOneRiwayatInputData'
+            ])
                 ->orderBy('updated_at', 'desc')
-                ->where('user_id', $userID)->get();
+                ->whereHas('hasOneDataPemohon', function ($query) {
+                    $query->whereNotNull('nama_proyek')->where('nama_proyek', '!=', '');
+                })
+                ->where('user_id', $userID)
+                ->get();
 
             // return $query;
             return Datatables::of($query)
