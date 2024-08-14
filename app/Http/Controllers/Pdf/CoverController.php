@@ -38,16 +38,16 @@ class CoverController extends Controller
 
         // mencari ukuran minimal
         if ($pengajuan?->sub_sub_jenis_rencana) {
-            $tipe = $pengajuan->belongsToSubJenisRencana->hasOneUkuranMinimal->tipe;
+            $tipe = $pengajuan->belongsToSubJenisRencana?->hasOneUkuranMinimal?->tipe;
         } else {
-            $tipe = $pengajuan->belongsToSubSubJenisRencana->hasOneUkuranMinimal->tipe;
+            $tipe = $pengajuan->belongsToSubSubJenisRencana?->hasOneUkuranMinimal?->tipe;
         }
 
         // mencari jenis bangkitan
         if ($pengajuan?->sub_sub_jenis_rencana) {
-            $jenisBangkitan = $pengajuan->belongsToSubJenisRencana->hasOneUkuranMinimal->kategori;
+            $jenisBangkitan = $pengajuan->belongsToSubJenisRencana?->hasOneUkuranMinimal?->kategori;
         } else {
-            $jenisBangkitan = $pengajuan->belongsToSubSubJenisRencana->hasOneUkuranMinimal->kategori;
+            $jenisBangkitan = $pengajuan->belongsToSubSubJenisRencana?->hasOneUkuranMinimal?->kategori;
         }
 
 
