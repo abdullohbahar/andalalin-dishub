@@ -27,6 +27,7 @@ class DashboardKasiController extends Controller
             'belongsToPengajuan.hasOneDataPemohon',
             'belongsToPengajuan.belongsToUser.hasOneProfile',
         ])->where('is_kasi_approve', 0)
+            ->whereNotNull('file')
             ->orderBy('created_at', 'asc')
             ->get();
 
@@ -35,6 +36,7 @@ class DashboardKasiController extends Controller
             'belongsToPengajuan.hasOneSuratPersetujuan',
             'belongsToPengajuan.belongsToUser.hasOneProfile',
         ])->where('is_kasi_approve', 1)
+            ->whereNotNull('file')
             ->orderBy('created_at', 'asc')
             ->get();
 

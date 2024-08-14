@@ -26,6 +26,7 @@ class DashboardKabidController extends Controller
         ])
             ->where('is_kasi_approve', 1)
             ->where('is_kabid_approve', 0)
+            ->whereNotNull('file')
             ->orderBy('created_at', 'asc')
             ->get();
 
@@ -34,6 +35,7 @@ class DashboardKabidController extends Controller
             'belongsToPengajuan.hasOneSuratPersetujuan',
             'belongsToPengajuan.belongsToUser.hasOneProfile',
         ])->where('is_kabid_approve', 1)
+            ->whereNotNull('file')
             ->orderBy('created_at', 'asc')
             ->get();
 
