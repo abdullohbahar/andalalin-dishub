@@ -101,7 +101,7 @@
                                                     <b>Nama Pimpinan</b>
                                                 </td>
                                                 <td>
-                                                    : {{ $pengajuan->hasOneDataPemohon->nama_pimpinan }}
+                                                    : {{ $pengajuan->hasOneDataPemohon?->nama_pimpinan }}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -109,7 +109,7 @@
                                                     <b>Jabatan Pimpinan</b>
                                                 </td>
                                                 <td>
-                                                    : {{ $pengajuan->hasOneDataPemohon->jabatan_pimpinan }}
+                                                    : {{ $pengajuan->hasOneDataPemohon?->jabatan_pimpinan }}
                                                 </td>
                                             </tr>
                                         </table>
@@ -125,7 +125,7 @@
                                                 </td>
                                                 <td>
                                                     :
-                                                    {{ $pengajuan->hasOneDataPemohon->belongsToConsultan->hasOneProfile->nama }}
+                                                    {{ $pengajuan->hasOneDataPemohon?->belongsToConsultan?->hasOneProfile?->nama }}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -134,7 +134,7 @@
                                                 </td>
                                                 <td>
                                                     :
-                                                    {{ $pengajuan->hasOneDataPemohon->belongsToConsultan->hasOneProfile->no_telepon }}
+                                                    {{ $pengajuan->hasOneDataPemohon?->belongsToConsultan?->hasOneProfile?->no_telepon }}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -142,7 +142,7 @@
                                                     <b>Email Konsultan</b>
                                                 </td>
                                                 <td>
-                                                    : {{ $pengajuan->hasOneDataPemohon->belongsToConsultan->email }}
+                                                    : {{ $pengajuan->hasOneDataPemohon?->belongsToConsultan?->email }}
                                                 </td>
                                             </tr>
                                         </table>
@@ -219,7 +219,7 @@
                                                     <b>Nama Proyek</b>
                                                 </td>
                                                 <td>
-                                                    : {{ $pengajuan->hasOneDataPemohon->nama_proyek }}
+                                                    : {{ $pengajuan->hasOneDataPemohon?->nama_proyek }}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -227,7 +227,7 @@
                                                     <b>Nama Jalan</b>
                                                 </td>
                                                 <td>
-                                                    : {{ $pengajuan->hasOneDataPemohon->nama_jalan }}
+                                                    : {{ $pengajuan->hasOneDataPemohon?->nama_jalan }}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -235,7 +235,7 @@
                                                     <b>Luas Bangunan</b>
                                                 </td>
                                                 <td>
-                                                    : {{ $pengajuan->hasOneDataPemohon->luas_bangunan }}
+                                                    : {{ $pengajuan->hasOneDataPemohon?->luas_bangunan }}
                                                 </td>
                                             </tr>
                                         </table>
@@ -248,7 +248,7 @@
                                                 </td>
                                                 <td>
                                                     :
-                                                    {{ $pengajuan->hasOneDataPemohon->luas_tanah }}
+                                                    {{ $pengajuan->hasOneDataPemohon?->luas_tanah }}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -257,7 +257,7 @@
                                                 </td>
                                                 <td>
                                                     :
-                                                    {{ $pengajuan->hasOneDataPemohon->alamat }}
+                                                    {{ $pengajuan->hasOneDataPemohon?->alamat }}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -266,7 +266,7 @@
                                                 </td>
                                                 <td>
                                                     :
-                                                    {{ $pengajuan->hasOneDataPemohon->nomor_surat_permohonan }}
+                                                    {{ $pengajuan->hasOneDataPemohon?->nomor_surat_permohonan }}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -275,7 +275,7 @@
                                                 </td>
                                                 <td>
                                                     :
-                                                    {{ $pengajuan->hasOneDataPemohon->tanggal_surat_permohonan }}
+                                                    {{ $pengajuan->hasOneDataPemohon?->tanggal_surat_permohonan }}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -284,7 +284,7 @@
                                                 </td>
                                                 <td>
                                                     :
-                                                    {{ $pengajuan->hasOneDataPemohon->longitude }}
+                                                    {{ $pengajuan->hasOneDataPemohon?->longitude }}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -293,7 +293,7 @@
                                                 </td>
                                                 <td>
                                                     :
-                                                    {{ $pengajuan->hasOneDataPemohon->latitude }}
+                                                    {{ $pengajuan->hasOneDataPemohon?->latitude }}
                                                 </td>
                                             </tr>
                                             {{-- <tr>
@@ -302,7 +302,7 @@
                                                 </td>
                                                 <td>
                                                     <a target="_blank"
-                                                        href="https://www.google.com/maps/{{ '@' . $pengajuan->hasOneDataPemohon->latitude }},{{ $pengajuan->hasOneDataPemohon->longitude }}"
+                                                        href="https://www.google.com/maps/{{ '@' . $pengajuan->hasOneDataPemohon?->latitude }},{{ $pengajuan->hasOneDataPemohon?->longitude }}"
                                                         class="btn btn-primary btn-sm">Lihat
                                                         Lokasi Di Google
                                                         Maps</a>
@@ -400,7 +400,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($pengajuan->hasOneDataPemohon->hasManyDokumenDataPemohon as $dokumen)
+                                                @foreach ($pengajuan->hasOneDataPemohon?->hasManyDokumenDataPemohon as $dokumen)
                                                     <tr>
                                                         <td>{{ $dokumen->nama_dokumen }}</td>
                                                         <td>
