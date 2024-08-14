@@ -27,6 +27,7 @@ class DashboardKabidController extends Controller
             ->where('is_kasi_approve', 1)
             ->where('is_kabid_approve', 0)
             ->whereNotNull('file')
+            ->whereNotNull('pengajuan_id')
             ->orderBy('created_at', 'asc')
             ->get();
 

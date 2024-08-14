@@ -29,6 +29,7 @@ class DashboardKadisController extends Controller
             ->where('is_kabid_approve', 1)
             ->where('is_kadis_approve', 0)
             ->whereNotNull('file')
+            ->whereNotNull('pengajuan_id')
             ->orderBy('created_at', 'asc')
             ->get();
 
@@ -38,6 +39,7 @@ class DashboardKadisController extends Controller
             'belongsToPengajuan.hasOneSuratPersetujuan'
         ])->where('is_kadis_approve', 1)
             ->whereNotNull('file')
+            ->whereNotNull('pengajuan_id')
             ->orderBy('created_at', 'asc')
             ->get();
 
