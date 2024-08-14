@@ -61,6 +61,7 @@
                                             <th>No</th>
                                             <th>Pemohon</th>
                                             <th>Nama Proyek</th>
+                                            <th>Status</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -80,11 +81,29 @@
                                                     {{ $pengajuan->belongsToPengajuan->hasOneDataPemohon?->nama_proyek ?? '' }}
                                                 </td>
                                                 <td>
-                                                    <div class="btn-group" role="group"
-                                                        aria-label="Basic mixed styles example">
-                                                        <a href="{{ route('penilai.berita.acara', $pengajuan->belongsToPengajuan->id) }}"
-                                                            class="btn btn-info btn-sm">Approve Berita Acara</a>
-                                                    </div>
+                                                    <?php $button = true; ?>
+                                                    @if ($pengajuan->belongsToPengajuan?->hasOnePenolakan)
+                                                        @if ($pengajuan->belongsToPengajuan?->hasOnePenolakan?->is_revisied)
+                                                            <span class='badge badge-info'>Telah direvisi</span>
+                                                        @else
+                                                            @php
+                                                                $button = false;
+                                                            @endphp
+                                                            <span class='badge badge-danger'>Ditolak & Menunggu
+                                                                Revisi</span>
+                                                        @endif
+                                                    @else
+                                                        <span class='badge badge-info'>Perlu Persetujuan</span>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if ($button)
+                                                        <div class="btn-group" role="group"
+                                                            aria-label="Basic mixed styles example">
+                                                            <a href="{{ route('penilai.berita.acara', $pengajuan->belongsToPengajuan->id) }}"
+                                                                class="btn btn-info btn-sm">Approve Berita Acara</a>
+                                                        </div>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach

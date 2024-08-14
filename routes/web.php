@@ -1,54 +1,55 @@
 <?php
 
-use App\Http\Controllers\Admin\AktivitasController;
-use App\Http\Controllers\Admin\BeritaAcaraController;
-use App\Http\Controllers\Admin\CreateJadwalController;
+use App\Models\SuratPersetujuan;
+use App\Models\TemplateBeritaAcara;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\LaporanDokumenAkhir;
+use App\Http\Controllers\Pdf\CoverController;
+use App\Http\Controllers\PenolakanController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Guest\LoginController;
 use App\Http\Controllers\Role\PilihRoleController;
+use App\Http\Controllers\Admin\AktivitasController;
+use App\Http\Controllers\Admin\PengajuanController;
 use App\Http\Controllers\Admin\JenisJalanController;
+use App\Http\Controllers\Admin\BeritaAcaraController;
+use App\Http\Controllers\PemberitahuanJadwalTinjauan;
+use App\Http\Controllers\Admin\CreateJadwalController;
+use App\Http\Controllers\Admin\JadwalSidangController;
+use App\Http\Controllers\Kasi\DashboardKasiController;
+use App\Http\Controllers\Konsultan\DashboardKonsultan;
 use App\Http\Controllers\Admin\UkuranMinimalController;
 use App\Http\Controllers\Admin\DashboardAdminController;
-use App\Http\Controllers\Admin\JadwalSidangController;
+use App\Http\Controllers\Kabid\DashboardKabidController;
+use App\Http\Controllers\Kadis\DashboardKadisController;
+use App\Http\Controllers\Pdf\SuratKesanggupanController;
+use App\Http\Controllers\Pdf\SuratPersetujuanController;
 use App\Http\Controllers\Pemohon\Ajax\ShowUkuranMinimal;
+use App\Http\Controllers\Pemohon\JadwalTinjauanLapangan;
+use App\Http\Controllers\Admin\PengajuanSelesaiController;
+use App\Http\Controllers\Admin\TinjauanLapanganController;
 use App\Http\Controllers\Pemohon\Ajax\ShowSubJenisRencana;
 use App\Http\Controllers\Pemohon\ProfilePemohonController;
 use App\Http\Controllers\Admin\SubSubJenisRencanaController;
 use App\Http\Controllers\Pemohon\DashboardPemohonController;
 use App\Http\Controllers\Pemohon\PengajuanPemohonController;
+use App\Http\Controllers\Pemohon\RiwayatInputDataController;
+use App\Http\Controllers\Penilai\DashboardPenilaiController;
+use App\Http\Controllers\Admin\TemplateBeritaAcaraController;
 use App\Http\Controllers\Pemohon\Ajax\ShowSubSubJenisRencana;
+use App\Http\Controllers\Pemohon\BeritaAcaraPemohonController;
 use App\Http\Controllers\Pemohon\PengajuanAndalalinController;
-use App\Http\Controllers\Admin\JenisRencanaPembangunanController;
-use App\Http\Controllers\Admin\PengajuanController;
-use App\Http\Controllers\Admin\PengajuanSelesaiController;
-use App\Http\Controllers\Admin\SubJenisRencanaPembangunanController;
 use App\Http\Controllers\Admin\SuratKesanggupanAdminController;
 use App\Http\Controllers\Admin\SuratPersetujuanAdminController;
-use App\Http\Controllers\Admin\TemplateBeritaAcaraController;
-use App\Http\Controllers\Admin\TinjauanLapanganController;
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Kabid\DashboardKabidController;
-use App\Http\Controllers\Kadis\DashboardKadisController;
-use App\Http\Controllers\Kasi\DashboardKasiController;
-use App\Http\Controllers\Konsultan\DashboardKonsultan;
-use App\Http\Controllers\Konsultan\PengajuanAndalalinKonsultanController;
-use App\Http\Controllers\LaporanDokumenAkhir;
-use App\Http\Controllers\Pdf\BeritaAcaraController as PdfBeritaAcaraController;
-use App\Http\Controllers\Pdf\CoverController;
-use App\Http\Controllers\Pdf\LaporanDokumenAkhir as PdfLaporanDokumenAkhir;
-use App\Http\Controllers\Pdf\SuratKesanggupanController;
-use App\Http\Controllers\Pdf\SuratPersetujuanController;
-use App\Http\Controllers\PemberitahuanJadwalTinjauan;
-use App\Http\Controllers\Pemohon\BeritaAcaraPemohonController;
-use App\Http\Controllers\Pemohon\JadwalSidangController as PemohonJadwalSidangController;
-use App\Http\Controllers\Pemohon\JadwalTinjauanLapangan;
-use App\Http\Controllers\Pemohon\RiwayatInputDataController;
+use App\Http\Controllers\Admin\JenisRencanaPembangunanController;
 use App\Http\Controllers\Pemohon\SuratKesanggupanPemohonController;
+use App\Http\Controllers\Admin\SubJenisRencanaPembangunanController;
+use App\Http\Controllers\Konsultan\PengajuanAndalalinKonsultanController;
+use App\Http\Controllers\Pdf\LaporanDokumenAkhir as PdfLaporanDokumenAkhir;
+use App\Http\Controllers\Pdf\BeritaAcaraController as PdfBeritaAcaraController;
+use App\Http\Controllers\Pemohon\JadwalSidangController as PemohonJadwalSidangController;
 use App\Http\Controllers\Pemohon\SuratPersetujuanController as PemohonSuratPersetujuanController;
-use App\Http\Controllers\Penilai\DashboardPenilaiController;
-use App\Models\SuratPersetujuan;
-use App\Models\TemplateBeritaAcara;
 
 /*
 |--------------------------------------------------------------------------
@@ -301,6 +302,7 @@ Route::prefix('penilai')->middleware('penilai')->group(function () {
 
     Route::get('berita-acara/{pengajuanID}', [DashboardPenilaiController::class, 'showBeritaAcara'])->name('penilai.berita.acara');
     Route::post('berita-acara/approve/{pengajuanID}', [DashboardPenilaiController::class, 'approve'])->name('penilai.approve.berita.acara');
+    Route::post('tolak-berita-acara', [PenolakanController::class, 'tolak'])->name('tolak');
 });
 
 Route::prefix('profile')->middleware('auth')->group(function () {

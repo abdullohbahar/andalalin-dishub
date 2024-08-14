@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 
 class DashboardPenilaiController extends Controller
 {
+    // Todo membuat status penolakan di admin
     public function index()
     {
         $userID = auth()->user()->id;
@@ -36,7 +37,8 @@ class DashboardPenilaiController extends Controller
         $belumApprove = RiwayatInputData::with([
             'belongsToPengajuan.hasOneDataPemohon',
             'belongsToPengajuan.belongsToUser.hasOneProfile',
-            'belongsToPengajuan.hasOneBeritaAcara'
+            'belongsToPengajuan.hasOneBeritaAcara',
+            'belongsToPengajuan.hasOnePenolakan'
         ])
             ->join('berita_acaras', 'riwayat_input_data.pengajuan_id', '=', 'berita_acaras.pengajuan_id')
             ->where('berita_acaras.' . $column . '', '!=', 1)
@@ -65,7 +67,13 @@ class DashboardPenilaiController extends Controller
 
     public function showBeritaAcara($pengajuanID)
     {
-        $pengajuan = Pengajuan::findorfail($pengajuanID);
+        $pengajuan = Pengajuan::with('hasOneBeritaAcara', 'hasOnePenolakan')->findorfail($pengajuanID);
+
+        if ($pengajuan?->hasOnePenolakan) {
+            if (!$pengajuan?->hasOnePenolakan?->is_revisied) {
+                return redirect()->back();
+            }
+        }
 
         $data = [
             'active' => 'dashboard',
