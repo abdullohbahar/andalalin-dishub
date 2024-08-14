@@ -117,7 +117,7 @@
                                         @foreach ($sudahApprove as $pengajuan)
                                             <tr>
                                                 <td>
-                                                    {{ $no++ }} {{ $pengajuan->belongsToPengajuan?->id }}
+                                                    {{ $no++ }}
                                                 </td>
                                                 <td>
                                                     {{ $pengajuan->belongsToPengajuan?->belongsToUser?->hasOneProfile?->nama }}

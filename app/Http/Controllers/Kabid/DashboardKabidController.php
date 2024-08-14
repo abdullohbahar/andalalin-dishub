@@ -36,6 +36,7 @@ class DashboardKabidController extends Controller
             'belongsToPengajuan.belongsToUser.hasOneProfile',
         ])->where('is_kabid_approve', 1)
             ->whereNotNull('file')
+            ->whereNotNull('pengajuan_id')
             ->orderBy('created_at', 'asc')
             ->get();
 
