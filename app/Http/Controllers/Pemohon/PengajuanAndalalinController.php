@@ -460,7 +460,7 @@ class PengajuanAndalalinController extends Controller
             $filename = time() . " - $lowerNamaDokumen ." . $file->getClientOriginalExtension();
             $location = 'file-uploads/Dokumen Permohonan/'  . $userID .  '/' . $request->nama_proyek . '/';
             $filepath = $location . $filename;
-            $file->storeAs($location, $filename);
+            $file->storeAs($location, $filename, 'public');
 
             $dokumen->where('id', $request->dokumen_id)->update([
                 'is_revised' => true,
@@ -468,6 +468,15 @@ class PengajuanAndalalinController extends Controller
                 'is_verified' => false,
                 'status' => NULL,
                 'alasan' => NULL,
+            ]);
+
+            DokumenDataPemohon::updateorcreate([
+                'data_pemohon_id' => $request->data_pemohon_id,
+                'user_id' => $userID,
+                'nama_dokumen' => 'Sertifikat Tanah',
+            ], [
+                'dokumen' => $filepath,
+                'is_verified' => false
             ]);
 
             return redirect()->back()->with('success', 'Berhasil diupload');
