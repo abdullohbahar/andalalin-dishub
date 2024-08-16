@@ -177,7 +177,7 @@ class PengajuanController extends Controller
 
 
         $statusDokumen = [];
-        foreach ($pengajuan->hasOneDataPemohon->hasManyDokumenDataPemohon as $dokumen) {
+        foreach ($pengajuan->hasOneDataPemohon?->hasManyDokumenDataPemohon as $dokumen) {
             $statusDokumen[] = $dokumen->status;
         }
 
@@ -247,14 +247,14 @@ class PengajuanController extends Controller
 
     public function kirimNotifikasiRevisi($pengajuan)
     {
-        $nomorPemohon = $pengajuan->belongsToUser->hasOneProfile->no_telepon;
-        $nomorKonsultan = $pengajuan->hasOneDataPemohon->belongsToConsultan->hasOneProfile->no_telepon;
+        $nomorPemohon = $pengajuan->belongsToUser?->hasOneProfile?->no_telepon;
+        $nomorKonsultan = $pengajuan->hasOneDataPemohon?->belongsToConsultan?->hasOneProfile?->no_telepon;
 
-        $namaProyek = $pengajuan->hasOneDataPemohon->nama_proyek;
+        $namaProyek = $pengajuan->hasOneDataPemohon?->nama_proyek;
         $upperNamaProyek = Str::upper($namaProyek);
 
         $namaDokumen = [];
-        foreach ($pengajuan->hasOneDataPemohon->hasManyDokumenDataPemohon as $dokumen) {
+        foreach ($pengajuan->hasOneDataPemohon?->hasManyDokumenDataPemohon as $dokumen) {
             if ($dokumen->status == 'revisi') {
                 $namaDokumen[] = '- ' . $dokumen->nama_dokumen;
             }
@@ -291,13 +291,13 @@ class PengajuanController extends Controller
 
     public function kirimNotifikasiDitolak($pengajuan)
     {
-        $nomorPemohon = $pengajuan->belongsToUser->hasOneProfile->no_telepon;
-        $nomorKonsultan = $pengajuan->hasOneDataPemohon->belongsToConsultan->hasOneProfile->no_telepon;
+        $nomorPemohon = $pengajuan->belongsToUser?->hasOneProfile?->no_telepon;
+        $nomorKonsultan = $pengajuan->hasOneDataPemohon?->belongsToConsultan?->hasOneProfile?->no_telepon;
 
-        $namaProyek = $pengajuan->hasOneDataPemohon->nama_proyek;
+        $namaProyek = $pengajuan->hasOneDataPemohon?->nama_proyek;
         $upperNamaProyek = Str::upper($namaProyek);
 
-        foreach ($pengajuan->hasOneDataPemohon->hasManyDokumenDataPemohon as $dokumen) {
+        foreach ($pengajuan->hasOneDataPemohon?->hasManyDokumenDataPemohon as $dokumen) {
             $alasan = $dokumen->alasan;
         }
 
@@ -330,10 +330,10 @@ class PengajuanController extends Controller
 
     public function kirimNotifikasiDisetujui($pengajuan)
     {
-        $nomorPemohon = $pengajuan->belongsToUser->hasOneProfile->no_telepon;
-        $nomorKonsultan = $pengajuan->hasOneDataPemohon->belongsToConsultan->hasOneProfile->no_telepon;
+        $nomorPemohon = $pengajuan->belongsToUser?->hasOneProfile?->no_telepon;
+        $nomorKonsultan = $pengajuan->hasOneDataPemohon?->belongsToConsultan?->hasOneProfile?->no_telepon;
 
-        $namaProyek = $pengajuan->hasOneDataPemohon->nama_proyek;
+        $namaProyek = $pengajuan->hasOneDataPemohon?->nama_proyek;
         $upperNamaProyek = Str::upper($namaProyek);
 
         $curl = curl_init();
