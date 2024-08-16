@@ -18,7 +18,7 @@ class DashboardKadisController extends Controller
 
         $user = User::with('hasOneProfile')->findOrFail($userID);
 
-        if ($user->hasOneProfile->no_ktp == '-' || $user->hasOneProfile->no_ktp == null) {
+        if ($user->hasOneProfile?->no_ktp == '-' || $user->hasOneProfile?->no_ktp == null) {
             return to_route('edit.profile', $userID)->with('notification', 'harap melengkapi profile terlebih dahulu');
         }
 
@@ -95,10 +95,10 @@ class DashboardKadisController extends Controller
     {
         $pengajuan = Pengajuan::with('belongsToUser.hasOneProfile', 'hasOneDataPemohon', 'belongsToConsultan.hasOneProfile')->findorfail($pengajuanID);
 
-        $nomorHpPemohon = $pengajuan->belongsToUser->hasOneProfile->no_telepon;
-        $nomorHpKonsultan = $pengajuan->belongsToConsultan->hasOneProfile->no_telepon;
+        $nomorHpPemohon = $pengajuan->belongsToUser?->hasOneProfile?->no_telepon;
+        $nomorHpKonsultan = $pengajuan->belongsToConsultan?->hasOneProfile?->no_telepon;
 
-        $namaProyek = $pengajuan->hasOneDataPemohon->nama_proyek;
+        $namaProyek = $pengajuan->hasOneDataPemohon?->nama_proyek;
 
         $curl = curl_init();
 
@@ -130,7 +130,7 @@ class DashboardKadisController extends Controller
     public function kirimNotifikasiKeSemua($pengajuanID)
     {
         $pengajuan = Pengajuan::with('belongsToUser.hasOneProfile', 'hasOneDataPemohon', 'belongsToConsultan.hasOneProfile')->findorfail($pengajuanID);
-        $nomorHpPemohon = $pengajuan->belongsToUser->hasOneProfile->no_telepon;
+        $nomorHpPemohon = $pengajuan->belongsToUser?->hasOneProfile?->no_telepon;
 
         $kasi = User::with('hasOneProfile')->where('role', 'kasi')->first();
         $nomorHpKasi = $kasi?->hasOneProfile?->no_telepon ?? '';
@@ -141,7 +141,7 @@ class DashboardKadisController extends Controller
         $kadis = User::with('hasOneProfile')->where('role', 'kadis')->first();
         $nomorHPKadis = $kadis?->hasOneProfile?->no_telepon ?? '';
 
-        $namaProyek = $pengajuan->hasOneDataPemohon->nama_proyek;
+        $namaProyek = $pengajuan->hasOneDataPemohon?->nama_proyek;
 
         $curl = curl_init();
 
