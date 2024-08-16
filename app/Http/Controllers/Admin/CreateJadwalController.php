@@ -66,8 +66,8 @@ class CreateJadwalController extends Controller
 
     public function kirimNotifikasiJadwalDibuat($jadwal)
     {
-        $nomorPemohon = $jadwal->belongsToPengajuan->belongsToUser->hasOneProfile->no_telepon;
-        $namaProyek = $jadwal->belongsToPengajuan->hasOneDataPemohon->nama_proyek;
+        $nomorPemohon = $jadwal->belongsToPengajuan?->belongsToUser?->hasOneProfile?->no_telepon;
+        $namaProyek = $jadwal->belongsToPengajuan?->hasOneDataPemohon?->nama_proyek;
         $upperNamaProyek = Str::upper($namaProyek);
         $namaWebsite = env('APP_URL');
 
@@ -76,7 +76,7 @@ class CreateJadwalController extends Controller
         )
             ->findorfail($jadwal->pengajuan_id);
 
-        $nomorKonsultan = $pengajuan->hasOneDataPemohon->belongsToConsultan->hasOneProfile->no_telepon;
+        $nomorKonsultan = $pengajuan->hasOneDataPemohon?->belongsToConsultan?->hasOneProfile?->no_telepon;
 
         $curl = curl_init();
 
@@ -110,8 +110,8 @@ class CreateJadwalController extends Controller
         $jadwal = JadwalTinajuanLapangan::with('belongsToPengajuan.hasOneDataPemohon')->where('id', $jadwalID)->first();
 
         $data = [
-            'nama_proyek' => $jadwal->belongsToPengajuan->hasOneDataPemohon->nama_proyek,
-            'alamat' => $jadwal->belongsToPengajuan->hasOneDataPemohon->alamat,
+            'nama_proyek' => $jadwal->belongsToPengajuan?->hasOneDataPemohon?->nama_proyek,
+            'alamat' => $jadwal->belongsToPengajuan?->hasOneDataPemohon?->alamat,
             'tanggal_tinjauan' => $jadwal->tanggal,
             'jam_tinjauan' => $jadwal->jam
         ];
