@@ -75,10 +75,12 @@
                                                     {{ $no++ }}
                                                 </td>
                                                 <td>
-                                                    {{ $pengajuan->belongsToPengajuan->belongsToUser->hasOneProfile->nama }}
+                                                    {{ $pengajuan->belongsToPengajuan?->belongsToUser?->hasOneProfile?->nama }}
+
                                                 </td>
                                                 <td>
-                                                    {{ $pengajuan->belongsToPengajuan->hasOneDataPemohon?->nama_proyek ?? '' }}
+                                                    {{ $pengajuan->belongsToPengajuan?->hasOneDataPemohon?->nama_proyek ?? '' }}
+
                                                 </td>
                                                 <td>
                                                     <?php $button = true; ?>
@@ -100,7 +102,7 @@
                                                     @if ($button)
                                                         <div class="btn-group" role="group"
                                                             aria-label="Basic mixed styles example">
-                                                            <a href="{{ route('penilai.berita.acara', $pengajuan->belongsToPengajuan->id) }}"
+                                                            <a href="{{ route('penilai.berita.acara', $pengajuan->belongsToPengajuan?->id) }}"
                                                                 class="btn btn-info btn-sm">Approve Berita Acara</a>
                                                         </div>
                                                     @endif
@@ -138,10 +140,12 @@
                                                     {{ $no++ }}
                                                 </td>
                                                 <td>
-                                                    {{ $pengajuan->belongsToPengajuan->belongsToUser->hasOneProfile->nama }}
+                                                    {{ $pengajuan->belongsToPengajuan?->belongsToUser?->hasOneProfile?->nama }}
+
                                                 </td>
                                                 <td>
-                                                    {{ $pengajuan->belongsToPengajuan->hasOneDataPemohon?->nama_proyek ?? '' }}
+                                                    {{ $pengajuan->belongsToPengajuan?->hasOneDataPemohon?->nama_proyek ?? '' }}
+
                                                 </td>
                                             </tr>
                                         @endforeach

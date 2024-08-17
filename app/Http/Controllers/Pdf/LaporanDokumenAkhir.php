@@ -42,7 +42,7 @@ class LaporanDokumenAkhir extends Controller
 
         // Load Berita Acara PDF
         $beritaAcara = BeritaAcara::where('pengajuan_id', $pengajuanID)->first()?->file_uploads;
-        $pdfMerger->addPDF(storage_path('app/public/' . $beritaAcara));
+        $pdfMerger->addPDF(public_path('storage/public/' . $beritaAcara));
 
         // Load Surat Kesanggupan PDF
         $suratKesanggupan = SuratKesanggupan::where('pengajuan_id', $pengajuanID)->first()?->getRawOriginal('file');

@@ -325,9 +325,13 @@
                                             <div class="row">
                                                 <div class="col-12">
                                                     <label for="" class="form-label">Luas Tanah</label>
-                                                    <input type="text" class="form-control"
-                                                        value="{{ old('luas_tanah', $dataPemohon->luas_tanah ?? '') }}"
-                                                        name="luas_tanah" required id="">
+                                                    <div class="input-group">
+                                                        <input type="number" class="form-control"
+                                                            value="{{ old('luas_tanah', $dataPemohon->luas_tanah ?? '') }}"
+                                                            name="luas_tanah" required id="">
+                                                        <span class="input-group-text"
+                                                            id="basic-addon1">m<sup>2</sup></span>
+                                                    </div>
                                                 </div>
                                                 <div class="col-12 mt-5">
                                                     <label for="" class="form-label">Alamat</label>
