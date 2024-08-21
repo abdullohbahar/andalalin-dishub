@@ -105,7 +105,7 @@
         <p style="line-height: 0.65cm">keputusan kepala dinas perhubungan kabupaten bantul
             <br>
             Nomor :
-            Sk.{{ $nomor }}/{{ $ukuranMinimal }}/dishub-btl/{{ $bulanRoman }}/{{ $tahunInteger }}
+            Sk.{{ $nomor }}/{{ $ukuranMinimal ?? '-' }}/dishub-btl/{{ $bulanRoman }}/{{ $tahunInteger }}
         </p>
     </div>
     <p class="text-center" style="text-transform: uppercase; line-height: 0.65cm">
@@ -362,7 +362,7 @@
                             <tr>
                                 <td>Pada tanggal</td>
                                 <td>:</td>
-                                <td>25 Oktober 2023</td>
+                                <td>{{ $tanggalSuratPersetujuan }}</td>
                             </tr>
                             <tr>
                                 <td colspan="3" style="text-align: center">
@@ -411,7 +411,7 @@
                 <td style="width: 50%"></td>
                 <td style="width: 50%; text-align:justify; line-height: 0.75cm" class="text-uppercase">
                     KEPUTUSAN KEPALA DINAS PERHUBUNGAN KABUPATEN BANTUL <br>
-                    Nomor : Sk.{{ $nomor }} / {{ $ukuranMinimal }} / dishub-btl /
+                    Nomor : Sk.{{ $nomor }} / {{ $ukuranMinimal ?? '-' }} / dishub-btl /
                     {{ $bulanRoman }} /
                     {{ $tahunInteger }}
                     <br>

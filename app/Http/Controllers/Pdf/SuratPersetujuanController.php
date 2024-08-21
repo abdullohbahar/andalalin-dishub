@@ -73,7 +73,8 @@ class SuratPersetujuanController extends Controller
         $tahun = \Carbon\Carbon::parse($pengajuan->hasOneBeritaAcara->tanggal)->translatedFormat('Y');
 
         // tanggal surat permohonan
-        $tanggalSuratPermohonan = Carbon::parse($pengajuan->hasOneDataPemohon?->tanggal_surat_permohonan)->translatedFormat('L F Y');
+        $tanggalSuratPermohonan = Carbon::parse($pengajuan->hasOneDataPemohon?->tanggal_surat_permohonan)->translatedFormat('d F Y');
+        $tanggalSuratPersetujuan = Carbon::parse($pengajuan->hasOneSuratPersetujuan?->updated_at)->translatedFormat('d F Y');
 
         $roman = new IntToRoman();
         $bulanRoman = $roman->filter($bulanInteger);
@@ -110,7 +111,8 @@ class SuratPersetujuanController extends Controller
             'luasLahan' => $luasLahan,
             'terbilangLuasLahan' => Terbilang::make(intVal($luasLahan)),
             'luasBangunan' => $luasBangunan,
-            'tanggalSuratPermohonan' => $tanggalSuratPermohonan
+            'tanggalSuratPermohonan' => $tanggalSuratPermohonan,
+            'tanggalSuratPersetujuan' => $tanggalSuratPersetujuan
         ];
 
         $pdf = PDF::loadView('document-template.surat-persetujuan', $data);

@@ -69,10 +69,20 @@ class PengajuanController extends Controller
                         $btnVerifikasi = '';
                     }
 
+                    if ($item->hasOneDataPemohon?->longitude) {
+                        $latitude = $item->hasOneDataPemohon?->latitude;
+                        $longitude = $item->hasOneDataPemohon?->longitude;
+
+                        $btnLihatLokasi = "<a href='https://www.google.com/maps?q=$latitude,$longitude' target='_blank' class='btn btn-success btn-sm'>Lihat Lokasi</a>";
+                    } else {
+                        $btnLihatLokasi  = '';
+                    }
+
                     return "
                         <div class='btn-group' role='group'>
                             $detailBtn
                             $btnVerifikasi
+                            $btnLihatLokasi
                         </div>
                     ";
                 })
