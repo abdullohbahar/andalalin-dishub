@@ -26,7 +26,7 @@
                         </b>
                     </h3>
                     <label for="" class="form-label mt-4">Alasan Menolak</label>
-                    <input type="hidden" name="dataPemohonID" value="{{ $pengajuan->hasOneDataPemohon->id }}"
+                    <input type="hidden" name="dataPemohonID" value="{{ $pengajuan->hasOneDataPemohon?->id }}"
                         id="revisiDokumenID">
                     <textarea name="alasan" class="form-control" required id="" style="width: 100%" rows="3"></textarea>
                     <br>

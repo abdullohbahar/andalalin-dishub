@@ -31,7 +31,7 @@ class PenolakanController extends Controller
     {
         $pengajuan = Pengajuan::with('belongsToUser.hasOneProfile', 'hasOneDataPemohon')->findorfail($pengajuanID);
 
-        $namaProyek = $pengajuan->hasOneDataPemohon->nama_proyek;
+        $namaProyek = $pengajuan->hasOneDataPemohon?->nama_proyek;
 
         $curl = curl_init();
 

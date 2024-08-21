@@ -46,8 +46,8 @@ class TinjauanLapanganController extends Controller
 
     public function kirimNotifikasiJadwalDiubah($jadwal)
     {
-        $nomorPemohon = $jadwal->belongsToPengajuan->belongsToUser->hasOneProfile->no_telepon;
-        $namaProyek = $jadwal->belongsToPengajuan->hasOneDataPemohon->nama_proyek;
+        $nomorPemohon = $jadwal->belongsToPengajuan?->belongsToUser?->hasOneProfile?->no_telepon;
+        $namaProyek = $jadwal->belongsToPengajuan?->hasOneDataPemohon?->nama_proyek;
         $upperNamaProyek = Str::upper($namaProyek);
         $namaWebsite = env('APP_URL');
 
@@ -56,7 +56,7 @@ class TinjauanLapanganController extends Controller
         )
             ->findorfail($jadwal->pengajuan_id);
 
-        $nomorKonsultan = $pengajuan->hasOneDataPemohon->belongsToConsultan->hasOneProfile->no_telepon;
+        $nomorKonsultan = $pengajuan->hasOneDataPemohon?->belongsToConsultan?->hasOneProfile?->no_telepon;
 
         $curl = curl_init();
 

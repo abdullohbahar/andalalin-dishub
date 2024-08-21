@@ -187,7 +187,7 @@
             <tr>
                 <td>Tempat</td>
                 <td>:</td>
-                <td>{{ $pengajuan->hasOneDataPemohon->alamat }}</td>
+                <td>{{ $pengajuan->hasOneDataPemohon?->alamat }}</td>
             </tr>
             <tr>
                 <td>Acara</td>

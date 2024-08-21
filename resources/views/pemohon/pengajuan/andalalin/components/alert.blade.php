@@ -13,12 +13,13 @@
             <!--end::Title-->
 
             <!--begin::Content-->
-            <span style="font-size: 11pt">
+            <span style="font-size: 11pt" class="text-capitalize">
+                <input type="hidden" id="klasifikasi" name="klasifikasi" value="{{ $klasifikasi }}">
                 @if ($klasifikasi == 'rendah')
-                    Kategori Pengajuan Anda Masuk Kedalam Kategori Rendah,
+                    Kategori Pengajuan Anda Masuk Kedalam Kategori {{ $klasifikasi }},
                     Anda Tidak Wajib Memilih Konsultan
                 @else
-                    Kategori Pengajuan Anda Masuk Kedalam Kategori Tinggi,
+                    Kategori Pengajuan Anda Masuk Kedalam Kategori {{ $klasifikasi }},
                     Anda Wajib Memilih Konsultan
                 @endif
             </span>

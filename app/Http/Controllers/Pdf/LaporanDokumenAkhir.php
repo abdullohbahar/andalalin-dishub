@@ -97,7 +97,7 @@ class LaporanDokumenAkhir extends Controller
         $pdfMerger->merge();
 
         // Simpan file hasil penggabungan (contoh: merged.pdf)
-        $path = public_path('storage/file-uploads/Laporan Dokumen Akhir/'  . $pengajuan->user_id .  '/' . $pengajuan->hasOneDataPemohon->nama_proyek . '/');
+        $path = public_path('storage/file-uploads/Laporan Dokumen Akhir/'  . $pengajuan->user_id .  '/' . $pengajuan->hasOneDataPemohon?->nama_proyek . '/');
 
         // Check if the directory exists
         if (!File::exists($path)) {

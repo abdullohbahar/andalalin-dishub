@@ -47,7 +47,7 @@ class SuratKesanggupanPemohonController extends Controller
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $filename = time() . " - Surat Kesanggupan." . $file->getClientOriginalExtension();
-            $location = 'file-uploads/Surat Kesanggupan/'  . $pengajuan->user_id .  '/' . $pengajuan->hasOneDataPemohon->nama_proyek . '/';
+            $location = 'file-uploads/Surat Kesanggupan/'  . $pengajuan->user_id .  '/' . $pengajuan->hasOneDataPemohon?->nama_proyek . '/';
             $filepath = $location . $filename;
             $file->storeAs($location, $filename, 'public');
 
@@ -78,7 +78,7 @@ class SuratKesanggupanPemohonController extends Controller
         $pengajuan = Pengajuan::with('belongsToUser.hasOneProfile', 'hasOneDataPemohon')->where('id', $pengajuanID)->first();
 
         $namaPemohon = $pengajuan->belongsToUser->hasOneProfile->nama;
-        $namaProyek = $pengajuan->hasOneDataPemohon->nama_proyek;
+        $namaProyek = $pengajuan->hasOneDataPemohon?->nama_proyek;
 
         $admin = User::with('hasOneProfile')->where('role', 'admin')->first();
         $nomorHpAdmin = $admin->hasOneProfile->no_telepon;

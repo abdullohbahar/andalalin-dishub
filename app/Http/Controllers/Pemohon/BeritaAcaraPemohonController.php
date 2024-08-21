@@ -34,7 +34,7 @@ class BeritaAcaraPemohonController extends Controller
         if ($request->hasFile('file_uploads')) {
             $file = $request->file('file_uploads');
             $filename = time() . " - Berita Acara." . $file->getClientOriginalExtension();
-            $location = 'file-uploads/Berita Acara/'  . $pengajuan->user_id .  '/' . $pengajuan->hasOneDataPemohon->nama_proyek . '/';
+            $location = 'file-uploads/Berita Acara/'  . $pengajuan->user_id .  '/' . $pengajuan->hasOneDataPemohon?->nama_proyek . '/';
             $filepath = $location . $filename;
             $file->storeAs('public/' . $location, $filename, 'public');
 

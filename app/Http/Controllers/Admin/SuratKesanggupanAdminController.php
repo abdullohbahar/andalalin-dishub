@@ -59,8 +59,8 @@ class SuratKesanggupanAdminController extends Controller
     {
         $pengajuan = Pengajuan::with('belongsToUser.hasOneProfile', 'hasOneDataPemohon')->findOrFail($pengajuanID);
 
-        $nomorHpPemohon = $pengajuan->belongsToUser->hasOneProfile->nomor_telepon;
-        $namaProyek = $pengajuan->hasOneDataPemohon->nama_proyek;
+        $nomorHpPemohon = $pengajuan->belongsToUser?->hasOneProfile?->nomor_telepon;
+        $namaProyek = $pengajuan->hasOneDataPemohon?->nama_proyek;
 
         $curl = curl_init();
 

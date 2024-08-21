@@ -106,7 +106,7 @@
                         @include('admin.layout.stepper')
                         <div class="card">
                             <div class="card-header pt-5">
-                                <h1>Buat Jadwal Tinjauan Lapangan - {{ $pengajuan->hasOneDataPemohon->nama_proyek }}</h1>
+                                <h1>Buat Jadwal Tinjauan Lapangan - {{ $pengajuan->hasOneDataPemohon?->nama_proyek }}</h1>
                                 {{-- <div style="float: right">
                                     <form action="{{ route('pemohon.selesai.revisi', $pengajuan->id) }}" method="POST">
                                         @csrf

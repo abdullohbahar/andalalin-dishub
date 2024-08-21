@@ -53,10 +53,10 @@ class SuratKesanggupanController extends Controller
         }
 
         // mengambil nama proyek
-        $namaProyek = $pengajuan->hasOneDataPemohon->nama_proyek ?? '';
+        $namaProyek = $pengajuan->hasOneDataPemohon?->nama_proyek ?? '';
 
         // alamat proyek
-        $alamatProyek = $pengajuan->hasOneDataPemohon->alamat ?? '';
+        $alamatProyek = $pengajuan->hasOneDataPemohon?->alamat ?? '';
 
         // tanggal diambil dari pemohon mengajukan berita acara
         \Carbon\Carbon::setLocale('id');
@@ -72,8 +72,8 @@ class SuratKesanggupanController extends Controller
 
         Config::set('terbilang.locale', 'id');
 
-        $luasLahan = $pengajuan->hasOneDataPemohon->luas_tanah;
-        $luasBangunan = $pengajuan->hasOneDataPemohon->luas_bangunan;
+        $luasLahan = $pengajuan->hasOneDataPemohon?->luas_tanah;
+        $luasBangunan = $pengajuan->hasOneDataPemohon?->luas_bangunan;
 
         $data = [
             'aksara' => $encodeAksara,

@@ -32,9 +32,9 @@ class PemberitahuanJadwalTinjauan extends Controller
         $tanggalSurat = \Carbon\Carbon::parse($pengajuan->hasOneJadwalTinjauan->created_at)->translatedFormat('d F Y');
 
         $kepada = [];
-        $kepada['pimpinan'] = $pengajuan->hasOneDataPemohon->nama_pimpinan;
-        $kepada['konsultan'] = $pengajuan->hasOneDataPemohon->belongsToConsultan->hasOneProfile->nama;
-        $kepada['pemohon'] = $pengajuan->belongsToUser->hasOneProfile->nama;
+        $kepada['pimpinan'] = $pengajuan->hasOneDataPemohon?->nama_pimpinan;
+        $kepada['konsultan'] = $pengajuan->hasOneDataPemohon?->belongsToConsultan?->hasOneProfile?->nama;
+        $kepada['pemohon'] = $pengajuan->belongsToUser?->hasOneProfile?->nama;
 
         $data = [
             'aksara' => $encodeAksara,

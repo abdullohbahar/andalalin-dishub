@@ -59,10 +59,10 @@ class SuratPersetujuanController extends Controller
 
 
         // mengambil nama proyek
-        $namaProyek = $pengajuan->hasOneDataPemohon->nama_proyek ?? '';
+        $namaProyek = $pengajuan->hasOneDataPemohon?->nama_proyek ?? '';
 
         // alamat proyek
-        $alamatProyek = $pengajuan->hasOneDataPemohon->alamat ?? '';
+        $alamatProyek = $pengajuan->hasOneDataPemohon?->alamat ?? '';
 
         // tanggal diambil dari pemohon mengajukan berita acara
         \Carbon\Carbon::setLocale('id');
@@ -73,7 +73,7 @@ class SuratPersetujuanController extends Controller
         $tahun = \Carbon\Carbon::parse($pengajuan->hasOneBeritaAcara->tanggal)->translatedFormat('Y');
 
         // tanggal surat permohonan
-        $tanggalSuratPermohonan = Carbon::parse($pengajuan->hasOneDataPemohon->tanggal_surat_permohonan)->translatedFormat('L F Y');
+        $tanggalSuratPermohonan = Carbon::parse($pengajuan->hasOneDataPemohon?->tanggal_surat_permohonan)->translatedFormat('L F Y');
 
         $roman = new IntToRoman();
         $bulanRoman = $roman->filter($bulanInteger);
@@ -85,8 +85,8 @@ class SuratPersetujuanController extends Controller
 
         Config::set('terbilang.locale', 'id');
 
-        $luasLahan = $pengajuan->hasOneDataPemohon->luas_tanah;
-        $luasBangunan = $pengajuan->hasOneDataPemohon->luas_bangunan;
+        $luasLahan = $pengajuan->hasOneDataPemohon?->luas_tanah;
+        $luasBangunan = $pengajuan->hasOneDataPemohon?->luas_bangunan;
 
         $data = [
             'aksara' => $encodeAksara,
@@ -116,7 +116,7 @@ class SuratPersetujuanController extends Controller
         $pdf = PDF::loadView('document-template.surat-persetujuan', $data);
 
         if (!$pengajuan->hasOneSuratPersetujuan?->tte) {
-            $directory = 'public/file-uploads/Surat Persetujuan/' . $pengajuan->user_id . '/' . $pengajuan->hasOneDataPemohon->nama_proyek;
+            $directory = 'public/file-uploads/Surat Persetujuan/' . $pengajuan->user_id . '/' . $pengajuan->hasOneDataPemohon?->nama_proyek;
 
             // Membuat direktori jika belum ada
             Storage::makeDirectory($directory);

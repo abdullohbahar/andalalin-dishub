@@ -20,12 +20,12 @@
         <b>
             <span style="font-size: 14pt">
                 Penanganan Dampak Lalu Lintas {{ $jenisBangkitan }} <br>
-                Pembangunan & Operasional {{ $pengajuan->hasOneDataPemohon->nama_proyek }}
+                Pembangunan & Operasional {{ $pengajuan->hasOneDataPemohon?->nama_proyek }}
             </span>
         </b>
         <br>
         <span style="font-size: 12pt">
-            {{ $pengajuan->hasOneDataPemohon->alamat }}
+            {{ $pengajuan->hasOneDataPemohon?->alamat }}
         </span>
         <img src="data:image/jpeg;base64,{{ $logoDishub }}" style="width: 100%" class="logo">
         <br>

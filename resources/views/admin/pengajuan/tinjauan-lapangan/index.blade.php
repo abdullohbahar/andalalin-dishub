@@ -118,13 +118,13 @@
                                             <tr>
                                                 <td>Nama Proyek</td>
                                                 <td>
-                                                    : {{ $pengajuan->hasOneDataPemohon->nama_proyek }}
+                                                    : {{ $pengajuan->hasOneDataPemohon?->nama_proyek }}
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>Alamat</td>
                                                 <td>
-                                                    : {{ $pengajuan->hasOneDataPemohon->alamat }}
+                                                    : {{ $pengajuan->hasOneDataPemohon?->alamat }}
                                                 </td>
                                             </tr>
                                             <tr>

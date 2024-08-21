@@ -84,7 +84,7 @@ class DashboardKasiController extends Controller
 
         $nomorHpKasi = $user?->hasOneProfile?->no_telepon ?? '';
 
-        $namaProyek = $pengajuan->hasOneDataPemohon->nama_proyek;
+        $namaProyek = $pengajuan->hasOneDataPemohon?->nama_proyek;
 
         $curl = curl_init();
 

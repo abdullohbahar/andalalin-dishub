@@ -83,7 +83,7 @@ class DashboardKabidController extends Controller
 
         $nomorHPKadis = $user?->hasOneProfile?->no_telepon ?? '';
 
-        $namaProyek = $pengajuan->hasOneDataPemohon->nama_proyek;
+        $namaProyek = $pengajuan->hasOneDataPemohon?->nama_proyek;
 
         $curl = curl_init();
 

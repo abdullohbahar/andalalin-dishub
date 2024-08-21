@@ -65,7 +65,7 @@
                                         @foreach ($pengajuanDitolak as $ditolak)
                                             <tr>
                                                 <td>{{ $ditolak->belongsToJenisRencana->nama }}</td>
-                                                <td>{{ $ditolak->hasOneDataPemohon->nama_proyek }}</td>
+                                                <td>{{ $ditolak->hasOneDataPemohon?->nama_proyek }}</td>
                                                 <td>
                                                     <a href="{{ route('pemohon.show.pengajuan.andalalin', $ditolak->id) }}"
                                                         class="btn btn-success btn-sm">Perbaiki Data</a>
@@ -95,7 +95,7 @@
                                         @foreach ($pengajuanPerluRevisi as $revisi)
                                             <tr>
                                                 <td>{{ $revisi->belongsToJenisRencana->nama }}</td>
-                                                <td>{{ $revisi->hasOneDataPemohon->nama_proyek }}</td>
+                                                <td>{{ $revisi->hasOneDataPemohon?->nama_proyek }}</td>
                                                 <td>
                                                     <a href="{{ route('pemohon.show.pengajuan.andalalin', $revisi->id) }}"
                                                         class="btn btn-success btn-sm">Revisi Data</a>
@@ -125,7 +125,7 @@
                                         @foreach ($pengajuanDisetujui as $disetujui)
                                             <tr>
                                                 <td>{{ $disetujui->belongsToJenisRencana->nama }}</td>
-                                                <td>{{ $disetujui->hasOneDataPemohon->nama_proyek }}</td>
+                                                <td>{{ $disetujui->hasOneDataPemohon?->nama_proyek }}</td>
                                                 <td>
                                                     @if ($disetujui->hasOneRiwayatVerifikasi->step != 'Selesai')
                                                         <a href="{{ route('pemohon.riwayat.input.data', $disetujui->id) }}"

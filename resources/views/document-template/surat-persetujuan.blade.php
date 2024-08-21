@@ -136,7 +136,7 @@
                             bahwa {{ $pengajuan->hasOnePemrakarsa->pemrakarsa }} telah mengajukan permohonan
                             persetujuan teknis
                             dengan Nomor
-                            : {{ $pengajuan->hasOneDataPemohon->nomor_surat_permohonan }} tanggal
+                            : {{ $pengajuan->hasOneDataPemohon?->nomor_surat_permohonan }} tanggal
                             {{ $tanggalSuratPermohonan }} perihal Teknis Penanganan Dampak Lalu
                             Lintas {{ $jenisBangkitan }} Pembangunan dan Operasional {{ $namaProyek }};
                         </li>
@@ -213,7 +213,7 @@
                         </li>
                         <li>
                             Surat Pernyataan Kesanggupan {{ $pengajuan->hasOnePemrakarsa->pemrakarsa }} Nomor :
-                            {{ $pengajuan->hasOneDataPemohon->nomor_surat_permohonan }}
+                            {{ $pengajuan->hasOneDataPemohon?->nomor_surat_permohonan }}
                             perihal Kesanggupan Melaksanakan Kewajiban dalam Rekomendasi {{ $ukuranMinimal }}
                             Penanganan
                             Dampak Lalu Lintas {{ $jenisBangkitan }} Pembangunan Dan Operasional {{ $namaProyek }}

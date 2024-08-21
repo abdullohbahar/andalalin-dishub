@@ -22,7 +22,7 @@
 @endpush
 
 @section('content')
-    <form action="{{ route('pemohon.store.data.pemohon.andalalin') }}" method="POST">
+    <form id="form" action="{{ route('pemohon.store.data.pemohon.andalalin') }}" method="POST">
         @csrf
         <input type="hidden" name="pengajuan_id" value="{{ $pengajuan->id }}">
         <div class="d-flex flex-column flex-column-fluid">
@@ -437,6 +437,29 @@
 
             var url = `https://www.google.com/maps?q=${latitude},${longitude}`
             window.open(url, '_blank').focus()
+        })
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            var klasifikasi = $("#klasifikasi").val()
+
+            $("#form").on("submit", function(e) {
+                if (klasifikasi == 'sedang' || klasifikasi == 'tinggi') {
+
+                    var idKonsultan = $("#konsultan_id").val()
+
+                    if (!idKonsultan) {
+                        e.preventDefault();
+                        Swal.fire({
+                            position: "center",
+                            icon: 'warning',
+                            title: 'Peringatan',
+                            text: 'Anda harus memilih konsultan terlebih dahulu, karena pengajuan anda masuk kategori bangkitan {{ $klasifikasi }}'
+                        })
+                    }
+                }
+            })
         })
     </script>
 

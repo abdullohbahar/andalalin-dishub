@@ -85,6 +85,8 @@ class PengajuanAndalalinController extends Controller
 
         if (stripos($pengajuan->belongsToUkuranMinimal->kategori, 'rendah')) {
             $klasifikasi = 'rendah';
+        } else if (stripos($pengajuan->belongsToUkuranMinimal->kategori, 'sedang')) {
+            $klasifikasi = 'sedang';
         } else {
             $klasifikasi = 'tinggi';
         }
@@ -168,8 +170,8 @@ class PengajuanAndalalinController extends Controller
         $pengajuan = Pengajuan::with('belongsToUser', 'hasOneDataPemohon.belongsToConsultan')->where('id', $pengajuanID)->first();
 
         $namaPemohon = $pengajuan->belongsToUser->hasOneProfile->nama ?? '';
-        $namaProyek = $pengajuan->hasOneDataPemohon->nama_proyek ?? '';
-        $nomerHpKonsultan = $pengajuan->hasOneDataPemohon->belongsToConsultan->hasOneProfile->no_telepon ?? '';
+        $namaProyek = $pengajuan->hasOneDataPemohon?->nama_proyek ?? '';
+        $nomerHpKonsultan = $pengajuan->hasOneDataPemohon?->belongsToConsultan->hasOneProfile->no_telepon ?? '';
 
         $curl = curl_init();
 
@@ -378,7 +380,7 @@ class PengajuanAndalalinController extends Controller
 
         $namaPemohon = $pengajuan->belongsToUser->hasOneProfile->nama;
         $jenisPengajuan = $pengajuan->jenis_pengajuan;
-        $namaProyek = $pengajuan->hasOneDataPemohon->nama_proyek;
+        $namaProyek = $pengajuan->hasOneDataPemohon?->nama_proyek;
         $deadline = $pengajuan->deadline;
 
         $curl = curl_init();

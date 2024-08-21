@@ -125,7 +125,7 @@
                                                 <tr>
                                                     <td>Nama Proyek</td>
                                                     <td>
-                                                        : {{ $pengajuan->hasOneDataPemohon->nama_proyek }}
+                                                        : {{ $pengajuan->hasOneDataPemohon?->nama_proyek }}
                                                     </td>
                                                 </tr>
                                                 <tr>

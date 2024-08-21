@@ -118,7 +118,8 @@
         <p style="line-height: 1.6">
             Dengan ini bertindak untuk dan atas nama instansi, bahwa berdasarkan surat permohonan Persetujuan Teknis
             Penanganan Dampak Lalu Lintas {{ $jenisBangkitan }} nomor:
-            {{ $pengajuan->hasOneDataPemohon->nomor_surat_permohonan }} tentang kegiatan {{ $namaProyek }}, dengan ini
+            {{ $pengajuan->hasOneDataPemohon?->nomor_surat_permohonan }} tentang kegiatan {{ $namaProyek }}, dengan
+            ini
             menyatakan sanggup
             untuk melaksanakan semua kewajiban, yaitu :
         </p>

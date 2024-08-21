@@ -93,8 +93,8 @@ class JadwalSidangController extends Controller
         )
             ->findorfail($pengajuanID);
 
-        $nomorPemohon = $pengajuan->belongsToUser->hasOneProfile->no_telepon;
-        $namaProyek = $pengajuan->hasOneDataPemohon->nama_proyek;
+        $nomorPemohon = $pengajuan->belongsToUser?->hasOneProfile?->no_telepon;
+        $namaProyek = $pengajuan->hasOneDataPemohon?->nama_proyek;
         $upperNamaProyek = Str::upper($namaProyek);
 
         $website = env("APP_URL");

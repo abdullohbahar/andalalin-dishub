@@ -62,7 +62,7 @@ class CoverController extends Controller
 
         $userID = auth()->user()->id;
 
-        $path = public_path('storage/file-uploads/cover/'  . $userID .  '/' . $pengajuan->hasOneDataPemohon->nama_proyek . '/');
+        $path = public_path('storage/file-uploads/cover/'  . $userID .  '/' . $pengajuan->hasOneDataPemohon?->nama_proyek . '/');
 
         // Check if the directory exists
         if (!File::exists($path)) {
