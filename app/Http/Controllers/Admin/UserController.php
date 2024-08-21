@@ -33,9 +33,13 @@ class UserController extends Controller
                 })
                 ->addColumn('aksi', function ($item) {
                     $route = route('admin.user.edit', $item->id);
+                    $routeShow = route('admin.user.show', $item->id);
 
                     return "
+                    <div class='btn-group' role='group' aria-label='Basic example'>
                         <a href='$route' class='btn btn-warning btn-sm'>Edit</a>
+                        <a href='$routeShow' class='btn btn-info btn-sm'>Profile</a>
+                    </div>
                     ";
                 })
                 ->rawColumns(['nama', 'no_telepon', 'aksi'])
@@ -47,6 +51,18 @@ class UserController extends Controller
         ];
 
         return view('admin.user.index', $data);
+    }
+
+    public function show($id)
+    {
+        $user = User::with('hasOneProfile')->findorfail($id);
+
+        $data = [
+            'active' => 'user',
+            'user' => $user
+        ];
+
+        return view('admin.user.show', $data);
     }
 
     public function create()

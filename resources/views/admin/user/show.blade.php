@@ -1,16 +1,4 @@
-@php
-    $role = auth()->user()->role;
-
-    if ($role == 'penilai1' || $role == 'penilai2' || $role == 'penilai3') {
-        $role = 'penilai';
-    }
-
-    if ($role == 'pemrakarsa') {
-        $role = 'pemohon';
-    }
-@endphp
-
-@extends("$role.layout.app")
+@extends('admin.layout.app')
 
 @section('title')
     Profile
@@ -306,7 +294,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <!--end::Content container-->
         </div>
@@ -314,6 +301,3 @@
     </div>
     <!--end::Content wrapper-->
 @endsection
-
-@push('addons-js')
-@endpush

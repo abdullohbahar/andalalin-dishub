@@ -15,9 +15,12 @@ class ProfilePemohonController extends Controller
     {
         $userID = auth()->user()->id;
 
+        $user = User::with('hasOneProfile')->findorfail($userID);
+
         $data = [
             'active' => 'profile',
-            'userID' => $userID
+            'userID' => $userID,
+            'user' => $user
         ];
 
         return view('pemohon.profile.index', $data);
