@@ -207,7 +207,7 @@
                                             @endif
                                             <tr>
                                                 <td colspan="2">
-                                                    <a href="{{ route('admin.user.edit', $user->id) }}"
+                                                    <a href="{{ route('edit.profile', $user->id) }}"
                                                         class="btn btn-warning btn-sm">Ubah Profile</a>
                                                 </td>
                                             </tr>

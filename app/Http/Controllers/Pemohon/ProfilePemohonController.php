@@ -40,6 +40,41 @@ class ProfilePemohonController extends Controller
 
     public function update(Request $request, $id)
     {
+        if ($request->hasFile('file_ktp')) {
+            $response = $this->handleFileUpload($request, 'file_ktp', 'ktp', $id);
+            if ($response !== null) return $response;
+        }
+
+        if ($request->hasFile('file_sertifikat_andalalin')) {
+            $response = $this->handleFileUpload($request, 'file_sertifikat_andalalin', 'sertifikat-andalalin', $id);
+            if ($response !== null) return $response;
+        }
+
+        if ($request->hasFile('file_cv')) {
+            $response = $this->handleFileUpload($request, 'file_cv', 'cv', $id);
+            if ($response !== null) return $response;
+        }
+
+        if ($request->hasFile('file_sk_kepala_dinas')) {
+            $response = $this->handleFileUpload($request, 'file_sk_kepala_dinas', 'sk-kepala-dinas', $id);
+            if ($response !== null) return $response;
+        }
+
+        if ($request->hasFile('file_sertifikat')) {
+            $response = $this->handleFileUpload($request, 'file_sertifikat', 'sertifikat', $id);
+            if ($response !== null) return $response;
+        }
+
+        if ($request->hasFile('file_ijazah_terakhir')) {
+            $response = $this->handleFileUpload($request, 'file_ijazah_terakhir', 'ijazah-terakhir', $id);
+            if ($response !== null) return $response;
+        }
+
+        if ($request->hasFile('foto_profile')) {
+            $response = $this->handleFileUpload($request, 'foto_profile', 'foto-profile', $id);
+            if ($response !== null) return $response;
+        }
+
         $request->validate([
             'nama' => 'required',
             'no_ktp' => 'required',
@@ -53,14 +88,6 @@ class ProfilePemohonController extends Controller
         ]);
 
         $user = User::with('hasOneTtd', 'hasOneProfile')->where('id', $id)->first();
-
-        if (!$user->hasOneProfile?->file_ktp) {
-            $request->validate([
-                'file_ktp' => 'required',
-            ], [
-                'file_ktp.required' => 'KTP harus diisi',
-            ]);
-        }
 
         $role = auth()->user()->role;
 
@@ -96,41 +123,6 @@ class ProfilePemohonController extends Controller
 
         $role = auth()->user()->role;
 
-        if ($role == 'konsultan') {
-            $request->validate([
-                'no_sertifikat' => 'required',
-                'masa_berlaku_sertifikat' => 'required',
-                'tingkatan' => 'required',
-                'sekolah_terakhir' => 'required',
-                'file_sertifikat' => 'required',
-                'file_ijazah_terakhir' => 'required',
-                'foto_profile' => 'mimes:jpg,jpeg,png|max:2048', // 2048 KB = 2 MB
-            ], [
-                'no_sertifikat.required' => 'Nomor sertifikat harus diisi',
-                'masa_berlaku_sertifikat.required' => 'Masa berlaku sertifikat harus diisi',
-                'tingkat.required' => 'Tingkatan harus diisi',
-                'sekolah_terakhir.required' => 'Sekolah terakhir harus diisi',
-                'file_sertifikat.required' => 'Sertifikat harus diisi',
-                'file_ijazah.required' => 'Ijazah Sertifikat harus diisi',
-                'foto_profile.mimes' => 'File KTP harus bertipe: jpg, jpeg, png.',
-                'foto_profile.max' => 'Ukuran file KTP maksimal 2MB.',
-            ]);
-        } else if ($role == 'pemohon') {
-            $request->validate([
-                'file_sertifikat_andalalin' => 'required',
-                'file_cv' => 'required',
-            ], [
-                'file_sertifikat_andalalin.required' => 'Sertifikat andalalin harus diisi',
-                'file_cv.required' => 'CV harus diisi',
-            ]);
-        } else if ($role == 'pemakarsa') {
-            $request->validate([
-                'file_sk_kepala_dinas' => 'required',
-            ], [
-                'file_sk_kepala_dinas.required' => 'SK Kepala Dinas harus diisi',
-            ]);
-        }
-
         $data = [
             'user_id' => $id,
             'nama' => $request->nama,
@@ -142,54 +134,6 @@ class ProfilePemohonController extends Controller
             'tingkatan' => $request->tingkatan,
             'sekolah_terakhir' => $request->sekolah_terakhir,
         ];
-
-        if ($request->hasFile('file_ktp')) {
-            $file = $request->file('file_ktp');
-            $filename = time() . "." . $file->getClientOriginalExtension();
-            $file->storeAs('file-uploads/ktp', $filename, 'public');
-            $data['file_ktp'] = $filename;
-        }
-
-        if ($request->hasFile('file_sertifikat_andalalin')) {
-            $file = $request->file('file_sertifikat_andalalin');
-            $filename = time() . "." . $file->getClientOriginalExtension();
-            $file->storeAs('file-uploads/sertifikat-andalalin', $filename, 'public');
-            $data['file_sertifikat_andalalin'] = $filename;
-        }
-
-        if ($request->hasFile('file_cv')) {
-            $file = $request->file('file_cv');
-            $filename = time() . "." . $file->getClientOriginalExtension();
-            $file->storeAs('file-uploads/cv', $filename, 'public');
-            $data['file_cv'] = $filename;
-        }
-
-        if ($request->hasFile('file_sk_kepala_dinas')) {
-            $file = $request->file('file_sk_kepala_dinas');
-            $filename = time() . "." . $file->getClientOriginalExtension();
-            $file->storeAs('file-uploads/sk-kepala-dinas', $filename, 'public');
-            $data['file_sk_kepala_dinas'] = $filename;
-        }
-
-        if ($request->hasFile('file_sertifikat')) {
-            $file = $request->file('file_sertifikat');
-            $filename = time() . "." . $file->getClientOriginalExtension();
-            $file->storeAs('file-uploads/sertifikat', $filename, 'public');
-        }
-
-        if ($request->hasFile('file_ijazah_terakhir')) {
-            $file = $request->file('file_ijazah_terakhir');
-            $filename = time() . "." . $file->getClientOriginalExtension();
-            $file->storeAs('file-uploads/ijazah-terakhir', $filename, 'public');
-            $data['file_ijazah_terakhir'] = $filename;
-        }
-
-        if ($request->hasFile('foto_profile')) {
-            $file = $request->file('foto_profile');
-            $filename = time() . "." . $file->getClientOriginalExtension();
-            $file->storeAs('file-uploads/foto-profile', $filename, 'public');
-            $data['foto_profile'] = $filename;
-        }
 
         if ($request->signed) {
             TandaTangan::updateorcreate([
@@ -214,5 +158,26 @@ class ProfilePemohonController extends Controller
         User::where('id', $id)->update($dataUser);
 
         return to_route('profile')->with('success', 'Berhasil Mengisi Profile');
+    }
+
+    function handleFileUpload($request, $fieldName, $folderName, $id)
+    {
+        if ($request->hasFile($fieldName)) {
+            $file = $request->file($fieldName);
+            $filename = time() . "." . $file->getClientOriginalExtension();
+            $file->storeAs('file-uploads/' . $folderName, $filename, 'public');
+
+            Profile::updateorcreate([
+                'user_id' => $id,
+            ], [
+                $fieldName => $filename
+            ]);
+
+            return to_route('edit.profile', $id)->with('success', 'Berhasil Mengupload Dokumen');
+        } else {
+            return to_route('edit.profile', $id)->with('failed', 'Gagal Mengupload Dokumen');
+        }
+
+        return null;
     }
 }

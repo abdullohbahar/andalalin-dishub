@@ -96,7 +96,7 @@
                                             <label for="" class="form-label">
                                                 Foto Profile
                                             </label>
-                                            <input required type="file" name="foto_profile"
+                                            <input type="file" name="foto_profile"
                                                 class="form-control @error('foto_profile') is-invalid @enderror"
                                                 id="foto_profile">
                                             <small>Foto hanya boleh bertipe .png, .jpg, dan .jpeg dengan ukuran maksimal
@@ -164,7 +164,67 @@
                                                 </div>
                                             @enderror
                                         </div>
-                                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-3">
+                                        @if ($user->role == 'konsultan')
+                                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-3">
+                                                <label for="" class="form-label">
+                                                    Tingkatan (madya dll)<span style="color: red">*</span>
+                                                </label>
+                                                <input required type="text" name="tingkatan"
+                                                    value="{{ old('tingkatan', $user->hasOneProfile?->tingkatan ?? '') }}"
+                                                    class="form-control @error('tingkatan') is-invalid @enderror"
+                                                    id="">
+                                                @error('tingkatan')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-3">
+                                                <label for="" class="form-label">
+                                                    Sekolah Terakhir<span style="color: red">*</span>
+                                                </label>
+                                                <input required type="text" name="sekolah_terakhir"
+                                                    value="{{ old('sekolah_terakhir', $user->hasOneProfile?->sekolah_terakhir ?? '') }}"
+                                                    class="form-control @error('sekolah_terakhir') is-invalid @enderror"
+                                                    id="">
+                                                @error('sekolah_terakhir')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-3">
+                                                <label for="" class="form-label">
+                                                    Nomor Sertifikat <span style="color: red">*</span>
+                                                </label>
+                                                <input required type="text" name="no_sertifikat"
+                                                    value="{{ old('no_sertifikat', $user->hasOneProfile?->no_sertifikat ?? '') }}"
+                                                    class="form-control @error('no_sertifikat') is-invalid @enderror"
+                                                    id="">
+                                                @error('no_sertifikat')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-3">
+                                                <label for="" class="form-label">
+                                                    Masa Berlaku Sertifikat Sertifikat <span style="color: red">*</span>
+                                                </label>
+                                                <input required type="text" name="masa_berlaku_sertifikat"
+                                                    value="{{ old('masa_berlaku_sertifikat', $user->hasOneProfile?->masa_berlaku_sertifikat ?? '') }}"
+                                                    class="form-control @error('masa_berlaku_sertifikat') is-invalid @enderror"
+                                                    id="">
+                                                @error('masa_berlaku_sertifikat')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-3">
                                             <label for="" class="form-label">
                                                 Username <span style="color: red">*</span>
                                             </label>
@@ -178,8 +238,6 @@
                                                 </div>
                                             @enderror
                                         </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-3">
                                             <label for="" class="form-label">
                                                 Password
@@ -222,36 +280,38 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <hr>
-                                        </div>
-                                        @includeWhen(
-                                            $user->role == 'pemohon',
-                                            'pemohon.profile.components.file-upload-pemohon')
-                                        @includeWhen(
-                                            $user->role == 'pemrakarsa',
-                                            'pemohon.profile.components.file-upload-pemrakarsa')
-                                        @includeWhen(
-                                            $user->role == 'konsultan',
-                                            'pemohon.profile.components.file-upload-konsultan')
-                                        @includeWhen(
-                                            $user->role == 'penilai1' ||
-                                                $user->role == 'penilai2' ||
-                                                $user->role == 'penilai3',
-                                            'pemohon.profile.components.ttd')
-                                        @includeWhen(
-                                            $user->role == 'kasi' ||
-                                                $user->role == 'kabid' ||
-                                                $user->role == 'kadis',
-                                            'pemohon.profile.components.file-upload-kasi')
                                         <div class="col-12 mt-5">
                                             <button type="submit" class="btn btn-success mt-5"
                                                 style="width: 100%">Simpan</button>
                                         </div>
                                     </div>
                                 </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    @includeWhen(
+                                        $user->role == 'pemohon',
+                                        'pemohon.profile.components.file-upload-pemohon')
+                                    @includeWhen(
+                                        $user->role == 'pemrakarsa',
+                                        'pemohon.profile.components.file-upload-pemrakarsa')
+                                    @includeWhen(
+                                        $user->role == 'konsultan',
+                                        'pemohon.profile.components.file-upload-konsultan')
+                                    @includeWhen(
+                                        $user->role == 'penilai1' ||
+                                            $user->role == 'penilai2' ||
+                                            $user->role == 'penilai3',
+                                        'pemohon.profile.components.ttd')
+                                    @includeWhen(
+                                        $user->role == 'kasi' || $user->role == 'kabid' || $user->role == 'kadis',
+                                        'pemohon.profile.components.file-upload-kasi')
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -313,7 +373,7 @@
                 alert(errorMessage)
                 $(this).val("")
                 $('#preview-foto-profile').attr('src',
-                '/img/default.jpg'); // Hapus pratinjau jika ada kesalahan
+                    '/img/default.jpg'); // Hapus pratinjau jika ada kesalahan
             });
         });
     </script>

@@ -23,8 +23,8 @@ class PemrakarsaMiddleware
 
         if (Auth::check() && Auth::user()->role == 'admin') {
             return redirect()->route('admin.dashboard');
-        } else if (Auth::check() && Auth::user()->role == 'pemohon') {
-            return redirect()->route('pemohon.dashboard');
+        } else if (Auth::check() && Auth::user()->role == 'pemohon' || Auth::user()->role == 'pemrakarsa') {
+            return $next($request);
         } else if (Auth::check() && Auth::user()->role == 'konsultan') {
             return redirect()->route('konsultan.dashboard');
         } else if (Auth::check() && Auth::user()->role == 'penilai' || Auth::user()->role == 'penilai1' || Auth::user()->role == 'penilai2' || Auth::user()->role == 'penilai3') {
@@ -35,8 +35,6 @@ class PemrakarsaMiddleware
             return redirect()->route('kabid.dashboard');
         } else if (Auth::check() && Auth::user()->role == 'kadis') {
             return redirect()->route('kadis.dashboard');
-        } else if (Auth::check() && Auth::user()->role == 'pemrakarsa') {
-            return $next($request);
         }
 
         return redirect('/');
