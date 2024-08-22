@@ -39,6 +39,7 @@ class UserController extends Controller
                     <div class='btn-group' role='group' aria-label='Basic example'>
                         <a href='$route' class='btn btn-warning btn-sm'>Edit</a>
                         <a href='$routeShow' class='btn btn-info btn-sm'>Profile</a>
+                        <a data-id='$item->id' data-nama='{$item->hasOneProfile->nama}' id='removeBtn' style='cursor: pointer !important;' class='btn btn-sm btn-danger'><b>Hapus</b></a>
                     </div>
                     ";
                 })

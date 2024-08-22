@@ -102,13 +102,12 @@ KTUtil.onDOMContentLoaded(function () {
 });
 
 //  Delete Data
-$("body").on("click", "#delete", function () {
+$("body").on("click", "#removeBtn", function () {
     var id = $(this).data("id");
     var nama = $(this).data("nama");
 
     Swal.fire({
         title: `Apakah Anda Ingin Menghapus ${nama}?`,
-        text: "Data yang berhubungan akan ikut terhapus!",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
