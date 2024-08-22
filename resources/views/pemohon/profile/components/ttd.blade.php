@@ -7,13 +7,23 @@
             <small>Biarkan kosong jika tidak ingin mengubah tanda tangan</small>
         @endif
     </label>
-    <input {{ $user->hasOneProfile->file_ktp == null ? 'required' : '' }} type="file" name="file_ktp"
-        class="form-control @error('file_ktp') is-invalid @enderror" id="">
-    @error('file_ktp')
-        <div class="invalid-feedback">
-            {{ $message }}
+    <form action="{{ route('update.profile', auth()->user()->id) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+        <div class="input-group mb-3">
+
+            <input {{ $user->hasOneProfile->file_ktp == null ? 'required' : '' }} type="file" name="file_ktp"
+                class="form-control @error('file_ktp') is-invalid @enderror" id="">
+
+            <button class="input-group-text btn btn-success" type="submit">Upload</button>
         </div>
-    @enderror
+        @error('file_ktp')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
+    </form>
+
 </div>
 <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-3">
     <label for="" class="form-label">

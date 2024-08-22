@@ -255,34 +255,35 @@
                     <div class="row mt-5">
                         <div class="col-12">
                             <div class="card">
-                                @if ($klasifikasi != 'non-andalalin')
-                                    <div class="card-header">
-                                        <h2 class="mt-5">
-                                            <b>Data Pengajuan Andalalin</b>
-                                        </h2>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-sm-12 col-md-12 col-lg-6">
-                                                <div class="row">
+                                <div class="card-header">
+                                    <h2 class="mt-5">
+                                        <b>Data Pengajuan
+                                            {{ $klasifikasi != 'non-andalalin' ? 'Andalalin' : 'Non Andalalin' }}</b>
+                                    </h2>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg-6">
+                                            <div class="row">
+                                                @if ($klasifikasi != 'non-andalalin')
                                                     <div class="col-12">
                                                         <label for="" class="form-label">Jenis Jalan</label>
                                                         <input type="text" class="form-control"
-                                                            value="{{ $pengajuan->belongsToJenisJalan->jenis }}" disabled
+                                                            value="{{ $pengajuan->belongsToJenisJalan?->jenis }}" disabled
                                                             id="">
                                                     </div>
                                                     <div class="col-12 mt-5">
                                                         <label for="" class="form-label">Jenis Rencana
                                                             Pembangunan</label>
                                                         <input type="text" class="form-control"
-                                                            value="{{ $pengajuan->belongsToJenisRencana->nama }}" disabled
-                                                            id="">
+                                                            value="{{ $pengajuan->belongsToJenisRencana?->nama }}"
+                                                            disabled id="">
                                                     </div>
                                                     <div class="col-12 mt-5">
                                                         <label for="" class="form-label">Sub Jenis Rencana
                                                             Pembangunan</label>
                                                         <input type="text" class="form-control"
-                                                            value="{{ $pengajuan->belongsToSubJenisRencana->nama }}"
+                                                            value="{{ $pengajuan->belongsToSubJenisRencana?->nama }}"
                                                             disabled id="">
                                                     </div>
                                                     @if ($pengajuan->belongsToSubSubJenisRencana != null)
@@ -290,118 +291,118 @@
                                                             <label for="" class="form-label">Sub Sub Jenis Rencana
                                                                 Pembangunan</label>
                                                             <input type="text" class="form-control"
-                                                                value="{{ $pengajuan->belongsToSubSubJenisRencana->nama }}"
+                                                                value="{{ $pengajuan->belongsToSubSubJenisRencana?->nama }}"
                                                                 disabled id="">
                                                         </div>
                                                     @endif
                                                     <div class="col-12 mt-5">
                                                         <label for="" class="form-label">Ukuran Minimal</label>
                                                         <input type="text" class="form-control"
-                                                            value="{{ $pengajuan->belongsToUkuranMinimal->kategori }}"
+                                                            value="{{ $pengajuan->belongsToUkuranMinimal?->kategori }}"
                                                             disabled id="">
                                                     </div>
-                                                    <div class="col-12 mt-5">
-                                                        <label for="" class="form-label">Nama Proyek</label>
-                                                        <input type="text" class="form-control"
-                                                            value="{{ old('nama_proyek', $dataPemohon->nama_proyek ?? '') }}"
-                                                            name="nama_proyek" required id="">
-                                                    </div>
-                                                    <div class="col-12 mt-5">
-                                                        <label for="" class="form-label">Nama Jalan</label>
-                                                        <input type="text" class="form-control"
-                                                            value="{{ old('nama_jalan', $dataPemohon->nama_jalan ?? '') }}"
-                                                            name="nama_jalan" required id="">
-                                                    </div>
-                                                    <div class="col-12 mt-5">
-                                                        <label for="" class="form-label">Luas Bangunan</label>
-                                                        <div class="input-group">
-                                                            <input type="number" class="form-control"
-                                                                value="{{ old('luas_bangunan', $dataPemohon->luas_bangunan ?? '') }}"
-                                                                name="luas_bangunan" required id="">
-                                                            <span class="input-group-text"
-                                                                id="basic-addon1">m<sup>2</sup></span>
-                                                        </div>
+                                                @endif
+                                                <div class="col-12 {{ $klasifikasi != 'non-andalalin' ? 'mt-5' : '' }}">
+                                                    <label for="" class="form-label">Nama Proyek</label>
+                                                    <input type="text" class="form-control"
+                                                        value="{{ old('nama_proyek', $dataPemohon->nama_proyek ?? '') }}"
+                                                        name="nama_proyek" required id="">
+                                                </div>
+                                                <div class="col-12 mt-5">
+                                                    <label for="" class="form-label">Nama Jalan</label>
+                                                    <input type="text" class="form-control"
+                                                        value="{{ old('nama_jalan', $dataPemohon->nama_jalan ?? '') }}"
+                                                        name="nama_jalan" required id="">
+                                                </div>
+                                                <div class="col-12 mt-5">
+                                                    <label for="" class="form-label">Luas Bangunan</label>
+                                                    <div class="input-group">
+                                                        <input type="number" class="form-control"
+                                                            value="{{ old('luas_bangunan', $dataPemohon->luas_bangunan ?? '') }}"
+                                                            name="luas_bangunan" required id="">
+                                                        <span class="input-group-text"
+                                                            id="basic-addon1">m<sup>2</sup></span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-12 col-md-12 col-lg-6">
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        <label for="" class="form-label">Luas Tanah</label>
-                                                        <div class="input-group">
-                                                            <input type="number" class="form-control"
-                                                                value="{{ old('luas_tanah', $dataPemohon->luas_tanah ?? '') }}"
-                                                                name="luas_tanah" required id="">
-                                                            <span class="input-group-text"
-                                                                id="basic-addon1">m<sup>2</sup></span>
-                                                        </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-12 col-lg-6">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <label for="" class="form-label">Luas Tanah</label>
+                                                    <div class="input-group">
+                                                        <input type="number" class="form-control"
+                                                            value="{{ old('luas_tanah', $dataPemohon->luas_tanah ?? '') }}"
+                                                            name="luas_tanah" required id="">
+                                                        <span class="input-group-text"
+                                                            id="basic-addon1">m<sup>2</sup></span>
                                                     </div>
-                                                    <div class="col-12 mt-5">
-                                                        <label for="" class="form-label">Alamat</label>
-                                                        <textarea name="alamat" id="" name="alamat" style="width:100%" class="form-control" rows="1">{{ old('alamat', $dataPemohon->alamat ?? '') }}</textarea>
-                                                    </div>
-                                                    <div class="col-12 mt-5">
-                                                        <label for="" class="form-label">Nomor Surat
-                                                            Permohonan</label>
-                                                        <input type="text" class="form-control"
-                                                            name="nomor_surat_permohonan"
-                                                            value="{{ old('nomor_surat_permohonan', $dataPemohon->nomor_surat_permohonan ?? '') }}"
-                                                            required id="">
-                                                    </div>
-                                                    <div class="col-12 mt-5">
-                                                        <label for="" class="form-label">Tanggal Surat
-                                                            Permohonan</label>
-                                                        @php
-                                                            $tanggal = $dataPemohon->tanggal_surat_permohonan ?? null;
+                                                </div>
+                                                <div class="col-12 mt-5">
+                                                    <label for="" class="form-label">Alamat</label>
+                                                    <textarea name="alamat" id="" name="alamat" style="width:100%" class="form-control" rows="1">{{ old('alamat', $dataPemohon->alamat ?? '') }}</textarea>
+                                                </div>
+                                                <div class="col-12 mt-5">
+                                                    <label for="" class="form-label">Nomor Surat
+                                                        Permohonan</label>
+                                                    <input type="text" class="form-control"
+                                                        name="nomor_surat_permohonan"
+                                                        value="{{ old('nomor_surat_permohonan', $dataPemohon->nomor_surat_permohonan ?? '') }}"
+                                                        required id="">
+                                                </div>
+                                                <div class="col-12 mt-5">
+                                                    <label for="" class="form-label">Tanggal Surat
+                                                        Permohonan</label>
+                                                    @php
+                                                        $tanggal = $dataPemohon->tanggal_surat_permohonan ?? null;
 
-                                                            if ($tanggal) {
-                                                                $tanggal = $dataPemohon->getRawOriginal(
-                                                                    'tanggal_surat_permohonan',
-                                                                );
-                                                            } else {
-                                                                $tanggal = '';
-                                                            }
-                                                        @endphp
-                                                        <input type="date" class="form-control"
-                                                            name="tanggal_surat_permohonan"
-                                                            value="{{ old('tanggal_surat_permohonan', $tanggal) }}"
-                                                            required id="">
+                                                        if ($tanggal) {
+                                                            $tanggal = $dataPemohon->getRawOriginal(
+                                                                'tanggal_surat_permohonan',
+                                                            );
+                                                        } else {
+                                                            $tanggal = '';
+                                                        }
+                                                    @endphp
+                                                    <input type="date" class="form-control"
+                                                        name="tanggal_surat_permohonan"
+                                                        value="{{ old('tanggal_surat_permohonan', $tanggal) }}" required
+                                                        id="">
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12 mt-5">
+                                                        <label for="" class="form-label">Tentukan Lokasi. <i
+                                                                style="color: red">Anda Harus Berada Dilokasi Untuk
+                                                                Menentukan
+                                                                Lokasi</i></label>
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-12 mt-5">
-                                                            <label for="" class="form-label">Tentukan Lokasi. <i
-                                                                    style="color: red">Anda Harus Berada Dilokasi Untuk
-                                                                    Menentukan
-                                                                    Lokasi</i></label>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <label for="" class="form-label">longitude</label>
-                                                            <input type="text" class="form-control" name="longitude"
-                                                                value="{{ old('longitude', $dataPemohon->longitude ?? '') }}"
-                                                                required id="longitude">
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <label for="" class="form-label">latitude</label>
-                                                            <input type="text" class="form-control" name="latitude"
-                                                                value="{{ old('latitude', $dataPemohon->latitude ?? '') }}"
-                                                                required id="latitude">
-                                                        </div>
-                                                        <div class="col-sm-12 col-md-6 mt-3">
-                                                            <button type="button" id="getLocation"
-                                                                class="btn btn-sm btn-info" style="width:100%">Ambil
-                                                                Lokasi</button>
-                                                        </div>
-                                                        <div class="col-sm-12 col-md-6 mt-3">
-                                                            <button id="seeLocation" type="button" style="width:100%"
-                                                                class="btn btn-sm btn-primary">Lihat
-                                                                Lokasi</button>
-                                                        </div>
+                                                    <div class="col-6">
+                                                        <label for="" class="form-label">longitude</label>
+                                                        <input type="text" class="form-control" name="longitude"
+                                                            value="{{ old('longitude', $dataPemohon->longitude ?? '') }}"
+                                                            required id="longitude">
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label for="" class="form-label">latitude</label>
+                                                        <input type="text" class="form-control" name="latitude"
+                                                            value="{{ old('latitude', $dataPemohon->latitude ?? '') }}"
+                                                            required id="latitude">
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-6 mt-3">
+                                                        <button type="button" id="getLocation"
+                                                            class="btn btn-sm btn-info" style="width:100%">Ambil
+                                                            Lokasi</button>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-6 mt-3">
+                                                        <button id="seeLocation" type="button" style="width:100%"
+                                                            class="btn btn-sm btn-primary">Lihat
+                                                            Lokasi</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                @endif
+                                </div>
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-success"
                                         style="float: right;">Selanjutnya</button>

@@ -153,6 +153,17 @@
                                                 </td>
                                                 <td>{{ $user->role }}</td>
                                             </tr>
+                                            <tr>
+                                                <td>
+                                                    <b>
+                                                        Jabatan
+                                                    </b>
+                                                </td>
+                                                <td>
+                                                    <b>:</b>
+                                                </td>
+                                                <td>{{ $user->jabatan ?? '-' }}</td>
+                                            </tr>
                                             @if ($user->hasOneProfile?->no_sertifikat)
                                                 <tr>
                                                     <td>

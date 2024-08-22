@@ -64,7 +64,7 @@
                                     <tbody>
                                         @foreach ($pengajuanDitolak as $ditolak)
                                             <tr>
-                                                <td>{{ $ditolak->belongsToJenisRencana->nama }}</td>
+                                                <td>{{ $ditolak->belongsToJenisRencana?->nama }}</td>
                                                 <td>{{ $ditolak->hasOneDataPemohon?->nama_proyek }}</td>
                                                 <td>
                                                     <a href="{{ route('pemohon.show.pengajuan.andalalin', $ditolak->id) }}"
@@ -94,7 +94,7 @@
                                     <tbody>
                                         @foreach ($pengajuanPerluRevisi as $revisi)
                                             <tr>
-                                                <td>{{ $revisi->belongsToJenisRencana->nama }}</td>
+                                                <td>{{ $revisi->belongsToJenisRencana?->nama }}</td>
                                                 <td>{{ $revisi->hasOneDataPemohon?->nama_proyek }}</td>
                                                 <td>
                                                     <a href="{{ route('pemohon.show.pengajuan.andalalin', $revisi->id) }}"
@@ -124,7 +124,7 @@
                                     <tbody>
                                         @foreach ($pengajuanDisetujui as $disetujui)
                                             <tr>
-                                                <td>{{ $disetujui->belongsToJenisRencana->nama }}</td>
+                                                <td>{{ $disetujui->belongsToJenisRencana?->nama }}</td>
                                                 <td>{{ $disetujui->hasOneDataPemohon?->nama_proyek }}</td>
                                                 <td>
                                                     @if ($disetujui->hasOneRiwayatVerifikasi->step != 'Selesai')
