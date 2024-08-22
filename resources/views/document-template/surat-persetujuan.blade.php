@@ -415,7 +415,7 @@
                     {{ $bulanRoman }} /
                     {{ $tahunInteger }}
                     <br>
-                    TAHUN 2023 <br>
+                    TAHUN {{ date('Y') }} <br>
                     TENTANG <br>
                     PERSETUJUAN {{ $ukuranMinimal }} <br>
                     DOKUMEN {{ $ukuranMinimal }} PENANGANAN DAMPAK LALU LINTAS {{ $jenisBangkitan }} PEMBANGUNAN DAN
