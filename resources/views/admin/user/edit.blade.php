@@ -108,6 +108,17 @@
                                                 </div>
                                             @enderror
                                         </div>
+                                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-4">
+                                            <label for="" class="form-label">Jabatan</label>
+                                            <input type="text" name="jabatan"
+                                                class="form-control @error('jabatan') is-invalid @enderror" id="jabatan"
+                                                value="{{ old('jabatan', $user->hasOneProfile->jabatan) }}">
+                                            @error('jabatan')
+                                                <div class="invalid-feedback text-capitalize">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-4">
@@ -134,7 +145,8 @@
                                                 <input type="password" name="password_confirmation"
                                                     class="form-control @error('password_confirmation') is-invalid @enderror"
                                                     id="password_confirmation" autocomplete="new-password">
-                                                <span class="input-group-text view-password-confirmation" id="basic-addon2">
+                                                <span class="input-group-text view-password-confirmation"
+                                                    id="basic-addon2">
                                                     <i id="icon-password-confirmation" class="fas fa-eye"></i>
                                                 </span>
                                                 @error('password_confirmation')

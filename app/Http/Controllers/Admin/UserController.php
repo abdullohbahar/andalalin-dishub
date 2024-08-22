@@ -80,7 +80,7 @@ class UserController extends Controller
             'nama' => 'required',
             'username' => 'required|unique:users,username',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|confirmed|min:10|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
+            // 'password' => 'required|confirmed|min:10|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
             'role' => 'required'
         ], [
             'nama.required' => 'nama harus diisi',
@@ -100,12 +100,13 @@ class UserController extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->role
+            'role' => $request->role,
         ]);
 
         Profile::create([
             'user_id' => $user->id,
             'nama' => $request->nama,
+            'jabatan' => $request->jabatan,
         ]);
 
         return to_route('admin.user.index')->with('success', 'Berhasil menambah user');
@@ -158,7 +159,7 @@ class UserController extends Controller
             ]);
         }
 
-        if ($request->email != $user->hasOneProfile->email) {
+        if ($request->email != $user->email) {
             $request->validate([
                 'email' => 'email|unique:users,email',
             ], [
@@ -176,6 +177,7 @@ class UserController extends Controller
 
         $user->hasOneProfile->update([
             'nama' => $request->nama,
+            'jabatan' => $request->jabatan,
         ]);
 
         return to_route('admin.user.index')->with('success', 'Berhasil mengubah user');

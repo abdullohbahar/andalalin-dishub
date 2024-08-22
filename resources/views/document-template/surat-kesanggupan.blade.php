@@ -250,7 +250,7 @@
                     <tr>
                         <td>{{ $no++ }}</td>
                         <td>{{ $penilai->hasOneProfile->nama }}</td>
-                        <td style="text-transform: capitalize">Penilai {{ $index + 1 }}</td>
+                        <td style="text-transform: capitalize">{{ $penilai->hasOneProfile?->jabatan }}</td>
                         <td style="text-align: center;">
                             @php
                                 $approval_column = 'is_penilai_' . $index + 1 . '_approve';
