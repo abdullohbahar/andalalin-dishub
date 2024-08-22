@@ -18,9 +18,7 @@ class PengajuanController extends Controller
         if ($request->ajax()) {
 
             $query = Pengajuan::with('belongsToJenisRencana', 'hasOneDataPemohon', 'belongsToUser.hasOneProfile', 'hasOneRiwayatInputData')
-                ->whereHas('hasOneDataPemohon', function ($query) {
-                    $query->whereNotNull('nama_proyek')->where('nama_proyek', '!=', '');
-                })
+                ->whereHas('hasOneDataPemohon')
                 ->orderBy('updated_at', 'desc')
                 ->get();
 

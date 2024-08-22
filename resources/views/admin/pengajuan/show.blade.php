@@ -59,7 +59,8 @@
                             </div>
                             <div class="card-body" style="overflow-y: visible">
                                 <div class="row">
-                                    <div class="col-sm-12 col-md-6">
+                                    <div
+                                        class="col-sm-12 {{ $pengajuan->jenis_pengajuan != 'non-andalalin' ? 'col-md-6' : 'col-md-12' }}">
                                         <h3>
                                             <b>Data Pemohon</b>
                                         </h3>
@@ -69,7 +70,7 @@
                                                     <b>NIK</b>
                                                 </td>
                                                 <td>
-                                                    : {{ $pengajuan->belongsToUser->hasOneProfile->no_ktp }}
+                                                    : {{ $pengajuan->belongsToUser?->hasOneProfile?->no_ktp }}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -77,7 +78,7 @@
                                                     <b>Nama Pemohon</b>
                                                 </td>
                                                 <td>
-                                                    : {{ $pengajuan->belongsToUser->hasOneProfile->nama }}
+                                                    : {{ $pengajuan->belongsToUser?->hasOneProfile?->nama }}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -85,7 +86,7 @@
                                                     <b>Email Pemohon</b>
                                                 </td>
                                                 <td>
-                                                    : {{ $pengajuan->belongsToUser->email }}
+                                                    : {{ $pengajuan->belongsToUser?->email }}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -93,7 +94,7 @@
                                                     <b>Nomor Telepon Pemohon</b>
                                                 </td>
                                                 <td>
-                                                    : {{ $pengajuan->belongsToUser->hasOneProfile->no_telepon }}
+                                                    : {{ $pengajuan->belongsToUser?->hasOneProfile?->no_telepon }}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -114,189 +115,192 @@
                                             </tr>
                                         </table>
                                     </div>
-                                    <div class="col-sm-12 col-md-6">
-                                        <h3>
-                                            <b>Data Konsultan</b>
-                                        </h3>
-                                        <table class="table table-striped table-bordered">
-                                            <tr>
-                                                <td>
-                                                    <b>Nama Konsultan</b>
-                                                </td>
-                                                <td>
-                                                    :
-                                                    {{ $pengajuan->hasOneDataPemohon?->belongsToConsultan?->hasOneProfile?->nama }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <b>Nomor Telepon Konsultan</b>
-                                                </td>
-                                                <td>
-                                                    :
-                                                    {{ $pengajuan->hasOneDataPemohon?->belongsToConsultan?->hasOneProfile?->no_telepon }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <b>Email Konsultan</b>
-                                                </td>
-                                                <td>
-                                                    : {{ $pengajuan->hasOneDataPemohon?->belongsToConsultan?->email }}
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
+                                    @if ($pengajuan->jenis_pengajuan != 'non-andalalin')
+                                        <div class="col-sm-12 col-md-6">
+                                            <h3>
+                                                <b>Data Konsultan</b>
+                                            </h3>
+                                            <table class="table table-striped table-bordered">
+                                                <tr>
+                                                    <td>
+                                                        <b>Nama Konsultan</b>
+                                                    </td>
+                                                    <td>
+                                                        :
+                                                        {{ $pengajuan->hasOneDataPemohon?->belongsToConsultan?->hasOneProfile?->nama }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>Nomor Telepon Konsultan</b>
+                                                    </td>
+                                                    <td>
+                                                        :
+                                                        {{ $pengajuan->hasOneDataPemohon?->belongsToConsultan?->hasOneProfile?->no_telepon }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>Email Konsultan</b>
+                                                    </td>
+                                                    <td>
+                                                        : {{ $pengajuan->hasOneDataPemohon?->belongsToConsultan?->email }}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 mt-5">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="mt-5">
-                                    <b>Data Pengajuan Andalalin</b>
-                                </h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-6">
-                                        <table class="table table-striped table-bordered">
-                                            <tr>
-                                                <td>
-                                                    <b>Jenis Jalan</b>
-                                                </td>
-                                                <td>
-                                                    :
-                                                    {{ $pengajuan->belongsToJenisJalan->jenis }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <b>Jenis Rencana Pembangunan</b>
-                                                </td>
-                                                <td>
-                                                    :
-                                                    {{ $pengajuan->belongsToJenisRencana->nama }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <b>Sub Jenis Rencana Pembangunan</b>
-                                                </td>
-                                                <td>
-                                                    : {{ $pengajuan->belongsToSubJenisRencana->nama }}
-                                                </td>
-                                            </tr>
-                                            @if ($pengajuan->belongsToSubSubJenisRencana != null)
+                    @if ($pengajuan->jenis_pengajuan != 'non-andalalin')
+                        <div class="col-12 mt-5">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="mt-5">
+                                        <b>Data Pengajuan Andalalin</b>
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-6">
+                                            <table class="table table-striped table-bordered">
                                                 <tr>
                                                     <td>
-                                                        <b>Sub Sub Jenis Rencana Pembangunan</b>
+                                                        <b>Jenis Jalan</b>
                                                     </td>
                                                     <td>
-                                                        : {{ $pengajuan->belongsToSubSubJenisRencana->nama }}
+                                                        :
+                                                        {{ $pengajuan->belongsToJenisJalan?->jenis }}
                                                     </td>
                                                 </tr>
-                                            @endif
-                                            <tr>
-                                                <td>
-                                                    <b>Ukuran Minimal</b>
-                                                </td>
-                                                <td>
-                                                    : {{ $pengajuan->belongsToUkuranMinimal->keterangan }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <b>Kategori Bangkitan Lalu Lintas</b>
-                                                </td>
-                                                <td>
-                                                    : {{ $pengajuan->belongsToUkuranMinimal->kategori }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <b>Nama Proyek</b>
-                                                </td>
-                                                <td>
-                                                    : {{ $pengajuan->hasOneDataPemohon?->nama_proyek }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <b>Nama Jalan</b>
-                                                </td>
-                                                <td>
-                                                    : {{ $pengajuan->hasOneDataPemohon?->nama_jalan }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <b>Luas Bangunan</b>
-                                                </td>
-                                                <td>
-                                                    : {{ $pengajuan->hasOneDataPemohon?->luas_bangunan }}
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    <div class="col-sm-12 col-md-6">
-                                        <table class="table table-striped table-bordered">
-                                            <tr>
-                                                <td>
-                                                    <b>Luas Tanah</b>
-                                                </td>
-                                                <td>
-                                                    :
-                                                    {{ $pengajuan->hasOneDataPemohon?->luas_tanah }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <b>Alamat</b>
-                                                </td>
-                                                <td>
-                                                    :
-                                                    {{ $pengajuan->hasOneDataPemohon?->alamat }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <b>Nomor Surat Permohonan</b>
-                                                </td>
-                                                <td>
-                                                    :
-                                                    {{ $pengajuan->hasOneDataPemohon?->nomor_surat_permohonan }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <b>Tanggal Surat Permohonan</b>
-                                                </td>
-                                                <td>
-                                                    :
-                                                    {{ $pengajuan->hasOneDataPemohon?->tanggal_surat_permohonan }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <b>Longitude</b>
-                                                </td>
-                                                <td>
-                                                    :
-                                                    {{ $pengajuan->hasOneDataPemohon?->longitude }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <b>Latitude</b>
-                                                </td>
-                                                <td>
-                                                    :
-                                                    {{ $pengajuan->hasOneDataPemohon?->latitude }}
-                                                </td>
-                                            </tr>
-                                            {{-- <tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>Jenis Rencana Pembangunan</b>
+                                                    </td>
+                                                    <td>
+                                                        :
+                                                        {{ $pengajuan->belongsToJenisRencana?->nama }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>Sub Jenis Rencana Pembangunan</b>
+                                                    </td>
+                                                    <td>
+                                                        : {{ $pengajuan->belongsToSubJenisRencana?->nama }}
+                                                    </td>
+                                                </tr>
+                                                @if ($pengajuan->belongsToSubSubJenisRencana != null)
+                                                    <tr>
+                                                        <td>
+                                                            <b>Sub Sub Jenis Rencana Pembangunan</b>
+                                                        </td>
+                                                        <td>
+                                                            : {{ $pengajuan->belongsToSubSubJenisRencana->nama }}
+                                                        </td>
+                                                    </tr>
+                                                @endif
+                                                <tr>
+                                                    <td>
+                                                        <b>Ukuran Minimal</b>
+                                                    </td>
+                                                    <td>
+                                                        : {{ $pengajuan->belongsToUkuranMinimal?->keterangan }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>Kategori Bangkitan Lalu Lintas</b>
+                                                    </td>
+                                                    <td>
+                                                        : {{ $pengajuan->belongsToUkuranMinimal?->kategori }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>Nama Proyek</b>
+                                                    </td>
+                                                    <td>
+                                                        : {{ $pengajuan->hasOneDataPemohon?->nama_proyek }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>Nama Jalan</b>
+                                                    </td>
+                                                    <td>
+                                                        : {{ $pengajuan->hasOneDataPemohon?->nama_jalan }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>Luas Bangunan</b>
+                                                    </td>
+                                                    <td>
+                                                        : {{ $pengajuan->hasOneDataPemohon?->luas_bangunan }}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6">
+                                            <table class="table table-striped table-bordered">
+                                                <tr>
+                                                    <td>
+                                                        <b>Luas Tanah</b>
+                                                    </td>
+                                                    <td>
+                                                        :
+                                                        {{ $pengajuan->hasOneDataPemohon?->luas_tanah }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>Alamat</b>
+                                                    </td>
+                                                    <td>
+                                                        :
+                                                        {{ $pengajuan->hasOneDataPemohon?->alamat }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>Nomor Surat Permohonan</b>
+                                                    </td>
+                                                    <td>
+                                                        :
+                                                        {{ $pengajuan->hasOneDataPemohon?->nomor_surat_permohonan }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>Tanggal Surat Permohonan</b>
+                                                    </td>
+                                                    <td>
+                                                        :
+                                                        {{ $pengajuan->hasOneDataPemohon?->tanggal_surat_permohonan }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>Longitude</b>
+                                                    </td>
+                                                    <td>
+                                                        :
+                                                        {{ $pengajuan->hasOneDataPemohon?->longitude }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>Latitude</b>
+                                                    </td>
+                                                    <td>
+                                                        :
+                                                        {{ $pengajuan->hasOneDataPemohon?->latitude }}
+                                                    </td>
+                                                </tr>
+                                                {{-- <tr>
                                                 <td>
                                                     <b>Lokasi</b>
                                                 </td>
@@ -308,12 +312,13 @@
                                                         Maps</a>
                                                 </td>
                                             </tr> --}}
-                                        </table>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                     <div class="col-12 mt-5">
                         <div class="card">
                             <div class="card-header">

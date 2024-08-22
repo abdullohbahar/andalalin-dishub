@@ -83,12 +83,14 @@ class PengajuanAndalalinController extends Controller
         $dataPemrakarsa = Pemrakarsa::where('pengajuan_id', $pengajuanID)
             ->first();
 
-        if (stripos($pengajuan->belongsToUkuranMinimal->kategori, 'rendah')) {
+        if (stripos($pengajuan->belongsToUkuranMinimal?->kategori, 'rendah')) {
             $klasifikasi = 'rendah';
-        } else if (stripos($pengajuan->belongsToUkuranMinimal->kategori, 'sedang')) {
+        } else if (stripos($pengajuan->belongsToUkuranMinimal?->kategori, 'sedang')) {
             $klasifikasi = 'sedang';
-        } else {
+        } else if (stripos($pengajuan->belongsToUkuranMinimal?->kategori, 'tinggi')) {
             $klasifikasi = 'tinggi';
+        } else {
+            $klasifikasi = 'non-andalalin';
         }
 
         $user = User::with('hasOneProfile')->findorfail($userID);

@@ -25,9 +25,7 @@ class PengajuanPemohonController extends Controller
                 'hasOneRiwayatInputData'
             ])
                 ->orderBy('updated_at', 'desc')
-                ->whereHas('hasOneDataPemohon', function ($query) {
-                    $query->whereNotNull('nama_proyek')->where('nama_proyek', '!=', '');
-                })
+                ->whereHas('hasOneDataPemohon')
                 ->where('user_id', $userID)
                 ->get();
 
@@ -126,5 +124,24 @@ class PengajuanPemohonController extends Controller
         ]);
 
         return to_route('pemohon.create.pengajuan.andalalin', $pengajuan->id);
+    }
+
+    public function createNonAndalalin()
+    {
+        $userID = auth()->user()->id;
+
+        $pengajuan = Pengajuan::create([
+            'user_id' => $userID,
+            'jenis_pengajuan' => 'non-andalalin',
+            'status' => 'input data belum selesai'
+        ]);
+
+        RiwayatInputData::updateorcreate([
+            'pengajuan_id' => $pengajuan->id
+        ], [
+            'step' => 'Buat Pengajuan Baru'
+        ]);
+
+        return to_route('pemohon.pilih.konsultan.pengajuan.andalalin', $pengajuan->id);
     }
 }

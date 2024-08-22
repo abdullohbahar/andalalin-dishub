@@ -66,7 +66,7 @@
                         </a>
                     </div>
                     <div class="col-sm-12 mt-3 col-md-6">
-                        <a href="" class="card text-white bg-primary">
+                        <a href="{{ route('pemohon.create.non.andalalin') }}" class="card text-white bg-primary">
                             <div class="card-body text-center">
                                 <h1>Non Andalalin</h1>
                             </div>

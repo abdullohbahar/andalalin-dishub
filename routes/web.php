@@ -201,6 +201,7 @@ Route::middleware('choose.role', 'pemohon')->group(function () {
         Route::get('/', [PengajuanPemohonController::class, 'index'])->name('pemohon.pengajuan');
         Route::get('/pilih-tipe', [PengajuanPemohonController::class, 'pilihTipe'])->name('pemohon.pilih.tipe.pengajuan');
         Route::get('/create-tipe-andalalin', [PengajuanPemohonController::class, 'createTipeAndalalin'])->name('pemohon.create.tipe.andalalin');
+        Route::get('/create-tipe-non-andalalin', [PengajuanPemohonController::class, 'createNonAndalalin'])->name('pemohon.create.non.andalalin');
 
         Route::prefix('andalalin')->group(function () {
             Route::get('riwayat-input-data/{pengajuanID}', RiwayatInputDataController::class)->name('pemohon.riwayat.input.data');
