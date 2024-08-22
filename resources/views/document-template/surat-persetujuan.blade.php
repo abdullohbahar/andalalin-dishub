@@ -121,7 +121,7 @@
 
     <div>
         <p class="text-center">DINAS PERHUBUNGAN KABUPATEN BANTUL</p>
-        <table border="1" style="text-align:justify">
+        <table style="text-align:justify">
             <tr>
                 <td style="width: 15%; vertical-align:top; padding-top: 17.6px;">Menimbang</td>
                 <td style="width: 2%; vertical-align:top; padding-top: 17.6px;">:</td>
