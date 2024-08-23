@@ -28,7 +28,12 @@ class PengajuanController extends Controller
                     return $item->belongsToUser?->hasOneProfile?->nama ?? '';
                 })
                 ->addColumn('jenis', function ($item) {
-                    return $item->belongsToJenisRencana?->nama ?? '';
+                    if ($item->jenis_pengajuan == 'non-andalalin') {
+                        $jenis = 'Non Andalalin';
+                    } else {
+                        $jenis = $item->belongsToJenisRencana?->nama ?? '';
+                    }
+                    return $jenis;
                 })
                 ->addColumn('proyek', function ($item) {
                     return $item->hasOneDataPemohon?->nama_proyek ?? '';
