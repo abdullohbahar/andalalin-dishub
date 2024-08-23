@@ -75,6 +75,27 @@ class ProfilePemohonController extends Controller
             if ($response !== null) return $response;
         }
 
+        $user = User::with('hasOneTtd', 'hasOneProfile')->where('id', $id)->first();
+
+        if ($request->hasFile('signed')) {
+            $request->validate([
+                'signed' => 'required|image|mimes:jpeg,png,jpg|max:2048', // Sesuaikan aturan validasi
+            ]);
+
+            // Mengambil file dan mengubahnya ke base64
+            $image = $request->file('signed');
+            $imageBase64 = base64_encode(file_get_contents($image->getRealPath()));
+
+            // Menyimpan data base64 ke dalam tabel TandaTangan
+            TandaTangan::updateOrCreate([
+                'user_id' => $user->id,
+            ], [
+                'ttd' => 'data:image/png;base64, ' . $imageBase64,
+            ]);
+
+            return to_route('profile')->with('success', 'Berhasil Upload Tanda Tangan');
+        }
+
         $request->validate([
             'nama' => 'required',
             'no_ktp' => 'required',
@@ -87,19 +108,17 @@ class ProfilePemohonController extends Controller
             'alamat.required' => 'Alamat harus diisi',
         ]);
 
-        $user = User::with('hasOneTtd', 'hasOneProfile')->where('id', $id)->first();
-
         $role = auth()->user()->role;
 
-        if ($role == 'penilai1' || $role == 'penilai2' || $role == 'penilai3') {
-            if (!$user->hasOneTtd) {
-                $request->validate([
-                    'signed' => 'required'
-                ], [
-                    'signed.required' => 'Tanda Tangan harus diisi'
-                ]);
-            }
-        }
+        // if ($role == 'penilai1' || $role == 'penilai2' || $role == 'penilai3') {
+        //     if (!$user->hasOneTtd) {
+        //         $request->validate([
+        //             'signed' => 'required'
+        //         ], [
+        //             'signed.required' => 'Tanda Tangan harus diisi'
+        //         ]);
+        //     }
+        // }
 
         if ($user->username != $request->username) {
             $request->validate([
@@ -134,14 +153,6 @@ class ProfilePemohonController extends Controller
             'tingkatan' => $request->tingkatan,
             'sekolah_terakhir' => $request->sekolah_terakhir,
         ];
-
-        if ($request->signed) {
-            TandaTangan::updateorcreate([
-                'user_id' => $user->id,
-            ], [
-                'ttd' => $request->signed,
-            ]);
-        }
 
         Profile::updateorcreate([
             'user_id' => $id,

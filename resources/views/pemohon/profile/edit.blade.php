@@ -376,6 +376,31 @@
                     '/img/default.jpg'); // Hapus pratinjau jika ada kesalahan
             });
         });
+
+        document.getElementById('ttd').addEventListener('change', function() {
+            const fileInput = document.getElementById('ttd');
+            const file = fileInput.files[0];
+
+            if (file) {
+                // Validasi ukuran file (Max 2MB)
+                const maxSize = 2 * 1024 * 1024; // 2MB dalam byte
+                if (file.size > maxSize) {
+                    alert('Ukuran file tidak boleh lebih dari 2MB');
+                    fileInput.value = ''; // Mengosongkan input file
+                    return;
+                }
+
+                // Validasi format file
+                const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+                if (!allowedExtensions.exec(file.name)) {
+                    alert('Format file tidak valid. Hanya diperbolehkan format jpg, jpeg, dan png.');
+                    fileInput.value = ''; // Mengosongkan input file
+                    return;
+                }
+            } else {
+                alert('Silakan pilih file untuk diunggah');
+            }
+        });
     </script>
 
     <script src="{{ asset('./assets/js/pages/view-password.js') }}"></script>

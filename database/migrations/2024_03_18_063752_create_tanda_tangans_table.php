@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('tanda_tangans', function (Blueprint $table) {
             $table->id();
             $table->foreignUuid('user_id')->nullable()->references('id')->on('users')->nullOnDelete();
-            $table->text('ttd');
+            $table->longText('ttd');
             $table->timestamps();
         });
     }
