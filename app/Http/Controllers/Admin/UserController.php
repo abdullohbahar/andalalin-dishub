@@ -81,7 +81,7 @@ class UserController extends Controller
             'nama' => 'required',
             'username' => 'required|unique:users,username',
             'email' => 'required|email|unique:users,email',
-            // 'password' => 'required|confirmed|min:10|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
+            'password' => 'required|confirmed|min:10|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
             'role' => 'required'
         ], [
             'nama.required' => 'nama harus diisi',
@@ -139,6 +139,12 @@ class UserController extends Controller
             'username.required' => 'username harus diisi',
         ]);
 
+        $data = [
+            'username' => $request->username,
+            'email' => $request->email,
+            'role' => $request->role
+        ];
+
         if ($request->password) {
             $request->validate([
                 'password' => 'required|confirmed|min:10|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
@@ -148,6 +154,8 @@ class UserController extends Controller
                 'password.min' => 'password minimal 10 karakter',
                 'password.regex' => 'password harus terdiri dari huruf besar, huruf kecil, dan angka',
             ]);
+
+            $data['password'] = Hash::make($request->password);
         }
 
         $user = User::with('hasOneProfile')->findorfail($id);
@@ -169,12 +177,7 @@ class UserController extends Controller
             ]);
         }
 
-        $user->update([
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => $request->role
-        ]);
+        $user->update($data);
 
         $user->hasOneProfile->update([
             'nama' => $request->nama,
