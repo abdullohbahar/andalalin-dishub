@@ -33,7 +33,9 @@ class PemberitahuanJadwalTinjauan extends Controller
 
         $kepada = [];
         $kepada['pimpinan'] = $pengajuan->hasOneDataPemohon?->nama_pimpinan;
-        $kepada['konsultan'] = $pengajuan->hasOneDataPemohon?->belongsToConsultan?->hasOneProfile?->nama;
+        if ($pengajuan->hasOneDataPemohon?->belongsToConsultan?->hasOneProfile?->nama) {
+            $kepada['konsultan'] = $pengajuan->hasOneDataPemohon?->belongsToConsultan?->hasOneProfile?->nama;
+        }
         $kepada['pemohon'] = $pengajuan->belongsToUser?->hasOneProfile?->nama;
 
         $data = [
