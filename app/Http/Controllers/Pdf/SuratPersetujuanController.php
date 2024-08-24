@@ -30,6 +30,9 @@ class SuratPersetujuanController extends Controller
         $aksaraPath = public_path('img/aksara-dishub.png');
         $encodeAksara = base64_encode(file_get_contents($aksaraPath));
 
+        $watermark = public_path('img/logo-dishub.png');
+        $encodeWatermark = base64_encode(file_get_contents($watermark));
+
         $pengajuan = Pengajuan::with(
             'hasOneJadwalTinjauan',
             'hasOneDataPemohon.belongsToConsultan.hasOneProfile',
@@ -112,7 +115,8 @@ class SuratPersetujuanController extends Controller
             'terbilangLuasLahan' => Terbilang::make(intVal($luasLahan)),
             'luasBangunan' => $luasBangunan,
             'tanggalSuratPermohonan' => $tanggalSuratPermohonan,
-            'tanggalSuratPersetujuan' => $tanggalSuratPersetujuan
+            'tanggalSuratPersetujuan' => $tanggalSuratPersetujuan,
+            'watermark' => $encodeWatermark,
         ];
 
         $pdf = PDF::loadView('document-template.surat-persetujuan', $data);

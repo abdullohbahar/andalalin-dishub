@@ -53,6 +53,27 @@
             padding: 1px 0;
             width: 100%;
         }
+
+        .watermark {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: url('data:image/png;base64,{{ $watermark }}');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 150%;
+            opacity: 0.1;
+            /* Sesuaikan opacity sesuai kebutuhan */
+        }
+
+        .content {
+            z-index: 10;
+            /* Memastikan konten berada di atas watermark */
+            position: relative;
+        }
     </style>
 </head>
 

@@ -29,6 +29,9 @@ class BeritaAcaraController extends Controller
         $aksaraPath = public_path('img/aksara-dishub.png');
         $encodeAksara = base64_encode(file_get_contents($aksaraPath));
 
+        $watermark = public_path('img/logo-dishub.png');
+        $encodeWatermark = base64_encode(file_get_contents($watermark));
+
         $pengajuan = Pengajuan::with(
             'hasOneJadwalTinjauan',
             'hasOneDataPemohon.belongsToConsultan.hasOneProfile',
@@ -95,6 +98,7 @@ class BeritaAcaraController extends Controller
             'pengajuan' => $pengajuan,
             'luasLahan' => $luasLahan,
             'luasBangunan' => $luasBangunan,
+            'watermark' => $encodeWatermark,
         ];
 
         $pdf = PDF::loadView('document-template.berita-acara', $data);
