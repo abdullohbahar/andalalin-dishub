@@ -52,7 +52,7 @@
                             <div class="card-header pt-5">
                                 <h1>Pengajuan</h1>
                                 <div class="card-toolbar">
-                                    <a href="{{ route('pemohon.pilih.tipe.pengajuan') }}" class="btn btn-success">
+                                    <a href="{{ route('pemohon.create.pengajuan') }}" class="btn btn-success">
                                         <i class="fas fa-plus"></i>
                                         Buat Pengajuan Baru
                                     </a>

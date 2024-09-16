@@ -140,6 +140,14 @@
                                             @enderror
                                         </div>
                                         <div class="col-12 mt-3">
+                                            <label for="" class="form-label">Tahapan Prakonstruksi</label>
+                                            <textarea name="body_prakonstruksi" class="editor_prakonstruksi" style="width: 100%;">{{ old('body_prakonstruksi', $pengajuan->hasOneBeritaAcara?->body_prakonstruksi ?? '') }}</textarea>
+                                        </div>
+                                        <div class="col-12 mt-3">
+                                            <label for="" class="form-label">Tahapan Konstruksi</label>
+                                            <textarea name="body_konstruksi" class="editor_konstruksi" style="width: 100%;">{{ old('body_konstruksi', $pengajuan->hasOneBeritaAcara?->body_konstruksi ?? '') }}</textarea>
+                                        </div>
+                                        <div class="col-12 mt-3">
                                             <label for="" class="form-label">Tahapan Operasional</label>
                                             <textarea name="body" class="editor" style="width: 100%;">{{ old('body', $pengajuan->hasOneBeritaAcara?->body ?? $pengajuan->belongsToJenisRencana?->hasOneTemplateBeritaAcara?->body) }}</textarea>
                                         </div>
@@ -181,6 +189,18 @@
 
     <script>
         ClassicEditor.create(document.querySelector(".editor"), {
+            height: 1200, // Ganti nilai ini sesuai dengan tinggi yang Anda inginkan
+        }).catch((error) => {
+            console.error(error);
+        });
+
+        ClassicEditor.create(document.querySelector(".editor_konstruksi"), {
+            height: 1200, // Ganti nilai ini sesuai dengan tinggi yang Anda inginkan
+        }).catch((error) => {
+            console.error(error);
+        });
+
+        ClassicEditor.create(document.querySelector(".editor_prakonstruksi"), {
             height: 1200, // Ganti nilai ini sesuai dengan tinggi yang Anda inginkan
         }).catch((error) => {
             console.error(error);

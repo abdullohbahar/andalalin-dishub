@@ -65,6 +65,8 @@ class SuratKesanggupanController extends Controller
         $bulan = \Carbon\Carbon::parse($pengajuan->hasOneBeritaAcara->tanggal)->translatedFormat('F');
         $tahun = \Carbon\Carbon::parse($pengajuan->hasOneBeritaAcara->tanggal)->translatedFormat('Y');
 
+        $tahapPrakonstruksi = $pengajuan->hasOneBeritaAcara->body_prakonstruksi;
+        $tahapKonstruksi = $pengajuan->hasOneBeritaAcara->body_konstruksi;
         $tahapOperasional = $pengajuan->hasOneBeritaAcara->body;
         $nomor = sprintf("%02d", $pengajuan->hasOneBeritaAcara->nomor);
 
@@ -87,6 +89,8 @@ class SuratKesanggupanController extends Controller
             'namaProyek' => $namaProyek,
             'alamatProyek' => $alamatProyek,
             'yearNow' => date('Y'),
+            'tahapPrakonstruksi' => $tahapPrakonstruksi,
+            'tahapKonstruksi' => $tahapKonstruksi,
             'tahapOperasional' => $tahapOperasional,
             'penilais' => $penilais,
             'nomor' => $nomor,

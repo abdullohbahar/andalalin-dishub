@@ -126,15 +126,17 @@
         <p>
             <b>TAHAP PRAKONSTRUKSI</b>
         </p>
-        <ol style="line-height: 1.6">
+        {!! $tahapPrakonstruksi !!}
+        {{-- <ol style="line-height: 1.6">
             <li>Memenuhi segala persyaratan perizinan yang diwajibkan sebelum melaksanakan pembangunan; </li>
             <li>Melakukan sosialisasi Kepada masyarakat sekitar yang terdampak terkait dengan adanya pelaksanaan
                 kontruksi pembangunan {{ $namaProyek }}.</li>
-        </ol>
+        </ol> --}}
         <p>
             <b>TAHAP KONSTRUKSI</b>
         </p>
-        <ol style="line-height: 1.6">
+        {!! $tahapKonstruksi !!}
+        {{-- <ol style="line-height: 1.6">
             <li>Menyediakan akses masuk dan keluar untuk angkutan barang, dengan memberikan ruang yang cukup dan tidak
                 menimbulkan tundaan perjalanan di jalan umum;</li>
             <li>
@@ -201,7 +203,7 @@
             <li>
                 Menyediakan Sumur Resapan untuk pembuangan air dan drainase
             </li>
-        </ol>
+        </ol> --}}
         <p>
             <b>TAHAP OPERASIONAL</b>
         </p>

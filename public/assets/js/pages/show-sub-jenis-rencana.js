@@ -1,8 +1,6 @@
 $("#jenisRencana").on("change", function () {
     var jenisRencana = $(this).val();
 
-    console.log("halo");
-
     $.ajax({
         url: "/pemohon/ajax/show-sub-jenis-rencana/" + jenisRencana,
         method: "GET",
@@ -48,7 +46,6 @@ $("#subJenisRencana").on("change", function () {
                 );
                 // Append new options based on the response data
                 $.each(response.data, function (index, option) {
-                    console.log(option);
                     $("#subSubJenisRencana").append(
                         '<option value="' +
                             option.id +
@@ -73,11 +70,14 @@ $("#subJenisRencana").on("change", function () {
 
                 // Append new options based on the response data
                 $.each(response.data_ukuran_minimal, function (index, option) {
-                    console.log(option);
                     $("#ukuranMinimal").append(
                         `<option value="${option.id}">${option.keterangan} - ${option.kategori}</option>`
                     );
                 });
+
+                $("#ukuranMinimal").append(
+                    `<option value="non-andalalin">Non Andalalin</option>`
+                );
 
                 $("#sectionSubSubJenisRencana").attr("hidden", true);
                 $("#subSubJenisRencana").attr("required", false);
@@ -106,11 +106,14 @@ $("#subSubJenisRencana").on("change", function () {
             );
             // Append new options based on the response data
             $.each(response.data, function (index, option) {
-                console.log(option);
                 $("#ukuranMinimal").append(
                     `<option value="${option.id}">${option.keterangan} - ${option.kategori}</option>`
                 );
             });
+
+            $("#ukuranMinimal").append(
+                `<option value="non-andalalin">Non Andalalin</option>`
+            );
 
             $("#sectionUkuranMinimal").attr("hidden", false);
             $("#ukuranMinimal").attr("required", true);

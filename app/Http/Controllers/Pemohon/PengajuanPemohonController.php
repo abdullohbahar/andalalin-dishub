@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Pemohon;
 
+use DataTables;
 use Carbon\Carbon;
 use App\Models\Pengajuan;
 use App\Models\JenisJalan;
 use Illuminate\Http\Request;
+use App\Models\RiwayatInputData;
+use App\Models\RiwayatVerifikasi;
 use App\Http\Controllers\Controller;
 use App\Models\JenisRencanaPembangunan;
-use App\Models\RiwayatInputData;
-use DataTables;
 
 
 class PengajuanPemohonController extends Controller
@@ -104,50 +105,69 @@ class PengajuanPemohonController extends Controller
         return view('pemohon.pengajuan.index', $data);
     }
 
-    public function pilihTipe()
+    public function pengajuan()
     {
+        $jenisJalans = JenisJalan::get();
+        $jenisRencanas = JenisRencanaPembangunan::orderBy('nama', 'asc')->get();
+
         $data = [
-            'active' => 'pengajuan'
+            'active' => 'pengajuan',
+            'tipe' => 'andalalin',
+            'jenisRencanas' => $jenisRencanas,
+            'jenisJalans' => $jenisJalans,
         ];
 
-        return view('pemohon.pengajuan.pilih-tipe', $data);
+        return view('pemohon.pengajuan.andalalin.create-andalalin', $data);
     }
 
-    public function createTipeAndalalin()
+    public function storePengajuan(Request $request)
     {
         $userID = auth()->user()->id;
 
-        $pengajuan = Pengajuan::create([
+        $data = [
             'user_id' => $userID,
-            'jenis_pengajuan' => 'andalalin',
-            'status' => 'input data belum selesai'
-        ]);
+            'jenis_jalan_id' => $request->jenis_jalan_id,
+            'jenis_rencana_id' => $request->jenis_rencana_id,
+            'sub_jenis_rencana_id' => $request->sub_jenis_rencana_id,
+        ];
 
-        RiwayatInputData::updateorcreate([
-            'pengajuan_id' => $pengajuan->id
-        ], [
-            'step' => 'Buat Pengajuan Baru'
-        ]);
+        if ($request->has('sub_sub_jenis_rencana_id')) {
+            $data['sub_sub_jenis_rencana_id'] = $request->sub_sub_jenis_rencana_id;
+        }
 
-        return to_route('pemohon.create.pengajuan.andalalin', $pengajuan->id);
-    }
+        $jenisPengajuan = ($request->ukuran_minimal_id != 'non-andalalin') ? 'andalalin' : 'non-andalalin';
+        $data['jenis_pengajuan'] = $jenisPengajuan;
 
-    public function createNonAndalalin()
-    {
-        $userID = auth()->user()->id;
+        if ($jenisPengajuan === 'andalalin') {
+            $data['status'] = 'input data belum selesai';
+            $data['ukuran_minimal_id'] = $request->ukuran_minimal_id;
+        } else {
+            $data['status'] = 'proses permohonan';
+        }
 
-        $pengajuan = Pengajuan::create([
-            'user_id' => $userID,
-            'jenis_pengajuan' => 'non-andalalin',
-            'status' => 'input data belum selesai'
-        ]);
+        $pengajuan = Pengajuan::create($data);
 
-        RiwayatInputData::updateorcreate([
-            'pengajuan_id' => $pengajuan->id
-        ], [
-            'step' => 'Buat Pengajuan Baru'
-        ]);
+        if ($jenisPengajuan === 'andalalin') {
+            RiwayatInputData::updateOrCreate(
+                ['pengajuan_id' => $pengajuan->id],
+                ['step' => 'Input Data Permohonan Dan Data Konsultan']
+            );
 
-        return to_route('pemohon.pilih.konsultan.pengajuan.andalalin', $pengajuan->id);
+            return to_route('pemohon.pilih.konsultan.pengajuan.andalalin', $pengajuan->id);
+        } else {
+            RiwayatVerifikasi::updateorcreate([
+                'pengajuan_id' => $pengajuan->id,
+            ], [
+                'step' => 'Berita Acara'
+            ]);
+
+            RiwayatInputData::updateorcreate([
+                'pengajuan_id' => $pengajuan->id,
+            ], [
+                'step' => 'Berita Acara'
+            ]);
+
+            return to_route('pemohon.menungu.verifikasi', $pengajuan->id);
+        }
     }
 }

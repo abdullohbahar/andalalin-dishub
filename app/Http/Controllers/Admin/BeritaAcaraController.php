@@ -47,6 +47,8 @@ class BeritaAcaraController extends Controller
             BeritaAcara::where('pengajuan_id', $pengajuanID)
                 ->update([
                     'body' => $request->body,
+                    'body_prakonstruksi' => $request->body_prakonstruksi,
+                    'body_konstruksi' => $request->body_konstruksi,
                     'user_id' => $request->user_id,
                     'tanggal' => $request->tanggal,
                 ]);
@@ -62,6 +64,8 @@ class BeritaAcaraController extends Controller
             }
 
             BeritaAcara::create([
+                'body_prakonstruksi' => $request->body_prakonstruksi,
+                'body_konstruksi' => $request->body_konstruksi,
                 'body' => $request->body,
                 'user_id' => $request->user_id,
                 'tanggal' => $request->tanggal,
@@ -75,23 +79,47 @@ class BeritaAcaraController extends Controller
 
     public function telahMengisi($pengajuanID)
     {
-        RiwayatVerifikasi::updateorcreate([
-            'pengajuan_id' => $pengajuanID,
-        ], [
-            'step' => 'Menunggu Verifikasi Penilai'
-        ]);
-
-        RiwayatInputData::updateorcreate([
-            'pengajuan_id' => $pengajuanID,
-        ], [
-            'step' => 'Menunggu Verifikasi Penilai'
-        ]);
-
-        $this->kirimNotifikasiKePenilai();
+        $pengajuan = Pengajuan::findorfail($pengajuanID);
 
         $role = auth()->user()->role;
 
-        return to_route("$role.menunggu.verifikasi.penilai", $pengajuanID)->with('success', 'Terimakasih telah mengisi berita acara. Harap menunggu verifikasi berita acara yang dilakukan oleh penilai!');
+        if ($pengajuan->jenis_pengajuan === 'andalalin') {
+            RiwayatVerifikasi::updateorcreate([
+                'pengajuan_id' => $pengajuanID,
+            ], [
+                'step' => 'Menunggu Verifikasi Penilai'
+            ]);
+
+            RiwayatInputData::updateorcreate([
+                'pengajuan_id' => $pengajuanID,
+            ], [
+                'step' => 'Menunggu Verifikasi Penilai'
+            ]);
+
+            $this->kirimNotifikasiKePenilai();
+
+            return to_route("$role.menunggu.verifikasi.penilai", $pengajuanID)->with('success', 'Terimakasih telah mengisi berita acara. Harap menunggu verifikasi berita acara yang dilakukan oleh penilai!');
+        } else {
+            RiwayatInputData::updateorcreate([
+                'pengajuan_id' => $pengajuanID
+            ], [
+                'step' => 'Surat Kesanggupan'
+            ]);
+
+            RiwayatVerifikasi::updateorcreate([
+                'pengajuan_id' => $pengajuanID
+            ], [
+                'step' => 'Menunggu Surat Kesanggupan'
+            ]);
+
+            BeritaAcara::where('pengajuan_id', $pengajuanID)->update([
+                'is_penilai_1_approve' => true,
+                'is_penilai_2_approve' => true,
+                'is_penilai_3_approve' => true,
+            ]);
+
+            return to_route("admin.menunggu.surat.kesanggupan", $pengajuanID)->with('success', 'Terimakasih telah mengisi berita acara. Harap menunggu verifikasi berita acara yang dilakukan oleh penilai!');
+        }
     }
 
     public function kirimNotifikasiKePenilai()

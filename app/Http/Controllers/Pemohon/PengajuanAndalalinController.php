@@ -20,23 +20,6 @@ use Illuminate\Support\Facades\Storage;
 
 class PengajuanAndalalinController extends Controller
 {
-    public function createAndalalin($pengajuanID)
-    {
-        $pengajuan = Pengajuan::findorfail($pengajuanID);
-        $jenisJalans = JenisJalan::get();
-        $jenisRencanas = JenisRencanaPembangunan::orderBy('nama', 'asc')->get();
-
-        $data = [
-            'active' => 'pengajuan',
-            'tipe' => 'andalalin',
-            'jenisRencanas' => $jenisRencanas,
-            'jenisJalans' => $jenisJalans,
-            'pengajuan' => $pengajuan
-        ];
-
-        return view('pemohon.pengajuan.andalalin.create-andalalin', $data);
-    }
-
     public function updateAndalalin(Request $request, $pengajuanID)
     {
         $userID = auth()->user()->id;

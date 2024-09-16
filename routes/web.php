@@ -199,14 +199,14 @@ Route::middleware('choose.role', 'pemohon')->group(function () {
 
     Route::prefix('pengajuan')->middleware('check.profile')->group(function () {
         Route::get('/', [PengajuanPemohonController::class, 'index'])->name('pemohon.pengajuan');
-        Route::get('/pilih-tipe', [PengajuanPemohonController::class, 'pilihTipe'])->name('pemohon.pilih.tipe.pengajuan');
-        Route::get('/create-tipe-andalalin', [PengajuanPemohonController::class, 'createTipeAndalalin'])->name('pemohon.create.tipe.andalalin');
-        Route::get('/create-tipe-non-andalalin', [PengajuanPemohonController::class, 'createNonAndalalin'])->name('pemohon.create.non.andalalin');
+        Route::get('/create', [PengajuanPemohonController::class, 'pengajuan'])->name('pemohon.create.pengajuan');
+        Route::post('/store', [PengajuanPemohonController::class, 'storePengajuan'])->name('pemohon.store.pengajuan');
+        // Route::get('/pilih-tipe', [PengajuanPemohonController::class, 'pilihTipe'])->name('pemohon.pilih.tipe.pengajuan');
 
         Route::prefix('andalalin')->group(function () {
             Route::get('riwayat-input-data/{pengajuanID}', RiwayatInputDataController::class)->name('pemohon.riwayat.input.data');
 
-            Route::get('/create/{id}', [PengajuanAndalalinController::class, 'createAndalalin'])->name('pemohon.create.pengajuan.andalalin');
+            // Route::get('/create/{id}', [PengajuanAndalalinController::class, 'createAndalalin'])->name('pemohon.create.pengajuan.andalalin');
             Route::put('/store/{pengajuanID}', [PengajuanAndalalinController::class, 'updateAndalalin'])->name('pemohon.store.pengajuan.andalalin');
 
             Route::get('/pilih-konsultan/{idPengajuan}', [PengajuanAndalalinController::class, 'pilihKonsultan'])->name('pemohon.pilih.konsultan.pengajuan.andalalin');

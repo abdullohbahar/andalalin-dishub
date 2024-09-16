@@ -54,18 +54,15 @@
                                 <h2 class="mt-5">Buat Pengajuan Andalalin Baru</h2>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('pemohon.store.pengajuan.andalalin', $pengajuan->id) }}"
-                                    method="POST">
+                                <form action="{{ route('pemohon.store.pengajuan') }}" method="POST">
                                     @csrf
-                                    @method('PUT')
                                     <div class="row">
                                         <div class="col-12">
                                             <label for="" class="form-label">Pilih Jenis Jalan</label>
                                             <select name="jenis_jalan_id" id="" class="form-control" required>
                                                 <option value="">-- Pilih Jenis Jalan --</option>
                                                 @foreach ($jenisJalans as $jalan)
-                                                    <option {{ $jalan->id == $pengajuan->jenis_jalan_id ? 'selected' : '' }}
-                                                        value="{{ $jalan->id }}">{{ $jalan->jenis }}</option>
+                                                    <option value="{{ $jalan->id }}">{{ $jalan->jenis }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -133,7 +130,7 @@
 @endsection
 
 @push('addons-js')
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             var jenisRencana = {{ $pengajuan->jenis_rencana_id }}
             $("#jenisRencana").val(jenisRencana).change();
@@ -157,7 +154,7 @@
             }, 700);
 
         });
-    </script>
+    </script> --}}
 
     <script src="{{ asset('./assets/js/pages/show-sub-jenis-rencana.js') }}"></script>
 @endpush

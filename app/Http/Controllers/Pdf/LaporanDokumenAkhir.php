@@ -40,56 +40,61 @@ class LaporanDokumenAkhir extends Controller
         $suratPersetujuan = SuratPersetujuan::where('pengajuan_id', $pengajuanID)->first()?->file;
         $pdfMerger->addPDF(storage_path('app/' . $suratPersetujuan));
 
-        // Load Berita Acara PDF
-        $beritaAcara = BeritaAcara::where('pengajuan_id', $pengajuanID)->first()?->file_uploads;
-        $pdfMerger->addPDF(public_path('storage/public/' . $beritaAcara));
+        if ($pengajuan->jenis_pengajuan === 'andalalin') {
+            // Load Berita Acara PDF
+            $beritaAcara = BeritaAcara::where('pengajuan_id', $pengajuanID)->first()?->file_uploads;
+            $pdfMerger->addPDF(public_path('storage/public/' . $beritaAcara));
+        }
 
         // Load Surat Kesanggupan PDF
         $suratKesanggupan = SuratKesanggupan::where('pengajuan_id', $pengajuanID)->first()?->getRawOriginal('file');
         $pdfMerger->addPDF(storage_path('app/public/' . $suratKesanggupan));
 
-        // dokumen
-        $dataPemohon = new DataPemohon();
+        if ($pengajuan->jenis_pengajuan === 'andalalin') {
 
-        $suratPermohonan = $dataPemohon->with([
-            'hasOneDokumenDataPemohon' => function ($query) {
-                $query->where('nama_dokumen', 'Surat Permohonan');
-            }
-        ])->where('pengajuan_id', $pengajuanID)->first();
+            // dokumen
+            $dataPemohon = new DataPemohon();
 
-        $pdfMerger->addPDF(storage_path('app/public/' . $suratPermohonan->hasOneDokumenDataPemohon->getRawOriginal('dokumen')));
+            $suratPermohonan = $dataPemohon->with([
+                'hasOneDokumenDataPemohon' => function ($query) {
+                    $query->where('nama_dokumen', 'Surat Permohonan');
+                }
+            ])->where('pengajuan_id', $pengajuanID)->first();
 
-        $dokumenSitePlan = $dataPemohon->with([
-            'hasOneDokumenDataPemohon' => function ($query) {
-                $query->where('nama_dokumen', 'Dokumen Site Plan');
-            }
-        ])->where('pengajuan_id', $pengajuanID)->first();
+            $pdfMerger->addPDF(storage_path('app/public/' . $suratPermohonan->hasOneDokumenDataPemohon->getRawOriginal('dokumen')));
 
-        $pdfMerger->addPDF(storage_path('app/public/' . $dokumenSitePlan->hasOneDokumenDataPemohon->getRawOriginal('dokumen')));
+            $dokumenSitePlan = $dataPemohon->with([
+                'hasOneDokumenDataPemohon' => function ($query) {
+                    $query->where('nama_dokumen', 'Dokumen Site Plan');
+                }
+            ])->where('pengajuan_id', $pengajuanID)->first();
 
-        $suratAspekTataRuang = $dataPemohon->with([
-            'hasOneDokumenDataPemohon' => function ($query) {
-                $query->where('nama_dokumen', 'Surat Aspek Tata Ruang');
-            }
-        ])->where('pengajuan_id', $pengajuanID)->first();
+            $pdfMerger->addPDF(storage_path('app/public/' . $dokumenSitePlan->hasOneDokumenDataPemohon->getRawOriginal('dokumen')));
 
-        $pdfMerger->addPDF(storage_path('app/public/' . $suratAspekTataRuang->hasOneDokumenDataPemohon->getRawOriginal('dokumen')));
+            $suratAspekTataRuang = $dataPemohon->with([
+                'hasOneDokumenDataPemohon' => function ($query) {
+                    $query->where('nama_dokumen', 'Surat Aspek Tata Ruang');
+                }
+            ])->where('pengajuan_id', $pengajuanID)->first();
 
-        $sertifikatTanah = $dataPemohon->with([
-            'hasOneDokumenDataPemohon' => function ($query) {
-                $query->where('nama_dokumen', 'Sertifikat Tanah');
-            }
-        ])->where('pengajuan_id', $pengajuanID)->first();
+            $pdfMerger->addPDF(storage_path('app/public/' . $suratAspekTataRuang->hasOneDokumenDataPemohon->getRawOriginal('dokumen')));
 
-        $pdfMerger->addPDF(storage_path('app/public/' . $sertifikatTanah->hasOneDokumenDataPemohon->getRawOriginal('dokumen')));
+            $sertifikatTanah = $dataPemohon->with([
+                'hasOneDokumenDataPemohon' => function ($query) {
+                    $query->where('nama_dokumen', 'Sertifikat Tanah');
+                }
+            ])->where('pengajuan_id', $pengajuanID)->first();
 
-        $kkop = $dataPemohon->with([
-            'hasOneDokumenDataPemohon' => function ($query) {
-                $query->where('nama_dokumen', 'KKOP');
-            }
-        ])->where('pengajuan_id', $pengajuanID)->first();
+            $pdfMerger->addPDF(storage_path('app/public/' . $sertifikatTanah->hasOneDokumenDataPemohon->getRawOriginal('dokumen')));
 
-        $pdfMerger->addPDF(storage_path('app/public/' . $kkop->hasOneDokumenDataPemohon->getRawOriginal('dokumen')));
+            $kkop = $dataPemohon->with([
+                'hasOneDokumenDataPemohon' => function ($query) {
+                    $query->where('nama_dokumen', 'KKOP');
+                }
+            ])->where('pengajuan_id', $pengajuanID)->first();
+
+            $pdfMerger->addPDF(storage_path('app/public/' . $kkop->hasOneDokumenDataPemohon->getRawOriginal('dokumen')));
+        }
 
         // lampiran
 
