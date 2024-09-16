@@ -79,6 +79,12 @@
                                                         ]) }}"
                                                             type="button" class="btn btn-sm btn-info">Ukuran
                                                             Minimal</a>
+                                                        <a href="{{ route('admin.template.sub.berita.acara', [
+                                                            'subJenisRencanaPembangunanID' => $subSubJenis->id,
+                                                            'jenis' => 'subsub',
+                                                        ]) }}"
+                                                            class="btn btn-sm btn-primary">Template Berita
+                                                            Acara</a>
                                                         <a href="{{ route('admin.edit.jenis.sub.sub.rencana.pembangunan', $subSubJenis->id) }}"
                                                             type="button" class="btn btn-sm btn-warning">Ubah</a>
                                                         <a data-id="{{ $subSubJenis->id }}" id="removeBtn"

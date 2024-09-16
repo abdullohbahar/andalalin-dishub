@@ -149,7 +149,7 @@
                                         </div>
                                         <div class="col-12 mt-3">
                                             <label for="" class="form-label">Tahapan Operasional</label>
-                                            <textarea name="body" class="editor" style="width: 100%;">{{ old('body', $pengajuan->hasOneBeritaAcara?->body ?? $pengajuan->belongsToJenisRencana?->hasOneTemplateBeritaAcara?->body) }}</textarea>
+                                            <textarea name="body" class="editor" style="width: 100%;">{{ old('body', $pengajuan->hasOneBeritaAcara?->body ?? $template) }}</textarea>
                                         </div>
                                     </div>
                                     <div class="row mt-5">

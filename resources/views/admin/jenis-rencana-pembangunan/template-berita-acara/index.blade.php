@@ -24,8 +24,12 @@
                                 <form action="{{ route('admin.update.template.berita.acara', $jenisRencana->id) }}"
                                     method="POST">
                                     @csrf
+                                    <input type="hidden" name="jenis" value="{{ $jenis }}">
                                     <div class="row">
                                         <div class="col-12">
+                                            <label for="">
+                                                <h4>Tahapan Operasional</h4>
+                                            </label>
                                             <textarea name="body" class="editor" style="width: 100%;">{{ old('body', $jenisRencana->hasOneTemplateBeritaAcara?->body) }}</textarea>
                                         </div>
                                     </div>

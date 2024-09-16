@@ -167,6 +167,7 @@ Route::prefix('admin')->middleware('admin')->group(function () {
 
         Route::prefix('template')->group(function () {
             Route::get('/{jenisRencanaPembangunanID}', [TemplateBeritaAcaraController::class, 'index'])->name('admin.template.berita.acara');
+            Route::get('/{subJenisRencanaPembangunanID}/{jenis}', [TemplateBeritaAcaraController::class, 'indexSub'])->name('admin.template.sub.berita.acara');
             Route::post('store/{jenisRencanaPembangunanID}', [TemplateBeritaAcaraController::class, 'update'])->name('admin.update.template.berita.acara');
         });
     });

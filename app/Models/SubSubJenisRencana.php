@@ -19,4 +19,9 @@ class SubSubJenisRencana extends Model
     {
         return $this->hasOne(UkuranMinimal::class, 'sub_jenis_rencana_id', 'id');
     }
+
+    public function hasOneTemplateBeritaAcara(): HasOne
+    {
+        return $this->hasOne(TemplateBeritaAcara::class, 'parent_id', 'id')->where('tipe', 'subsub');
+    }
 }

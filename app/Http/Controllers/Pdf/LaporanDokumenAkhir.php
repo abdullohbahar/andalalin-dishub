@@ -40,10 +40,12 @@ class LaporanDokumenAkhir extends Controller
         $suratPersetujuan = SuratPersetujuan::where('pengajuan_id', $pengajuanID)->first()?->file;
         $pdfMerger->addPDF(storage_path('app/' . $suratPersetujuan));
 
+        // Load Berita Acara PDF
+        $beritaAcara = BeritaAcara::where('pengajuan_id', $pengajuanID)->first()?->file_uploads;
         if ($pengajuan->jenis_pengajuan === 'andalalin') {
-            // Load Berita Acara PDF
-            $beritaAcara = BeritaAcara::where('pengajuan_id', $pengajuanID)->first()?->file_uploads;
             $pdfMerger->addPDF(public_path('storage/public/' . $beritaAcara));
+        } else {
+            $pdfMerger->addPDF('storage/' . $beritaAcara);
         }
 
         // Load Surat Kesanggupan PDF

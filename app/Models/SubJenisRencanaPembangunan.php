@@ -37,4 +37,9 @@ class SubJenisRencanaPembangunan extends Model
     {
         return $this->hasMany(SubSubJenisRencana::class, 'sub_jenis_rencana_id', 'id');
     }
+
+    public function hasOneTemplateBeritaAcara(): HasOne
+    {
+        return $this->hasOne(TemplateBeritaAcara::class, 'parent_id', 'id')->where('tipe', 'sub');
+    }
 }

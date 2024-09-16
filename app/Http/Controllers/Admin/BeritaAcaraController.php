@@ -2,19 +2,34 @@
 
 namespace App\Http\Controllers\Admin;
 
+use PDF;
+use App\Models\User;
 use App\Models\Pengajuan;
 use App\Models\BeritaAcara;
 use Illuminate\Http\Request;
 use App\Models\RiwayatInputData;
 use App\Models\RiwayatVerifikasi;
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Storage;
+use Riskihajar\Terbilang\Facades\Terbilang;
 
 class BeritaAcaraController extends Controller
 {
     public function index($pengajuanID)
     {
-        $pengajuan = Pengajuan::with('belongsToJenisRencana.hasOneTemplateBeritaAcara', 'hasOneBeritaAcara.belongsToUser.hasOneProfile')->findorfail($pengajuanID);
+        $pengajuan = Pengajuan::with(
+            'belongsToJenisRencana.hasOneTemplateBeritaAcara',
+            'hasOneBeritaAcara.belongsToUser.hasOneProfile',
+            'belongsToSubJenisRencana.hasOneTemplateBeritaAcara',
+            'belongsToSubSubJenisRencana.hasOneTemplateBeritaAcara',
+        )->findorfail($pengajuanID);
+
+        if ($pengajuan->belongsToSubSubJenisRencana) {
+            $template = $pengajuan->belongsToSubSubJenisRencana?->hasOneTemplateBeritaAcara?->body;
+        } else {
+            $template = $pengajuan->belongsToSubJenisRencana?->hasOneTemplateBeritaAcara?->body;
+        }
 
         $users = User::where('role', 'pemohon')
             ->orwhere('role', 'konsultan')
@@ -24,7 +39,8 @@ class BeritaAcaraController extends Controller
         $data = [
             'active' => 'pengajuan',
             'pengajuan' => $pengajuan,
-            'users' => $users
+            'users' => $users,
+            'template' => $template
         ];
 
         return view('admin.pengajuan.berita-acara.index', $data);
@@ -112,10 +128,13 @@ class BeritaAcaraController extends Controller
                 'step' => 'Menunggu Surat Kesanggupan'
             ]);
 
+            $fileUpload = $this->generateBeritaAcara($pengajuanID);
+
             BeritaAcara::where('pengajuan_id', $pengajuanID)->update([
                 'is_penilai_1_approve' => true,
                 'is_penilai_2_approve' => true,
                 'is_penilai_3_approve' => true,
+                'file_uploads' => $fileUpload
             ]);
 
             return to_route("admin.menunggu.surat.kesanggupan", $pengajuanID)->with('success', 'Terimakasih telah mengisi berita acara. Harap menunggu verifikasi berita acara yang dilakukan oleh penilai!');
@@ -169,5 +188,104 @@ class BeritaAcaraController extends Controller
         ];
 
         return view('admin.pengajuan.berita-acara.show', $data);
+    }
+
+    public function generateBeritaAcara($pengajuanID)
+    {
+        // dd($pengajuanID);
+
+        $logoPath = public_path('img/kab-bantul.png');
+        $encodeLogo = base64_encode(file_get_contents($logoPath));
+
+        $aksaraPath = public_path('img/aksara-dishub.png');
+        $encodeAksara = base64_encode(file_get_contents($aksaraPath));
+
+        $watermark = public_path('img/logo-dishub.png');
+        $encodeWatermark = base64_encode(file_get_contents($watermark));
+
+        $pengajuan = Pengajuan::with(
+            'hasOneJadwalTinjauan',
+            'hasOneDataPemohon.belongsToConsultan.hasOneProfile',
+            'belongsToUser.hasOneProfile',
+            'belongsToJenisRencana',
+            'belongsToSubJenisRencana.hasOneUkuranMinimal',
+            'belongsToSubSubJenisRencana.hasOneUkuranMinimal',
+            'hasOneBeritaAcara',
+            'hasOnePemrakarsa'
+        )->findOrFail($pengajuanID);
+
+        // mencari ukuran minimal
+        if ($pengajuan?->sub_sub_jenis_rencana) {
+            $ukuranMinimal = $pengajuan?->belongsToSubJenisRencana?->hasOneUkuranMinimal?->tipe;
+        } else {
+            $ukuranMinimal = $pengajuan?->belongsToSubSubJenisRencana?->hasOneUkuranMinimal?->tipe;
+        }
+
+        // mencari jenis bangkitan
+        if ($pengajuan?->sub_sub_jenis_rencana) {
+            $jenisBangkitan = $pengajuan?->belongsToSubJenisRencana?->hasOneUkuranMinimal?->kategori;
+        } else {
+            $jenisBangkitan = $pengajuan?->belongsToSubSubJenisRencana?->hasOneUkuranMinimal?->kategori;
+        }
+
+        // mengambil nama proyek
+        $namaProyek = $pengajuan->hasOneDataPemohon?->nama_proyek ?? '';
+
+        // alamat proyek
+        $alamatProyek = $pengajuan->hasOneDataPemohon?->alamat ?? '';
+
+        // tanggal diambil dari pemohon mengajukan berita acara
+        \Carbon\Carbon::setLocale('id');
+        $tanggal = \Carbon\Carbon::parse($pengajuan->hasOneBeritaAcara->tanggal)->translatedFormat('L');
+        $hari = \Carbon\Carbon::parse($pengajuan->hasOneBeritaAcara->tanggal)->translatedFormat('l');
+        $bulan = \Carbon\Carbon::parse($pengajuan->hasOneBeritaAcara->tanggal)->translatedFormat('F');
+        $tahun = \Carbon\Carbon::parse($pengajuan->hasOneBeritaAcara->tanggal)->translatedFormat('Y');
+
+        $tahapOperasional = $pengajuan->hasOneBeritaAcara->body;
+        $nomor = $pengajuan->hasOneBeritaAcara->nomor;
+
+        $penilais = User::with('hasOneProfile', 'hasOneTtd')->where('role', 'like', '%penilai%')->orderBy('role', 'asc')->get();
+
+        Config::set('terbilang.locale', 'id');
+
+        $luasLahan = $pengajuan->hasOneDataPemohon?->luas_tanah;
+        $luasBangunan = $pengajuan->hasOneDataPemohon?->luas_bangunan;
+
+        $data = [
+            'aksara' => $encodeAksara,
+            'logo' => $encodeLogo,
+            'hari' => $hari,
+            'tanggal' => Terbilang::make($tanggal),
+            'bulan' => $bulan,
+            'tahun' => Terbilang::make($tahun),
+            'ukuranMinimal' => $ukuranMinimal,
+            'jenisBangkitan' => $jenisBangkitan,
+            'namaProyek' => $namaProyek,
+            'alamatProyek' => $alamatProyek,
+            'yearNow' => date('Y'),
+            'tahapOperasional' => $tahapOperasional,
+            'penilais' => $penilais,
+            'nomor' => $nomor,
+            'pengajuan' => $pengajuan,
+            'luasLahan' => $luasLahan,
+            'luasBangunan' => $luasBangunan,
+            'watermark' => $encodeWatermark,
+        ];
+
+        $pdf = PDF::loadView('document-template.berita-acara', $data);
+
+        // Tentukan lokasi penyimpanan sesuai dengan struktur yang digunakan untuk file uploads
+        $filename = time() . " - Berita Acara.pdf";
+        $location = 'public/file-uploads/Berita Acara/' . $pengajuan->user_id . '/non-andalalin/berita-acara/';
+        $filepath = $location . $filename;
+
+        if (!Storage::exists('public/' . $location)) {
+            Storage::makeDirectory('public/' . $location);
+        }
+
+        // Simpan file PDF
+        $pdf->save(storage_path('app/public/' . $filepath));
+
+        return $filepath;
     }
 }
