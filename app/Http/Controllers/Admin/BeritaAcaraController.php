@@ -59,15 +59,25 @@ class BeritaAcaraController extends Controller
         // lakukan pengecekan apakah berita acara sudah ada atau belum
         $beritaAcara = new BeritaAcara();
 
+        $pengajuan = Pengajuan::findorfail($pengajuanID);
+
         if ($beritaAcara->where('pengajuan_id', $pengajuanID)->first()) {
+            $data = [
+                'body' => $request->body,
+                'body_prakonstruksi' => $request->body_prakonstruksi,
+                'body_konstruksi' => $request->body_konstruksi,
+                'user_id' => $request->user_id,
+                'tanggal' => $request->tanggal,
+            ];
+
+            if ($pengajuan->jenis_pengajuan == 'non-andalalin') {
+                $data['is_penilai_3_approve'] = true;
+                $data['is_penilai_2_approve'] = true;
+                $data['is_penilai_1_approve'] = true;
+            }
+
             BeritaAcara::where('pengajuan_id', $pengajuanID)
-                ->update([
-                    'body' => $request->body,
-                    'body_prakonstruksi' => $request->body_prakonstruksi,
-                    'body_konstruksi' => $request->body_konstruksi,
-                    'user_id' => $request->user_id,
-                    'tanggal' => $request->tanggal,
-                ]);
+                ->update($data);
         } else {
             $nomor_terbesar = BeritaAcara::max('nomor');
 
@@ -79,7 +89,7 @@ class BeritaAcaraController extends Controller
                 $nomor_baru = $nomor_terbesar + 1;
             }
 
-            BeritaAcara::create([
+            $data = [
                 'body_prakonstruksi' => $request->body_prakonstruksi,
                 'body_konstruksi' => $request->body_konstruksi,
                 'body' => $request->body,
@@ -87,7 +97,15 @@ class BeritaAcaraController extends Controller
                 'tanggal' => $request->tanggal,
                 'nomor' => $nomor_baru,
                 'pengajuan_id' => $pengajuanID
-            ]);
+            ];
+
+            if ($pengajuan->jenis_pengajuan == 'non-andalalin') {
+                $data['is_penilai_3_approve'] = true;
+                $data['is_penilai_2_approve'] = true;
+                $data['is_penilai_1_approve'] = true;
+            }
+
+            BeritaAcara::create($data);
         }
 
         return redirect()->back()->with('success', 'Berhasil disimpan');
