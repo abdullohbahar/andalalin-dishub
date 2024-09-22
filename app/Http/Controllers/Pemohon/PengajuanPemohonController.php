@@ -147,27 +147,11 @@ class PengajuanPemohonController extends Controller
 
         $pengajuan = Pengajuan::create($data);
 
-        if ($jenisPengajuan === 'andalalin') {
-            RiwayatInputData::updateOrCreate(
-                ['pengajuan_id' => $pengajuan->id],
-                ['step' => 'Input Data Permohonan Dan Data Konsultan']
-            );
+        RiwayatInputData::updateOrCreate(
+            ['pengajuan_id' => $pengajuan->id],
+            ['step' => 'Input Data Permohonan Dan Data Konsultan']
+        );
 
-            return to_route('pemohon.pilih.konsultan.pengajuan.andalalin', $pengajuan->id);
-        } else {
-            RiwayatVerifikasi::updateorcreate([
-                'pengajuan_id' => $pengajuan->id,
-            ], [
-                'step' => 'Berita Acara'
-            ]);
-
-            RiwayatInputData::updateorcreate([
-                'pengajuan_id' => $pengajuan->id,
-            ], [
-                'step' => 'Berita Acara'
-            ]);
-
-            return to_route('pemohon.menungu.verifikasi', $pengajuan->id);
-        }
+        return to_route('pemohon.pilih.konsultan.pengajuan.andalalin', $pengajuan->id);
     }
 }

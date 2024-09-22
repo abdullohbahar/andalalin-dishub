@@ -242,19 +242,37 @@ class PengajuanController extends Controller
                 'status' => $status
             ]);
 
-            RiwayatVerifikasi::updateorcreate([
-                'pengajuan_id' => $pengajuanID,
-            ], [
-                'step' => 'Buat Jadwal Tinjauan Lapangan'
-            ]);
+            $pengajuan = Pengajuan::findorfail($pengajuanID);
 
-            RiwayatInputData::updateorcreate([
-                'pengajuan_id' => $pengajuanID,
-            ], [
-                'step' => 'Jadwal Tinjauan Lapangan'
-            ]);
+            if ($pengajuan->jenis_pengajuan === 'andalalin') {
+                RiwayatVerifikasi::updateorcreate([
+                    'pengajuan_id' => $pengajuanID,
+                ], [
+                    'step' => 'Buat Jadwal Tinjauan Lapangan'
+                ]);
 
-            return to_route('admin.buat.jadwal', $pengajuanID)->with('success', 'Terimakasih Telah Melakukan Verifikasi. ' . $tambahan);
+                RiwayatInputData::updateorcreate([
+                    'pengajuan_id' => $pengajuanID,
+                ], [
+                    'step' => 'Jadwal Tinjauan Lapangan'
+                ]);
+
+                return to_route('admin.buat.jadwal', $pengajuanID)->with('success', 'Terimakasih Telah Melakukan Verifikasi. ' . $tambahan);
+            } else {
+                RiwayatVerifikasi::updateorcreate([
+                    'pengajuan_id' => $pengajuanID,
+                ], [
+                    'step' => 'Berita Acara'
+                ]);
+
+                RiwayatInputData::updateorcreate([
+                    'pengajuan_id' => $pengajuanID,
+                ], [
+                    'step' => 'Berita Acara'
+                ]);
+
+                return to_route('admin.berita.acara', $pengajuanID)->with('success', 'Terimakasih Telah Melakukan Verifikasi.');
+            }
         }
     }
 
