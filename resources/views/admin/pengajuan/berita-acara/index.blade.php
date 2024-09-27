@@ -141,15 +141,15 @@
                                         </div>
                                         <div class="col-12 mt-3">
                                             <label for="" class="form-label">Tahapan Prakonstruksi</label>
-                                            <textarea name="body_prakonstruksi" class="editor_prakonstruksi" style="width: 100%;">{{ old('body_prakonstruksi', $pengajuan->hasOneBeritaAcara?->body_prakonstruksi ?? '') }}</textarea>
+                                            <textarea name="body_prakonstruksi" class="editor_prakonstruksi" style="width: 100%;">{{ old('body_prakonstruksi', $pengajuan->hasOneBeritaAcara?->body_prakonstruksi ?? ($template->body_prakonstruksi ?? '')) }}</textarea>
                                         </div>
                                         <div class="col-12 mt-3">
                                             <label for="" class="form-label">Tahapan Konstruksi</label>
-                                            <textarea name="body_konstruksi" class="editor_konstruksi" style="width: 100%;">{{ old('body_konstruksi', $pengajuan->hasOneBeritaAcara?->body_konstruksi ?? '') }}</textarea>
+                                            <textarea name="body_konstruksi" class="editor_konstruksi" style="width: 100%;">{{ old('body_konstruksi', $pengajuan->hasOneBeritaAcara?->body_konstruksi ?? ($template->body_konstruksi ?? '')) }}</textarea>
                                         </div>
                                         <div class="col-12 mt-3">
                                             <label for="" class="form-label">Tahapan Operasional</label>
-                                            <textarea name="body" class="editor" style="width: 100%;">{{ old('body', $pengajuan->hasOneBeritaAcara?->body ?? $template) }}</textarea>
+                                            <textarea name="body" class="editor" style="width: 100%;">{{ old('body', $pengajuan->hasOneBeritaAcara?->body ?? ($template->body ?? '')) }}</textarea>
                                         </div>
                                     </div>
                                     <div class="row mt-5">

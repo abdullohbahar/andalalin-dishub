@@ -26,9 +26,17 @@
                                     @csrf
                                     <input type="hidden" name="jenis" value="{{ $jenis }}">
                                     <div class="row">
-                                        <div class="col-12">
+                                        <div class="col-12 mt-3">
+                                            <label for="" class="form-label">Tahapan Prakonstruksi</label>
+                                            <textarea name="body_prakonstruksi" class="editor_prakonstruksi" style="width: 100%;">{{ old('body', $jenisRencana->hasOneTemplateBeritaAcara?->body_prakonstruksi) }}</textarea>
+                                        </div>
+                                        <div class="col-12 mt-3">
+                                            <label for="" class="form-label">Tahapan Konstruksi</label>
+                                            <textarea name="body_konstruksi" class="editor_konstruksi" style="width: 100%;">{{ old('body', $jenisRencana->hasOneTemplateBeritaAcara?->body_konstruksi) }}</textarea>
+                                        </div>
+                                        <div class="col-12 mt-3">
                                             <label for="">
-                                                <h4>Tahapan Operasional</h4>
+                                                <label for="" class="form-label">Tahapan Operasional</label>
                                             </label>
                                             <textarea name="body" class="editor" style="width: 100%;">{{ old('body', $jenisRencana->hasOneTemplateBeritaAcara?->body) }}</textarea>
                                         </div>
@@ -57,6 +65,18 @@
 
     <script>
         ClassicEditor.create(document.querySelector(".editor"), {
+            height: 1200, // Ganti nilai ini sesuai dengan tinggi yang Anda inginkan
+        }).catch((error) => {
+            console.error(error);
+        });
+
+        ClassicEditor.create(document.querySelector(".editor_konstruksi"), {
+            height: 1200, // Ganti nilai ini sesuai dengan tinggi yang Anda inginkan
+        }).catch((error) => {
+            console.error(error);
+        });
+
+        ClassicEditor.create(document.querySelector(".editor_prakonstruksi"), {
             height: 1200, // Ganti nilai ini sesuai dengan tinggi yang Anda inginkan
         }).catch((error) => {
             console.error(error);

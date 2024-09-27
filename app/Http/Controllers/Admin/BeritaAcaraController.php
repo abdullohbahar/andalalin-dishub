@@ -26,9 +26,9 @@ class BeritaAcaraController extends Controller
         )->findorfail($pengajuanID);
 
         if ($pengajuan->belongsToSubSubJenisRencana) {
-            $template = $pengajuan->belongsToSubSubJenisRencana?->hasOneTemplateBeritaAcara?->body;
+            $template = $pengajuan->belongsToSubSubJenisRencana?->hasOneTemplateBeritaAcara;
         } else {
-            $template = $pengajuan->belongsToSubJenisRencana?->hasOneTemplateBeritaAcara?->body;
+            $template = $pengajuan->belongsToSubJenisRencana?->hasOneTemplateBeritaAcara;
         }
 
         $users = User::where('role', 'pemohon')

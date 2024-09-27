@@ -52,6 +52,8 @@ class TemplateBeritaAcaraController extends Controller
         }
 
         TemplateBeritaAcara::updateorcreate($updateData, [
+            'body_konstruksi' => $request->body_konstruksi,
+            'body_prakonstruksi' => $request->body_prakonstruksi,
             'body' => $request->body,
             'tipe' => $request->jenis ?? '',
         ]);
