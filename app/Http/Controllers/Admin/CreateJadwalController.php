@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Pengajuan;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\RiwayatVerifikasi;
 use App\Http\Controllers\Controller;
 use App\Models\JadwalTinajuanLapangan;
-use App\Models\RiwayatVerifikasi;
+use App\Http\Controllers\EmailNotificationController;
 
 class CreateJadwalController extends Controller
 {
@@ -66,7 +67,6 @@ class CreateJadwalController extends Controller
 
     public function kirimNotifikasiJadwalDibuat($jadwal)
     {
-        $nomorPemohon = $jadwal->belongsToPengajuan?->belongsToUser?->hasOneProfile?->no_telepon;
         $namaProyek = $jadwal->belongsToPengajuan?->hasOneDataPemohon?->nama_proyek;
         $upperNamaProyek = Str::upper($namaProyek);
         $namaWebsite = env('APP_URL');
@@ -76,33 +76,49 @@ class CreateJadwalController extends Controller
         )
             ->findorfail($jadwal->pengajuan_id);
 
-        $nomorKonsultan = $pengajuan->hasOneDataPemohon?->belongsToConsultan?->hasOneProfile?->no_telepon;
+        $notification = new EmailNotificationController();
+        // kirim ke konsultan
+        $notification->sendEmail($pengajuan->hasOneDataPemohon?->belongsToConsultan?->id, "Admin telah membuat jadwal tinajaun lapangan pada proyek $upperNamaProyek, Harap melakukan pengecekan pada website $namaWebsite , untuk mengunduh jadwal tinjauan lapangan!");
+        // kirim ke pemohon
+        $notification->sendEmail($jadwal->belongsToPengajuan?->belongsToUser?->id, "Admin telah membuat jadwal tinajaun lapangan pada proyek $upperNamaProyek, Harap melakukan pengecekan pada website $namaWebsite , untuk mengunduh jadwal tinjauan lapangan!");
 
-        $curl = curl_init();
+        // $nomorPemohon = $jadwal->belongsToPengajuan?->belongsToUser?->hasOneProfile?->no_telepon;
+        // $namaProyek = $jadwal->belongsToPengajuan?->hasOneDataPemohon?->nama_proyek;
+        // $upperNamaProyek = Str::upper($namaProyek);
+        // $namaWebsite = env('APP_URL');
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.fonnte.com/send',
-            CURLOPT_SSL_VERIFYPEER => FALSE,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array(
-                'target' => "$nomorPemohon, $nomorKonsultan", // nomer hp pemohon
-                'message' => "Admin telah membuat jadwal tinajaun lapangan pada proyek $upperNamaProyek, Harap melakukan pengecekan pada website $namaWebsite , untuk mengunduh jadwal tinjauan lapangan!",
-                'countryCode' => '62', //optional
-            ),
-            CURLOPT_HTTPHEADER => array(
-                'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
-            ),
-        ));
+        // $pengajuan = Pengajuan::with(
+        //     'hasOneDataPemohon.belongsToConsultan.hasOneProfile',
+        // )
+        //     ->findorfail($jadwal->pengajuan_id);
 
-        $response = curl_exec($curl);
+        // $nomorKonsultan = $pengajuan->hasOneDataPemohon?->belongsToConsultan?->hasOneProfile?->no_telepon;
 
-        curl_close($curl);
+        // $curl = curl_init();
+
+        // curl_setopt_array($curl, array(
+        //     CURLOPT_URL => 'https://api.fonnte.com/send',
+        //     CURLOPT_SSL_VERIFYPEER => FALSE,
+        //     CURLOPT_RETURNTRANSFER => true,
+        //     CURLOPT_ENCODING => '',
+        //     CURLOPT_MAXREDIRS => 10,
+        //     CURLOPT_TIMEOUT => 0,
+        //     CURLOPT_FOLLOWLOCATION => true,
+        //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        //     CURLOPT_CUSTOMREQUEST => 'POST',
+        //     CURLOPT_POSTFIELDS => array(
+        //         'target' => "$nomorPemohon, $nomorKonsultan", // nomer hp pemohon
+        //         'message' => "Admin telah membuat jadwal tinajaun lapangan pada proyek $upperNamaProyek, Harap melakukan pengecekan pada website $namaWebsite , untuk mengunduh jadwal tinjauan lapangan!",
+        //         'countryCode' => '62', //optional
+        //     ),
+        //     CURLOPT_HTTPHEADER => array(
+        //         'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
+        //     ),
+        // ));
+
+        // $response = curl_exec($curl);
+
+        // curl_close($curl);
     }
 
     public function getDetailJadwal($jadwalID)

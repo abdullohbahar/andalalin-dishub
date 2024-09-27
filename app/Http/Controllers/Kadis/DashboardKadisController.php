@@ -9,6 +9,7 @@ use App\Models\RiwayatInputData;
 use App\Models\SuratPersetujuan;
 use App\Models\RiwayatVerifikasi;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\EmailNotificationController;
 
 class DashboardKadisController extends Controller
 {
@@ -100,31 +101,36 @@ class DashboardKadisController extends Controller
 
         $namaProyek = $pengajuan->hasOneDataPemohon?->nama_proyek;
 
-        $curl = curl_init();
+        $notification = new EmailNotificationController();
+        $notification->sendEmail($pengajuan->user_id, "Pengajuan proyek $namaProyek telah selesai.\nHarap mengunduh surat persetujuan!");
+        $notification->sendEmail($pengajuan->hasOneDataPemohon?->belongsToConsultan?->id, "Pengajuan proyek $namaProyek telah selesai.\nHarap mengunduh surat persetujuan!");
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.fonnte.com/send',
-            CURLOPT_SSL_VERIFYPEER => FALSE,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array(
-                'target' => "$nomorHpPemohon, $nomorHpKonsultan", // nomer hp pemohon
-                'message' => "Pengajuan proyek $namaProyek telah selesai.\nHarap mengunduh surat persetujuan!",
-                'countryCode' => '62', //optional
-            ),
-            CURLOPT_HTTPHEADER => array(
-                'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
-            ),
-        ));
 
-        $response = curl_exec($curl);
+        // $curl = curl_init();
 
-        curl_close($curl);
+        // curl_setopt_array($curl, array(
+        //     CURLOPT_URL => 'https://api.fonnte.com/send',
+        //     CURLOPT_SSL_VERIFYPEER => FALSE,
+        //     CURLOPT_RETURNTRANSFER => true,
+        //     CURLOPT_ENCODING => '',
+        //     CURLOPT_MAXREDIRS => 10,
+        //     CURLOPT_TIMEOUT => 0,
+        //     CURLOPT_FOLLOWLOCATION => true,
+        //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        //     CURLOPT_CUSTOMREQUEST => 'POST',
+        //     CURLOPT_POSTFIELDS => array(
+        //         'target' => "$nomorHpPemohon, $nomorHpKonsultan", // nomer hp pemohon
+        //         'message' => "Pengajuan proyek $namaProyek telah selesai.\nHarap mengunduh surat persetujuan!",
+        //         'countryCode' => '62', //optional
+        //     ),
+        //     CURLOPT_HTTPHEADER => array(
+        //         'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
+        //     ),
+        // ));
+
+        // $response = curl_exec($curl);
+
+        // curl_close($curl);
     }
 
     public function kirimNotifikasiKeSemua($pengajuanID)
@@ -143,30 +149,38 @@ class DashboardKadisController extends Controller
 
         $namaProyek = $pengajuan->hasOneDataPemohon?->nama_proyek;
 
-        $curl = curl_init();
+        $roles = ['kasi', 'kabid', 'kadis'];
+        $users = User::with('hasOneProfile')->whereIn('role', $roles)->get();
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.fonnte.com/send',
-            CURLOPT_SSL_VERIFYPEER => FALSE,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array(
-                'target' => "$nomorHpPemohon, $nomorHpKasi, $nomorHPKadis, $nomorHpKabid", // nomer hp
-                'message' => "Pengajuan proyek $namaProyek telah selesai.\nHarap mengunduh Laporan Dokumen Akhir!",
-                'countryCode' => '62', //optional
-            ),
-            CURLOPT_HTTPHEADER => array(
-                'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
-            ),
-        ));
+        $notification = new EmailNotificationController();
+        foreach ($users as $user) {
+            $notification->sendEmail($user->id, "Pengajuan proyek $namaProyek telah selesai.\nHarap mengunduh Laporan Dokumen Akhir!");
+        }
 
-        $response = curl_exec($curl);
+        // $curl = curl_init();
 
-        curl_close($curl);
+        // curl_setopt_array($curl, array(
+        //     CURLOPT_URL => 'https://api.fonnte.com/send',
+        //     CURLOPT_SSL_VERIFYPEER => FALSE,
+        //     CURLOPT_RETURNTRANSFER => true,
+        //     CURLOPT_ENCODING => '',
+        //     CURLOPT_MAXREDIRS => 10,
+        //     CURLOPT_TIMEOUT => 0,
+        //     CURLOPT_FOLLOWLOCATION => true,
+        //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        //     CURLOPT_CUSTOMREQUEST => 'POST',
+        //     CURLOPT_POSTFIELDS => array(
+        //         'target' => "$nomorHpPemohon, $nomorHpKasi, $nomorHPKadis, $nomorHpKabid", // nomer hp
+        //         'message' => "Pengajuan proyek $namaProyek telah selesai.\nHarap mengunduh Laporan Dokumen Akhir!",
+        //         'countryCode' => '62', //optional
+        //     ),
+        //     CURLOPT_HTTPHEADER => array(
+        //         'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
+        //     ),
+        // ));
+
+        // $response = curl_exec($curl);
+
+        // curl_close($curl);
     }
 }

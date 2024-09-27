@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Penilai;
 
-use App\Http\Controllers\Controller;
-use App\Models\BeritaAcara;
+use App\Models\User;
 use App\Models\Pengajuan;
+use App\Models\BeritaAcara;
+use Illuminate\Http\Request;
 use App\Models\RiwayatInputData;
 use App\Models\RiwayatVerifikasi;
-use App\Models\User;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\EmailNotificationController;
 
 class DashboardPenilaiController extends Controller
 {
@@ -139,30 +140,33 @@ class DashboardPenilaiController extends Controller
         $nomorHpPemohon = $pengajuan->belongsToUser->hasOneProfile->no_telepon;
         $namaProyek = $pengajuan->hasOneDataPemohon?->nama_proyek;
 
-        $curl = curl_init();
+        $notification = new EmailNotificationController();
+        $notification->sendEmail($pengajuan->user_id, "Penilai telah melakukan approve berita acara proyek $namaProyek. Harap untuk mengakses website kembali dan melanjutkan langkah selanjutnya!");
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.fonnte.com/send',
-            CURLOPT_SSL_VERIFYPEER => FALSE,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array(
-                'target' => "$nomorHpPemohon", // nomer hp pemohon
-                'message' => "Penilai telah melakukan approve berita acara proyek $namaProyek. Harap untuk mengakses website kembali dan melanjutkan langkah selanjutnya!",
-                'countryCode' => '62', //optional
-            ),
-            CURLOPT_HTTPHEADER => array(
-                'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
-            ),
-        ));
+        // $curl = curl_init();
 
-        $response = curl_exec($curl);
+        // curl_setopt_array($curl, array(
+        //     CURLOPT_URL => 'https://api.fonnte.com/send',
+        //     CURLOPT_SSL_VERIFYPEER => FALSE,
+        //     CURLOPT_RETURNTRANSFER => true,
+        //     CURLOPT_ENCODING => '',
+        //     CURLOPT_MAXREDIRS => 10,
+        //     CURLOPT_TIMEOUT => 0,
+        //     CURLOPT_FOLLOWLOCATION => true,
+        //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        //     CURLOPT_CUSTOMREQUEST => 'POST',
+        //     CURLOPT_POSTFIELDS => array(
+        //         'target' => "$nomorHpPemohon", // nomer hp pemohon
+        //         'message' => "Penilai telah melakukan approve berita acara proyek $namaProyek. Harap untuk mengakses website kembali dan melanjutkan langkah selanjutnya!",
+        //         'countryCode' => '62', //optional
+        //     ),
+        //     CURLOPT_HTTPHEADER => array(
+        //         'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
+        //     ),
+        // ));
 
-        curl_close($curl);
+        // $response = curl_exec($curl);
+
+        // curl_close($curl);
     }
 }

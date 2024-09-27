@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use DataTables;
 use App\Models\Pengajuan;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\DokumenDataPemohon;
-use App\Http\Controllers\Controller;
 use App\Models\RiwayatInputData;
 use App\Models\RiwayatVerifikasi;
-use DataTables;
+use App\Models\DokumenDataPemohon;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\EmailNotificationController;
 
 class PengajuanController extends Controller
 {
@@ -293,31 +294,35 @@ class PengajuanController extends Controller
 
         $implode = implode("\n", $namaDokumen);
 
-        $curl = curl_init();
+        $notification = new EmailNotificationController();
+        $notification->sendEmail($pengajuan->user_id, "Admin telah melakukan verifikasi pada data telah unggah pada proyek $upperNamaProyek, adapun dokumen yang perlu DIREVISI yaitu:\n$implode\nHarap untuk mengunggah ulang dokumen tersebut.");
+        $notification->sendEmail($pengajuan->hasOneDataPemohon?->belongsToConsultan?->id, "Admin telah melakukan verifikasi pada data telah unggah pada proyek $upperNamaProyek, adapun dokumen yang perlu DIREVISI yaitu:\n$implode\nHarap untuk mengunggah ulang dokumen tersebut.");
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.fonnte.com/send',
-            CURLOPT_SSL_VERIFYPEER => FALSE,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array(
-                'target' => "$nomorPemohon, $nomorKonsultan", // nomer hp pemohon
-                'message' => "Admin telah melakukan verifikasi pada data telah unggah pada proyek $upperNamaProyek, adapun dokumen yang perlu DIREVISI yaitu:\n$implode\nHarap untuk mengunggah ulang dokumen tersebut.",
-                'countryCode' => '62', //optional
-            ),
-            CURLOPT_HTTPHEADER => array(
-                'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
-            ),
-        ));
+        // $curl = curl_init();
 
-        $response = curl_exec($curl);
+        // curl_setopt_array($curl, array(
+        //     CURLOPT_URL => 'https://api.fonnte.com/send',
+        //     CURLOPT_SSL_VERIFYPEER => FALSE,
+        //     CURLOPT_RETURNTRANSFER => true,
+        //     CURLOPT_ENCODING => '',
+        //     CURLOPT_MAXREDIRS => 10,
+        //     CURLOPT_TIMEOUT => 0,
+        //     CURLOPT_FOLLOWLOCATION => true,
+        //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        //     CURLOPT_CUSTOMREQUEST => 'POST',
+        //     CURLOPT_POSTFIELDS => array(
+        //         'target' => "$nomorPemohon, $nomorKonsultan", // nomer hp pemohon
+        //         'message' => "Admin telah melakukan verifikasi pada data telah unggah pada proyek $upperNamaProyek, adapun dokumen yang perlu DIREVISI yaitu:\n$implode\nHarap untuk mengunggah ulang dokumen tersebut.",
+        //         'countryCode' => '62', //optional
+        //     ),
+        //     CURLOPT_HTTPHEADER => array(
+        //         'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
+        //     ),
+        // ));
 
-        curl_close($curl);
+        // $response = curl_exec($curl);
+
+        // curl_close($curl);
     }
 
     public function kirimNotifikasiDitolak($pengajuan)
@@ -332,31 +337,36 @@ class PengajuanController extends Controller
             $alasan = $dokumen->alasan;
         }
 
-        $curl = curl_init();
+        $notification = new EmailNotificationController();
+        $notification->sendEmail($pengajuan->user_id, "Admin telah melakukan verifikasi pada data yang telah diunggah pada proyek $upperNamaProyek, permohonan anda DITOLAK oleh Admin. Adapun alasan penolakannya sebagai berikut:\n$alasan\nHarap untuk melakukan pengisian data ulang.");
+        $notification->sendEmail($pengajuan->hasOneDataPemohon?->belongsToConsultan?->id, "Admin telah melakukan verifikasi pada data yang telah diunggah pada proyek $upperNamaProyek, permohonan anda DITOLAK oleh Admin. Adapun alasan penolakannya sebagai berikut:\n$alasan\nHarap untuk melakukan pengisian data ulang.");
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.fonnte.com/send',
-            CURLOPT_SSL_VERIFYPEER => FALSE,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array(
-                'target' => "$nomorPemohon, $nomorKonsultan", // nomer hp pemohon
-                'message' => "Admin telah melakukan verifikasi pada data yang telah diunggah pada proyek $upperNamaProyek, permohonan anda DITOLAK oleh Admin. Adapun alasan penolakannya sebagai berikut:\n$alasan\nHarap untuk melakukan pengisian data ulang.",
-                'countryCode' => '62', //optional
-            ),
-            CURLOPT_HTTPHEADER => array(
-                'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
-            ),
-        ));
 
-        $response = curl_exec($curl);
+        // $curl = curl_init();
 
-        curl_close($curl);
+        // curl_setopt_array($curl, array(
+        //     CURLOPT_URL => 'https://api.fonnte.com/send',
+        //     CURLOPT_SSL_VERIFYPEER => FALSE,
+        //     CURLOPT_RETURNTRANSFER => true,
+        //     CURLOPT_ENCODING => '',
+        //     CURLOPT_MAXREDIRS => 10,
+        //     CURLOPT_TIMEOUT => 0,
+        //     CURLOPT_FOLLOWLOCATION => true,
+        //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        //     CURLOPT_CUSTOMREQUEST => 'POST',
+        //     CURLOPT_POSTFIELDS => array(
+        //         'target' => "$nomorPemohon, $nomorKonsultan", // nomer hp pemohon
+        //         'message' => "Admin telah melakukan verifikasi pada data yang telah diunggah pada proyek $upperNamaProyek, permohonan anda DITOLAK oleh Admin. Adapun alasan penolakannya sebagai berikut:\n$alasan\nHarap untuk melakukan pengisian data ulang.",
+        //         'countryCode' => '62', //optional
+        //     ),
+        //     CURLOPT_HTTPHEADER => array(
+        //         'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
+        //     ),
+        // ));
+
+        // $response = curl_exec($curl);
+
+        // curl_close($curl);
     }
 
     public function kirimNotifikasiDisetujui($pengajuan)
@@ -367,30 +377,35 @@ class PengajuanController extends Controller
         $namaProyek = $pengajuan->hasOneDataPemohon?->nama_proyek;
         $upperNamaProyek = Str::upper($namaProyek);
 
-        $curl = curl_init();
+        $notification = new EmailNotificationController();
+        $notification->sendEmail($pengajuan->user_id, "Admin telah melakukan verifikasi pada data yang telah diunggah pada proyek $upperNamaProyek, permohonan anda DISETUJUI oleh admin. Harap menunggu notifikasi berikutnya untuk jadwal tinjauan lapangan");
+        $notification->sendEmail($pengajuan->hasOneDataPemohon?->belongsToConsultan?->id, "Admin telah melakukan verifikasi pada data yang telah diunggah pada proyek $upperNamaProyek, permohonan anda DISETUJUI oleh admin. Harap menunggu notifikasi berikutnya untuk jadwal tinjauan lapangan");
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.fonnte.com/send',
-            CURLOPT_SSL_VERIFYPEER => FALSE,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array(
-                'target' => "$nomorPemohon, $nomorKonsultan", // nomer hp pemohon
-                'message' => "Admin telah melakukan verifikasi pada data yang telah diunggah pada proyek $upperNamaProyek, permohonan anda DISETUJUI oleh admin. Harap menunggu notifikasi berikutnya untuk jadwal tinjauan lapangan",
-                'countryCode' => '62', //optional
-            ),
-            CURLOPT_HTTPHEADER => array(
-                'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
-            ),
-        ));
 
-        $response = curl_exec($curl);
+        // $curl = curl_init();
 
-        curl_close($curl);
+        // curl_setopt_array($curl, array(
+        //     CURLOPT_URL => 'https://api.fonnte.com/send',
+        //     CURLOPT_SSL_VERIFYPEER => FALSE,
+        //     CURLOPT_RETURNTRANSFER => true,
+        //     CURLOPT_ENCODING => '',
+        //     CURLOPT_MAXREDIRS => 10,
+        //     CURLOPT_TIMEOUT => 0,
+        //     CURLOPT_FOLLOWLOCATION => true,
+        //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        //     CURLOPT_CUSTOMREQUEST => 'POST',
+        //     CURLOPT_POSTFIELDS => array(
+        //         'target' => "$nomorPemohon, $nomorKonsultan", // nomer hp pemohon
+        //         'message' => "Admin telah melakukan verifikasi pada data yang telah diunggah pada proyek $upperNamaProyek, permohonan anda DISETUJUI oleh admin. Harap menunggu notifikasi berikutnya untuk jadwal tinjauan lapangan",
+        //         'countryCode' => '62', //optional
+        //     ),
+        //     CURLOPT_HTTPHEADER => array(
+        //         'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
+        //     ),
+        // ));
+
+        // $response = curl_exec($curl);
+
+        // curl_close($curl);
     }
 }

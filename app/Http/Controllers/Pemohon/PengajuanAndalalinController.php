@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\JenisRencanaPembangunan;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\EmailNotificationController;
 
 class PengajuanAndalalinController extends Controller
 {
@@ -158,31 +159,35 @@ class PengajuanAndalalinController extends Controller
         $namaProyek = $pengajuan->hasOneDataPemohon?->nama_proyek ?? '';
         $nomerHpKonsultan = $pengajuan->hasOneDataPemohon?->belongsToConsultan->hasOneProfile->no_telepon ?? '';
 
-        $curl = curl_init();
+        $notification = new EmailNotificationController();
+        $notification->sendEmail($pengajuan->hasOneDataPemohon?->belongsToConsultan?->id, "Anda telah dipilih sebagai konsultan proyek, dengan rincian data berikut:\nNama Pemohon: $namaPemohon\nNama Proyek: $namaProyek\nHarap lakukan pengecekan pada website dan koordinasi dengan pemohon untuk dokumen yang diupload.");
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.fonnte.com/send',
-            CURLOPT_SSL_VERIFYPEER => FALSE,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array(
-                'target' => "$nomerHpKonsultan", // nomer hp konsultan
-                'message' => "Anda telah dipilih sebagai konsultan proyek, dengan rincian data berikut:\nNama Pemohon: $namaPemohon\nNama Proyek: $namaProyek\nHarap lakukan pengecekan pada website dan koordinasi dengan pemohon untuk dokumen yang diupload.",
-                'countryCode' => '62', //optional
-            ),
-            CURLOPT_HTTPHEADER => array(
-                'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
-            ),
-        ));
 
-        $response = curl_exec($curl);
+        // $curl = curl_init();
 
-        curl_close($curl);
+        // curl_setopt_array($curl, array(
+        //     CURLOPT_URL => 'https://api.fonnte.com/send',
+        //     CURLOPT_SSL_VERIFYPEER => FALSE,
+        //     CURLOPT_RETURNTRANSFER => true,
+        //     CURLOPT_ENCODING => '',
+        //     CURLOPT_MAXREDIRS => 10,
+        //     CURLOPT_TIMEOUT => 0,
+        //     CURLOPT_FOLLOWLOCATION => true,
+        //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        //     CURLOPT_CUSTOMREQUEST => 'POST',
+        //     CURLOPT_POSTFIELDS => array(
+        //         'target' => "$nomerHpKonsultan", // nomer hp konsultan
+        //         'message' => "Anda telah dipilih sebagai konsultan proyek, dengan rincian data berikut:\nNama Pemohon: $namaPemohon\nNama Proyek: $namaProyek\nHarap lakukan pengecekan pada website dan koordinasi dengan pemohon untuk dokumen yang diupload.",
+        //         'countryCode' => '62', //optional
+        //     ),
+        //     CURLOPT_HTTPHEADER => array(
+        //         'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
+        //     ),
+        // ));
+
+        // $response = curl_exec($curl);
+
+        // curl_close($curl);
     }
 
     public function uploadDokumenPemohon($pengajuanID)
@@ -368,31 +373,39 @@ class PengajuanAndalalinController extends Controller
         $namaProyek = $pengajuan->hasOneDataPemohon?->nama_proyek;
         $deadline = $pengajuan->deadline;
 
-        $curl = curl_init();
+        $roles = ['admin'];
+        $users = User::with('hasOneProfile')->whereIn('role', $roles)->get();
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.fonnte.com/send',
-            CURLOPT_SSL_VERIFYPEER => FALSE,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array(
-                'target' => "085701223722", // nomer hp admin
-                'message' => "Pemohon telah melakukan pengajuan permohonan baru, dengan rincian data berikut:\nNama Pemohon: $namaPemohon\nJenis Pengajuan: $jenisPengajuan\nNama Proyek: $namaProyek\nHarap diverifikasi sebelum tanggal $deadline",
-                'countryCode' => '62', //optional
-            ),
-            CURLOPT_HTTPHEADER => array(
-                'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
-            ),
-        ));
+        $notification = new EmailNotificationController();
+        foreach ($users as $user) {
+            $notification->sendEmail($user->id, "Pemohon telah melakukan pengajuan permohonan baru, dengan rincian data berikut:\nNama Pemohon: $namaPemohon\nJenis Pengajuan: $jenisPengajuan\nNama Proyek: $namaProyek\nHarap diverifikasi sebelum tanggal $deadline");
+        }
 
-        $response = curl_exec($curl);
+        // $curl = curl_init();
 
-        curl_close($curl);
+        // curl_setopt_array($curl, array(
+        //     CURLOPT_URL => 'https://api.fonnte.com/send',
+        //     CURLOPT_SSL_VERIFYPEER => FALSE,
+        //     CURLOPT_RETURNTRANSFER => true,
+        //     CURLOPT_ENCODING => '',
+        //     CURLOPT_MAXREDIRS => 10,
+        //     CURLOPT_TIMEOUT => 0,
+        //     CURLOPT_FOLLOWLOCATION => true,
+        //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        //     CURLOPT_CUSTOMREQUEST => 'POST',
+        //     CURLOPT_POSTFIELDS => array(
+        //         'target' => "", // nomer hp admin
+        //         'message' => "Pemohon telah melakukan pengajuan permohonan baru, dengan rincian data berikut:\nNama Pemohon: $namaPemohon\nJenis Pengajuan: $jenisPengajuan\nNama Proyek: $namaProyek\nHarap diverifikasi sebelum tanggal $deadline",
+        //         'countryCode' => '62', //optional
+        //     ),
+        //     CURLOPT_HTTPHEADER => array(
+        //         'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
+        //     ),
+        // ));
+
+        // $response = curl_exec($curl);
+
+        // curl_close($curl);
     }
 
     public function show($pengajuanID)

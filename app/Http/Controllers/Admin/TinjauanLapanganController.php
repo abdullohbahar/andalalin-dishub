@@ -9,6 +9,7 @@ use App\Models\RiwayatInputData;
 use App\Models\RiwayatVerifikasi;
 use App\Http\Controllers\Controller;
 use App\Models\JadwalTinajuanLapangan;
+use App\Http\Controllers\EmailNotificationController;
 
 class TinjauanLapanganController extends Controller
 {
@@ -58,31 +59,36 @@ class TinjauanLapanganController extends Controller
 
         $nomorKonsultan = $pengajuan->hasOneDataPemohon?->belongsToConsultan?->hasOneProfile?->no_telepon;
 
-        $curl = curl_init();
+        $notification = new EmailNotificationController();
+        $notification->sendEmail($pengajuan->user_id, "Admin telah mengubah jadwal tinajaun lapangan pada proyek $upperNamaProyek, Harap melakukan pengecekan pada website $namaWebsite , untuk mengunduh jadwal tinjauan lapangan baru!");
+        $notification->sendEmail($pengajuan->hasOneDataPemohon?->belongsToConsultan?->id, "Admin telah mengubah jadwal tinajaun lapangan pada proyek $upperNamaProyek, Harap melakukan pengecekan pada website $namaWebsite , untuk mengunduh jadwal tinjauan lapangan baru!");
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.fonnte.com/send',
-            CURLOPT_SSL_VERIFYPEER => FALSE,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array(
-                'target' => "$nomorPemohon, $nomorKonsultan", // nomer hp pemohon
-                'message' => "Admin telah mengubah jadwal tinajaun lapangan pada proyek $upperNamaProyek, Harap melakukan pengecekan pada website $namaWebsite , untuk mengunduh jadwal tinjauan lapangan baru!",
-                'countryCode' => '62', //optional
-            ),
-            CURLOPT_HTTPHEADER => array(
-                'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
-            ),
-        ));
 
-        $response = curl_exec($curl);
+        // $curl = curl_init();
 
-        curl_close($curl);
+        // curl_setopt_array($curl, array(
+        //     CURLOPT_URL => 'https://api.fonnte.com/send',
+        //     CURLOPT_SSL_VERIFYPEER => FALSE,
+        //     CURLOPT_RETURNTRANSFER => true,
+        //     CURLOPT_ENCODING => '',
+        //     CURLOPT_MAXREDIRS => 10,
+        //     CURLOPT_TIMEOUT => 0,
+        //     CURLOPT_FOLLOWLOCATION => true,
+        //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        //     CURLOPT_CUSTOMREQUEST => 'POST',
+        //     CURLOPT_POSTFIELDS => array(
+        //         'target' => "$nomorPemohon, $nomorKonsultan", // nomer hp pemohon
+        //         'message' => "Admin telah mengubah jadwal tinajaun lapangan pada proyek $upperNamaProyek, Harap melakukan pengecekan pada website $namaWebsite , untuk mengunduh jadwal tinjauan lapangan baru!",
+        //         'countryCode' => '62', //optional
+        //     ),
+        //     CURLOPT_HTTPHEADER => array(
+        //         'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
+        //     ),
+        // ));
+
+        // $response = curl_exec($curl);
+
+        // curl_close($curl);
     }
 
     public function telahMelakukanTinjauan($jadwalID)

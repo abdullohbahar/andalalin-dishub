@@ -6,9 +6,10 @@ use App\Models\Pengajuan;
 use Illuminate\Support\Str;
 use App\Models\JadwalSidang;
 use Illuminate\Http\Request;
+use App\Models\RiwayatInputData;
 use App\Models\RiwayatVerifikasi;
 use App\Http\Controllers\Controller;
-use App\Models\RiwayatInputData;
+use App\Http\Controllers\EmailNotificationController;
 
 class JadwalSidangController extends Controller
 {
@@ -93,37 +94,57 @@ class JadwalSidangController extends Controller
         )
             ->findorfail($pengajuanID);
 
-        $nomorPemohon = $pengajuan->belongsToUser?->hasOneProfile?->no_telepon;
         $namaProyek = $pengajuan->hasOneDataPemohon?->nama_proyek;
         $upperNamaProyek = Str::upper($namaProyek);
 
         $website = env("APP_URL");
 
-        $curl = curl_init();
+        $notification = new EmailNotificationController();
+        $notification->sendEmail($pengajuan->user_id, "Admin telah membuat jadwal sidang pada proyek $upperNamaProyek. Harap melakukan pengecekan pada website $website , untuk melihat jadwal sidang yang telah dibuat");
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.fonnte.com/send',
-            CURLOPT_SSL_VERIFYPEER => FALSE,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array(
-                'target' => "$nomorPemohon", // nomer hp pemohon
-                'message' => "Admin telah membuat jadwal sidang pada proyek $upperNamaProyek. Harap melakukan pengecekan pada website $website , untuk melihat jadwal sidang yang telah dibuat",
-                'countryCode' => '62', //optional
-            ),
-            CURLOPT_HTTPHEADER => array(
-                'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
-            ),
-        ));
+        // $pengajuan = Pengajuan::with(
+        //     'belongsToJenisRencana',
+        //     'belongsToUkuranMinimal',
+        //     'belongsToJenisJalan',
+        //     'belongsToSubJenisRencana',
+        //     'belongsToSubSubJenisRencana',
+        //     'hasOneDataPemohon.hasManyDokumenDataPemohon',
+        //     'hasOneDataPemohon.belongsToConsultan.hasOneProfile',
+        //     'belongsToUser.hasOneProfile'
+        // )
+        //     ->findorfail($pengajuanID);
 
-        $response = curl_exec($curl);
+        // $nomorPemohon = $pengajuan->belongsToUser?->hasOneProfile?->no_telepon;
+        // $namaProyek = $pengajuan->hasOneDataPemohon?->nama_proyek;
+        // $upperNamaProyek = Str::upper($namaProyek);
 
-        curl_close($curl);
+        // $website = env("APP_URL");
+
+        // $curl = curl_init();
+
+        // curl_setopt_array($curl, array(
+        //     CURLOPT_URL => 'https://api.fonnte.com/send',
+        //     CURLOPT_SSL_VERIFYPEER => FALSE,
+        //     CURLOPT_RETURNTRANSFER => true,
+        //     CURLOPT_ENCODING => '',
+        //     CURLOPT_MAXREDIRS => 10,
+        //     CURLOPT_TIMEOUT => 0,
+        //     CURLOPT_FOLLOWLOCATION => true,
+        //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        //     CURLOPT_CUSTOMREQUEST => 'POST',
+        //     CURLOPT_POSTFIELDS => array(
+        //         'target' => "$nomorPemohon", // nomer hp pemohon
+        //         'message' => "Admin telah membuat jadwal sidang pada proyek $upperNamaProyek. Harap melakukan pengecekan pada website $website , untuk melihat jadwal sidang yang telah dibuat",
+        //         'countryCode' => '62', //optional
+        //     ),
+        //     CURLOPT_HTTPHEADER => array(
+        //         'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
+        //     ),
+        // ));
+
+        // $response = curl_exec($curl);
+
+        // curl_close($curl);
     }
 
     public function jadwalSidang($pengajuanID)

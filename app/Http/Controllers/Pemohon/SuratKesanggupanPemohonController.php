@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Pemohon;
 
+use App\Models\User;
 use App\Models\Pengajuan;
 use Illuminate\Http\Request;
 use App\Models\RiwayatInputData;
 use App\Models\SuratKesanggupan;
 use App\Models\RiwayatVerifikasi;
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Http\Controllers\EmailNotificationController;
 
 class SuratKesanggupanPemohonController extends Controller
 {
@@ -83,31 +84,39 @@ class SuratKesanggupanPemohonController extends Controller
         $admin = User::with('hasOneProfile')->where('role', 'admin')->first();
         $nomorHpAdmin = $admin->hasOneProfile->no_telepon;
 
-        $curl = curl_init();
+        $roles = ['admin'];
+        $users = User::with('hasOneProfile')->whereIn('role', $roles)->get();
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.fonnte.com/send',
-            CURLOPT_SSL_VERIFYPEER => FALSE,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array(
-                'target' => "$nomorHpAdmin", // nomer hp konsultan
-                'message' => "Pemohon telah mengunggah surat pernyataan kesanggupan, dengan rincian data berikut:\nNama Pemohon: $namaPemohon\nNama Proyek: $namaProyek\nHarap lakukan persetujuan pada surat pernyataan tersebut.",
-                'countryCode' => '62', //optional
-            ),
-            CURLOPT_HTTPHEADER => array(
-                'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
-            ),
-        ));
+        $notification = new EmailNotificationController();
+        foreach ($users as $user) {
+            $notification->sendEmail($user->id, "Pemohon telah mengunggah surat pernyataan kesanggupan, dengan rincian data berikut:\nNama Pemohon: $namaPemohon\nNama Proyek: $namaProyek\nHarap lakukan persetujuan pada surat pernyataan tersebut.");
+        }
 
-        $response = curl_exec($curl);
+        // $curl = curl_init();
 
-        curl_close($curl);
+        // curl_setopt_array($curl, array(
+        //     CURLOPT_URL => 'https://api.fonnte.com/send',
+        //     CURLOPT_SSL_VERIFYPEER => FALSE,
+        //     CURLOPT_RETURNTRANSFER => true,
+        //     CURLOPT_ENCODING => '',
+        //     CURLOPT_MAXREDIRS => 10,
+        //     CURLOPT_TIMEOUT => 0,
+        //     CURLOPT_FOLLOWLOCATION => true,
+        //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        //     CURLOPT_CUSTOMREQUEST => 'POST',
+        //     CURLOPT_POSTFIELDS => array(
+        //         'target' => "$nomorHpAdmin", // nomer hp konsultan
+        //         'message' => "Pemohon telah mengunggah surat pernyataan kesanggupan, dengan rincian data berikut:\nNama Pemohon: $namaPemohon\nNama Proyek: $namaProyek\nHarap lakukan persetujuan pada surat pernyataan tersebut.",
+        //         'countryCode' => '62', //optional
+        //     ),
+        //     CURLOPT_HTTPHEADER => array(
+        //         'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
+        //     ),
+        // ));
+
+        // $response = curl_exec($curl);
+
+        // curl_close($curl);
     }
 
     public function menungguVerifikasi($pengajuanID)

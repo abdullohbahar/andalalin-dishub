@@ -10,6 +10,7 @@ use App\Models\SuratKesanggupan;
 use App\Models\SuratPersetujuan;
 use App\Models\RiwayatVerifikasi;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\EmailNotificationController;
 
 class DashboardKasiController extends Controller
 {
@@ -82,34 +83,42 @@ class DashboardKasiController extends Controller
 
         $user = User::with('hasOneProfile')->where('role', 'kabid')->first();
 
-        $nomorHpKasi = $user?->hasOneProfile?->no_telepon ?? '';
+        $nomorHpKabid = $user?->hasOneProfile?->no_telepon ?? '';
 
         $namaProyek = $pengajuan->hasOneDataPemohon?->nama_proyek;
 
-        $curl = curl_init();
+        $roles = ['kabid'];
+        $users = User::with('hasOneProfile')->whereIn('role', $roles)->get();
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.fonnte.com/send',
-            CURLOPT_SSL_VERIFYPEER => FALSE,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array(
-                'target' => "$nomorHpKasi", // nomer hp pemohon
-                'message' => "Kasi telah melakukan approve Surat Persetujuan pada proyek $namaProyek.\nHarap melakukan persetujuan pada surat persetujuan tersebut!",
-                'countryCode' => '62', //optional
-            ),
-            CURLOPT_HTTPHEADER => array(
-                'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
-            ),
-        ));
+        $notification = new EmailNotificationController();
+        foreach ($users as $user) {
+            $notification->sendEmail($user->id, "Kasi telah melakukan approve Surat Persetujuan pada proyek $namaProyek.\nHarap melakukan persetujuan pada surat persetujuan tersebut");
+        }
 
-        $response = curl_exec($curl);
+        // $curl = curl_init();
 
-        curl_close($curl);
+        // curl_setopt_array($curl, array(
+        //     CURLOPT_URL => 'https://api.fonnte.com/send',
+        //     CURLOPT_SSL_VERIFYPEER => FALSE,
+        //     CURLOPT_RETURNTRANSFER => true,
+        //     CURLOPT_ENCODING => '',
+        //     CURLOPT_MAXREDIRS => 10,
+        //     CURLOPT_TIMEOUT => 0,
+        //     CURLOPT_FOLLOWLOCATION => true,
+        //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        //     CURLOPT_CUSTOMREQUEST => 'POST',
+        //     CURLOPT_POSTFIELDS => array(
+        //         'target' => "$nomorHpKabid", // nomer hp pemohon
+        //         'message' => "Kasi telah melakukan approve Surat Persetujuan pada proyek $namaProyek.\nHarap melakukan persetujuan pada surat persetujuan tersebut!",
+        //         'countryCode' => '62', //optional
+        //     ),
+        //     CURLOPT_HTTPHEADER => array(
+        //         'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
+        //     ),
+        // ));
+
+        // $response = curl_exec($curl);
+
+        // curl_close($curl);
     }
 }

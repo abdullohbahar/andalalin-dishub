@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Pengajuan;
 use App\Models\Penolakan;
 use Illuminate\Http\Request;
+use App\Http\Controllers\EmailNotificationController;
 
 class PenolakanController extends Controller
 {
@@ -33,30 +34,33 @@ class PenolakanController extends Controller
 
         $namaProyek = $pengajuan->hasOneDataPemohon?->nama_proyek;
 
-        $curl = curl_init();
+        $notification = new EmailNotificationController();
+        $notification->sendEmail($pengajuan->user_id, "Penilai melakukan penolakan $tipe proyek $namaProyek. Harap untuk merevisi $tipe tersebut!\nDengan alasan:\n$alasan");
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.fonnte.com/send',
-            CURLOPT_SSL_VERIFYPEER => FALSE,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array(
-                'target' => "$nomorHp", // nomer hp pemohon
-                'message' => "Penilai melakukan penolakan $tipe proyek $namaProyek. Harap untuk merevisi $tipe tersebut!\nDengan alasan:\n$alasan",
-                'countryCode' => '62', //optional
-            ),
-            CURLOPT_HTTPHEADER => array(
-                'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
-            ),
-        ));
+        // $curl = curl_init();
 
-        $response = curl_exec($curl);
+        // curl_setopt_array($curl, array(
+        //     CURLOPT_URL => 'https://api.fonnte.com/send',
+        //     CURLOPT_SSL_VERIFYPEER => FALSE,
+        //     CURLOPT_RETURNTRANSFER => true,
+        //     CURLOPT_ENCODING => '',
+        //     CURLOPT_MAXREDIRS => 10,
+        //     CURLOPT_TIMEOUT => 0,
+        //     CURLOPT_FOLLOWLOCATION => true,
+        //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        //     CURLOPT_CUSTOMREQUEST => 'POST',
+        //     CURLOPT_POSTFIELDS => array(
+        //         'target' => "$nomorHp", // nomer hp pemohon
+        //         'message' => "Penilai melakukan penolakan $tipe proyek $namaProyek. Harap untuk merevisi $tipe tersebut!\nDengan alasan:\n$alasan",
+        //         'countryCode' => '62', //optional
+        //     ),
+        //     CURLOPT_HTTPHEADER => array(
+        //         'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
+        //     ),
+        // ));
 
-        curl_close($curl);
+        // $response = curl_exec($curl);
+
+        // curl_close($curl);
     }
 }

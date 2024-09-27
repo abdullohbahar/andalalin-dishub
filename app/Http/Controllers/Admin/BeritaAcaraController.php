@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 use Riskihajar\Terbilang\Facades\Terbilang;
+use App\Http\Controllers\EmailNotificationController;
 
 class BeritaAcaraController extends Controller
 {
@@ -161,39 +162,47 @@ class BeritaAcaraController extends Controller
 
     public function kirimNotifikasiKePenilai()
     {
-        $penilai1 = User::with('hasOneProfile')->where('role', 'penilai1')->first();
-        $penilai2 = User::with('hasOneProfile')->where('role', 'penilai2')->first();
-        $penilai3 = User::with('hasOneProfile')->where('role', 'penilai3')->first();
+        $users = User::where('role', 'like', '%penilai%')->get();
 
-        $nomorHpPenilai1 = $penilai1?->hasOneProfile?->no_telepon ?? '';
-        $nomorHpPenilai2 = $penilai2?->hasOneProfile?->no_telepon ?? '';
-        $nomorHpPenilai3 = $penilai3?->hasOneProfile?->no_telepon ?? '';
+        foreach ($users as $user) {
+            $notification = new EmailNotificationController();
+            $notification->sendEmail($user->id, "Admin telah melakukan input berita acara, harap untuk segera melakukan persetujuan berita acara");
+        }
 
-        $curl = curl_init();
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.fonnte.com/send',
-            CURLOPT_SSL_VERIFYPEER => FALSE,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array(
-                'target' => "$nomorHpPenilai1, $nomorHpPenilai2, $nomorHpPenilai3", // nomer hp pemohon
-                'message' => "Admin telah melakukan input berita acara, harap untuk segera melakukan persetujuan berita acara!",
-                'countryCode' => '62', //optional
-            ),
-            CURLOPT_HTTPHEADER => array(
-                'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
-            ),
-        ));
+        // $penilai1 = User::with('hasOneProfile')->where('role', 'penilai1')->first();
+        // $penilai2 = User::with('hasOneProfile')->where('role', 'penilai2')->first();
+        // $penilai3 = User::with('hasOneProfile')->where('role', 'penilai3')->first();
 
-        $response = curl_exec($curl);
+        // $nomorHpPenilai1 = $penilai1?->hasOneProfile?->no_telepon ?? '';
+        // $nomorHpPenilai2 = $penilai2?->hasOneProfile?->no_telepon ?? '';
+        // $nomorHpPenilai3 = $penilai3?->hasOneProfile?->no_telepon ?? '';
 
-        curl_close($curl);
+        // $curl = curl_init();
+
+        // curl_setopt_array($curl, array(
+        //     CURLOPT_URL => 'https://api.fonnte.com/send',
+        //     CURLOPT_SSL_VERIFYPEER => FALSE,
+        //     CURLOPT_RETURNTRANSFER => true,
+        //     CURLOPT_ENCODING => '',
+        //     CURLOPT_MAXREDIRS => 10,
+        //     CURLOPT_TIMEOUT => 0,
+        //     CURLOPT_FOLLOWLOCATION => true,
+        //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        //     CURLOPT_CUSTOMREQUEST => 'POST',
+        //     CURLOPT_POSTFIELDS => array(
+        //         'target' => "$nomorHpPenilai1, $nomorHpPenilai2, $nomorHpPenilai3", // nomer hp pemohon
+        //         'message' => "Admin telah melakukan input berita acara, harap untuk segera melakukan persetujuan berita acara!",
+        //         'countryCode' => '62', //optional
+        //     ),
+        //     CURLOPT_HTTPHEADER => array(
+        //         'Authorization: 2Ap5o4gaEsJrHmNuhLDH' //change TOKEN to your actual token
+        //     ),
+        // ));
+
+        // $response = curl_exec($curl);
+
+        // curl_close($curl);
     }
 
     public function menungguVerifikasiPenilai($pengajuanID)
