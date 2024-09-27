@@ -155,7 +155,7 @@ class BeritaAcaraController extends Controller
                 'file_uploads' => $fileUpload
             ]);
 
-            return to_route("admin.menunggu.surat.kesanggupan", $pengajuanID)->with('success', 'Terimakasih telah mengisi berita acara. Harap menunggu verifikasi berita acara yang dilakukan oleh penilai!');
+            return to_route("admin.menunggu.surat.kesanggupan", $pengajuanID)->with('success', 'Template surat kesanggupan berhasil di buat, Harap menunggu pemohon mengunggah surat kesanggupan');
         }
     }
 

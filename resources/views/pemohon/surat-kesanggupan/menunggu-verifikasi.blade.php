@@ -123,7 +123,7 @@
                             <div class="card-body text-center">
                                 <h1>
                                     Harap Menunggu Admin
-                                    {{ $pengajuan->jenis_pengajuan == 'andalalin' ? 'Memverifikasi' : 'Membuat' }} Surat
+                                    Memverifikasi Surat
                                     Kesanggupan Anda
                                 </h1>
                             </div>
