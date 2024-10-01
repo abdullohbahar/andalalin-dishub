@@ -16,8 +16,7 @@ return new class extends Migration
         Schema::create('data_pemohons', function (Blueprint $table) {
             $table->id();
             $table->foreignUuid('user_id')->nullable()->references('id')->on('users')->nullOnDelete();
-            $table->unsignedBigInteger('pengajuan_id')->nullable();
-            $table->foreign('pengajuan_id')->references('id')->on('pengajuans')->nullOnDelete();
+            $table->foreignUuid('pengajuan_id')->nullable()->references('id')->on('pengajuans')->nullOnDelete();
             $table->foreignUuid('konsultan_id')->nullable()->references('id')->on('users')->nullOnDelete();
             $table->string('nama_pimpinan')->nullable();
             $table->string('jabatan_pimpinan')->nullable();

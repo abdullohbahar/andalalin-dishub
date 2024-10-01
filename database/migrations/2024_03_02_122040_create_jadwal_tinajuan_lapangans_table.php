@@ -15,8 +15,7 @@ return new class extends Migration
     {
         Schema::create('jadwal_tinajuan_lapangans', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('pengajuan_id')->nullable();
-            $table->foreign('pengajuan_id')->references('id')->on('pengajuans')->nullOnDelete();
+            $table->foreignUuid('pengajuan_id')->nullable()->references('id')->on('pengajuans')->nullOnDelete();
             $table->date('tanggal');
             $table->string('jam');
             $table->timestamps();

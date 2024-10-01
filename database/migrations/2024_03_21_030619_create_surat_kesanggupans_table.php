@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('surat_kesanggupans', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('pengajuan_id')->nullable();
-            $table->foreign('pengajuan_id')->references('id')->on('pengajuans')->nullOnDelete();
+            $table->foreignUuid('pengajuan_id')->nullable()->references('id')->on('pengajuans')->nullOnDelete();
+
             $table->string('nomor_surat');
             $table->text('file')->nullable();
             $table->timestamps();
