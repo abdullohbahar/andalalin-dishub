@@ -53,9 +53,17 @@
                                 <h1></h1>
                                 <div class="card-toolbar">
                                     <form action="{{ route('kadis.approve.surat.persetujuan', $pengajuanID) }}"
-                                        method="POST" id="approve">
+                                        method="POST" id="approve" class="inline form">
                                         @csrf
-                                        <button class="btn btn-info">Approve Surat Persetujuan</button>
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <input type="password" name="passphrase" placeholder="Masukkan Passphrase"
+                                                    class="form-control" id="" required>
+                                            </div>
+                                            <div class="col-7">
+                                                <button class="btn btn-info">Approve Surat Persetujuan & Proses TTE</button>
+                                            </div>
+                                        </div>
                                     </form>
                                 </div>
                             </div>

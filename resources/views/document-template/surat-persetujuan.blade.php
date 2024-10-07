@@ -79,11 +79,26 @@
         .text-uppercase {
             text-transform: uppercase;
         }
+
+        footer {
+            position: fixed;
+            left: 10px;
+            right: 0px;
+            bottom: 10px;
+            /* Tambahkan properti ini */
+            height: auto;
+            margin-bottom: 0px;
+        }
     </style>
 </head>
 
 <body>
-
+    @if (isset($bsre))
+        <!-- Footer yang muncul di setiap halaman -->
+        <footer>
+            <img src="data:image/jpeg;base64,{{ $bsre }}" style="width: 20%">
+        </footer>
+    @endif
     <div class="watermark"></div>
 
     {{-- KOP --}}
@@ -386,16 +401,20 @@
                                 <td colspan="3" style="text-align: center">
                                     <br>
                                     KEPALA DINAS PERHUBUNGAN KABUPATEN BANTUL
-                                    <br>
-                                    <br>
-                                    <br>
-                                    <br>
-                                    <br>
-                                    <br>
+                                    @if (isset($qrcode))
+                                        <br>
+                                        <img src="{{ $qrcode }}" alt="QR Code">
+                                        <br>
+                                    @else
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <br>
+                                    @endif
                                     <b>
-                                        <u>SINGGIH RIYADI, S.E., M.M.</u> <br>
-                                        Pembina Tingkat I, IV/b <br>
-                                        NIP. 197307211997031007
+                                        {{ $kadis->hasOneProfile?->nama }} <br>
+                                        NIP: {{ $kadis->hasOneProfile?->nip }}
                                     </b>
                                 </td>
                             </tr>
@@ -547,23 +566,22 @@
 
                 </td>
                 <td style="width: 50%; line-height:0.75cm;" class="text-center">
-                    KEPALA DINAS PERHUBUNGAN <br>
-                    KABUPATEN BANTUL
                     <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
+                    KEPALA DINAS PERHUBUNGAN KABUPATEN BANTUL
+                    @if (isset($qrcode))
+                        <br>
+                        <img src="{{ $qrcode }}" alt="QR Code">
+                        <br>
+                    @else
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                    @endif
                     <b>
-                        <u>
-                            SINGGIH RIYADI, S.E., M.M.
-                        </u>
-                        <br>
-                        Pembina Tingkat I, IV/b
-                        <br>
-                        NIP. 197307211997031007
+                        {{ $kadis->hasOneProfile?->nama }} <br>
+                        NIP: {{ $kadis->hasOneProfile?->nip }}
                     </b>
                 </td>
             </tr>

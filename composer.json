@@ -13,6 +13,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "riskihajar/terbilang": "^2.0",
+        "simplesoftwareio/simple-qrcode": "^4.2",
         "socialiteproviders/keycloak": "^5.3",
         "socialiteproviders/zoho": "^4.1",
         "wandersonwhcr/romans": "^1.5",

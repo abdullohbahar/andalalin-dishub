@@ -345,6 +345,7 @@ Route::prefix('download')->middleware('auth')->group(function () {
     Route::get('berita-acara/{pengajuanID}', PdfBeritaAcaraController::class)->name('download.berita.acara');
     Route::get('surat-kesanggupan/{pengajuanID}', SuratKesanggupanController::class)->name('download.surat.kesanggupan');
     Route::get('surat-persetujuan/{pengajuanID}', SuratPersetujuanController::class)->name('download.surat.persetujuan');
+    Route::get('preview-surat-persetujuan/{pengajuanID}', SuratPersetujuanController::class)->name('preview.surat.persetujuan');
 
     Route::get('cover/{pengajuanID}', CoverController::class)->name('cover');
     Route::get('laporan-dokumen-akhir/{pengajuanID}', PdfLaporanDokumenAkhir::class)->name('download.laporan.dokumen.akhir');

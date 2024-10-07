@@ -91,6 +91,7 @@ class SuratPersetujuanController extends Controller
 
         $luasLahan = $pengajuan->hasOneDataPemohon?->luas_tanah;
         $luasBangunan = $pengajuan->hasOneDataPemohon?->luas_bangunan;
+        $kadis = User::where('role', 'kadis')->first();
 
         $data = [
             'aksara' => $encodeAksara,
@@ -117,6 +118,7 @@ class SuratPersetujuanController extends Controller
             'tanggalSuratPermohonan' => $tanggalSuratPermohonan,
             'tanggalSuratPersetujuan' => $tanggalSuratPersetujuan,
             'watermark' => $encodeWatermark,
+            'kadis' => $kadis
         ];
 
         $pdf = PDF::loadView('document-template.surat-persetujuan', $data);
@@ -146,7 +148,7 @@ class SuratPersetujuanController extends Controller
             $suratPersetujuan->save();
         }
 
-        return $pdf->stream('Surat Kesanggupan.pdf');
+        return $pdf->stream('Surat Persetujuan.pdf');
 
         return view('document-template.surat-persetujuan', $data);
     }

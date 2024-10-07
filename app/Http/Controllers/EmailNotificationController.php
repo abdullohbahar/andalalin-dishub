@@ -12,6 +12,8 @@ class EmailNotificationController extends Controller
     {
         $user = User::where('id', $userID)->first();
 
-        $user->notify(new EmailNotification($message));
+        if ($user) {
+            $user->notify(new EmailNotification($message));
+        }
     }
 }
