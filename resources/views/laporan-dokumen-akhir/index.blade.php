@@ -58,7 +58,8 @@
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <!--begin::Content container-->
             <div id="kt_app_content_container" class="app-container container-fluid">
-
+                <iframe src="{{ route('download.laporan.dokumen.akhir', $pengajuan->id) }}" width="100%" height="1200px">
+                </iframe>
             </div>
             <!--end::Content container-->
         </div>

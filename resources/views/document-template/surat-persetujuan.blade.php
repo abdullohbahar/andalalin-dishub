@@ -61,7 +61,7 @@
             width: 100%;
         }
 
-        .watermark {
+        /* .watermark {
             position: fixed;
             top: 0;
             left: 0;
@@ -76,7 +76,7 @@
             /* Sesuaikan opacity sesuai kebutuhan */
         }
 
-        .text-uppercase {
+        */ .text-uppercase {
             text-transform: uppercase;
         }
 
@@ -99,7 +99,7 @@
             <img src="data:image/jpeg;base64,{{ $bsre }}" style="width: 20%">
         </footer>
     @endif
-    <div class="watermark"></div>
+    {{-- <div class="watermark"></div> --}}
 
     {{-- KOP --}}
     <div>

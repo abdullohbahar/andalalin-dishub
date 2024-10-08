@@ -60,8 +60,14 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <iframe src="{{ route('download.surat.persetujuan', $pengajuanID) }}" width="100%"
-                                    height="600px">
+                                @php
+                                    if ($suratPersetujuan->tte) {
+                                        $route = asset($suratPersetujuan->file);
+                                    } else {
+                                        $route = route('download.surat.persetujuan', $pengajuanID);
+                                    }
+                                @endphp
+                                <iframe src="{{ $route }}" width="100%" height="600px">
                                 </iframe>
                             </div>
                         </div>

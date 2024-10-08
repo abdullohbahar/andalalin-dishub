@@ -39,9 +39,9 @@ class SuratPersetujuanAdminController extends Controller
             'step' => 'Menunggu Persetujuan Surat Persetujuan'
         ]);
 
-        SuratPersetujuan::create([
-            'pengajuan_id' => $pengajuanID
-        ]);
+        // SuratPersetujuan::create([
+        //     'pengajuan_id' => $pengajuanID
+        // ]);
 
         $this->kirimNotifikasiKeKasi($pengajuanID);
 

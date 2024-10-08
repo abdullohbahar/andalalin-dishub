@@ -54,11 +54,13 @@ class DashboardKabidController extends Controller
     public function showSuratPersetujuan($pengajuanID)
     {
         $pengajuan = Pengajuan::findorfail($pengajuanID);
+        $suratPersetujuan = SuratPersetujuan::where('pengajuan_id', $pengajuanID)->orderBy('created_at', 'desc')->first();
 
         $data = [
             'active' => 'dashboard',
             'pengajuan' => $pengajuan,
-            'pengajuanID' => $pengajuanID
+            'pengajuanID' => $pengajuanID,
+            'suratPersetujuan' => $suratPersetujuan
         ];
 
         return view('kabid.dashboard.show-surat-persetujuan', $data);

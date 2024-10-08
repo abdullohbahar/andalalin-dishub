@@ -67,10 +67,13 @@ class DashboardKadisController extends Controller
     {
         $pengajuan = Pengajuan::findorfail($pengajuanID);
 
+        $suratPersetujuan = SuratPersetujuan::where('pengajuan_id', $pengajuanID)->orderBy('created_at', 'desc')->first();
+
         $data = [
             'active' => 'dashboard',
             'pengajuan' => $pengajuan,
-            'pengajuanID' => $pengajuanID
+            'pengajuanID' => $pengajuanID,
+            'suratPersetujuan' => $suratPersetujuan
         ];
 
         return view('kadis.dashboard.show-surat-persetujuan', $data);
@@ -103,9 +106,14 @@ class DashboardKadisController extends Controller
             }
         }
 
+        $suratPersetujuan = SuratPersetujuan::where('pengajuan_id', $pengajuanID)->first()?->file;
+
+        unlink(storage_path('app/' . $suratPersetujuan));
+
         SuratPersetujuan::where('pengajuan_id', $pengajuanID)->update([
             'is_kadis_approve' => true,
-            'file' => $generatePDF['response']
+            'file' => $generatePDF['response'],
+            'tte' => true
         ]);
 
         $this->kirimNotifikasiKePemohonKonsultan($pengajuanID);

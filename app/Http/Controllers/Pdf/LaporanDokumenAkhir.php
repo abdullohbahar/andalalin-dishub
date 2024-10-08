@@ -38,7 +38,7 @@ class LaporanDokumenAkhir extends Controller
         $suratPersetujuan = new SuratPersetujuanController();
         $suratPersetujuan->__invoke($pengajuanID);
         $suratPersetujuan = SuratPersetujuan::where('pengajuan_id', $pengajuanID)->first()?->file;
-        $pdfMerger->addPDF(storage_path('app/' . $suratPersetujuan));
+        $pdfMerger->addPDF(public_path($suratPersetujuan));
 
         // Load Berita Acara PDF
         $beritaAcara = BeritaAcara::where('pengajuan_id', $pengajuanID)->first()?->file_uploads;
