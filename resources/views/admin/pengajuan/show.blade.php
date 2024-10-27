@@ -450,9 +450,22 @@
                                                     @if ($pengajuan->hasOneSuratPersetujuan?->is_kadis_approve)
                                                         <td>Surat Persetujuan</td>
                                                         <td>-</td>
-                                                        <td><a target="_blank"
-                                                                href="{{ route('download.surat.persetujuan', $pengajuan->id) }}">Lihat
-                                                                Dokumen</a></td>
+                                                        <td>
+                                                            @php
+                                                                if ($pengajuan->hasOneSuratPersetujuan?->tte) {
+                                                                    $route = asset(
+                                                                        $pengajuan->hasOneSuratPersetujuan?->file,
+                                                                    );
+                                                                } else {
+                                                                    $route = route(
+                                                                        'download.surat.persetujuan',
+                                                                        $pengajuanID,
+                                                                    );
+                                                                }
+                                                            @endphp
+                                                            <a target="_blank" href="{{ $route }}">Lihat
+                                                                Dokumen</a>
+                                                        </td>
                                                         <td>
                                                             Anda Telah Menyetujui Dokumen Ini
                                                         </td>
