@@ -403,7 +403,9 @@
                                     KEPALA DINAS PERHUBUNGAN KABUPATEN BANTUL
                                     @if (isset($qrcode))
                                         <br>
+                                        <br>
                                         <img src="{{ $qrcode }}" alt="QR Code">
+                                        <br>
                                         <br>
                                     @else
                                         <br>
@@ -572,7 +574,9 @@
                     KEPALA DINAS PERHUBUNGAN KABUPATEN BANTUL
                     @if (isset($qrcode))
                         <br>
+                        <br>
                         <img src="{{ $qrcode }}" alt="QR Code">
+                        <br>
                         <br>
                     @else
                         <br>

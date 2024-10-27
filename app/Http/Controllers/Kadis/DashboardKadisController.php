@@ -108,7 +108,9 @@ class DashboardKadisController extends Controller
 
         $suratPersetujuan = SuratPersetujuan::where('pengajuan_id', $pengajuanID)->first()?->file;
 
-        unlink(storage_path('app/' . $suratPersetujuan));
+        if ($suratPersetujuan && file_exists(storage_path('app/' . $suratPersetujuan))) {
+            unlink(storage_path('app/' . $suratPersetujuan));
+        }
 
         SuratPersetujuan::where('pengajuan_id', $pengajuanID)->update([
             'is_kadis_approve' => true,
@@ -212,10 +214,10 @@ class DashboardKadisController extends Controller
         $kadis = User::with('hasOneProfile')->where('role', 'kadis')->first();
 
         // Buat QR Code dalam format PNG
-        $qrcode = QrCode::size(100)
+        $qrcode = QrCode::size(130)
             ->format('png')
-            ->merge(public_path('img/kab-bantul.png'), 0.5, true) // Ganti dengan path yang benar
-            ->errorCorrection('M')
+            ->merge(public_path('img/kab-bantul.png'), 0.4, true) // Ubah ukuran logo menjadi lebih kecil
+            ->errorCorrection('H') // Tingkat koreksi kesalahan tertinggi
             ->generate(route('preview.surat.persetujuan', $pengajuanID));
 
         // Encode QR Code ke dalam Base64
