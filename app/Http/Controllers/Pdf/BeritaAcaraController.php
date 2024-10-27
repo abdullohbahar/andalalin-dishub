@@ -71,6 +71,8 @@ class BeritaAcaraController extends Controller
         $tahun = \Carbon\Carbon::parse($pengajuan->hasOneBeritaAcara->tanggal)->translatedFormat('Y');
 
         $tahapOperasional = $pengajuan->hasOneBeritaAcara->body;
+        $tahapPrakonstruksi = $pengajuan?->hasOneBeritaAcara?->body_prakonstruksi;
+        $tahapKonstruksi = $pengajuan?->hasOneBeritaAcara?->body_konstruksi;
         $nomor = $pengajuan->hasOneBeritaAcara->nomor;
 
         $penilais = User::with('hasOneProfile', 'hasOneTtd')->where('role', 'like', '%penilai%')->orderBy('role', 'asc')->get();
@@ -99,6 +101,8 @@ class BeritaAcaraController extends Controller
             'luasLahan' => $luasLahan,
             'luasBangunan' => $luasBangunan,
             'watermark' => $encodeWatermark,
+            'tahapPrakonstruksi' => $tahapPrakonstruksi,
+            'tahapKonstruksi' => $tahapKonstruksi,
         ];
 
         $pdf = PDF::loadView('document-template.berita-acara', $data);

@@ -83,6 +83,8 @@ class SuratPersetujuanController extends Controller
         $bulanRoman = $roman->filter($bulanInteger);
 
         $tahapOperasional = $pengajuan->hasOneBeritaAcara->body;
+        $tahapPrakonstruksi = $pengajuan?->hasOneBeritaAcara?->body_prakonstruksi;
+        $tahapKonstruksi = $pengajuan?->hasOneBeritaAcara?->body_konstruksi;
         $nomor = sprintf("%02d", $pengajuan->hasOneBeritaAcara->nomor);
 
         $penilais = User::with('hasOneProfile', 'hasOneTtd')->where('role', 'like', '%penilai%')->orderBy('role', 'asc')->get();
@@ -118,7 +120,9 @@ class SuratPersetujuanController extends Controller
             'tanggalSuratPermohonan' => $tanggalSuratPermohonan,
             'tanggalSuratPersetujuan' => $tanggalSuratPersetujuan,
             'watermark' => $encodeWatermark,
-            'kadis' => $kadis
+            'kadis' => $kadis,
+            'tahapPrakonstruksi' => $tahapPrakonstruksi,
+            'tahapKonstruksi' => $tahapKonstruksi,
         ];
 
         $pdf = PDF::loadView('document-template.surat-persetujuan', $data);
