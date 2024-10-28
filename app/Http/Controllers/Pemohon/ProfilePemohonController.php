@@ -152,6 +152,7 @@ class ProfilePemohonController extends Controller
             'masa_berlaku_sertifikat' => $request->masa_berlaku_sertifikat,
             'tingkatan' => $request->tingkatan,
             'sekolah_terakhir' => $request->sekolah_terakhir,
+            'nip' => $request->nip ?? null
         ];
 
         Profile::updateorcreate([

@@ -15,6 +15,7 @@ class Profile extends Model
         'user_id',
         'nama',
         'no_ktp',
+        'nip',
         'alamat',
         'no_telepon',
         'no_sertifikat',

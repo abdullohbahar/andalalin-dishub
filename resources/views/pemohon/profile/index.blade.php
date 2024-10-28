@@ -90,6 +90,17 @@
                                             <tr>
                                                 <td>
                                                     <b>
+                                                        NIP/NRP
+                                                    </b>
+                                                </td>
+                                                <td>
+                                                    <b>:</b>
+                                                </td>
+                                                <td>{{ $user->hasOneProfile?->nip }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <b>
                                                         No KTP
                                                     </b>
                                                 </td>

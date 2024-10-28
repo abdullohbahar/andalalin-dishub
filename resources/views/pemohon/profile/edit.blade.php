@@ -123,6 +123,23 @@
                                                 </div>
                                             @enderror
                                         </div>
+                                        @if ($user->role != 'pemohon' || $user->role != 'pemrakarsa' || $user->role != 'konsultan')
+                                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-3">
+                                                <label for="" class="form-label">
+                                                    NIP/NRP
+                                                </label>
+                                                <input type="text" name="nip"
+                                                    class="form-control @error('nip') is-invalid @enderror"
+                                                    placeholder="Masukkan NIP/NRP Anda"
+                                                    value="{{ old('nip', $user->hasOneProfile?->nip ?? '') }}"
+                                                    id="">
+                                                @error('nip')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                        @endif
                                         <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-3">
                                             <label for="" class="form-label">
                                                 No KTP <span style="color: red">*</span>
