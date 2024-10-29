@@ -10,8 +10,8 @@
                 id="">
             <button class="input-group-text btn btn-success" type="submit">Upload</button>
         </div>
-        @if ($user->hasOneProfile->getRawOriginal('file_ktp'))
-            <a target="_blank" href="{{ $user->hasOneProfile->file_ktp }}">
+        @if ($user->hasOneProfile?->getRawOriginal('file_ktp'))
+            <a target="_blank" href="{{ $user->hasOneProfile?->file_ktp }}">
                 Lihat KTP Yang Telah Diupload
             </a>
             <br>
@@ -35,8 +35,8 @@
                 class="form-control @error('file_sertifikat_andalalin') is-invalid @enderror" id="">
             <button class="input-group-text btn btn-success" type="submit">Upload</button>
         </div>
-        @if ($user->hasOneProfile->getRawOriginal('file_sertifikat_andalalin'))
-            <a target="_blank" href="{{ $user->hasOneProfile->file_sertifikat_andalalin }}">
+        @if ($user->hasOneProfile?->getRawOriginal('file_sertifikat_andalalin'))
+            <a target="_blank" href="{{ $user->hasOneProfile?->file_sertifikat_andalalin }}">
                 Lihat Sertifikat Andalalin Yang Telah Diupload
             </a>
             <br>
@@ -61,8 +61,8 @@
                 id="">
             <button class="input-group-text btn btn-success" type="submit">Upload</button>
         </div>
-        @if ($user->hasOneProfile->getRawOriginal('file_cv'))
-            <a target="_blank" href="{{ $user->hasOneProfile->file_cv }}">
+        @if ($user->hasOneProfile?->getRawOriginal('file_cv'))
+            <a target="_blank" href="{{ $user->hasOneProfile?->file_cv }}">
                 Lihat CV Yang Telah Diupload
             </a>
             <br>
