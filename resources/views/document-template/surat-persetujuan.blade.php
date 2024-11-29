@@ -479,7 +479,7 @@
         <p>
             <b>TAHAP PRAKONSTRUKSI</b>
         </p>
-        {{ $tahapPrakonstruksi }}
+        {!! $tahapPrakonstruksi !!}
         {{-- <ol style="line-height: 0.7cm">
             <li>Memenuhi segala persyaratan perizinan yang diwajibkan sebelum melaksanakan pembangunan;</li>
             <li>Melakukan sosialisasi Kepada masyarakat sekitar yang terdampak terkait dengan adanya pelaksanaan

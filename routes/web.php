@@ -339,7 +339,7 @@ Route::prefix('laporan-dokumen-akhir')->group(function () {
     Route::get('/{pengajuanID}', [LaporanDokumenAkhir::class, 'index'])->name('laporan.dokumen.akhir');
 });
 
-Route::prefix('download')->middleware('auth')->group(function () {
+Route::prefix('download')->group(function () {
     Route::get('pemberitahuan-jadwal-tinjauan/{pengajuanID}', PemberitahuanJadwalTinjauan::class)->name('download.pemberitahuan.jadwal.tinjauan');
 
     Route::get('berita-acara/{pengajuanID}', PdfBeritaAcaraController::class)->name('download.berita.acara');
