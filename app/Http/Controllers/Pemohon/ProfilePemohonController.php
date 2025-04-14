@@ -177,6 +177,13 @@ class ProfilePemohonController extends Controller
         if ($request->hasFile($fieldName)) {
             $file = $request->file($fieldName);
             $filename = time() . "." . $file->getClientOriginalExtension();
+
+            // Cek folder dan buat jika tidak ada dengan permission 777
+            $folderPath = storage_path('app/public/file-uploads/' . $folderName);
+            if (!file_exists($folderPath)) {
+                mkdir($folderPath, 0777, true);
+            }
+
             $file->storeAs('file-uploads/' . $folderName, $filename, 'public');
 
             Profile::updateorcreate([
