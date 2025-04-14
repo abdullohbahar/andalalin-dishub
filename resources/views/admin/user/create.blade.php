@@ -100,6 +100,7 @@
                                                 <option value="kadis">Kadis</option>
                                                 <option value="konsultan">Konsultan</option>
                                                 <option value="pemohon">Pemohon</option>
+                                                <option value="pemrakarsa">Pemrakarsa</option>
                                             </select>
                                             @error('role')
                                                 <div class="invalid-feedback text-capitalize">
