@@ -39,7 +39,7 @@ class DashboardKabidController extends Controller
         ])->where('is_kabid_approve', 1)
             ->whereNotNull('file')
             ->whereNotNull('pengajuan_id')
-            ->orderBy('created_at', 'asc')
+            ->orderBy('created_at', 'desc')
             ->get();
 
         $data = [

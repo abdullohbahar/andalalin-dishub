@@ -416,7 +416,7 @@
                                     @endif
                                     <b>
                                         {{ $kadis->hasOneProfile?->nama }} <br>
-                                        NIP: {{ $kadis->hasOneProfile?->nip }}
+                                        NIP: {{ $kadis->hasOneProfile?->nip ?? '197307211997031007' }}
                                     </b>
                                 </td>
                             </tr>
@@ -587,7 +587,7 @@
                     @endif
                     <b>
                         {{ $kadis->hasOneProfile?->nama }} <br>
-                        NIP: {{ $kadis->hasOneProfile?->nip }}
+                        NIP: {{ $kadis->hasOneProfile?->nip ?? '197307211997031007' }}
                     </b>
                 </td>
             </tr>
