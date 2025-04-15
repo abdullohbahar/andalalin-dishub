@@ -90,9 +90,9 @@ class DashboardKadisController extends Controller
         // Hapus file lama jika ada
         $suratPersetujuan = SuratPersetujuan::where('pengajuan_id', $pengajuanID)->first();
 
-        if ($suratPersetujuan->file && file_exists(storage_path('app/' . $suratPersetujuan->file))) {
-            unlink(storage_path('app/' . $suratPersetujuan->file));
-        }
+        // if ($suratPersetujuan->file && file_exists(storage_path('app/' . $suratPersetujuan->file))) {
+        //     unlink(storage_path('app/' . $suratPersetujuan->file));
+        // }
 
         // Update database
         // SuratPersetujuan::where('pengajuan_id', $pengajuanID)->update([
