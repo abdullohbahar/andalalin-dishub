@@ -86,6 +86,8 @@ class DashboardKadisController extends Controller
         // Generate PDF baru tanpa TTE
         $pdfPath = $this->generatePDF($pengajuanID);
 
+        dd($pdfPath);
+
         // Hapus file lama jika ada
         $suratPersetujuan = SuratPersetujuan::where('pengajuan_id', $pengajuanID)->first()?->file;
 
@@ -208,8 +210,6 @@ class DashboardKadisController extends Controller
         $qrcode = 'data:image/png;base64,' . $base64;
 
         $kadis = User::where('role', 'kadis')->first();
-
-        dd($qrcode);
 
         $data = [
             'aksara' => $encodeAksara,
