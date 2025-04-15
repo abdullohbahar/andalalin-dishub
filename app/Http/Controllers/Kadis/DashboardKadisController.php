@@ -86,14 +86,15 @@ class DashboardKadisController extends Controller
         // Generate PDF baru tanpa TTE
         $pdfPath = $this->generatePDF($pengajuanID);
 
-        dd($pdfPath);
 
         // Hapus file lama jika ada
         $suratPersetujuan = SuratPersetujuan::where('pengajuan_id', $pengajuanID)->first()?->file;
 
         if ($suratPersetujuan && file_exists(storage_path('app/' . $suratPersetujuan))) {
+            dd("x");
             unlink(storage_path('app/' . $suratPersetujuan));
         }
+        dd($pdfPath, $suratPersetujuan);
 
         // Update database
         SuratPersetujuan::where('pengajuan_id', $pengajuanID)->update([
