@@ -15,6 +15,7 @@ use App\Models\RiwayatVerifikasi;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Storage;
 use Riskihajar\Terbilang\Facades\Terbilang;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Http\Controllers\EmailNotificationController;
@@ -82,40 +83,21 @@ class DashboardKadisController extends Controller
 
     public function approve(Request $request, $pengajuanID)
     {
-        $this->passphrase = $request->passphrase;
-        // dd($request->all());
-        $generatePDF = $this->generatePDF($pengajuanID);
+        // Generate PDF baru tanpa TTE
+        $pdfPath = $this->generatePDF($pengajuanID);
 
-        // if (!$generatePDF['success']) {
-        //     $response = json_decode($generatePDF['response']->body());
-
-        //     // dd($response);
-
-        //     TteLog::create([
-        //         'parent_id' => $pengajuanID,
-        //         'parent_table' => 'surat_keputusans',
-        //         'response' => $generatePDF['response']->body()
-        //     ]);
-
-        //     // dd($response);
-
-        //     if ($generatePDF['status'] !== 500) {
-        //         return redirect()->back()->with('failed', $response->error);
-        //     } else {
-        //         return redirect()->back()->with('failed', 'Terjadi masalah saat memproses TTE');
-        //     }
-        // }
-
+        // Hapus file lama jika ada
         $suratPersetujuan = SuratPersetujuan::where('pengajuan_id', $pengajuanID)->first()?->file;
 
         if ($suratPersetujuan && file_exists(storage_path('app/' . $suratPersetujuan))) {
             unlink(storage_path('app/' . $suratPersetujuan));
         }
 
+        // Update database
         SuratPersetujuan::where('pengajuan_id', $pengajuanID)->update([
             'is_kadis_approve' => true,
-            'file' => $generatePDF['response'],
-            'tte' => true
+            'file' => $pdfPath,
+            'tte' => false // Set ke false karena tidak ada TTE
         ]);
 
         $this->kirimNotifikasiKePemohonKonsultan($pengajuanID);
@@ -176,7 +158,6 @@ class DashboardKadisController extends Controller
         } else {
             $jenisBangkitan = $pengajuan->belongsToSubSubJenisRencana?->hasOneUkuranMinimal?->kategori;
         }
-
 
         // mengambil nama proyek
         $namaProyek = $pengajuan->hasOneDataPemohon?->nama_proyek ?? '';
@@ -262,31 +243,22 @@ class DashboardKadisController extends Controller
 
         $pdf = PDF::loadView('document-template.surat-persetujuan', $data);
 
-        // / Tentukan nama file dan lokasi penyimpanan di folder public
-        $fileDir = public_path('file-uploads/pdf/');
+        // Gunakan Storage Laravel untuk menghindari masalah permission
         $fileName = 'surat_persetujuan_' . $pengajuanID . '.pdf';
-        $filePath = $fileDir . $fileName;
+        $filePath = 'pdf/' . $fileName;
 
-        // Periksa apakah folder sudah ada, jika tidak, buat folder
-        if (!file_exists($fileDir)) {
-            mkdir($fileDir, 0755, true);
-        }
+        // Pastikan direktori ada
+        Storage::disk('public')->makeDirectory('pdf');
 
         // Simpan file PDF
-        $pdf->save($filePath);
+        Storage::disk('public')->put($filePath, $pdf->output());
 
-        return $this->signTte($filePath, $fileName);
+        // Kembalikan path untuk disimpan di database
+        return 'public/' . $filePath;
     }
 
     public function signTte($file, $filename)
     {
-        return [
-            'success' => true,
-            'status' => 'success',
-            'response' => $file,
-            'body' => ''
-        ];
-
         $username = env("TTE_USERNAME");
         $password = env("TTE_PASSWORD");
         $passphrase = $this->passphrase;
