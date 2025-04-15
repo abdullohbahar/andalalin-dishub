@@ -209,6 +209,8 @@ class DashboardKadisController extends Controller
 
         $kadis = User::where('role', 'kadis')->first();
 
+        dd($qrcode);
+
         $data = [
             'aksara' => $encodeAksara,
             'logo' => $encodeLogo,
