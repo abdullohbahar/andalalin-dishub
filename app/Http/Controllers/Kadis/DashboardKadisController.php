@@ -86,25 +86,25 @@ class DashboardKadisController extends Controller
         // dd($request->all());
         $generatePDF = $this->generatePDF($pengajuanID);
 
-        if (!$generatePDF['success']) {
-            $response = json_decode($generatePDF['response']->body());
+        // if (!$generatePDF['success']) {
+        //     $response = json_decode($generatePDF['response']->body());
 
-            // dd($response);
+        //     // dd($response);
 
-            TteLog::create([
-                'parent_id' => $pengajuanID,
-                'parent_table' => 'surat_keputusans',
-                'response' => $generatePDF['response']->body()
-            ]);
+        //     TteLog::create([
+        //         'parent_id' => $pengajuanID,
+        //         'parent_table' => 'surat_keputusans',
+        //         'response' => $generatePDF['response']->body()
+        //     ]);
 
-            // dd($response);
+        //     // dd($response);
 
-            if ($generatePDF['status'] !== 500) {
-                return redirect()->back()->with('failed', $response->error);
-            } else {
-                return redirect()->back()->with('failed', 'Terjadi masalah saat memproses TTE');
-            }
-        }
+        //     if ($generatePDF['status'] !== 500) {
+        //         return redirect()->back()->with('failed', $response->error);
+        //     } else {
+        //         return redirect()->back()->with('failed', 'Terjadi masalah saat memproses TTE');
+        //     }
+        // }
 
         $suratPersetujuan = SuratPersetujuan::where('pengajuan_id', $pengajuanID)->first()?->file;
 
@@ -275,11 +275,18 @@ class DashboardKadisController extends Controller
         // Simpan file PDF
         $pdf->save($filePath);
 
-        // return $this->signTte($filePath, $fileName);
+        return $this->signTte($filePath, $fileName);
     }
 
     public function signTte($file, $filename)
     {
+        return [
+            'success' => true,
+            'status' => 'success',
+            'response' => $file,
+            'body' => ''
+        ];
+
         $username = env("TTE_USERNAME");
         $password = env("TTE_PASSWORD");
         $passphrase = $this->passphrase;
