@@ -91,10 +91,9 @@ class DashboardKadisController extends Controller
         $suratPersetujuan = SuratPersetujuan::where('pengajuan_id', $pengajuanID)->first()?->file;
 
         if ($suratPersetujuan && file_exists(storage_path('app/' . $suratPersetujuan))) {
-            dd("x");
             unlink(storage_path('app/' . $suratPersetujuan));
         }
-        dd($pdfPath, $suratPersetujuan);
+
 
         // Update database
         SuratPersetujuan::where('pengajuan_id', $pengajuanID)->update([
@@ -102,6 +101,8 @@ class DashboardKadisController extends Controller
             'file' => $pdfPath,
             'tte' => false // Set ke false karena tidak ada TTE
         ]);
+
+        dd($pdfPath, $suratPersetujuan);
 
         $this->kirimNotifikasiKePemohonKonsultan($pengajuanID);
         $this->kirimNotifikasiKeSemua($pengajuanID);
