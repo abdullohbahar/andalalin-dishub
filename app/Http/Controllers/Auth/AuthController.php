@@ -16,7 +16,7 @@ class AuthController extends Controller
         // Keycloak below v3.2 requires no scopes to be set. 
         // Later versions require the openid scope for all requests.
         // return Socialite::driver('keycloak')->scopes(['openid'])->redirect();
-        return Socialite::driver('keycloak')->redirect('http://localhost:8000/callback');
+        return Socialite::driver('keycloak')->redirect(env("KEYCLOAK_REDIRECT_URI"));
     }
 
     public function handleKeycloakCallback(Request $request)
@@ -56,7 +56,7 @@ class AuthController extends Controller
         if ($role == 'pemohon' || $role == 'pemrakarsa' || $role == 'konsultan') {
             # code...
             // The URL the user is redirected to after logout.
-            $redirectUri = env('APP_URL');
+            $redirectUri = env("KEYCLOAK_REDIRECT_URI");
 
             return redirect(Socialite::driver('keycloak')->getLogoutUrl($redirectUri, env('KEYCLOAK_CLIENT_ID')));
         } else {
