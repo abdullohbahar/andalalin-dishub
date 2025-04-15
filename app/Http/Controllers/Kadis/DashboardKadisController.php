@@ -106,6 +106,8 @@ class DashboardKadisController extends Controller
         $suratPersetujuan->tte = false;
         $suratPersetujuan->save();
 
+        dd($suratPersetujuan);
+
         $this->kirimNotifikasiKePemohonKonsultan($pengajuanID);
         $this->kirimNotifikasiKeSemua($pengajuanID);
 
