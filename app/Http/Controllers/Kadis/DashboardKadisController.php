@@ -103,10 +103,10 @@ class DashboardKadisController extends Controller
 
         $suratPersetujuan->is_kadis_approve = true;
         $suratPersetujuan->file = $pdfPath;
-        $suratPersetujuan->tte = false;
+        $suratPersetujuan->tte = true;
         $suratPersetujuan->save();
 
-        dd($suratPersetujuan);
+        // dd($suratPersetujuan);
 
         $this->kirimNotifikasiKePemohonKonsultan($pengajuanID);
         $this->kirimNotifikasiKeSemua($pengajuanID);
