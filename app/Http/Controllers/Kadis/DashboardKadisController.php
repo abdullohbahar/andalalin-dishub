@@ -275,7 +275,7 @@ class DashboardKadisController extends Controller
         // Simpan file PDF
         $pdf->save($filePath);
 
-        return $this->signTte($filePath, $fileName);
+        // return $this->signTte($filePath, $fileName);
     }
 
     public function signTte($file, $filename)
