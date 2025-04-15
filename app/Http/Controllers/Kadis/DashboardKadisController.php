@@ -88,21 +88,23 @@ class DashboardKadisController extends Controller
 
 
         // Hapus file lama jika ada
-        $suratPersetujuan = SuratPersetujuan::where('pengajuan_id', $pengajuanID)->first()?->file;
+        $suratPersetujuan = SuratPersetujuan::where('pengajuan_id', $pengajuanID)->first();
 
-        if ($suratPersetujuan && file_exists(storage_path('app/' . $suratPersetujuan))) {
-            unlink(storage_path('app/' . $suratPersetujuan));
+        if ($suratPersetujuan->file && file_exists(storage_path('app/' . $suratPersetujuan->file))) {
+            unlink(storage_path('app/' . $suratPersetujuan->file));
         }
 
-
         // Update database
-        SuratPersetujuan::where('pengajuan_id', $pengajuanID)->update([
-            'is_kadis_approve' => true,
-            'file' => $pdfPath,
-            'tte' => false // Set ke false karena tidak ada TTE
-        ]);
+        // SuratPersetujuan::where('pengajuan_id', $pengajuanID)->update([
+        //     'is_kadis_approve' => true,
+        //     'file' => $pdfPath,
+        //     'tte' => false // Set ke false karena tidak ada TTE
+        // ]);
 
-        dd($pdfPath, $suratPersetujuan);
+        $suratPersetujuan->is_kadis_approve = true;
+        $suratPersetujuan->file = $pdfPath;
+        $suratPersetujuan->tte = false;
+        $suratPersetujuan->save();
 
         $this->kirimNotifikasiKePemohonKonsultan($pengajuanID);
         $this->kirimNotifikasiKeSemua($pengajuanID);
