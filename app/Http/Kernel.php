@@ -2,6 +2,16 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\CheckProfileMiddleware;
+use App\Http\Middleware\ChooseRoleMiddleware;
+use App\Http\Middleware\KabidMiddleware;
+use App\Http\Middleware\KadisMiddleware;
+use App\Http\Middleware\KasiMiddleware;
+use App\Http\Middleware\KonsultanMiddleware;
+use App\Http\Middleware\PemohonMiddleware;
+use App\Http\Middleware\PemrakarsaMiddleware;
+use App\Http\Middleware\PenilaiMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -63,5 +73,15 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'check.profile' => CheckProfileMiddleware::class,
+        'choose.role' => ChooseRoleMiddleware::class,
+        'admin' => AdminMiddleware::class,
+        'pemohon' => PemohonMiddleware::class,
+        'konsultan' => KonsultanMiddleware::class,
+        'penilai' => PenilaiMiddleware::class,
+        'kasi' => KasiMiddleware::class,
+        'kabid' => KabidMiddleware::class,
+        'kadis' => KadisMiddleware::class,
+        'pemrakarsa' => PemrakarsaMiddleware::class,
     ];
 }
